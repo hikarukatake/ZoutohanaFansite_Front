@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登録完了</title>
+    <link rel="stylesheet" href="../css/books/book-complete.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header class="signup-header">
+        <h1>
+            投稿完了
+        </h1>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <div class="check-img-div">
+                <div class="check-outer">
+                    <div class="check-inner">
+                        <svg width="40" height="30" viewBox="0 0 52 40" fill="none">
+                            <path d="M5 22L20 35L47 5" stroke="white" stroke-width="6" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+            <div class="complete-text">
+                <h2>登録完了しました</h2>
+                <div class="text-gap">
+                    <p class="intro-text">ご投稿いただきありがとうございます。</p>
+                    <p class="intro-text">一次審査の開始までしばらくお待ちください。</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <div class="container">
+                    <h3>今後の書評の流れ</h3>
+                    <div class="underline"></div>
+                </div>
+                <!-- ステップフロー -->
+                <div class="timeline-container">
+                    <div class="timeline-step">
+                        <div class="step-marker">
+                            <div class="circle green">1</div>
+                            <div class="line"></div>
+                        </div>
+                        <div class="step-content">
+                            <h3>一次審査</h3>
+                            <p>投稿された書評の一次審査が行われます。</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step">
+                        <div class="step-marker">
+                            <div class="circle gray">2</div>
+                            <div class="line"></div>
+                        </div>
+                        <div class="step-content">
+                            <h3>二次審査</h3>
+                            <p>一次審査を通過した書評の二次審査が行われます。</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step">
+                        <div class="step-marker">
+                            <div class="circle gray">3</div>
+                            <div class="line"></div>
+                        </div>
+                        <div class="step-content">
+                            <h3>ノミネート発表</h3>
+                            <p>二次審査を通過した10冊の書評が書店にて発売されます。</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step">
+                        <div class="step-marker">
+                            <div class="circle gray">4</div>
+                            <div class="line"></div>
+                        </div>
+                        <div class="step-content">
+                            <h3>大賞発表</h3>
+                            <p>店舗で発売された10冊のうち、最も人気だった本が<strong>文庫X</strong>として発売されます。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="countdown-container">
+                <div class="label-text">一次審査開始まで</div>
+                <div class="timer-display">
+                    <div class="time-group">
+                        <span id="days" class="number">--</span>
+                        <span class="unit">日</span>
+                    </div>
+                    <div class="time-group">
+                        <span id="hours" class="number">--</span>
+                        <span class="unit">時間</span>
+                    </div>
+                    <div class="time-group">
+                        <span id="minutes" class="number">--</span>
+                        <span class="unit">分</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a href="mypage.html" class="btn btn-next-step" id="btn-next-step">
+                    マイページへ
+                </a>
+            </div>
+            <footer>@copylite</footer>
+        </div>
+    </main>
+
+    <script>
+        // APIのエンドポイントURL
+        const API_URL = '/api/info';
+
+        // 残り時間を計算して表示する関数
+        function updateDisplay(targetDateString, serverDateString) {
+            // 一次審査のに開始日時を取得してミリ秒に変換
+            const targetDate = new Date(targetDateString).getTime();
+            // 今の時間をミリ秒で取得
+            const now = new Date(serverDateString).getTime();
+            // 一次審査開始までの時間から今の時間を引く
+            const distance = targetDate - now;
+
+            // 期限切れの場合
+            if (distance < 0) {
+                document.getElementById("days").innerText = "0";
+                document.getElementById("hours").innerText = "0";
+                document.getElementById("minutes").innerText = "0";
+                return;
+            }
+
+            // 計算
+            // 残りの日数、時間、分を計算
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            // 表示更新
+            // 変更ささったら上書きしている
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+        }
+
+        // サーバーからデータを取得する関数
+        async function fetchAndUpdate() {
+            try {
+                const data = await new Promise((resolve) => {
+                    setTimeout(() => {
+                        // ★修正点3: サーバー側で「サーバーの現在時刻」を入れて返す想定
+                        // (本来はPHPやJavaなどで生成された時刻が入ります)
+                        resolve({
+                            targetDate: "2025-12-31T10:00:00", // 目標日時
+                            serverTime: new Date().toISOString() // ★サーバーの現在時刻を追加(シミュレーション)
+                        });
+                    }, 200);
+                });
+                // ----------------------------------------------------
+
+                console.log("データ取得成功:", new Date().toLocaleTimeString()); // 確認用ログ
+                // データの中の日付を使って計算 (jsonのキー名に合わせてください。例: data.date)
+                if (data.targetDate && data.serverTime) {
+                    updateDisplay(data.targetDate, data.serverTime);
+                }
+            } catch (error) {
+                console.error("データの取得に失敗しました", error);
+            }
+        }
+
+        // 1. ページ読み込み時に即座に1回実行
+        fetchAndUpdate();
+
+        // 2. その後、1000ミリ秒（1秒）ごとに実行
+        setInterval(fetchAndUpdate, 1000);
+
+    </script>
+</body>
+
+</html>

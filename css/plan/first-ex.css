@@ -1,0 +1,381 @@
+        /* --- 基本設定（前回と同じ） --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--back-color);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: var(--back-color);
+            min-height: 100vh;
+            padding-bottom: 40px;
+            position: relative;
+        }
+
+
+        /* スライダー全体 */
+        .slider-box {
+            padding: 0 10px;
+            margin-bottom: 3rem;
+        }
+
+        .slider {
+            position: relative;
+            margin: 0 auto;
+            width: 95%;
+            height: 90vh;
+            overflow: hidden;
+            border-radius: 20px;
+            margin-top: 1rem;
+        }
+
+        /* 写真リスト */
+        .slides {
+            display: flex;
+            transition: transform 0.6s ease;
+            width: 100%;
+        }
+
+        /* 個々のスライド */
+        .slide {
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ====== ABOUT セクション ====== */
+        .about-section {
+            width: 100%;
+            background-color: var(--sub-color);
+            border-radius: 50% / 50px;
+            padding: 100px 0px;
+            margin-top: 20vh;
+            margin-bottom: 5rem;
+            text-align: center;
+        }
+
+        .about-section::before,
+        .about-section::after {
+            display: none;
+        }
+
+        .about-wrapper {
+            /* テキストの幅を制限して読みやすく */
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .about-title {
+            font-size: 1.7rem;
+            font-weight: bold;
+            color: var(--back-color);
+            /* 深い緑 */
+            margin-bottom: 5px;
+        }
+
+        .about-subtitle {
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            color: var(--back-color);
+            /* 少し濃いグレー */
+            margin-bottom: 15px;
+            font-family: sans-serif;
+            /* 英字に適したフォント */
+        }
+
+        .about-line {
+            width: 40px;
+            height: 1px;
+            background: var(--back-color);
+            margin: 0 auto 40px auto;
+            /* 線の下に余白を大きくとる */
+        }
+
+        .about-text-box {
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .about-text {
+            width: 95%;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            color: var(--back-color);
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        /* 現在の流れ状況*/
+
+        .flow {
+            padding: 2rem;
+            color: var(--font-normal);
+            background-color: white;
+        }
+
+        .flow-situation {
+            border-bottom: 3px solid var(--main-color);
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            width: 90%;
+            margin: 0 auto;
+            margin-bottom: 30px;
+        }
+
+        .flow-situation h2{
+            text-align: center;
+            font-weight: 600;
+            font-size: 24px;
+        }
+        
+        .flow-situation p{
+            font-size: 32px;
+            font-weight:bold;
+        }
+
+        .flow-text{
+            width: 95%;
+            margin:  0 auto;
+            letter-spacing: 1px;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        /* === 検索ボタン === */
+        .btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            width: 90%;
+            height: 50px;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-sizing: border-box;
+            cursor: pointer;
+            border: 1.5px solid var(--sub-color);
+        }
+
+        .btn-next-step {
+            background-color: white;
+            color: var(--font-normal);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-top: 50px;
+        }
+
+
+
+        /* 参加の流れ */
+        .section-info {
+            padding: 1rem;
+            background-color: white;
+        }
+
+        .section-square {
+            width: 1.3rem;
+            height: 1.3rem;
+            border-radius: 3px;
+            background-color: var(--sub-color);
+            padding-left: 1rem;
+            margin-right: 1rem;
+        }
+
+        .section-title-area {
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--font-normal);
+            white-space: nowrap;
+            padding-left: 5px;
+        }
+
+        .seciton-green {
+            height: 2px;
+            background-color: var(--main-color);
+            width: 75%;
+            border: none;
+            border-radius: 2px;
+        }
+
+        .section-title-text {
+            color: var(--font-normal);
+            font-size: 15px;
+            font-weight: 100;
+            margin-left: 20px;
+        }
+
+        /* 円を作る */
+        .circle {
+            margin-left: 8%;
+            text-align: center;
+            width: 5.5rem;
+            height: 5.5rem;
+            border-radius: 100px;
+            background-color: var(--sub-color);
+            color: var(--back-color);
+            position: relative;
+            /* ← 必須！ */
+            z-index: 10;
+        }
+
+        .circle-step {
+            padding-top: 1rem;
+            font-size: 13px;
+        }
+
+        .circle-1 {
+            font-size: 30px;
+            margin-top: -0.5rem;
+        }
+
+        /* 参加の流れのimg部分 */
+        .book-section {
+            width: 95%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            margin-top: -30px;
+        }
+
+        .step-book {
+            display: block;
+        }
+
+        .step-text {
+            width: 95%;
+            margin: 0 auto;
+            padding: 1rem;
+            margin-bottom: 50px;
+        }
+
+        .step-text h3 {
+            color: var(--sub-color);
+            font-size: 1.6rem;
+            padding: 5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-text {
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            color: var(--font-normal);
+        }
+
+        .step-text-span {
+            font-weight: bold;
+        }
+
+        .triangle-box {
+            display: flex;
+            justify-content: center;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 1rem solid transparent;
+            border-right: 1rem solid transparent;
+            border-top: 1.5rem solid var(--sub-color);
+        }
+
+        /* 受賞 */
+        .Award-box {
+            display: block;
+            background-color: white;
+            width: 90%;
+            border-radius: 10px;
+            border: 1px solid #E3E3E3;
+            margin: 0 auto;
+            padding-left: 1rem;
+        }
+
+        .Award {
+            display: flex;
+        }
+
+        .Award-text {
+            padding: 10px;
+        }
+
+        .Award-text h4 {
+            color: var(--font-normal);
+            font-size: 1.2rem;
+            padding: 12px 0px;
+            font-weight: 800;
+        }
+
+        .Award-text p {
+            color: var(--font-normal);
+            letter-spacing: 1px;
+            line-height: 2;
+        }
+
+        .Award-circle {
+            margin-left: 8%;
+            text-align: center;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 1000px;
+            background-color: var(--sub-color);
+            color: var(--back-color);
+            position: relative;
+            /* ← 必須！ */
+            z-index: 10;
+        }
+
+        .Award-circle-step {
+            padding-top: 12px;
+            font-size: 11px;
+        }
+
+        .Award-circle-1 {
+            font-size: 20px;
+            margin-top: -0.5rem;
+        }
+
+        .Award-circle-box {
+            padding-right: 13px;
+            margin-top: 60px;
+        }
+
+        /* 破線 */
+        .dashe {
+            width: 0;
+            height: 30px;
+            border-left: 2px dashed var(--font-normal);
+
+        }
+
+        .dashe-box {
+            display: flex;
+            justify-content: center;
+        }
+
+        .Award-bottom {
+            margin-bottom: 50px;
+        }
+
+

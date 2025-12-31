@@ -1,0 +1,1135 @@
+html {
+    width: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body.no-scroll {
+    overflow: hidden;
+    height: 100%;
+}
+
+h1 {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+.book-text {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 100px;
+    left: 13%;
+    color: #303030;
+    transition: opacity 3s ease;
+    opacity: 1;
+}
+
+/* ▼ 5秒後に付与して、文字を透明にするクラス */
+.img-box.fade-out {
+    opacity: 0;
+}
+
+.text-top {
+    margin-top: 3vh;
+    font-weight: 600;
+    line-height: 2.2;
+}
+
+.book-text p {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 2.2;
+}
+
+.text-box {
+    margin-top: 30px;
+}
+
+/* fixedからabsoluteに変更 */
+.book-text.release-fixed {
+    position: absolute;
+    pointer-events: none;
+}
+
+.img-box {
+    padding-top: 200px;
+    width: 100%;
+    height: 90vh;
+    background-image: url(../../img/back-book.png);
+    background-size: cover;
+    /* ←全体にフィット（必要なら拡大縮小） */
+    background-repeat: no-repeat;
+    /* ←繰り返しを止める */
+    background-position: center;
+    /* ←中央に置く */
+    display: block;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 3s ease;
+    opacity: 1;
+    position: relative;
+}
+
+/* 動作確認用に下にコンテンツがないとスクロールできないのでダミーを追加 */
+.next-section {
+    width: 100%;
+    height: 140vh;
+    background-image: url(../../img/book-flow.png);
+    display: block;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    background-size: cover;
+    /* ←全体にフィット（必要なら拡大縮小） */
+    background-repeat: no-repeat;
+    /* ←繰り返しを止める */
+    background-position: center;
+    /* ←中央に置く */
+}
+
+.look-review {
+    border-bottom: 2px solid #00BCD4;
+    line-height: 2;
+}
+
+/* --- 本棚エリア --- */
+.shelf-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 110px);
+    gap: 15px;
+    justify-content: center;
+    position: relative;
+}
+
+/* 新規追加 */
+.grid-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.falling-book {
+    position: fixed;
+    top: -200px;
+    width: 110px;
+    height: 140px;
+    background-size: cover;
+    border-radius: 4px;
+    z-index: 100;
+    pointer-events: none;
+}
+
+/* --- 本のスタイル --- */
+.book {
+    width: 100px;
+    height: 140px;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    border: 2px solid rgb(160, 160, 160);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    /* アニメーション用設定 */
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.8s ease;
+    z-index: 10;
+    /* 初期状態：画面のはるか上(-150vh)に待機させ、少し回転させておく */
+    transform: translate(0, -150vh) rotate(var(--fall-angle, 0deg));
+    opacity: 0;
+    overflow: visible;
+    /* ← 重要（影が切れない） */
+}
+
+/* 📌 この疑似要素が「影用のもう１枚」 */
+.book::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* 画像と同じサイズに広げる */
+    background-image: inherit;
+    /* 親の画像をコピー */
+    background-size: inherit;
+    background-position: inherit;
+    background-repeat: inherit;
+    border: 2px solid rgb(160, 160, 160);
+    border-radius: 4px;
+
+    z-index: 0;
+    transform: translate(-8px, -8px);
+}
+
+.book-text-overlay {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+
+    font-size: 12px;
+    line-height: 2;
+    font-weight: bold;
+
+    position: absolute;
+    top: 22px;
+    left: 22px;
+
+    color: var(--font-normal);
+    z-index: 2;
+}
+
+
+
+.book.landed {
+
+    /* 定着位置：ズレ(offset)と角度(angle)はJSで個別に指定 */
+    opacity: 1;
+    /* transformはJSで上書きされます */
+}
+
+@keyframes fallThrough {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    100% {
+        transform: translateY(120vh) rotate(180deg);
+    }
+}
+
+
+/* ボタンのスタイル */
+.button-area {
+    text-align: center;
+    margin-top: 30px;
+    opacity: 0;
+    /* 最初は隠しておく */
+    transition: opacity 1s;
+}
+
+.button-area.show {
+    opacity: 1;
+}
+
+.next-btn {
+    padding: 10px 30px;
+    margin-top: 100px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+}
+
+.next-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 本が下に落ちていくときのアニメーション用クラス */
+.book.fall-out {
+    /* インラインスタイルでtranslateを設定しているため、!importantで強制的に書き換えるか、
+        JSで値を計算するほうが確実ですが、今回はJSで制御するため
+       ここでは transition の設定のみ確認しておきます */
+    transition: transform 0.8s ease-in !important;
+    opacity: 0;
+}
+
+.totalling-box {
+    width: 75%;
+    padding-top: 50px;
+    margin-bottom: 5px;
+}
+
+.looking-box {
+    width: 75%;
+    display: flex;
+    justify-content: flex-end;
+    margin-left: auto;
+    margin-bottom: 5px;
+}
+
+.totalling-text {
+    border-bottom: 2px solid #808C91;
+    color: var(--font-normal);
+    width: 75%;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 1.7;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.tab-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    /* タブの間隔 */
+    margin: 30px 0;
+    padding: 1rem;
+}
+
+.tab {
+    width: 80%;
+    position: relative;
+    padding-bottom: 10px;
+    font-size: 16px;
+    color: var(--font-normal);
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* 下線（緑のライン） */
+.tab::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: var(--main-color);
+    margin-top: 5px;
+    opacity: 0.4;
+    transition: opacity 0.3s;
+}
+
+.tab.active::after {
+    opacity: 1;
+}
+
+.marker {
+    position: absolute;
+    left: 50%;
+    bottom: 0px;
+    /* 位置の微調整 */
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 12px solid var(--main-color);
+    /* 緑の三角形 */
+    z-index: 1;
+}
+
+/* 全ての書評 */
+.all-book-box {
+    border-radius: 30px 30px 30px 30px;
+    background-color: white;
+    border: solid #BEBEBE 1px;
+    margin-top: 400px;
+    box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.all-book {
+    background-image: url('../../img/book2.png');
+    position: relative;
+    /* ← 疑似要素の基準 */
+    width: 100px;
+    height: 150px;
+    /* 本なので高さも必要 */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 2px solid rgb(160, 160, 160);
+    border-radius: 4px;
+    z-index: 1;
+    box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.3);
+
+}
+
+.all-book::before {
+    background-image: url('../../img/book2.png');
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image: inherit;
+    background-size: inherit;
+    background-position: inherit;
+    background-repeat: inherit;
+
+    border: 2px solid rgb(160, 160, 160);
+    border-radius: 4px;
+
+    transform: translate(-5px, -5px);
+    /* ← ちょっとずらす */
+    z-index: 0;
+}
+
+.all-landed {
+    opacity: 1;
+}
+
+.book-shinto-box {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.thema-shinto-altar {
+    width: 150px;
+    height: 40px;
+    background-color: var(--sub-color);
+    border-radius: 10px;
+    margin-top: -30px;
+    box-shadow: 5px 4px 10px rgba(0, 0, 0, 0.3);
+
+}
+
+.book-shinto-set {
+    position: relative;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* あなたが選んだ一冊 */
+.one-book-box {
+    padding-top: 100px;
+    width: 100%;
+    height: 50vh;
+    background-color: var(--back-color);
+}
+
+.you-one-text {
+    text-align: center;
+    width: 70%;
+    margin: 0 auto;
+    font-size: 33px;
+    line-height: 1.9;
+    border-bottom: var(--sub-color) 3px solid;
+    color: var(--font-bold);
+    margin-bottom: 20px;
+}
+
+.one-text-box {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 1.8;
+}
+
+.one-text {
+    color: var(--font-normal);
+
+}
+
+
+.one-book-text-overlay {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 30px;
+    line-height: 2;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+
+    position: absolute;
+    top: 50px;
+    left: 65px;
+
+    color: var(--font-normal);
+    z-index: 2;
+}
+
+.one-book {
+    background-image: url('../../img/book2.png');
+    position: relative;
+    /* ← 疑似要素の基準 */
+    width: 100%;
+    height: 400px;
+    /* 本なので高さも必要 */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 2px solid rgb(160, 160, 160);
+    border-radius: 4px;
+    z-index: 1;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
+}
+
+.one-book::before {
+    background-image: url('../../img/book2.png');
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image: inherit;
+    background-size: inherit;
+    background-position: inherit;
+    background-repeat: inherit;
+
+    border: 2px solid rgb(160, 160, 160);
+    border-radius: 4px;
+
+    transform: translate(-8px, -8px);
+    /* ← ちょっとずらす */
+    z-index: 0;
+}
+
+.one-book-shinto-set {
+    position: relative;
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.one-book-shinto-box {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 30px;
+}
+
+/* チュートリアル用の暗い背景 */
+#tutorialOverlay {
+    position: fixed;
+    top: 30px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    /* 背景を黒くして透過 */
+    z-index: 1000;
+    display: none;
+    /* 最初は隠しておく */
+    pointer-events: auto;
+}
+
+/* 1冊目の本を浮かび上がらせる（黄色い光） */
+.highlight {
+    position: relative;
+    z-index: 1001 !important;
+    /* 背景より上に表示 */
+    box-shadow: 0 0 20px 10px rgba(255, 255, 0, 0.6);
+    /* 黄色い光 */
+    transform: scale(1.05) !important;
+    /* 少し大きくして強調 */
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+/* チュートリアルメッセージ */
+.tutorial-msg {
+    position: absolute;
+    top: 200%;
+    left: 30%;
+    background: #fff;
+    color: var(--font-normal);
+    font-size: 20px;
+    padding: 14px 23px;
+    border-radius: 35px;
+    font-weight: bold;
+    white-space: nowrap;
+    z-index: 1002;
+    border: 3px solid white;
+    box-shadow: inset 0 0 0 2px var(--sub-color);
+}
+
+
+
+/* pen */
+.pen-box {
+    display: flex;
+    justify-content: center;
+    color: var(--font-normal);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.pen-text {
+    font-size: 18px;
+}
+
+.pen {
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+}
+
+/* share */
+.share-box {
+    display: flex;
+    justify-content: center;
+    color: white;
+    gap: 10px;
+    width: 75%;
+    margin: 0 auto;
+    height: 55px;
+    align-items: center;
+    border-radius: 10px;
+    background-color: var(--sub-color);
+}
+
+.share-text {
+    font-size: 18px;
+}
+
+.share {
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    padding-right: 5px;
+}
+
+.posted-by {
+    color: var(--font-normal);
+    margin-top: 20px;
+}
+
+/* 投稿者 */
+.vote-box {
+    width: 100%;
+    height: 40px;
+    color: var(--font-bold);
+    font-weight: 700;
+    border-radius: 30px;
+    border: var(--sub-color) 1px solid;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+}
+
+.vote {
+    font-size: 15px;
+    padding-left: 5px;
+}
+
+.vote-text {
+    font-size: 25px;
+}
+
+/* 参加の流れ */
+.section-info {
+    padding: 1rem;
+    background-color: white;
+}
+
+.section-square {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 3px;
+    background-color: var(--sub-color);
+    margin-right: 1rem;
+}
+
+.section-title-area {
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+}
+
+.section-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--font-bold);
+    white-space: nowrap;
+    padding-left: 5px;
+}
+
+.seciton-green {
+    height: 2px;
+    background-color: var(--main-color);
+    width: 75%;
+    border: none;
+    border-radius: 2px;
+}
+
+.section-title-text {
+    color: var(--font-normal);
+    font-size: 15px;
+    font-weight: 100;
+    margin-left: 20px;
+}
+
+/* 円を作る */
+.circle {
+    margin-left: 8%;
+    text-align: center;
+    width: 5.5rem;
+    height: 5.5rem;
+    border-radius: 100px;
+    background-color: var(--sub-color);
+    color: var(--back-color);
+    position: relative;
+    /* ← 必須！ */
+    z-index: 10;
+}
+
+.circle-step {
+    padding-top: 1rem;
+    font-size: 13px;
+}
+
+.circle-1 {
+    font-size: 30px;
+    margin-top: -0.5rem;
+}
+
+/* 参加の流れのimg部分 */
+.book-section {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    margin-top: -30px;
+}
+
+.step-book {
+    display: block;
+}
+
+.step-text {
+    width: 95%;
+    margin: 0 auto;
+    padding: 1rem;
+    margin-bottom: 50px;
+}
+
+.step-text h3 {
+    color: var(--sub-color);
+    font-size: 1.6rem;
+    padding: 5px;
+    margin-bottom: 0.5rem;
+}
+
+.step-text {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    color: var(--font-normal);
+}
+
+.step-text-span {
+    font-weight: bold;
+}
+
+.triangle-box {
+    display: flex;
+    justify-content: center;
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    border-left: 1rem solid transparent;
+    border-right: 1rem solid transparent;
+    border-top: 1.5rem solid var(--sub-color);
+}
+
+/* 受賞 */
+.Award-box {
+    display: block;
+    background-color: white;
+    width: 90%;
+    border-radius: 10px;
+    border: 1px solid #E3E3E3;
+    margin: 0 auto;
+    padding-left: 1rem;
+}
+
+.Award {
+    display: flex;
+}
+
+.Award-text {
+    padding: 10px;
+}
+
+.Award-text h4 {
+    color: var(--font-normal);
+    font-size: 1.2rem;
+    padding: 20px 0px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.Award-text p {
+    color: var(--font-normal);
+    letter-spacing: 1px;
+    line-height: 2;
+}
+
+.Award-circle {
+    margin-left: 8%;
+    text-align: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1000px;
+    background-color: var(--sub-color);
+    color: var(--back-color);
+    position: relative;
+    /* ← 必須！ */
+    z-index: 10;
+}
+
+.inversion-circle {
+    margin-left: 8%;
+    text-align: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1000px;
+    border: var(--sub-color) solid 1px;
+    background-color: var(--back-color);
+    color: var(--sub-color);
+    position: relative;
+    /* ← 必須！ */
+    z-index: 10;
+}
+
+.Award-circle-step {
+    padding-top: 12px;
+    font-size: 11px;
+}
+
+.inversion-circle-step {
+    padding-top: 12px;
+    font-size: 11px;
+}
+
+.Award-circle-1 {
+    font-size: 20px;
+    margin-top: -0.5rem;
+}
+
+.inversion-circle-1 {
+    font-size: 20px;
+    margin-top: -0.5rem;
+}
+
+.Award-circle-box {
+    padding-right: 13px;
+    margin-top: 50px;
+}
+
+/* 破線 */
+.dashe {
+    width: 0;
+    height: 30px;
+    border-left: 2px dashed var(--font-normal);
+
+}
+
+.dashe-box {
+    display: flex;
+    justify-content: center;
+}
+
+.Award-bottom {
+    margin-bottom: 50px;
+}
+
+
+/* モーダル全体の背景 */
+.modal-overlay {
+    display: none;
+    /* 最初は隠す */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 2000;
+    margin-bottom: 20px;
+    overflow-y: auto;
+    justify-content: center;
+}
+
+/* モーダルの箱 */
+.modal-content {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    position: relative;
+    animation: modalOpen 0.3s ease-out;
+}
+
+.modal-box {
+    width: 100%;
+    border-radius: 6px;
+
+}
+
+.modal-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-textFirst-box,
+.modal-textSecond-box {
+    width: 80%;
+    margin: 0 auto;
+    padding: 16px;
+    padding: 10px 40px;
+    /* 内側の線 */
+    border: 1px solid var(--font-bold);
+    /* 外側の線 */
+    outline: 1px solid var(--font-bold);
+    outline-offset: 2px;
+    /* ← ★ここが「二重線の間隔」 */
+    position: relative;
+    margin-bottom: 32px;
+    background-color: var(--back-color);
+
+
+    box-shadow: 6px 6px 10px -4px rgba(0, 0, 0, 0.25);
+}
+
+.modal-textFirst-box h3 {
+    font-size: 28px;
+    text-align: center;
+    color: var(--font-bold);
+    margin: 0 0 10px 0;
+}
+
+
+
+.modal-textSecond-box {
+    border-bottom: none;
+}
+
+
+.modal-textFirst,
+.modal-textSecond {
+    font-size: 16px;
+    line-height: 2.2;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px dashed var(--font-normal);
+    color: var(--font-normal);
+}
+
+.modal-box::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+
+
+@keyframes modalOpen {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 閉じるボタン */
+.close-button {
+    position: absolute;
+    top: 20px;
+    left: 40px;
+    font-size: 40px;
+    z-index: 10;
+    color: var(--font-bold);
+}
+
+.modal-body {
+    text-align: center;
+    color: var(--font-normal);
+}
+
+.one-book-shinto-set-modal {
+    position: relative;
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.one-book-text-overlay-modal {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    /* font-size: clamp(18px, 2vw, 50px); */
+    font-size: 30px;
+    line-height: 2;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    color: var(--font-normal);
+    z-index: 2;
+    max-height: 80%;
+    white-space: nowrap;
+}
+
+.modal-textFirst {
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: left;
+    color: var(--font-normal);
+}
+
+.modal-textSecond {
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: left;
+    color: var(--font-normal);
+}
+
+/* モーダルの下のボタン */
+.modal-buttons {
+    display: flex;
+    justify-content: space-around;
+    font-size: 18px;
+    color: var(--back-color);
+    margin: 0 auto;
+    padding: 5px 10px;
+}
+
+.modal-button {
+    display: flex;
+    justify-content: center;
+    background-color: var(--sub-color);
+    width: 35%;
+    height: 35px;
+    padding: 10px;
+    border-radius: 5px;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-img{
+    width: 20px;
+    height: 20px;
+    display: block;
+    align-items: center;
+}
+
+.modal-img-book{
+    width: 15px;
+    height: 20px;
+    display: block;
+    align-items: center;
+}
+
+
+.modal-rose {
+    width: 30px;
+    height: 35px;
+    display: block;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+        .profile-card {
+            width: 90%;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            border: 1px solid #B3B3B3;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+
+        .profile-icon {
+            width: 60px;
+            height: 60px;
+            background-color: #fff9c4;
+            /* 薄い黄色 */
+            border: 4px solid #fce4ec;
+            /* 薄いピンクの枠線 */
+            border-radius: 50%;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+            color: var(--font-bold);
+        }
+
+        /* タグ部分：年代と性別 */
+        .profile-tags {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background-color: #f5f5f5;
+            padding: 4px 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            color: var(--font-normal);
+        }
+
+        .divider {
+            width: 1px;
+            height: 14px;
+            background-color: #D0D0D0;
+        }
+
+        /* 居住地 */
+        .profile-location {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* 中央寄せ */
+            gap: 8px;
+            margin-bottom: 15px;
+            color: var(--font-normal);
+            font-size: 15px;
+        }
+
+        .location-icon {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+        }
+
+        .location-text {
+            margin: 0;
+        }
+
+        /* 区切り線 */
+        .profile-line {
+            border: none;
+            border-top: 2px solid #D9D9D9;
+            margin: 20px 0;
+        }
+
+        /* 自己紹介文 */
+        .profile-bio {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--font-normal);
+            width: 85%;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .profile-bio p {
+            margin: 0;
+            word-break: break-all;
+
+        }

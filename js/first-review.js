@@ -18,6 +18,12 @@
     const nextStep = document.getElementById('nextStep');
 
     let isActivated = false;
+
+    let tutorialStep = 0;
+    // 10: モーダル開いた
+    // 11: 感想読む
+    // 12: スクロール促す
+    // 13: 自己紹介説明
     
     // tapTargetが存在する場合ときだけ
     if (tapTarget) {
@@ -127,6 +133,9 @@
             modal.style.display = 'flex';
             document.body.classList.add('no-scroll');
 
+            tutorialStep = 10;
+            startModalTutorial();
+
             // （応用）クリックした本の情報をモーダルに入れる場合
             document.getElementById('modalTitle').innerText = `作品 No.${index + 1}`;
         });
@@ -148,9 +157,11 @@
     }
 
     // ■ チュートリアル：本を光らせてメッセージを出す
+
     function startTutorial() {
         const overlay = document.getElementById('tutorialOverlay');
         const firstBook = document.getElementById('firstBook');
+        const MODAL_SCROLL_TUTORIAL_KEY = 'seenModalScrollTutorial';
 
         const allBooks = document.querySelectorAll('.book');
         allBooks.forEach(b => {
@@ -177,13 +188,53 @@
     const modal = document.getElementById('bookDetailModal');
     const closeBtn = document.getElementById('closeModal');
 
-    // モーダルを閉じるボタン（×印）をクリックした時
+    function startModalTutorial() {
+        showScrollOverlay();
+    }
+
+
     if (closeBtn) {
         closeBtn.addEventListener('click', function () {
             modal.style.display = 'none';
             document.body.classList.remove('no-scroll'); // スクロール禁止を解除
         });
     }
+
+    const modalContent = document.querySelector('.modal-content');
+    if (modalContent) {
+    modalContent.addEventListener('scroll', () => {
+
+        if (tutorialStep === 12 && modalContent.scrollTop > 20) {
+            hideScrollOverlay();
+        }
+
+    });
+}
+    function showScrollOverlay() {
+        const overlay = document.getElementById('modalScrollOverlay');
+        overlay.style.display = 'flex';
+        tutorialStep = 12;
+    }
+    function hideScrollOverlay() {
+        const overlay = document.getElementById('modalScrollOverlay');
+        overlay.style.display = 'none';
+
+        tutorialStep = 13;
+    }
+    const modalScrollOverlay = document.getElementById('modalScrollOverlay');
+
+    if (modalScrollOverlay) {
+        modalScrollOverlay.addEventListener('click', hideScrollOverlay);
+    }
+
+
+
+
+    function endModalTutorial() {
+        document.getElementById('modalTutorial').style.display = 'none';
+    }
+
+
 
     // 背景（モーダルの外側の黒い部分）をクリックした時も閉じる
     window.addEventListener('click', function (event) {

@@ -88,7 +88,7 @@ body {
 }
 
 h3 {
-    color: --var(font-normal);
+    color: var(--font-bold);
     margin-bottom: 10px;
 }
 
@@ -100,6 +100,47 @@ h3 {
     margin: 0 auto;
     margin-bottom: 50px;
 }
+
+/* check img */
+.check-img-div {
+    display: flex;
+    justify-content: center;
+}
+
+.check-img {
+    width: 100px;
+    height: auto;
+}
+
+/* チェックマークの外枠 */
+.check-outer {
+    width: 110px;
+    height: 110px;
+    background-color: #E3E3E3;
+    /* 薄い緑 */
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.check-inner {
+    width: 90px;
+    height: 90px;
+    background-color: var(--main-color);
+    /* 濃い緑 */
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-size: 48px;
+    font-weight: bold;
+}
+
 
 
 
@@ -164,11 +205,13 @@ h3 {
 }
 .copy-box p{
     font-size: 1.2rem;
+    color: var(--main-color);
 }
 
-.copy-box p{
-    color: #34C759;
+.red-text{
+    color:red
 }
+
 .text-gap{
     margin-bottom: 5vh;
 }
@@ -191,7 +234,7 @@ h3 {
 }
 .maku-text p{
     margin:  0;
-    padding: 20px;
+    padding: 2.8vh;
     font-size: 0.8rem;
 
 }

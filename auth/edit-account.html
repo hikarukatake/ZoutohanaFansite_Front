@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アカウント編集</title>
+
+    <link rel="stylesheet" href="../css/auth/edit-account.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header class="signup-header">
+        <a href="login.html" class="back-link">&lt;&nbsp;&nbsp;もどる</a>
+        <h1><i class="fas fa-user-plus"></i> アカウント編集</h1>
+    </header>
+    <main>
+        <div class="form-container">
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="account-id">アカウントID <span style="color: #FF4564">(*あとから変更できません)</span></label>
+                    <input type="text" id="account-id" name="account-id">
+                </div>
+                <div class="form-group">
+                    <label for="nickname">ニックネーム</label>
+                    <input type="text" id="nickname" name="nickname">
+                </div>
+                <div class="form-group">
+                    <label>アイコン</label>
+                    <div class="icon-grid">
+
+                        <!-- 上段：花 -->
+                        <div class="icon">
+                            <img src="../img/flower-pink.png" class="flower" alt="">
+                        </div>
+                        <div class="icon">
+                            <img src="../img/flower-blue.png" class="flower" alt="">
+                        </div>
+                        <div class="icon">
+                            <img src="../img/flower-purple.png" class="flower" alt="">
+                        </div>
+                        <div class="icon">
+                            <img src="../img/flower-green.png" class="flower" alt="">
+                        </div>
+
+                        <!-- 下段：象 -->
+                        <div class="icon active">
+                            <img src="../img/elephant-pink.png" class="elephant" alt="">
+                            <span class="badge"></span>
+                        </div>
+                        <div class="icon">
+                            <img src="../img/elephant-blue.png" class="elephant" alt="">
+                        </div>
+                        <div class="icon">
+                            <img src="../img/elephant-purple.png" class="elephant" alt="">
+                        </div>
+                        <div class="icon">
+                            <img src="../img/elephant-green.png" class="elephant" alt="">
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="postal-code">居住地</label>
+                    <div class="postal-code-wrapper">
+                        <span>〒</span>
+                        <input type="number" placeholder="" id="postal-code" name="postal-code">
+                    </div>
+                    <p class="note">郵便番号を入力すると、住所の一部が自動的に表示されます。なお、郵便番号は登録されません。</p>
+                    <div class="address-display">
+                        <span id="prefecture"></span>
+                        <span id="city"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="birth-year">生年</label>
+                    <select id="birth-year" name="birth-year">
+                        <option value="" selected hidden>選択してください</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>性別</label>
+                    <div class="radio-group">
+                        <input type="radio" id="male" name="gender" value="male" checked>
+                        <label for="male" class="radio-label">男性</label>
+
+                        <input type="radio" id="female" name="gender" value="female">
+                        <label for="female" class="radio-label">女性</label>
+
+                        <input type="radio" id="other" name="gender" value="other">
+                        <label for="other" class="radio-label">その他</label>
+                    </div>
+                </div>
+                
+                <div class="form-group bio-wrapper">
+                    <label for="bio">自己紹介 <span class="optional-tag">任意</span></label>
+                    <textarea id="bio" name="bio" rows="6"></textarea>
+                    <div class="char-count"><span id="current-count">0</span>/300文字</div>
+                </div>
+            </form>
+            <hr class="form-divider">
+            <a href=".html" class="btn-confirmation btn-submit" id="btn-to-confirm" disabled>編集を確定する</a>
+        </div>
+    </main>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // --- フォーム用スクリプト ---
+            // 生年セレクトボックス
+            const yearSelect = document.getElementById('birth-year');
+            if (yearSelect) {
+                const currentYear = new Date().getFullYear();
+                const startYear = 1930;
+                const endYear = currentYear;
+
+                // HTMLに <option value="" selected hidden> がある前提
+                for (let year = endYear; year >= startYear; year--) {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.textContent = year;
+                    yearSelect.appendChild(option);
+                }
+
+                // 選択状態によって色を切り替える (CSS側で処理)
+                yearSelect.addEventListener('change', function () {
+                    if (this.value === "" || this.value === "選択してください") {
+                        this.classList.remove('has-value');
+                    } else {
+                        this.classList.add('has-value');
+                    }
+                });
+            }
+
+            // 郵便番号 → 住所
+            const postalInput = document.getElementById('postal-code');
+            const prefDisplay = document.getElementById('prefecture');
+            const cityDisplay = document.getElementById('city');
+
+            if (postalInput) {
+                postalInput.addEventListener('input', function () {
+                    const postal = postalInput.value.replace(/[^0-9]/g, '');
+
+                    if (postal.length === 7) {
+                        fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${postal}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.results) {
+                                    const result = data.results[0];
+                                    prefDisplay.textContent = result.address1;
+                                    cityDisplay.textContent = result.address2;
+                                } else {
+                                    prefDisplay.textContent = "";
+                                    cityDisplay.textContent = "住所が見つかりません";
+                                }
+                            })
+                            .catch(() => {
+                                prefDisplay.textContent = "";
+                                cityDisplay.textContent = "住所検索エラー";
+                            });
+                    } else {
+                        prefDisplay.textContent = "";
+                        cityDisplay.textContent = "";
+                    }
+                });
+            }
+
+            // 自己紹介文字数カウント
+            const bio = document.getElementById('bio');
+            const currentCount = document.getElementById('current-count');
+            const maxLength = 300;
+
+            if (bio && currentCount) {
+                bio.addEventListener('input', function () {
+                    const length = bio.value.length;
+                    currentCount.textContent = length;
+                    if (length > maxLength) {
+                        currentCount.style.color = 'red';
+                    } else {
+                        currentCount.style.color = '#888';
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="../js/theme.js"></script>
+</body>
+
+</html>

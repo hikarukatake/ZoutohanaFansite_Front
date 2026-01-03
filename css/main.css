@@ -32,6 +32,30 @@ body {
     border-bottom: 1px solid #9F9F9F;
 }
 
+/* メールアイコン */
+.mail-icon {
+    /* 画面固定 */
+    position: fixed;
+    top: 15px;
+    right: 75px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--main-color);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mail-icon svg {
+    width: 26px;
+    height: 26px;
+}
+
 /* ハンバーガーボタン */
 .menu-icon {
     /* 画面固定 */
@@ -162,7 +186,7 @@ body {
     align-items: center;
     justify-content: center;
     color: white;
-    gap: 1em;
+    gap:6vh;
     /* 初期状態は非表示 */
     opacity: 0;
     visibility: hidden;

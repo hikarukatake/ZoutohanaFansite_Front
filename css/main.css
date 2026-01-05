@@ -30,6 +30,7 @@ body {
     align-items: center;
     padding: 15px 40px 5px 15px;
     border-bottom: 1px solid #9F9F9F;
+    background-color: var(--back-color);
 }
 
 /* メールアイコン */

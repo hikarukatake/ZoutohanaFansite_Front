@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>書評の詳細</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/books/book-detail.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="project-header">
+            <div class="logo-placeholder"><img src="../img/象と花実物.png" style="width: 3rem;" alt=""></div>
+            <div style="display: flex;">
+                <div class="mail-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M2 6h20v12H2z" fill="none" stroke="white" stroke-width="2" />
+                        <path d="M2 6l10 7 10-7" fill="none" stroke="white" stroke-width="2" />
+                    </svg>
+                </div>
+
+                <div class="menu-icon" id="menuOpen">
+                    <div class="menu-icon-box">
+                        <span class="span-top"></span>
+                        <span class="span-middle"></span>
+                        <span class="span-bottom"></span>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="breadcrumb-box">
+            <div class="breadcrumb">ホーム</div>
+            <div class="breadcrumb-middle">></div>
+            <div class="breadcrumb">マイページ</div>
+            <div class="breadcrumb-middle">></div>
+            <div class="breadcrumb">書評の詳細</div>
+        </div>
+
+        <div class="settings-icon">
+            <div class="gear-radius">
+                <img src="../img/gear.png" alt="" width="18px">
+            </div>
+        </div>
+
+        <section class="card">
+            <div class="review-container">
+                <!-- タイトル -->
+                <div class="review-title">
+                    小学校の頃から大好きな作品！
+                </div>
+
+                <!-- 投稿日 -->
+                <div class="review-meta">
+                    投稿日：2025.01.01
+                    <span>#文庫X 2.0</span>
+                </div>
+
+                <!-- 本カード -->
+                <div class="book-card">
+                    <div class="book-image"></div>
+
+                    <div class="book-info">
+                        <h3>象と花について</h3>
+                        <div class="book-details">
+                            <p>著者名：象と花</p>
+                            <p>出版社：象と花プロジェクト</p>
+                        </div>
+                    </div>
+                </div>
+                <hr style="margin: 30px 0;">
+
+                <!-- 書評本文 -->
+                <div class="review-text">
+                    最近の読書の中でも特に心に残った一冊でした。<br>
+                    読み進めるほど登場人物の気持ちに寄り添えるようになり、
+                    自分の日常を見つめ直すきっかけにもなりました。<br>
+                    読み終えたあとも温かい余韻が残り、しばらくその世界に浸っていたくなる作品でした。<br>
+                    読み進めるほど共感する場面が増え、自分の経験と重ね合わせながら楽しめました。
+                    静かで優しい雰囲気の中に、少しずつ変わっていく気持ちが繊細に表現されていて、
+                    読んでいて胸が温かくなる作品でした。
+                </div>
+            </div>
+        </section>
+        <div class="page-nav">
+            <button class="nav-circle prev">＜</button>
+
+            <a href="#" class="nav-center">
+                マイページへ
+            </a>
+
+            <button class="nav-circle next">＞</button>
+        </div>
+
+
+        <!-- ヘッダーモーダル -->
+        <div class="overlay-menu" id="overlayMenu">
+            <div class="close-btn" id="menuClose">×</div>
+            <img src="../img/象と花-white-color.png" class="" style="width: 5rem;" alt="">
+            <ul class="menu-list">
+                <li class="menu-item">お知らせ</li>
+
+                <li class="menu-item">企画一覧</li>
+
+                <li class="menu-item">象と花プロジェクト</li>
+
+                <li class="menu-item">お問い合わせ</li>
+
+                <li class="menu-item">ログイン</li>
+            </ul>
+            <div class="imgs">
+                <img src="../img/instagram-white.png" class="imgs-icon" alt="">
+                <img src="../img/facebook-white.png" class="imgs-width" alt="">
+                <img src="../img/x-white.png" class="imgs-width" alt="">
+            </div>
+        </div>
+        <div class="settings-overlay" id="settingsModal">
+            <div class="settings-content">
+                <a href="#" class="settings-row">
+                    <span class="settings-icon-img">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                    </span>
+                    <span class="settings-text">アカウント情報編集</span>
+                    <span class="settings-arrow">&gt;</span>
+                </a>
+
+                <div class="settings-line"></div>
+
+                <a href="#" class="settings-row">
+                    <span class="settings-icon-img">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="8.5" cy="7" r="4"></circle>
+                            <line x1="20" y1="8" x2="20" y2="14"></line>
+                            <line x1="23" y1="11" x2="17" y2="11"></line>
+                        </svg>
+                    </span>
+                    <span class="settings-text">アカウント退会手続き</span>
+                    <span class="settings-arrow">&gt;</span>
+                </a>
+            </div>
+
+        </div>
+        <!-- フッター -->
+        <footer class="footer-all">
+            <div class="footer-menu">
+                <div class="footer-top">
+                    <img src="../img/象と花-白.png" style="width: 4.5rem;" alt="">
+                    <p class="footer-white-text">A BOOK PROJECT</p>
+                </div>
+                <a href="#" class="footer-menu-item-top">
+                    <p>お知らせ</p>
+                    <p>></p>
+                </a>
+                <a href="#" class="footer-menu-item">
+                    <p>企画</p>
+                    <p>></p>
+                </a>
+                <a href="#" class="footer-menu-item">
+                    <p>象と花プロジェクト</p>
+                    <p>></p>
+                </a>
+                <a href="#" class="footer-menu-item">
+                    <p>お問い合わせ</p>
+                    <p>></p>
+                </a>
+                <a href="#" class="footer-menu-item">
+                    <p>サイトのご利用について</p>
+                    <p>></p>
+                </a>
+            </div>
+
+            <!-- SNSブロック -->
+            <div class="footer-sns">
+                <div class="sns-box">
+                    <div class="footer-sns-title">SNS</div>
+                    <div class="sns-box-icons">
+                        <div class="sns-icons">
+                            <img src="../img/instagram.png" class="sns-icon" alt="">
+                            <img src="../img/facebook.png" class="sns-icon-facebook" alt="">
+                            <img src="../img/x.png" class="sns-icon-x" alt="">
+                        </div>
+
+                        <div class="sns-labels">
+                            <span>Instagram</span>
+                            <span>Facebook</span>
+                            <span>X（旧Twitter）</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-line"></div>
+
+                <div class="footer-copy">©Copylight</div>
+            </div>
+        </footer>
+    </div>
+
+
+
+    <script>
+        // ▼▼▼ 要素を取得 ▼▼▼
+        const menuOpen = document.getElementById('menuOpen');   // ハンバーガーメニューのアイコン
+        const menuClose = document.getElementById('menuClose'); // ハンバーガーメニューの閉じるボタン
+        const overlayMenu = document.getElementById('overlayMenu'); // ハンバーガーメニュー本体
+
+        const gearButton = document.querySelector('.settings-icon'); // 歯車アイコン
+        const settingsModal = document.getElementById('settingsModal'); // 設定モーダル本体
+
+        // ▼▼▼ ハンバーガーメニューの動作（既存のまま） ▼▼▼
+        menuOpen.addEventListener('click', () => {
+            overlayMenu.classList.add('active');
+        });
+
+        menuClose.addEventListener('click', () => {
+            overlayMenu.classList.remove('active');
+        });
+
+        // 1. 歯車を押したときの動作
+        gearButton.addEventListener('click', (e) => {
+            // add ではなく toggle にすることで、「開く/閉じる」を繰り返せます
+            settingsModal.classList.toggle('active');
+        });
+
+        // 2. モーダルの背景（黒い部分）を押したときの動作
+        settingsModal.addEventListener('click', (e) => {
+            // クリックした場所が「モーダル本体(settingsModal)」そのものだった場合のみ閉じる
+            // （中の白い箱をクリックしても閉じないようにする判定）
+            if (e.target === settingsModal) {
+                settingsModal.classList.remove('active');
+            }
+        });
+
+    </script>
+    <script src="../js/mypage.js"></script>
+</body>
+
+</html>

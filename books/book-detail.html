@@ -130,7 +130,7 @@
 
                 <div class="settings-line"></div>
 
-                <a href="#" class="settings-row">
+                <a href="#" class="settings-row" id="openDeleteModal">
                     <span class="settings-icon-img">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -143,8 +143,22 @@
                     <span class="settings-arrow">&gt;</span>
                 </a>
             </div>
-
         </div>
+        <!-- 削除確認モーダル -->
+        <div class="delete-overlay" id="deleteModal">
+            <div class="delete-content">
+                <h3 class="delete-title">本当に書評を削除しますか？</h3>
+                <p class="delete-text">
+                    書評を削除すると、復元することはできません。
+                </p>
+
+                <div class="delete-buttons">
+                    <button class="btn-back" id="deleteCancel">もどる</button>
+                    <button class="btn-delete">削除する</button>
+                </div>
+            </div>
+        </div>
+
         <!-- フッター -->
         <footer class="footer-all">
             <div class="footer-menu">
@@ -233,8 +247,32 @@
                 settingsModal.classList.remove('active');
             }
         });
-
     </script>
+    <script>
+        const openDeleteModal = document.getElementById('openDeleteModal');
+        const deleteModal = document.getElementById('deleteModal');
+        const deleteCancel = document.getElementById('deleteCancel');
+
+        // 削除モーダルを開く
+        openDeleteModal.addEventListener('click', (e) => {
+            e.preventDefault();
+            deleteModal.classList.add('active');
+            settingsModal.classList.remove('active'); // 設定モーダルを閉じる
+        });
+
+        // 「もどる」ボタン
+        deleteCancel.addEventListener('click', () => {
+            deleteModal.classList.remove('active');
+        });
+
+        // 背景クリックで閉じる
+        deleteModal.addEventListener('click', (e) => {
+            if (e.target === deleteModal) {
+                deleteModal.classList.remove('active');
+            }
+        });
+    </script>
+
     <script src="../js/mypage.js"></script>
 </body>
 

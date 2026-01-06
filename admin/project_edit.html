@@ -1,0 +1,361 @@
+<!-- 【企画編集・情報】 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企画編集・情報</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="">
+</head>
+<body id="projectEdit-page">
+    <header></header>
+
+    <main>
+      <h1 id="admin-page-title">企画編集・情報</h1>
+      <!-- あとでここにタブパーツ入れる -->
+      <div class="admin-page-content"> <!-- 「企画について」タブの中身 -->
+        <form>
+          <table>
+            <tr>
+              <th>公開/非公開 : </th>
+              <td>
+                <div class="radio-wrap">
+                  <label><input type="radio" name="published" value="TRUE">公開</label>
+                  <label><input type="radio" name="published" value="FALSE">非公開</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>ステータス : </th>
+              <td>
+                <select name="status">
+                  <option value="BEFORE_SUBMISSION">書評投稿期間前</option>
+                  <option value="DURING_SUBMISSION">書評作成・投稿期間中</option>
+                  <option value="FIRST_PHASE">一次審査中</option>
+                  <option value="SECOND_PHASE_VOTING">二次審査(投票)中</option>
+                  <option value="SECOND_PHASE_VERIFY">二次審査(確認)中</option>
+                  <option value="SECOND_PHASE_RESULT">二次審査結果発表</option>
+                  <option value="AWARD_ANNOUNCEMENT">大賞発表</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <th>QRコード : </th>
+              <td>
+                <button id="qrImg-showButton">表示する</button>
+                <button id="qrImg-downloadButton">ダウンロードする</button>
+                <img id="qrImg-preview">
+              </td>
+            </tr>
+            <tr> <!-- 濃い下線クラスつける -->
+              <!-- 削除機能は後で実装 -->
+              <th>削除</th>
+              <td><button>このプロジェクトを削除する</button></td>
+            </tr>
+
+            <tr>
+              <th>企画名 : </th>
+              <td><input type="text" name="name"></td>
+            </tr>
+            <tr>
+              <th>企画URL<span class="material-symbols-outlined gray-text" title="企画ページのURLの末尾につく文字列です。">help</span> : </th>
+              <td>
+                <input type="text" name="urlKey" id="urlKey-input">
+                <span class="gray-text">https://zoutohana-fansite.com/project/</span><span id="urlKey-preview" class="gray-text">_____</span>
+              </td>
+            </tr>
+            <tr> <!-- 薄い下線クラスつける -->
+              <th>説明 : </th>
+              <td><textarea rows="10" name="introduction"></textarea></td>
+            </tr>
+
+            <tr>
+              <th>企画期間 : </th>
+              <td>
+                <input type="datetime-local" name="projectStartAt">
+                <span class="wave-dash">～</span>
+                <input type="datetime-local" name="projectEndAt">
+              </td>
+            </tr>
+            <tr>
+              <th>書評作成・投稿期間 : </th>
+              <td>
+                <input type="datetime-local" name="submissionStartAt">
+                <span class="wave-dash">～</span>
+                <input type="datetime-local" name="submissionEndAt">
+              </td>
+            </tr>
+            <tr> <!-- 薄い下線クラスつける -->
+              <th>書評投票(二次審査)期間 : </th>
+              <td>
+                <input type="datetime-local" name="votingStartAt">
+                <span class="wave-dash">～</span>
+                <input type="datetime-local" name="votingEndAt">
+              </td>
+            </tr>
+
+            <tr>
+              <th>書籍タイトル : </th>
+              <td>
+                <div class="radio-wrap">
+                  <label><input type="radio" name="enableVisibleBookTitle" value="FALSE">表示しない</label>
+                  <label><input type="radio" name="enableVisibleBookTitle" value="TRUE">表示する</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>書評タイトル : </th>
+              <td>
+                <div class="radio-wrap">
+                  <label><input type="radio" name="enableVisibleReviewTitle" value="FALSE">表示しない</label>
+                  <label><input type="radio" name="enableVisibleReviewTitle" value="TRUE">表示する</label>
+                </div>
+              </td>
+            </tr>
+            <tr> <!-- 薄い下線クラスつける -->
+              <th>投稿者情報 : </th>
+              <td>
+                <div class="radio-wrap">
+                  <label><input type="radio" name="enableVisibleUserInfo" value="FALSE">表示しない</label>
+                  <label><input type="radio" name="enableVisibleUserInfo" value="TRUE">表示する</label>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <th>テーマカラー : </th>
+              <td>
+                <div class="themeColor-wrap">
+                  <label>
+                    <input type="radio" name="themeColor" value="GREEN">
+                    <span class="color-dot" style="background:var(--project-green);" title="GREEN : みどり">
+                      <span class="material-symbols-outlined">check</span>
+                    </span>
+                  </label>
+
+                  <label>
+                    <input type="radio" name="themeColor" value="PINK">
+                    <span class="color-dot" style="background:var(--project-pink);" title="PINK : もも">
+                      <span class="material-symbols-outlined">check</span>
+                    </span>
+                  </label>
+
+                  <label>
+                    <input type="radio" name="themeColor" value="YELLOW">
+                    <span class="color-dot" style="background:var(--project-yellow);" title="YELLOW : き">
+                      <span class="material-symbols-outlined">check</span>
+                    </span>
+                  </label>
+
+                  <label>
+                    <input type="radio" name="themeColor" value="BLUE">
+                    <span class="color-dot" style="background:var(--project-blue);" title="BLUE : あお">
+                      <span class="material-symbols-outlined">check</span>
+                    </span>
+                  </label>
+
+                  <label>
+                    <input type="radio" name="themeColor" value="BLACK">
+                    <span class="color-dot" style="background:var(--project-black);" title="BLACK : くろ">
+                      <span class="material-symbols-outlined">check</span>
+                    </span>
+                  </label>
+
+                  <label>
+                    <input type="radio" name="themeColor" value="GRAY">
+                    <span class="color-dot" style="background:var(--project-gray);" title="GRAY : はい">
+                      <span class="material-symbols-outlined">check</span>
+                    </span>
+                  </label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>ロゴ画像 : </th>
+              <td id="projectInput-td">
+                <div>
+                  <input type="file" accept="image/*" name="mainImg" id="mainImg-input">
+                  <img id="mainImg-preview">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>PDF : </th>
+              <td id="projectInput-td">
+                <div>
+                  <input type="file" accept="application/pdf" name="pdf" multiple id="pdf-input">
+                  <ul id="pdf-list-ul"></ul>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <div class="button-wrap">
+            <a href="#">キャンセル</a>
+            <input type="submit" value="確認する">
+          </div>
+        </form>
+      </div>
+
+      <div class="admin-page-content"> <!-- 「投稿された書評について」タブの中身 -->
+        <div> <!-- 「通知一括送信」部分 -->
+          <h2>通知一括送信</h2>
+          <div>
+            <span>テンプレート名 : </span>
+            <select>
+              <option>一次審査通過連絡</option>
+            </select>
+            <button>呼び出す</button>
+          </div>
+          <textarea></textarea>
+          <div>
+            <span>宛先 : </span>
+            <select>
+              <option>ステータスが「一次審査通過」の書評すべて</option>
+            </select>
+            <button>確認する</button>
+          </div>
+        </div>
+
+        <div> <!-- 「書評閲覧」部分 -->
+          <h2>書評閲覧</h2>
+          <div>
+            <a href="#">
+              <span class="material-symbols-outlined">library_books</span>すべての書評を確認
+            </a>
+            <button>
+              <span class="material-symbols-outlined">csv</span><span class="material-symbols-outlined">download_2</span>すべての書評をCSV形式で出力
+            </button>
+          </div>
+        </div>
+
+        <div> <!-- 「大賞の書評」部分 -->
+          <h2>大賞の書評</h2>
+          <div> <!-- 書評カード -->
+            <div> <!-- 書評カードヘッダー -->
+              <div> <!-- 左側 -->
+                <p>No.<span>100</span></p>
+                <h3>小学生の頃から大好きな一冊</h3>
+                <p><span>なまえなまえ</span>(ID:<span>loginID123</span>)</p>
+              </div>
+              <h3> <!-- 右側 -->
+                <span>123</span>
+                票
+              </h3>
+            </div>
+            <div> <!-- 書評カードボディ -->
+              <table>
+                <tr>
+                  <th>ISBN : </th>
+                  <td>9784XXXXXXXXXX</td>
+                </tr>
+                <tr>
+                  <th>タイトル : </th>
+                  <td>風の図書館</td>
+                </tr>
+                <tr>
+                  <th>出版社 : </th>
+                  <td>ABC出版</td>
+                </tr>
+                <tr>
+                  <th>著者 : </th>
+                  <td>田中太郎</td>
+                </tr>
+                <tr>
+                  <th>形式 : </th>
+                  <td>文庫</td>
+                </tr>
+              </table>
+              <div>
+                <p>本文 : </p>
+                <p>この本を初めて読んだのは、小学四年生のときでした。表紙のイラストに惹かれて手に取ったのがきっかけでしたが、読み進めるうちに主人公の冒険や葛藤にどんどん引き込まれていったのを今でも覚えています。 あの頃は物語の世界に憧れるだけでしたが、大学生になった今読むと、人生の選択や成長の物語として心に響く部分が多く、まるで自分へのメッセージのように感じます。 文庫版の柔らかい紙の感触や少し黄ばんだページも、懐かしさをより一層引き立ててくれます。何度読み返しても色あせない、僕の原点のような一冊です。</p>
+              </div>
+            </div>
+            <div> <!-- 書評カードフッター -->
+              <div> <!-- 左側 -->
+                <p>投稿日時 : <span>2025/10/01 12:34</span></p>
+                <p>更新日時 : <span>2025/10/02 23:45</span></p>
+              </div>
+              <a href="#">詳細を確認する<span class="material-symbols-outlined">keyboard_double_arrow_right</span></a> <!-- 右側 -->
+            </div>
+          </div>
+        </div>
+
+        <div> <!-- 「ノミネートした書評」部分 -->
+          <h2>ノミネートした書評</h2>
+          <div> <!-- メニュー部分 -->
+            <div> <!-- メニュー左部分(並び替え) -->
+              <select>
+                <option>得票数</option>
+              </select>
+              順
+            </div>
+            <div> <!-- メニュー右部分(検索) -->
+              <input type="text">
+              <button><span class="material-symbols-outlined">search</span></button>
+            </div>
+          </div>
+
+          <div> <!-- 書評カードを並べる部分 -->
+            <div> <!-- 書評カード -->
+              <div> <!-- 書評カードヘッダー -->
+                <div> <!-- 左側 -->
+                  <p>No.<span>100</span></p>
+                  <h3>小学生の頃から大好きな一冊</h3>
+                  <p><span>なまえなまえ</span>(ID:<span>loginID123</span>)</p>
+                </div>
+                <h3> <!-- 右側 -->
+                  <span>123</span>
+                  票
+                </h3>
+              </div>
+              <div> <!-- 書評カードボディ -->
+                <table>
+                  <tr>
+                    <th>ISBN : </th>
+                    <td>9784XXXXXXXXXX</td>
+                  </tr>
+                  <tr>
+                    <th>タイトル : </th>
+                    <td>風の図書館</td>
+                  </tr>
+                  <tr>
+                    <th>出版社 : </th>
+                    <td>ABC出版</td>
+                  </tr>
+                  <tr>
+                    <th>著者 : </th>
+                    <td>田中太郎</td>
+                  </tr>
+                  <tr>
+                    <th>形式 : </th>
+                    <td>文庫</td>
+                  </tr>
+                </table>
+                <div>
+                  <p>本文 : </p>
+                  <p>この本を初めて読んだのは、小学四年生のときでした。表紙のイラストに惹かれて手に取ったのがきっかけでしたが、読み進めるうちに主人公の冒険や葛藤にどんどん引き込まれていったのを今でも覚えています。 あの頃は物語の世界に憧れるだけでしたが、大学生になった今読むと、人生の選択や成長の物語として心に響く部分が多く、まるで自分へのメッセージのように感じます。 文庫版の柔らかい紙の感触や少し黄ばんだページも、懐かしさをより一層引き立ててくれます。何度読み返しても色あせない、僕の原点のような一冊です。</p>
+                </div>
+              </div>
+              <div> <!-- 書評カードフッター -->
+                <div> <!-- 左側 -->
+                  <p>投稿日時 : <span>2025/10/01 12:34</span></p>
+                  <p>更新日時 : <span>2025/10/02 23:45</span></p>
+                </div>
+                <a href="#">詳細を確認する<span class="material-symbols-outlined">keyboard_double_arrow_right</span></a> <!-- 右側 -->
+              </div>
+            </div>
+          </div>
+
+          <div class="pagination" id="pagination"></div>
+        </div>
+
+      </div>
+    </main>
+
+    <footer></footer>
+
+    <script src="js/project-detail.js"></script>
+</body>
+</html>

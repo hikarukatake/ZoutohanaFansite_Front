@@ -1,0 +1,127 @@
+<!-- 【企画作成確認】 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企画作成 - 確認</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <header></header>
+
+    <main>
+      <h1 id="admin-page-title">企画作成 - 確認</h1>
+      <div class="admin-page-content">
+        <form>
+          <table>
+            <tr>
+              <th>企画名 : </th>
+              <td>
+                冬に読みたい！わたしのおすすめ文庫
+                <input type="text" name="name" class="hidden" value="">
+              </td>
+            </tr>
+            <tr>
+              <th>企画URL<span class="material-symbols-outlined gray-text" title="企画ページのURLの末尾につく文字列です。">help</span> : </th>
+              <td>
+                <input type="text" name="urlKey" id="urlKey-input" class="hidden" value="">
+                <span class="gray-text">https://zoutohana-fansite.com/project/_____</span>
+              </td>
+            </tr>
+            <tr> <!-- 薄い下線クラスつける -->
+              <th>説明 : </th>
+              <td>
+                <p>冬の足音が近づく中、「冬に読みたい文庫本」をテーマに、皆さまからの書評を募集します。寒い日につい手に取りたくなる心温まる物語、静かな時間に寄り添う一冊――あなたのおすすめをぜひ教えてください。</p>
+                <textarea rows="10" name="introduction" class="hidden"></textarea>
+              </td>
+            </tr>
+
+            <tr>
+              <th>企画期間 : </th>
+              <td>
+                2025/10/27 12:00<span class="wave-dash">～</span>2025/11/09 12:00
+                <input type="datetime-local" name="projectStartAt" class="hidden" value="">
+                <input type="datetime-local" name="projectEndAt" class="hidden" value="">
+              </td>
+            </tr>
+            <tr>
+              <th>書評作成・投稿期間 : </th>
+              <td>
+                2025/10/27 12:00<span class="wave-dash">～</span>2025/11/09 12:00
+                <input type="datetime-local" name="submissionStartAt" class="hidden" value="">
+                <input type="datetime-local" name="submissionEndAt" class="hidden" value="">
+              </td>
+            </tr>
+            <tr> <!-- 薄い下線クラスつける -->
+              <th>書評投票(二次審査)期間 : </th>
+              <td>
+                2025/10/27 12:00<span class="wave-dash">～</span>2025/11/09 12:00
+                <input type="datetime-local" name="votingStartAt" class="hidden" value="">
+                <input type="datetime-local" name="votingEndAt" class="hidden" value="">
+              </td>
+            </tr>
+
+            <tr>
+              <th>書籍タイトル : </th>
+              <td>
+                表示しない
+                <input type="radio" name="enableVisibleBookTitle" value="FALSE">
+              </td>
+            </tr>
+            <tr>
+              <th>書評タイトル : </th>
+              <td>
+                表示する
+                <input type="radio" name="enableVisibleReviewTitle" value="TRUE">
+              </td>
+            </tr>
+            <tr> <!-- 薄い下線クラスつける -->
+              <th>投稿者情報 : </th>
+              <td>
+                表示する
+                <input type="radio" name="enableVisibleUserInfo" value="TRUE">
+              </td>
+            </tr>
+
+            <tr>
+              <th>テーマカラー : </th>
+              <td>
+                <span class="color-dot" style="background:var(--project-yellow);" title="YELLOW : き"></span>
+                <input type="radio" name="themeColor" value="YELLOW" class="hidden">
+              </td>
+            </tr>
+            <tr>
+              <th>ロゴ画像 : </th>
+              <td id="projectInput-td">
+                <div>
+                  <input type="file" accept="image/*" name="mainImg" id="mainImg-input">
+                  <img id="mainImg-preview">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>PDF : </th>
+              <td id="projectInput-td">
+                <div>
+                  <input type="file" accept="application/pdf" name="pdf" multiple id="pdf-input">
+                  <ul id="pdf-list-ul"></ul>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <div class="button-wrap">
+            <a href="#">前に戻る</a>
+            <input type="submit" value="作成する">
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer></footer>
+
+    <script src=""></script>
+  </body>
+</html>

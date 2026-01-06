@@ -1,0 +1,59 @@
+<!-- 【個別通知テンプレート】 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個別通知テンプレート一覧</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <header></header>
+
+    <main>
+      <h1 id="admin-page-title">個別通知テンプレート一覧</h1>
+      <div> <!-- テーブルの上のメニュー部分 -->
+        <div> <!-- メニュー左部分(並び替え) -->
+          <select>
+            <option>ID</option>
+          </select>
+          順
+        </div>
+        <div> <!-- メニュー右部分(絞り込み・検索) -->
+          <button>絞り込みオプション</button>
+          <input type="text">
+          <button><span class="material-symbols-outlined">search</span></button>
+          <a href="#">
+            <span class="material-symbols-outlined">library_add</span>
+            新しいテンプレートを登録
+          </a>
+        </div>
+      </div>
+
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>テンプレート名</th>
+          <th>タイトル</th>
+          <th></th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>一次審査通過連絡</td>
+          <td>一次審査通貨のお知らせ</td>
+          <td>
+            <a href="#">編集する</a>
+            <a href="#">削除する</a>
+          </td>
+        </tr>
+      </table>
+
+      <div class="pagination" id="pagination"></div>
+    </main>
+
+    <footer></footer>
+
+    <script src=""></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!-- 【お知らせ作成確認】 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お知らせ作成 - 確認</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <header></header>
+
+    <main>
+      <h1 id="admin-page-title">お知らせ作成 - 確認</h1>
+      <div class="admin-page-content">
+        <form>
+          <table>
+            <tr>
+              <th>カテゴリー : </th>
+              <td>
+                寄贈情報
+                <input type="radio" name="category" class="hidden" value="DONATION">
+              </td>
+            </tr>
+            <tr>
+              <th>タイトル : </th>
+              <td>
+                <input type="text" name="title" class="hidden" value="先月寄贈した本(2025年10月)">
+              </td>
+            </tr>
+            <tr>
+              <th>本文 : </th>
+              <td>
+　いつも「象と花」の活動にご協力いただき、ありがとうございます。　皆さまからお預かりした本の査定金額をもとに、2025年10月は計20冊の本を病気とたたかう子供たちへ贈ることができました。
+　今回の寄贈先は、岩手医科大学附属病院の小児病棟と、盛岡市の児童養護施設4か所です。 　絵本や図鑑、児童文学、そして将来の夢を応援するような専門書など、子供たちの希望や興味に合わせた本をお届けしました。
+              </td>
+              <textarea rows="10" name="content"></textarea></td>
+            </tr>
+            <tr>
+              <th>投稿日時(表示される日時) : </th>
+              <td>
+                2025/11/01 12:00
+                <input type="datetime-local" name="postedAt" value="2025/11/01 12:00">
+              </td>
+            </tr>
+          </table>
+
+          <div class="button-wrap">
+            <input type="submit" value="確認する">
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer></footer>
+
+    <script src=""></script>
+</body>
+</html>

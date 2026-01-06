@@ -1,0 +1,172 @@
+<!-- 【企画作成】 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企画作成</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <header></header>
+
+    <main>
+      <h1 id="admin-page-title">企画作成</h1>
+      <div class="admin-page-content">
+        <form id="projectForm">
+          <table>
+            <tr>
+              <th>企画名 : </th>
+              <td>
+                <input type="text" name="name">
+                <p class="error"></p>
+              </td>
+            </tr>
+            <tr>
+              <th>企画URL<span class="material-symbols-outlined gray-text" title="企画ページのURLの末尾につく文字列です。">help</span> : </th>
+              <td>
+                <input type="text" name="urlKey" id="urlKey-input">
+                <span class="gray-text">https://zoutohana-fansite.com/project/</span><span id="urlKey-preview" class="gray-text">_____</span>
+                <p class="error"></p>
+              </td>
+            </tr>
+            <tr> <!-- 薄い下線クラスつける -->
+              <th>説明 : </th>
+              <td><textarea rows="10" name="introduction"></textarea></td>
+            </tr>
+
+            <tr>
+              <th>企画期間 : </th>
+              <td>
+                <input type="datetime-local" name="projectStartAt">
+                <span class="wave-dash">～</span>
+                <input type="datetime-local" name="projectEndAt">
+              </td>
+            </tr>
+            <tr>
+              <th>書評作成・投稿期間 : </th>
+              <td>
+                <input type="datetime-local" name="submissionStartAt">
+                <span class="wave-dash">～</span>
+                <input type="datetime-local" name="submissionEndAt">
+              </td>
+            </tr>
+            <tr> <!-- 薄い下線クラスつける -->
+              <th>書評投票(二次審査)期間 : </th>
+              <td>
+                <input type="datetime-local" name="votingStartAt">
+                <span class="wave-dash">～</span>
+                <input type="datetime-local" name="votingEndAt">
+              </td>
+            </tr>
+
+            <tr>
+              <th>書籍タイトル : </th>
+              <td>
+                <div class="radio-wrap">
+                  <label><input type="radio" name="enableVisibleBookTitle" value="FALSE">表示しない</label>
+                  <label><input type="radio" name="enableVisibleBookTitle" value="TRUE">表示する</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>書評タイトル : </th>
+              <td>
+                <div class="radio-wrap">
+                  <label><input type="radio" name="enableVisibleReviewTitle" value="FALSE">表示しない</label>
+                  <label><input type="radio" name="enableVisibleReviewTitle" value="TRUE">表示する</label>
+                </div>
+              </td>
+            </tr>
+            <tr> <!-- 薄い下線クラスつける -->
+              <th>投稿者情報 : </th>
+              <td>
+                <div class="radio-wrap">
+                  <label><input type="radio" name="enableVisibleUserInfo" value="FALSE">表示しない</label>
+                  <label><input type="radio" name="enableVisibleUserInfo" value="TRUE">表示する</label>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <th>テーマカラー : </th>
+              <td>
+                <div class="themeColor-wrap">
+                  <label>
+                    <input type="radio" name="themeColor" value="GREEN">
+                    <span class="color-dot" style="background:var(--project-green);" title="GREEN : みどり">
+                      <span class="material-symbols-outlined">check</span>
+                    </span>
+                  </label>
+
+                  <label>
+                    <input type="radio" name="themeColor" value="PINK">
+                    <span class="color-dot" style="background:var(--project-pink);" title="PINK : もも">
+                      <span class="material-symbols-outlined">check</span>
+                    </span>
+                  </label>
+
+                  <label>
+                    <input type="radio" name="themeColor" value="YELLOW">
+                    <span class="color-dot" style="background:var(--project-yellow);" title="YELLOW : き">
+                      <span class="material-symbols-outlined">check</span>
+                    </span>
+                  </label>
+
+                  <label>
+                    <input type="radio" name="themeColor" value="BLUE">
+                    <span class="color-dot" style="background:var(--project-blue);" title="BLUE : あお">
+                      <span class="material-symbols-outlined">check</span>
+                    </span>
+                  </label>
+
+                  <label>
+                    <input type="radio" name="themeColor" value="BLACK">
+                    <span class="color-dot" style="background:var(--project-black);" title="BLACK : くろ">
+                      <span class="material-symbols-outlined">check</span>
+                    </span>
+                  </label>
+
+                  <label>
+                    <input type="radio" name="themeColor" value="GRAY">
+                    <span class="color-dot" style="background:var(--project-gray);" title="GRAY : はい">
+                      <span class="material-symbols-outlined">check</span>
+                    </span>
+                  </label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>ロゴ画像 : </th>
+              <td id="projectInput-td">
+                <div>
+                  <input type="file" accept="image/*" name="mainImg" id="mainImg-input">
+                  <img id="mainImg-preview">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>PDF : </th>
+              <td id="projectInput-td">
+                <div>
+                  <input type="file" accept="application/pdf" name="pdf" multiple id="pdf-input">
+                  <ul id="pdf-list-ul"></ul>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <div class="button-wrap">
+            <a href="#">キャンセル</a>
+            <input type="submit" value="確認する">
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer></footer>
+
+    <script src="js/project-detail.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!-- 【お知らせ作成】 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お知らせ作成</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <header></header>
+
+    <main>
+      <h1 id="admin-page-title">お知らせ作成</h1>
+      <div class="admin-page-content">
+        <form>
+          <table>
+            <tr>
+              <th>カテゴリー : </th>
+              <td>
+                <div class="radio-wrap">
+                  <label><input type="radio" name="category" value="PROJECT">企画情報</label>
+                  <label><input type="radio" name="category" value="DONATION">寄贈情報</label>
+                  <label><input type="radio" name="category" value="ELSE">その他情報</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>タイトル : </th>
+              <td><input type="text" name="title"></td>
+            </tr>
+            <tr>
+              <th>本文 : </th>
+              <td><textarea rows="10" name="content"></textarea></td>
+            </tr>
+            <tr>
+              <th>投稿日時(表示される日時) : </th>
+              <td>
+                <input type="datetime-local" name="postedAt">
+              </td>
+            </tr>
+          </table>
+
+          <div class="button-wrap">
+            <input type="submit" value="確認する">
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer></footer>
+
+    <script src=""></script>
+</body>
+</html>

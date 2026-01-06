@@ -1,0 +1,91 @@
+<!-- 【書評印刷】 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>書評印刷</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <header></header>
+
+    <main>
+      <h1 id="admin-page-title">書評印刷</h1>
+      <div>
+        <h2>印刷機能の使い方<span>(クリックして閉じる)</span></h2>
+        <ol>
+          <li>「印刷する情報」のチェックボックスで、カードに印刷する情報を選択します。書評本文の一部を編集(例:誤字を修正)することもできます。</li>
+          <li>「印刷データを作成する」ボタンを押します。書評カードの印刷データがPDF形式で生成され、自動でダウンロードされます。</li>
+          <li>PDFを選択し、PCの印刷メニューから印刷部数を設定して印刷してください。</li>
+        </ol>
+        <ul>
+          <li>印刷データには4枚分の書評カードが配置されています。A4サイズで印刷することで、1枚が文庫本と同じサイズになります。</li>
+        </ul>
+      </div>
+      <div class="admin-page-content">
+        <h2>印刷する情報</h2>
+        <form>
+          <table>
+            <tr>
+              <td><input type="checkbox">企画名</td>
+              <td>冬に読みたい！わたしのおすすめ文庫</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">書評ID</td>
+              <td>100</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">書評タイトル</td>
+              <td>小学生の頃から大好きな一冊</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">投稿したユーザー</td>
+              <td>なまえなまえ</td>
+            </tr>
+            <tr> <!-- 薄い下線クラスつける -->
+              <td><input type="checkbox">投稿したユーザーのID</td>
+              <td>loginID123</td>
+            </tr>
+
+            <tr>
+              <td><input type="checkbox">書籍タイトル</td>
+              <td>風の図書館</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">出版社</td>
+              <td>ABC出版</td>
+            </tr>
+            <tr> <!-- 薄い下線クラスつける -->
+              <td><input type="checkbox">著者</td>
+              <td>田中太郎</td>
+            </tr>
+          </table>
+
+          <div>
+            <label>書評本文(オリジナル)</label>
+            <p>この本を初めて読んだのは、小学四年生のときでした。表紙のイラストに惹かれて手に取ったのがきっかけでしたが、読み進めるうちに主人公の冒険や葛藤にどんどん引き込まれていったのを今でも覚えています。 あの頃は物語の世界に憧れるだけでしたが、大学生になった今読むと、人生の選択や成長の物語として心に響く部分が多く、まるで自分へのメッセージのように感じます。 文庫版の柔らかい紙の感触や少し黄ばんだページも、懐かしさをより一層引き立ててくれます。何度読み返しても色あせない、僕の原点のような一冊です。</p>
+          </div>
+
+          <div>
+            <div>
+              <label>書評本文</label>
+              <button>編集をリセット</button>
+            </div>
+            <textarea>この本を初めて読んだのは、小学四年生のときでした。表紙のイラストに惹かれて手に取ったのがきっかけでしたが、読み進めるうちに主人公の冒険や葛藤にどんどん引き込まれていったのを今でも覚えています。 あの頃は物語の世界に憧れるだけでしたが、大学生になった今読むと、人生の選択や成長の物語として心に響く部分が多く、まるで自分へのメッセージのように感じます。 文庫版の柔らかい紙の感触や少し黄ばんだページも、懐かしさをより一層引き立ててくれます。何度読み返しても色あせない、僕の原点のような一冊です。</textarea>
+          </div>
+
+          <div class="button-wrap">
+            <a href="#">キャンセル</a>
+            <input type="submit" value="印刷データを作成する">
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer></footer>
+
+    <script src=""></script>
+</body>
+</html>

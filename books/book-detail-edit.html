@@ -129,6 +129,87 @@
             </div>
         </div>
 
+        <!-- メールモーダル -->
+        <div class="mail-modal-overlay" id="mailModal">
+            <div class="mail-modal">
+                <div class="mail-modal-header">
+                    <span>メール</span>
+                    <button class="mail-close" id="mailClose">×</button>
+                </div>
+
+                <ul class="mail-list">
+                    <li>
+                        <span class="mail-date">2025.01.01</span>
+                        <div class="mail-flex">
+                            <p>あなたの書評が選ばれました。</p>
+                            <p class="mail-open-detail">></p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="mail-date">2025.01.01</span>
+                        <div class="mail-flex">
+                            <p>新たに寄贈しました</p>
+                            <p class="mail-open-detail">></p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="mail-date">2025.01.01</span>
+                        <div class="mail-flex">
+                            <p>「文庫X 1.0」終了のお知らせ</p>
+                            <p class="mail-open-detail">></p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="mail-date">2025.01.01</span>
+                        <div class="mail-flex">
+                            <p>サイトのメンテナンスについて</p>
+                            <p class="mail-open-detail">></p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="page-nav">
+                    <button class="nav-circle prev">＜</button>
+                    <button class="nav-circle next">＞</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- メール詳細モーダル -->
+        <div class="mail-modal-overlay" id="mailDetailModal">
+            <div class="mail-modal">
+                <div class="mail-modal-header">
+                    <span>メール</span>
+                    <button class="mail-close" id="mailDetailClose">×</button>
+                </div>
+                <article class="mail-detail-box">
+                    <h1 class="main-title">【書評コンテスト】結果発表！</h1>
+                    <p class="date">2025.01.01</p>
+                    <div class="current-sub-title">
+                        <h2 class="sub-title">第1次選考の結果を発表しました！</h2>
+                    </div>
+                    <p class="content-text">
+                        書評コンテストにたくさんのご応募をいただき、誠にありがとうございました。<br>
+                        どの作品にも作者の想いや読書への情熱が込められており、選考委員一同、非常に熱心に審査を行いました。
+                    </p>
+
+                    <p class="content-text">
+                        第1次選考では、以下の点を中心に審査を実施しました。
+                    </p>
+                </article>
+                <div class="page-nav-box">
+                    <button class="nav-circle-box prev">＜</button>
+
+                    <a href="#" class="nav-center">
+                        一覧に戻る
+                    </a>
+
+                    <button class="nav-circle-box next">＞</button>
+                </div>
+            </div>
+        </div>
+
+
         <!-- フッター -->
         <footer class="footer-all">
             <div class="footer-menu">
@@ -218,6 +299,56 @@
             }
         });
     </script>
+    <script>
+        // メールモーダル
+        const mailIcon = document.querySelector('.mail-icon');
+        const mailModal = document.getElementById('mailModal');
+        const mailClose = document.getElementById('mailClose');
+
+        const detailButtons = document.querySelectorAll('.mail-open-detail');
+        const mailDetailModal = document.getElementById('mailDetailModal');
+        const mailDetailClose = document.getElementById('mailDetailClose');
+
+        mailIcon.addEventListener('click', () => {
+            mailModal.classList.add('active');
+        });
+
+        mailClose.addEventListener('click', () => {
+            mailModal.classList.remove('active');
+        });
+
+        // 背景タップで閉じる
+        mailModal.addEventListener('click', (e) => {
+            if (e.target === mailModal) {
+                mailModal.classList.remove('active');
+            }
+        });
+
+        // ＞ を押したら詳細モーダル
+        detailButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+
+                mailModal.classList.remove('active');
+
+                mailDetailModal.classList.add('active');
+            });
+        });
+
+        // × で閉じる
+        mailDetailClose.addEventListener('click', () => {
+            mailDetailModal.classList.remove('active');
+            mailModal.classList.add('active');
+        });
+
+        // 背景クリックで閉じる
+        mailDetailModal.addEventListener('click', (e) => {
+            if (e.target === mailDetailModal) {
+                mailDetailModal.classList.remove('active');
+            }
+        });
+    </script>
+
     <script>
         const openDeleteModal = document.getElementById('openDeleteModal');
         const deleteModal = document.getElementById('deleteModal');

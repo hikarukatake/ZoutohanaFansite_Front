@@ -25,7 +25,7 @@ body {
 
 
 /* --- ヘッダー --- */
-.project-header{
+.project-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -131,23 +131,24 @@ body {
     line-height: 1;
 }
 
-.imgs{
+.imgs {
     display: flex;
     align-items: center;
     margin-top: 50px;
 }
 
-.imgs-width{
+.imgs-width {
     width: 2rem;
     height: 2rem;
     margin: 0 0.5rem;
 }
 
-.imgs-icon{
+.imgs-icon {
     width: 40px;
     height: 40px;
     margin: 0 0.5rem;
 }
+
 /* メニューリスト */
 .menu-list {
     list-style: none;
@@ -188,13 +189,283 @@ body {
     align-items: center;
     justify-content: center;
     color: white;
-    gap:6vh;
+    gap: 6vh;
     /* 初期状態は非表示 */
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
+/* メールモーダル */
+/* 背景 */
+.mail-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.mail-modal-overlay.active {
+    display: flex;
+}
+
+/* 本体 */
+.mail-modal {
+    width: 90%;
+    padding: 0 10px;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* ヘッダー */
+.mail-modal-header {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    /* ← baseline */
+    position: relative;
+    padding: 30px 30px 10px 30px;
+    border-bottom: 2px solid var(--sub-color);
+    font-size: 31px;
+    font-weight: bold;
+}
+
+.mail-close {
+    position: absolute;
+    right: 16px;
+    top: 10px;
+    font-size: 34px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* リスト */
+.mail-list {
+    list-style: none;
+    margin: 0;
+    padding: 0 20px;
+}
+
+.mail-list li {
+    padding: 30px 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.mail-date {
+    font-size: 15px;
+    color: var(--font-normal);
+
+}
+
+.mail-flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mail-list p {
+    margin: 4px 0 0;
+    font-size: 18px;
+    color: var(--font-normal);
+}
+
+.page-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 25px 0;
+    margin: 0 auto;
+
+}
+
+/* 左右の丸ボタン */
+.nav-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid #999;
+    background-color: var(--back-color);
+    font-size: 18px;
+    color: var(--font-normal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ===== メール詳細モーダル ===== */
+.mail-detail-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    /* メール一覧より上 */
+}
+
+.mail-detail-overlay.active {
+    display: flex;
+}
+
+.mail-detail {
+    width: 90%;
+    max-width: 360px;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.mail-detail-header {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    position: relative;
+    padding: 16px;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}
+
+.mail-detail-close {
+    position: absolute;
+    right: 16px;
+    top: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.mail-detail-body {
+    padding: 16px;
+}
+
+.mail-detail-date {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 8px;
+}
+
+.mail-detail-box {
+    background-color: #ffffff;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* メインタイトル */
+.main-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: var(--font-bold);
+    margin-bottom: 20px;
+    border-bottom: 1px solid #9F9F9F;
+    line-height: 1.7;
+    padding-bottom: 8px;
+}
+
+/* 区切り線 */
+.divider {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin-bottom: 30px;
+}
+
+/* 日付 */
+.date {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 40px;
+}
+
+.current-sub-title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    position: relative;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    margin-left: 1px;
+    padding-left: 15px;
+}
+
+.current-sub-title :before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 35%;
+    transform: translateY(-50%);
+    height: 30px;
+    width: 7px;
+    background-color: var(--main-color);
+    border-radius: 3px;
+}
+
+.current-sub-title h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 10px;
+    display: flex;
+    align-items: baseline;
+    color: var(--font-bold);
+}
+
+.sub-title {
+    height: 100%;
+}
+
+/* 本文テキスト */
+.content-text {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 25px;
+    padding: 0 15px;
+}
+
+
+.page-nav-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 40px 20px;
+    margin: 0 auto;
+}
+
+/* 左右の丸ボタン */
+.nav-circle-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid #999;
+    background-color: var(--back-color);
+    font-size: 18px;
+    color: var(--font-normal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 中央ボタン */
+.nav-center {
+    height: 44px;
+    width: 60%;
+    background-color: var(--sub-color);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+}
 
 
 /* 参加の流れ */

@@ -14,7 +14,6 @@
             max-width: 480px;
             margin: 0 auto;
             background-color: var(--back-color);
-            min-height: 100vh;
             position: relative;
         }
 
@@ -79,7 +78,7 @@
             margin-left: 10px;
             display: flex;
             align-items: baseline;
-            color: var(--font-normal);
+            color: var(--font-bold);
         }
 
         /* === 説明ボックス === */

@@ -1,33 +1,34 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新規登録</title>
 
-    <link rel="stylesheet" href="../css/auth/signup.css">
-    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" th:href="@{/css/auth/signup.css}" href="../css/auth/signup.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
     <header class="signup-header">
-        <a href="login.html" class="back-link">&lt;&nbsp;&nbsp;もどる</a>
+        <a th:href="@{/login(id=${param.id})}" href="login.html" class="back-link">&lt;&nbsp;&nbsp;もどる</a>
         <h1><i class="fas fa-user-plus"></i> 新規登録</h1>
     </header>
     <main>
         <div class="form-container">
-            <form id="signup-form">
+            <form th:action="@{/signup(id=${param.id})}" method="post" id="signup-form" th:object="${signupForm}">
                 <div class="form-group">
                     <label for="account-id">アカウントID <span style="color: #FF4564">(*あとから変更できません)</span></label>
-                    <input type="text" id="account-id" name="account-id">
+                    <input th:field="*{loginId}" type="text" id="account-id" name="account-id">
                 </div>
                 <div class="form-group">
                     <label for="nickname">ニックネーム</label>
-                    <input type="text" id="nickname" name="nickname">
+                    <input th:field="*{nickname}" type="text" id="nickname" name="nickname">
                 </div>
                 <div class="form-group">
+                    <input type="hidden" name="icon" value="1">
                     <label>アイコン</label>
                     <div class="icon-grid">
 
@@ -70,50 +71,59 @@
                         <input type="number" placeholder="" id="postal-code" name="postal-code">
                     </div>
                     <p class="note">郵便番号を入力すると、住所の一部が自動的に表示されます。なお、郵便番号は登録されません。</p>
-                    <div class="address-display">
+                    <div th:if="${signupForm.address == null}" class="address-display">
                         <span id="prefecture"></span>
                         <span id="city"></span>
+                        <input id="form-address" type="hidden" th:field="*{address}">
+                    </div>
+                    <div th:unless="${signupForm.address == null}" class="address-display" th:with="addressParts=${#strings.arraySplit(signupForm.address, ' ')}">
+                        <span id="prefecture" th:text="${addressParts[0]}"></span>
+                        <span id="city" th:text="${addressParts[1]}"></span>
+                        <input id="form-address" type="hidden" th:field="*{address}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="birth-year">生年</label>
-                    <select id="birth-year" name="birth-year">
+                    <select th:if="${signupForm.birthYear == null}" id="birth-year" name="birth-year" th:field="*{birthYear}">
                         <option value="" selected hidden>選択してください</option>
+                    </select>
+                    <select th:unless="${signupForm.birthYear == null}" id="birth-year" name="birth-year" th:field="*{birthYear}">
+                        <option th:value="${signupForm.birthYear}" th:text="${signupForm.birthYear}" selected hidden></option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>性別</label>
                     <div class="radio-group">
-                        <input type="radio" id="male" name="gender" value="male" checked>
+                        <input type="radio" id="male" name="gender" value="MALE" checked th:field="*{userGender}">
                         <label for="male" class="radio-label">男性</label>
 
-                        <input type="radio" id="female" name="gender" value="female">
+                        <input type="radio" id="female" name="gender" value="FEMALE" th:field="*{userGender}">
                         <label for="female" class="radio-label">女性</label>
 
-                        <input type="radio" id="other" name="gender" value="other">
+                        <input type="radio" id="other" name="gender" value="UNSPECIFIED" th:field="*{userGender}">
                         <label for="other" class="radio-label">その他</label>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="password">パスワード</label>
                     <div class="password-wrapper">
-                        <input type="password" id="password" name="password">
+                        <input th:field="*{password}" type="password" id="password" name="password">
                         <i class="fas fa-eye-slash toggle-password"></i>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="password-confirm">パスワード確認</label>
                     <div class="password-wrapper">
-                        <input type="password" id="password-confirm" name="password-confirm">
+                        <input th:field="*{confirmPassword}" type="password" id="password-confirm" name="password-confirm">
                         <i class="fas fa-eye-slash toggle-password"></i>
                     </div>
                 </div>
                 <div class="form-group bio-wrapper">
                     <label for="bio">自己紹介 <span class="optional-tag">任意</span></label>
-                    <textarea id="bio" name="bio" rows="6"></textarea>
+                    <textarea th:field="*{selfIntroduction}" id="bio" name="bio" rows="6"></textarea>
                     <div class="char-count"><span id="current-count">0</span>/300文字</div>
                 </div>
-            </form>
+
             <hr class="form-divider">
             <p class="terms-notice">
                 本サービスをご利用いただく前に、以下の利用規
@@ -122,7 +132,8 @@
 
             <a href="#" class="btn btn-terms" id="open-terms">利用規約へ</a>
 
-            <a href="signup-confirm.html" class="btn-confirmation btn-submit" id="btn-to-confirm" disabled>確認へ</a>
+            <button type="submit" class="btn-confirmation btn-submit" id="btn-to-confirm" disabled>確認へ</button>
+            </form>
         </div>
     </main>
 
@@ -233,6 +244,7 @@
                                     const result = data.results[0];
                                     prefDisplay.textContent = result.address1;
                                     cityDisplay.textContent = result.address2;
+                                    document.getElementById('form-address').value = result.address1 + ' ' + result.address2;
                                 } else {
                                     prefDisplay.textContent = "";
                                     cityDisplay.textContent = "住所が見つかりません";
@@ -340,61 +352,6 @@
                     }
                 });
             }
-            // ▼▼▼【追記】ここからが「確認へ」ボタンの処理です ▼▼▼
-            // ===================================================
-            if (confirmBtn) {
-                confirmBtn.addEventListener('click', function (e) {
-                    // (1) ボタンが disabled の場合は何もしない
-                    if (this.hasAttribute('disabled')) {
-                        e.preventDefault();
-                        return;
-                    }
-
-                    // (2) リンクのデフォルト動作（画面遷移）を一旦停止
-                    e.preventDefault();
-
-                    // (3) フォームの各値を取得
-                    const accountId = document.getElementById('account-id').value;
-                    const nickname = document.getElementById('nickname').value;
-                    const prefecture = document.getElementById('prefecture').textContent;
-                    const city = document.getElementById('city').textContent;
-                    const birthYear = document.getElementById('birth-year').value;
-                    const bio = document.getElementById('bio').value;
-
-                    // 性別の値を取得
-                    let gender = "";
-                    let genderValue = ""; // "male", "female", "other" を保存
-                    if (document.getElementById('male').checked) {
-                        gender = "男性";
-                        genderValue = "male";
-                    } else if (document.getElementById('female').checked) {
-                        gender = "女性";
-                        genderValue = "female";
-                    } else if (document.getElementById('other').checked) {
-                        gender = "その他";
-                        genderValue = "other";
-                    }
-
-                    // (4) 取得した値を一つのオブジェクトにまとめる
-                    const registrationData = {
-                        accountId: accountId,
-                        nickname: nickname,
-                        prefecture: prefecture,
-                        city: city,
-                        birthYear: birthYear,
-                        genderDisplay: gender, // 表示用のテキスト
-                        genderValue: genderValue, // 再編集用の値
-                        bio: bio
-                        // ※ パスワードはセキュリティのため、ここには保存しません
-                    };
-
-                    // (5) sessionStorageにJSON文字列として保存
-                    sessionStorage.setItem('regData', JSON.stringify(registrationData));
-
-                    // (6) 保存が完了したら、本来のリンク先（確認画面）へ遷移
-                    window.location.href = this.href;
-                });
-            }
 
         });
         // jsでセットテーマを変えてcssの色を一括で変更するやり方
@@ -402,7 +359,7 @@
         //     setLightTheme();
         // });
     </script>
-    <script src="../js/theme.js"></script>
+<!--    <script src="../js/theme.js"></script>-->
 </body>
 
 </html>

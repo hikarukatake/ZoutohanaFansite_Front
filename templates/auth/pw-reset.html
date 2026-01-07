@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 
 
@@ -8,14 +8,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>パスワードリセット画面</title>
-    <link rel="stylesheet" href="../css/auth/pw-reset.css">
-    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" th:href="@{/css/auth/pw-reset.css}" href="../css/auth/pw-reset.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
     <header class="signup-header">
-        <a href="#" class="back-link">&lt;&nbsp;&nbsp;もどる</a>
+        <a href="#" th:href="@{/login(id=${id})}" class="back-link">&lt;&nbsp;&nbsp;もどる</a>
         <div class="step-indicator">
             <div class="step active">
                 <div class="step-number">1</div>
@@ -45,38 +45,40 @@
                 <h2>アカウント確認</h2>
             </div>
 
-            <form id="signup-form">
+            <form th:object="${passwordResetForm}" th:action="@{/password-reset(id=${id})}" method="post" id="signup-form">
                 <div class="explanation">
                     <p>本人確認のため、アカウントIDとセキュリティキーを入力してください。</p>
                 </div>
                 <div class="form-group">
                     <label for="account-id">アカウントID</label>
-                    <input type="text" id="account-id" name="account-id">
+                    <input th:field="*{loginId}" type="text" id="account-id" name="account-id">
                 </div>
                 <div class="form-group">
                     <label for="nickname">セキュリティキー</label>
-                    <input type="text" id="nickname" name="nickname">
+                    <input th:field="*{securityKey}" type="text" id="nickname" name="nickname">
                 </div>
-                <div class="error-box">
+                <div class="error-box" th:if="${error}">
                     <svg class="error-icon" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M1 21h22L12 2 1 21z" fill="#e54848" />
                         <rect x="11" y="9" width="2" height="5" fill="#fff" />
                         <rect x="11" y="16" width="2" height="2" fill="#fff" />
                     </svg>
 
-                    <p class="error-text">
+                    <p  class="error-text">
                         アカウントIDまたはセキュリティキーが<br>
                         正しくありません。
                     </p>
                 </div>
 
+                <div>
+                    <button type="submit" class="btn btn-next-step" id="btn-next-step">
+                        次へ
+                    </button>
+                </div>
+
 
             </form>
-            <div>
-                <a href="plan-list.html" class="btn btn-next-step" id="btn-next-step">
-                    次へ
-                </a>
-            </div>
+
             <footer>@copylite</footer>
 
         </div>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン</title>
 
-    <link rel="stylesheet" href="../css/auth/login.css">
+    <link th:href="@{/css/auth/login.css}" rel="stylesheet" href="../css/auth/login.css">
 
 </head>
 
@@ -20,57 +20,60 @@
         </div>
         <main class="login-main">
             <div class="logo-area">
-                <img src="../img/象と花.png" alt="ロゴ" class="logo-image-placeholder">
+                <img th:src="@{/img/象と花.png}" src="../img/象と花.png" alt="ロゴ" class="logo-image-placeholder">
             </div>
             <div class="form-container">
-                <form id="login-form">
+                <form th:action="@{/login(id=${param.id})}" method="post"  id="login-form">
                     <div class="form-group">
                         <label for="account-id">アカウントID</label>
-                        <input type="text" id="account-id" name="account-id">
+                        <input type="text" id="account-id" name="username">
                     </div>
                     <div class="form-group">
                         <label for="password">パスワード</label>
                         <input type="password" id="password" name="password">
                     </div>
                     <button type="submit" class="btn btn-login login-btn" id="login-submit-btn">ログイン</button>
-                    <a href="new-account.html" class="forgot-password">パスワードをお忘れですか？</a>
+                    <th:block th:if="${param.id != null}">
+                    <a th:href="@{/password-reset(id=${param.id})}" href="new-account.html" class="forgot-password">パスワードをお忘れですか？</a>
 
                     <div class="divider">
                         <span>または</span>
                     </div>
-                    <a href="signup.html" class="btn btn-register">新規登録</a>
+                    <a th:href="@{/signup(id=${param.id})}" href="signup.html" class="btn btn-register">新規登録</a>
+                    </th:block>
                 </form>
             </div>
         </main>
     </div>
-    <script>
-        // 管理者画面で決めた色をバックから送ってきて、フロントで CSS 変数に反映させるやり方
-        // バックからJSONで返すようにしてそれを反映
-        async function loadTheme() {
-            try {
-                const response = await fetch('/api/theme'); // バックのURL
-                const theme = await response.json();
 
-                // CSS変数にセット
-                setThemeVariable('--main-color', theme.mainColor);
-                setThemeVariable('--back-color', theme.backColor);
-                setThemeVariable('--font-normal', theme.fontNormal);
-                setThemeVariable('--text-white-color', theme.textWhiteColor);
+<!--    <script>-->
+<!--        // 管理者画面で決めた色をバックから送ってきて、フロントで CSS 変数に反映させるやり方-->
+<!--        // バックからJSONで返すようにしてそれを反映-->
+<!--        async function loadTheme() {-->
+<!--            try {-->
+<!--                const response = await fetch('/api/theme'); // バックのURL-->
+<!--                const theme = await response.json();-->
 
-            } catch (err) {
-                console.error("テーマ読み込み失敗:", err);
-            }
-        }
+<!--                // CSS変数にセット-->
+<!--                setThemeVariable('&#45;&#45;main-color', theme.mainColor);-->
+<!--                setThemeVariable('&#45;&#45;back-color', theme.backColor);-->
+<!--                setThemeVariable('&#45;&#45;font-normal', theme.fontNormal);-->
+<!--                setThemeVariable('&#45;&#45;text-white-color', theme.textWhiteColor);-->
 
-        // ページ読み込み時に適用
-        window.addEventListener("DOMContentLoaded", loadTheme);
-    </script>
-    <!-- jsでセットテーマを変えてcssの色を一括で変更するやり方
-        window.addEventListener("DOMContentLoaded", () => {
-            setLightTheme();
-        }); -->
-    <script src="../js/login.js"></script>
-    <script src="../js/theme.js"></script>
+<!--            } catch (err) {-->
+<!--                console.error("テーマ読み込み失敗:", err);-->
+<!--            }-->
+<!--        }-->
+
+<!--        // ページ読み込み時に適用-->
+<!--        window.addEventListener("DOMContentLoaded", loadTheme);-->
+<!--    </script>-->
+<!--    &lt;!&ndash; jsでセットテーマを変えてcssの色を一括で変更するやり方-->
+<!--        window.addEventListener("DOMContentLoaded", () => {-->
+<!--            setLightTheme();-->
+<!--        }); &ndash;&gt;-->
+<!--    <script src="../js/login.js"></script>-->
+<!--    <script src="../js/theme.js"></script>-->
 </body>
 
 </html>

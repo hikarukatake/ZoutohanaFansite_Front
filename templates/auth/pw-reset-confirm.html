@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>パスワードリセット完了画面</title>
-    <link rel="stylesheet" href="../css/auth/pw-reset-confirm.css">
-    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" th:href="@{/css/auth/pw-reset-confirm.css}" href="../css/auth/pw-reset-confirm.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -31,7 +31,7 @@
             <div class="info-box">
                 <div class="container">
                     <div class="key-box">
-                        <img class="key-img" src="../img/key.png" alt="">
+                        <img class="key-img" th:src="@{/img/key.png}" src="../img/key.png" alt="">
                         <h3>セキュリティキーについて</h3>
                     </div>
                     <div class="underline"></div>
@@ -41,19 +41,19 @@
                     <p class="intro-text">パスワードを変更する際に必要になります。</p>
                 </div>
                 <div class="security-code">
-                    <p class="security-code-text">AAAA-AAAA</p>
+                    <p th:text="${securityKey}" class="security-code-text">AAAA-AAAA</p>
                     <p class="space">|</p>
                     <div class="copy-box">
-                        <img src="../img/darft2.png" class="security-img" alt="">
+                        <img th:src="@{/img/draft2.png}" src="../img/darft2.png" class="security-img" alt="">
                         <p>Copy</p>
                     </div>
                 </div>
                 <div class="border-security"></div>
                 <div class="squea-box">
                     <div class="maku-box">
-                        <img src="../img/!.png" class="maku-security" alt="">
-                        <img src="../img/!.png" class="maku-security" alt="">
-                        <img src="../img/!.png" class="maku-security" alt="">
+                        <img th:src="@{/img/extension.png}" src="../img/!.png" class="maku-security" alt="">
+                        <img th:src="@{/img/extension.png}" src="../img/!.png" class="maku-security" alt="">
+                        <img th:src="@{/img/extension.png}" src="../img/!.png" class="maku-security" alt="">
                     </div>
                     <div class="maku-text">
                         <p>コピーや自身の端末でスクリーンショット
@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div>
-                <a href="login.html" class="btn btn-next-step" id="btn-next-step">
+                <a th:href="@{/login(id=${id})}" href="login.html" class="btn btn-next-step" id="btn-next-step">
                     ログインへ
                 </a>
             </div>

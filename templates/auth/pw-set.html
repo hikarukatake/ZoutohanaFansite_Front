@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 
 
@@ -8,14 +8,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>パスワード設定画面</title>
-    <link rel="stylesheet" href="../css/auth/pw-set.css">
-    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" th:href="@{/css/auth/pw-set.css}" href="../css/auth/pw-set.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
     <header class="signup-header">
-        <a href="#" class="back-link">&lt;&nbsp;&nbsp;もどる</a>
         <div class="step-indicator">
             <div class="step">
                 <div class="step-number">1</div>
@@ -45,25 +44,26 @@
                 <h2>パスワード設定</h2>
             </div>
 
-            <form id="signup-form">
+            <form id="signup-form" th:action="@{/password-reset/input-password(id=${id})}" th:object="${newPasswordForm}" method="post">
+                <input type="hidden" th:field="*{loginId}">
                 <div class="explanation">
                     <p>新たなパスワードを設定してください。</p>
                 </div>
                 <div class="form-group">
                     <label for="password">新しいパスワード <span>（半角英数字）</span></label>
                     <div class="password-wrapper">
-                        <input type="password" id="password" name="password">
+                        <input th:field="*{password}" type="password" id="password" name="password">
                         <i class="fas fa-eye-slash toggle-password"></i>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="password-confirm">新しいパスワード確認 <span> (確認)</span></label>
                     <div class="password-wrapper">
-                        <input type="password" id="password-confirm" name="password-confirm">
+                        <input th:field="*{confirmPassword}" type="password" id="password-confirm" name="password-confirm">
                         <i class="fas fa-eye-slash toggle-password"></i>
                     </div>
                 </div>
-                <div class="error-box">
+                <div class="error-box" th:if="${error}">
                     <svg class="error-icon" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M1 21h22L12 2 1 21z" fill="#e54848" />
                         <rect x="11" y="9" width="2" height="5" fill="#fff" />
@@ -74,14 +74,14 @@
                         パスワードが一致しません。
                     </p>
                 </div>
-
+                <div>
+                    <button type="submit" class="btn btn-next-step" id="btn-next-step">
+                        パスワードを変更する
+                    </button>
+                </div>
 
             </form>
-            <div>
-                <a href="plan-list.html" class="btn btn-next-step" id="btn-next-step">
-                    パスワードを変更する
-                </a>
-            </div>
+
             <footer>@copylite</footer>
 
         </div>

@@ -1,38 +1,21 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>企画一覧</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/fansite/project-list.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
+    <link rel="stylesheet" th:href="@{/css/fansite/project-list.css}" href="../css/fansite/project-list.css">
 </head>
 
 <body>
     <div class="container">
-        <header class="project-header">
-            <div class="logo-placeholder"><img src="../img/象と花実物.png" style="width: 3rem;" alt=""></div>
-            <div style="display: flex;">
-                <div class="mail-icon">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M2 6h20v12H2z" fill="none" stroke="white" stroke-width="2" />
-                        <path d="M2 6l10 7 10-7" fill="none" stroke="white" stroke-width="2" />
-                    </svg>
-                </div>
-
-                <div class="menu-icon" id="menuOpen">
-                    <div class="menu-icon-box">
-                        <span class="span-top"></span>
-                        <span class="span-middle"></span>
-                        <span class="span-bottom"></span>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <div th:replace="~{layout :: header}"></div>
 
         <div class="breadcrumb-box">
-            <div class="breadcrumb">ホーム</div>
+            <div class="breadcrumb"><a th:href="@{/}">ホーム</a></div>
             <div class="breadcrumb-middle">></div>
             <div class="breadcrumb">企画一覧</div>
         </div>
@@ -45,35 +28,43 @@
         </div>
         <section class="projects-box">
             <div class="tab-wrapper">
-                <div class="tab active">
-                    開催中
-                    <span class="marker"></span>
-                </div>
-                <div class="tab">
-                    過去の企画
-                </div>
+                <a class="a-text" th:href="@{/projects(s=${'ongoing'})}">
+                    <div class="tab" th:classappend="${status ? 'active' : ''}">
+                        開催中
+                        <span th:if="${status}" class="marker"></span>
+                    </div>
+                </a>
+                <a class="a-text" th:href="@{/projects(s=${'past'})}">
+                    <div class="tab" th:classappend="${!status ? 'active' : ''}">
+                        過去の企画
+                        <span th:unless="${status}" class="marker"></span>
+                    </div>
+                </a>
             </div>
             <div class="card-box">
-                <div class="card">
-                    <div class="card-image-wrapper">
-                        <div class="badge">文庫X 2.0</div>
-                        <img src="../img/img.png" alt="商品画像">
-                    </div>
-                    <div class="card-content">
-                        <div class="date-row">
-                            <span class="date-label">開催期間</span>
-                            <span>2025.01.01 - 2025.01.01</span>
+                <div class="card" th:each="project : ${projects}">
+                    <a th:href="@{/project/{urlKey}(urlKey = ${project.urlKey})}" href="" class="a-text">
+                        <div class="card-image-wrapper">
+                            <div th:text="${project.name}" th:style="'background-color: ' + ${project.themeColor.getDbValue()}" class="badge">文庫X 2.0</div>
+                            <img th:if="${project.mainImgUrl == null}" th:src="@{/img/img.png}" alt="商品画像">
+                            <img th:unless="${project.mainImgUrl == null}" th:src="@{|/api/image/${project.mainImgUrl}|}">
                         </div>
-                        <p class="description">
-                            文庫Xとは、書店員が「読んでほしい」と思った1冊を、タイトルも著者名も隠して販売するプロモーション企画です。
-                            今回は第二弾です。
-                        </p>
-                    </div>
-                    <div class="flow-situation">
-                        <h2>現在</h2>
-                        <p id="status-text">投稿受付前</p>
-                        <h2>です</h2>
-                    </div>
+                        <div class="card-content">
+                            <div class="date-row">
+                                <span class="date-label">開催期間</span>
+                                <span th:text="${#temporals.format(project.projectStartAt, 'yyyy.MM.dd') + ' - ' + #temporals.format(project.projectEndAt, 'yyyy.MM.dd')}">2025.01.01 - 2025.01.01</span>
+                            </div>
+                            <p th:text="${project.introduction}" class="description">
+                                文庫Xとは、書店員が「読んでほしい」と思った1冊を、タイトルも著者名も隠して販売するプロモーション企画です。
+                                今回は第二弾です。
+                            </p>
+                        </div>
+                        <div th:if="${status}" class="flow-situation">
+                            <h2>現在</h2>
+                            <p th:text="${project.projectStatus.label}" id="status-text">投稿受付前</p>
+                            <h2>です</h2>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -175,30 +166,4 @@
                 overlayMenu.classList.remove('active');
             });
         </script>
-
-        <script>
-            // 企画一覧のタブメニュー
-            const tabs = document.querySelectorAll('.tab');
-
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function () {
-                    // 全てのタブからactiveクラスとmarkerを削除
-                    tabs.forEach(t => {
-                        t.classList.remove('active');
-                        const marker = t.querySelector('.marker');
-                        if (marker) marker.remove();
-                    });
-
-                    // クリックされたタブにactiveクラスを追加
-                    this.classList.add('active');
-
-                    // マーカーを追加
-                    const marker = document.createElement('span');
-                    marker.classList.add('marker');
-                    this.appendChild(marker);
-                });
-            });
-        </script>
-
-
 </body>

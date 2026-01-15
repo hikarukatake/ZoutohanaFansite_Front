@@ -440,7 +440,7 @@
             padding: 12px;
             width: 95%;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            margin: 0 auto;
+            margin: 30px auto 0;
         }
 
         /* 画像エリア */
@@ -500,4 +500,12 @@
             line-height: 1.6;
             margin: 0;
             width: 100%;
+        }
+
+        .hidden{
+            display: none;
+        }
+
+        .project-a{
+            text-decoration: none;
         }

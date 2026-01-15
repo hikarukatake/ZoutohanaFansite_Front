@@ -1,138 +1,54 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>お知らせ詳細</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/info/post-detail.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
+    <link rel="stylesheet" th:href="@{/css/info/post-detail.css}" href="../css/info/post-detail.css">
 </head>
 
 <body>
     <div class="container">
-        <header class="project-header">
-            <div class="logo-placeholder"><img src="../img/象と花実物.png" style="width: 3rem;" alt=""></div>
-            <div style="display: flex;">
-                <div class="mail-icon">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M2 6h20v12H2z" fill="none" stroke="white" stroke-width="2" />
-                        <path d="M2 6l10 7 10-7" fill="none" stroke="white" stroke-width="2" />
-                    </svg>
-                </div>
-
-                <div class="menu-icon" id="menuOpen">
-                    <div class="menu-icon-box">
-                        <span class="span-top"></span>
-                        <span class="span-middle"></span>
-                        <span class="span-bottom"></span>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <div th:replace="~{layout :: header}"></div>
 
         <div class="breadcrumb-box">
-            <div class="breadcrumb"><a href="../fansite/top.html">ホーム</a></div>
+            <div class="breadcrumb"><a th:href="@{/}" href="../fansite/top.html">ホーム</a></div>
             <div class="breadcrumb-middle">></div>
-            <div class="breadcrumb" id="breadcrumb-category">お知らせカテゴリー</div>
+            <div class="breadcrumb" id="breadcrumb-category"><a th:href="@{/news(category='new')}" href="">お知らせ一覧</a></div>
             <div class="breadcrumb-middle">></div>
-            <div class="breadcrumb" id="breadcrumb-here">お知らせタイトル</div>
+            <div class="breadcrumb" id="breadcrumb-here" th:text="${post.title}">お知らせタイトル</div>
         </div>
         <div class="list-box">
             <div class="list-title">
                 <h2>News</h2>
                 <div class="list-border"></div>
             </div>
-            <p id="list-category">お知らせカテゴリー</p>
+            <p id="list-category" th:text="${post.category.label}">お知らせカテゴリー</p>
         </div>
         <section class="plans-box">
             <div>
                 <div class="box-text">
-                    <h2 id="post-title">お知らせが取得できませんでした</h2>
+                    <h2 id="post-title" th:text="${post.title}">お知らせが取得できませんでした</h2>
                 </div>
                 <div class="deta-box">
-                    <p id="post-data-date">2025.01.01</p>
-                    <p class="deta-box-plan" id="post-data-category">#お知らせカテゴリ</p>
+                    <p id="post-data-date" th:text="${#temporals.format(post.postedAt, 'yyyy.MM.dd')}">2025.01.01</p>
+                    <p class="deta-box-plan" id="post-data-category" th:text="'#' + ${post.category.label}">#お知らせカテゴリ</p>
                 </div>
             </div>
-            <div class="news-plan" id="post-content">
-                <p>お知らせが取得できませんでした</p>
-            </div>
-            <!-- <div class="news-plan">
-                <h3 class="heading-style">第1次選考の結果を発表しました！</h3>
-                <p>書評コンテストにたくさんのご応募をいただき、誠にありがとうございました。どの作品にも作者の想いや読書への情熱が込められており、選考委員一同、 非常に熱心に審査を行いました。</p>
-                <p>第1次選考では、以下の点を中心に審査を実施しました。</p>
-                <p>・ 読書体験の魅力が伝わっているか<br>・ 表現のわかりやすさや構成の工夫</p>
-            </div>
             <div class="news-plan">
-                <h3 class="heading-style">結果を確認しましょう</h3>
-                <p>本日、第1次選考の結果を公開しました。マイページ内の「選考結果」から、あなたの作品の結果をご確認いただけます。結果は応募作品ごとに表示され、第2次選考に進まれる方には次のステップに関する詳細な案内も併せてご覧いただけます。
-                </p>
-            </div> -->
+                <p th:text="${post.content}">本日、第1次選考の結果を公開しました。マイページ内の「選考結果」から、あなたの作品の結果をご確認いただけます。結果は応募作品ごとに表示され、第2次選考に進まれる方には次のステップに関する詳細な案内も併せてご覧いただけます。</p>
+            </div>
         </section>
 
         <div class="navigation-container">
-            <a href="#" class="nav-link circle-button hidden" id="next-post-button">&lt;</a>
-
-            <a href="post-list.html?category=new" class="nav-link rectangle-button" id="back-to-list">一覧に戻る</a>
-
-            <a href="#" class="nav-link circle-button hidden" id="prev-post-button">&gt;</a>
+            <a th:href="@{/news(category='new')}" href="post-list.html?category=new" class="nav-link rectangle-button" id="back-to-list">一覧に戻る</a>
         </div>
 
 
         <!-- フッター -->
-        <footer class="footer-all">
-            <div class="footer-menu">
-                <div class="footer-top">
-                    <img src="../img/象と花-白.png" style="width: 4.5rem;" alt="">
-                    <p class="footer-white-text">A BOOK PROJECT</p>
-                </div>
-                <a href="#" class="footer-menu-item-top">
-                    <p>お知らせ</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>企画</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>象と花プロジェクト</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>お問い合わせ</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>サイトのご利用について</p>
-                    <p>></p>
-                </a>
-            </div>
-
-
-            <!-- SNSブロック -->
-            <div class="footer-sns">
-                <div class="sns-box">
-                    <div class="footer-sns-title">SNS</div>
-                    <div class="sns-box-icons">
-                        <div class="sns-icons">
-                            <img src="../img/instagram.png" class="sns-icon" alt="">
-                            <img src="../img/facebook.png" class="sns-icon-facebook" alt="">
-                            <img src="../img/x.png" class="sns-icon-x" alt="">
-                        </div>
-
-                        <div class="sns-labels">
-                            <span>Instagram</span>
-                            <span>Facebook</span>
-                            <span>X（旧Twitter）</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-line"></div>
-
-                <div class="footer-copy">©Copylight</div>
-            </div>
-        </footer>
+        <div th:replace="~{layout :: footer}"></div>
 
 
     <!-- ヘッダーモーダル -->
@@ -150,11 +66,6 @@
 
             <li class="menu-item">ログイン</li>
         </ul>
-        <div class="imgs">
-            <img src="../img/instagram-white.png" class="imgs-icon" alt="">
-            <img src="../img/facebook-white.png" class="imgs-width" alt="">
-            <img src="../img/x-white.png" class="imgs-width" alt="">
-        </div>
     </div>
 
 
@@ -201,6 +112,5 @@
                 });
             });
         </script>
-        <script src="../js/post-detail.js"></script>
 
 </body>

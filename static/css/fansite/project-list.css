@@ -430,3 +430,7 @@
             font-weight: 500;
             font-size: 16px;
         }
+
+        .a-text{
+            text-decoration: none;
+        }

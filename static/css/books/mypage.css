@@ -484,3 +484,8 @@
             text-align: center;
             color: var(--font-normal);
         }
+
+        .a-text{
+            text-decoration: none;
+            color: #f0f0f0;
+        }

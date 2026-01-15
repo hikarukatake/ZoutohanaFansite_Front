@@ -1,61 +1,38 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>企画ページtop</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/project/first-ex.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
+    <style th:inline="css">
+        :root {
+            --main-color: [(${project.themeColor.dbValue})];
+            --sub-color: [(${project.themeColor.dbValue})];
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/project/first-ex.css}" href="../css/project/first-ex.css">
 </head>
 
 <body>
     <div class="container">
-        <header class="project-header">
-            <div class="logo-placeholder"><img src="../img/象と花実物.png" style="width: 3rem;" alt=""></div>
-            <div style="display: flex;">
-                <div class="mail-icon">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M2 6h20v12H2z" fill="none" stroke="white" stroke-width="2" />
-                        <path d="M2 6l10 7 10-7" fill="none" stroke="white" stroke-width="2" />
-                    </svg>
-                </div>
-
-                <div class="menu-icon" id="menuOpen">
-                    <div class="menu-icon-box">
-                        <span class="span-top"></span>
-                        <span class="span-middle"></span>
-                        <span class="span-bottom"></span>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <div th:replace="~{layout :: header}"></div>
         <div class="slider-box">
             <div class="slider">
                 <div class="slides">
-                    <div class="slide active"><img src="..//img/book-img.png" alt=""></div>
+                    <div class="slide active"><img th:href="@{/img/book-img.png}" src="../img/book-img.png" alt=""></div>
                 </div>
             </div>
         </div>
         <section class="about-section">
             <div class="about-wrapper">
-                <h2 class="about-title">文庫X 2.0とは？</h2>
+                <h2 class="about-title" th:text="${project.name + 'とは？'}">文庫X 2.0とは？</h2>
                 <p class="about-subtitle">ABOUT US</p>
                 <div class="about-line"></div>
 
-                <div class="about-text-box">
-                    <p class="about-text">文庫X 2.0とは</p>
-                    <p class="about-text">子供たちがもっと本と出会える環境を</p>
-                    <p class="about-text">作ることを目的とした</p>
-                    <p class="about-text">象と花プロジェクトのファンサイトです。</p>
-                </div>
-                <div class="about-text-box">
-                    <p class="about-text">あなたに知識や感動を与えてくれた本を</p>
-                    <p class="about-text">循環させ、病気とたたかう子供たちの</p>
-                    <p class="about-text">ための本に替えて贈ります。</p>
-                    <p class="about-text">身近な人に贈り物を手渡すような気持ちで</p>
-                    <p class="about-text">子供たちと読書のよろこびを分かち合える</p>
-                    <p class="about-text">取り組みです。</p>
+                <div class="about-text-box" th:text="${project.introduction}" style="white-space: pre-wrap;">
                 </div>
             </div>
         </section>
@@ -63,7 +40,7 @@
         <div class="flow">
             <div class="flow-situation">
                 <h2>現在</h2>
-                <p id="status-text">投稿受付前</p>
+                <p id="status-text" th:text="${project.status.getLabel()}">投稿受付前</p>
                 <h2>です</h2>
             </div>
             <div class="flow-text">
@@ -72,11 +49,11 @@
                 <p>皆さまの一票が、作品が店頭に並ぶ大きな力となります。</p>
                 <p>投稿受付開始まで、今しばらくお待ちください。</p>
             </div>
-                <div id="info-link" style="display:none;">
-        <a href="new-info.html" class="btn btn-next-step" id="btn-next-step">
-            書評の投稿をする
-        </a>
-    </div>
+            <div id="info-link" th:if="${project.status.dbValue.equals('DURING_SUBMISSION')}" sec:authorize="isAuthenticated()">
+                <a th:href="@{/review(id=${project.id})}" href="new-info.html" class="btn btn-next-step" id="btn-next-step">
+                    書評の投稿をする
+                </a>
+            </div>
         </div>
 
         <div class="section-title-area">
@@ -199,86 +176,14 @@
                 </div>
             </div>
         </section>
-        <!-- お問い合わせ -->
-        <div class="contact-box">
-            <div class="contact-card">
-                <h2 class="contact-title">お問い合わせ</h2>
-                <div class="contact-desc-box">
-                    <p class="contact-desc">企画、寄贈に関するご質問など、</p>
-                    <p class="contact-desc">お気軽にお問い合わせください。</p>
-                </div>
-                <a href="#" class="contact-btn">
-                    <span class="btn-text">お問い合わせフォーム</span>
-                    <span class="btn-arrow">&gt;</span>
-                </a>
-
-                <div class="tel-box">
-                    <div class="tel-main">
-                        <span class="tel-label">TEL</span>
-                        <span class="tel-number">000-0000-0000</span>
-                    </div>
-                    <p class="tel-hours">受付時間 ｜ 平日 9:00 ~ 17:00</p>
-                </div>
-            </div>
-        </div>
+        <div th:replace="~{layout :: contact}"></div>
     </div>
 
 
 
 
     <!-- フッター -->
-    <footer class="footer-all">
-        <div class="footer-menu">
-            <div class="footer-top">
-                <img src="../img/象と花-白.png" style="width: 4.5rem;" alt="">
-                <p class="footer-white-text">A BOOK PROJECT</p>
-            </div>
-            <a href="#" class="footer-menu-item-top">
-                <p>お知らせ</p>
-                <p>></p>
-            </a>
-            <a href="#" class="footer-menu-item">
-                <p>企画</p>
-                <p>></p>
-            </a>
-            <a href="#" class="footer-menu-item">
-                <p>象と花プロジェクト</p>
-                <p>></p>
-            </a>
-            <a href="#" class="footer-menu-item">
-                <p>お問い合わせ</p>
-                <p>></p>
-            </a>
-            <a href="#" class="footer-menu-item">
-                <p>サイトのご利用について</p>
-                <p>></p>
-            </a>
-        </div>
-
-
-        <!-- SNSブロック -->
-        <div class="footer-sns">
-            <div class="sns-box">
-                <div class="footer-sns-title">SNS</div>
-                <div class="sns-box-icons">
-                    <div class="sns-icons">
-                        <img src="../img/instagram.png" class="sns-icon" alt="">
-                        <img src="../img/facebook.png" class="sns-icon-facebook" alt="">
-                        <img src="../img/x.png" class="sns-icon-x" alt="">
-                    </div>
-
-                    <div class="sns-labels">
-                        <span>Instagram</span>
-                        <span>Facebook</span>
-                        <span>X（旧Twitter）</span>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-line"></div>
-
-            <div class="footer-copy">©Copylight</div>
-        </div>
-    </footer>
+    <div th:replace="~{layout :: footer}"></div>
 
 
     <!-- ヘッダーモーダル -->
@@ -323,50 +228,4 @@
             overlayMenu.classList.remove('active');
         });
     </script>
-    <script>
-        // 企画一覧のタブメニュー
-        const tabs = document.querySelectorAll('.tab');
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', function () {
-                // 全てのタブからactiveクラスとmarkerを削除
-                tabs.forEach(t => {
-                    t.classList.remove('active');
-                    const marker = t.querySelector('.marker');
-                    if (marker) marker.remove();
-                });
-
-                // クリックされたタブにactiveクラスを追加
-                this.classList.add('active');
-
-                // マーカーを追加
-                const marker = document.createElement('span');
-                marker.classList.add('marker');
-                this.appendChild(marker);
-            });
-        });
-    </script>
-    <script>
-        // jsonから取得してきたデータで流れ、一次審査中とかの切り替え
-        const json = {
-            status: 3
-        };
-
-        // ステータスごとの表示テキスト
-        const textMap = {
-            1: "投稿受付前",
-            2: "投稿受付中",
-            3: "一次審査中"
-        };
-
-        // pタグを書き換えている
-        document.getElementById("status-text").textContent = textMap[json.status];
-
-        // 2の時だけボタン出す
-        if (json.status === 2) {
-            document.getElementById("info-link").style.display = 'block';
-        }
-    </script>
-
-
 </body>

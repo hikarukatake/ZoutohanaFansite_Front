@@ -1,34 +1,16 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>top</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/fansite/top.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
+    <link rel="stylesheet" th:href="@{/css/fansite/top.css}" href="../css/fansite/top.css">
 </head>
 <body>  
 <div class="container">
-    <header class="project-header">
-            <div class="logo-placeholder"><img src="../img/象と花実物.png" style="width: 3rem;" alt=""></div>
-            <div style="display: flex;">
-                <div class="mail-icon">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M2 6h20v12H2z" fill="none" stroke="white" stroke-width="2" />
-                        <path d="M2 6l10 7 10-7" fill="none" stroke="white" stroke-width="2" />
-                    </svg>
-                </div>
-
-                <div class="menu-icon" id="menuOpen">
-                    <div class="menu-icon-box">
-                        <span class="span-top"></span>
-                        <span class="span-middle"></span>
-                        <span class="span-bottom"></span>
-                    </div>
-                </div>
-            </div>
-        </header>
+    <div th:replace="~{layout :: header}"></div>
     <section class="about-section">
         <div class="about-wrapper">
             <h2 class="about-title">象と花ファンサイトについて</h2>
@@ -55,60 +37,25 @@
             <h2 class="section-title">最新のお知らせ<span class="section-title-text">infomation</span></h2>
             <div class="seciton-green"></div>
         </div>
-        <div class="news-list">
-            <a href="#" class="news-item">
-                <div class="news-body">
-                    <div class="news-meta">
-                        <span class="news-date">2025.01.01</span>
-                        <span class="news-tag">#企画情報</span>
+        <div class="news-list" th:if="${!#lists.isEmpty(posts)}">
+            <div th:each="post : ${posts}">
+                <a th:href="@{/news/{id}(id=${post.id})}" href="#" class="news-item">
+                    <div class="news-body">
+                        <div class="news-meta">
+                            <span th:text="${#temporals.format(post.postedAt, 'yyyy.MM.dd')}" class="news-date">2025.01.01</span>
+                            <span th:text="${'#' + post.getCategory.label}" class="news-tag">#企画情報</span>
+                        </div>
+                        <div class="news-box">
+                            <p th:text="${post.title}" class="news-title">「文庫X 2.0」開始</p>
+                            <span class="news-arrow">&gt;</span>
+                        </div>
                     </div>
-                    <div class="news-box">
-                        <p class="news-title">「文庫X 2.0」開始</p>
-                        <span class="news-arrow">&gt;</span>
-                    </div>
-                </div>
-            </a>
-            <a href="#" class="news-item">
-                <div class="news-body">
-                    <div class="news-meta">
-                        <span class="news-date">2025.01.01</span>
-                        <span class="news-tag">#寄贈情報</span>
-                    </div>
-                    <div class="news-box">
-                        <p class="news-title">新たに寄贈しました</p>
-                        <span class="news-arrow">&gt;</span>
-                    </div>
-                </div>
-            </a>
+                </a>
+            </div>
 
-            <a href="#" class="news-item">
-                <div class="news-body">
-                    <div class="news-meta">
-                        <span class="news-date">2025.01.01</span>
-                        <span class="news-tag">#企画情報</span>
-                    </div>
-                    <div class="news-box">
-                        <p class="news-title">「文庫X 1.0」終了のお知らせ</p>
-                        <span class="news-arrow">&gt;</span>
-                    </div>
-                </div>
-            </a>
-
-            <a href="#" class="news-item">
-                <div class="news-body">
-                    <div class="news-meta">
-                        <span class="news-date">2025.01.01</span>
-                        <span class="news-tag">#その他情報</span>
-                    </div>
-                    <div class="news-box">
-                        <p class="news-title">サイトのメンテナンスについて</p>
-                        <span class="news-arrow">&gt;</span>
-                    </div>
-                </div>
-            </a>
         </div>
         <div>
-            <a href="../info/post-list.html?category=new" class="btn btn-next-step" id="btn-next-step">
+            <a th:href="@{/news(category='new')}" href="../info/post-list.html?category=new" class="btn btn-next-step" id="btn-next-step">
                 お知らせ一覧へ
             </a>
         </div>
@@ -147,28 +94,61 @@
                 過去の企画
             </div>
         </div>
-        <div class="card-box">
-            <div class="card">
-                <div class="card-image-wrapper">
-                    <div class="badge">文庫X 2.0</div>
-                    <img src="../img/img.png" alt="商品画像">
-                </div>
-                <div class="card-content">
-                    <div class="date-row">
-                        <span class="date-label">開催期間</span>
-                        <span>2025.01.01 - 2025.01.01</span>
+        <div class="card-box" id="ongoing" th:if="${#lists.isEmpty(ongoingProjects)}">
+            <div >現在開催中の企画はありません</div>
+        </div>
+
+        <div class="card-box" id="ongoing" th:unless="${#lists.isEmpty(ongoingProjects)}">
+            <div class="card" th:each="project : ${ongoingProjects}">
+                <a th:href="@{/project/{urlKey}(urlKey = ${project.urlKey})}" href="" class="project-a">
+                    <div class="card-image-wrapper">
+                        <div th:text="${project.name}" th:style="'background-color: ' + ${project.themeColor.getDbValue()}" class="badge">開催中</div>
+                        <img th:if="${project.mainImgUrl == null}" th:src="@{/img/img.png}" alt="商品画像">
+                        <img th:unless="${project.mainImgUrl == null}" th:src="@{|/api/image/${project.mainImgUrl}|}">
                     </div>
-                    <p class="description">
-                        文庫Xとは、書店員が「読んでほしい」と思った1冊を、タイトルも著者名も隠して販売するプロモーション企画です。
-                        今回は第二弾です。
-                    </p>
-                </div>
+                    <div class="card-content">
+                        <div class="date-row">
+                            <span class="date-label">開催期間</span>
+                            <span th:text="${#temporals.format(project.projectStartAt, 'yyyy.MM.dd') + ' - ' + #temporals.format(project.projectEndAt, 'yyyy.MM.dd')}">2025.01.01 - 2025.01.01</span>
+                        </div>
+                        <p th:text="${project.introduction}" class="description">
+                            文庫Xとは、書店員が「読んでほしい」と思った1冊を、タイトルも著者名も隠して販売するプロモーション企画です。
+                            今回は第二弾です。
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div th:if="${pastProjects == null}" class="card-body hidden" id="past">
+            <div>過去の企画はありません。</div>
+        </div>
+
+        <div th:unless="${pastProjects == null}" class="card-box hidden" id="past">
+            <div class="card" th:each="project : ${pastProjects}">
+                <a th:href="@{/project/{urlKey}(urlKey = ${project.urlKey})}" href="" class="project-a">
+                    <div class="card-image-wrapper">
+                        <div th:text="${project.name}" th:style="'background-color: ' + ${project.themeColor.getDbValue()}" class="badge">開催中</div>
+                        <img th:if="${project.mainImgUrl == null}" th:src="@{/img/img.png}" alt="商品画像">
+                        <img th:unless="${project.mainImgUrl == null}" th:src="@{|/api/image/${project.mainImgUrl}|}">
+                    </div>
+                    <div class="card-content">
+                        <div class="date-row">
+                            <span class="date-label">開催期間</span>
+                            <span th:text="${#temporals.format(project.projectStartAt, 'yyyy.MM.dd') + ' - ' + #temporals.format(project.projectEndAt, 'yyyy.MM.dd')}">2025.01.01 - 2025.01.01</span>
+                        </div>
+                        <p th:text="${project.introduction}" class="description">
+                            文庫Xとは、書店員が「読んでほしい」と思った1冊を、タイトルも著者名も隠して販売するプロモーション企画です。
+                            今回は第二弾です。
+                        </p>
+                    </div>
+                </a>
             </div>
         </div>
 
         <!-- 企画一覧ボタン -->
         <div>
-            <a href="plan-list.html" class="btn btn-next-step" id="btn-next-step">
+            <a th:href="@{/projects(s='ongoing')}" href="plan-list.html" class="btn btn-next-step" id="btn-next-step">
                 企画一覧へ
             </a>
         </div>
@@ -187,27 +167,7 @@
         </div>
     </div>
     <!-- お問い合わせ -->
-    <div class="contact-box">
-        <div class="contact-card">
-            <h2 class="contact-title">お問い合わせ</h2>
-            <div class="contact-desc-box">
-                <p class="contact-desc">企画、寄贈に関するご質問など、</p>
-                <p class="contact-desc">お気軽にお問い合わせください。</p>
-            </div>
-            <a href="#" class="contact-btn">
-                <span class="btn-text">お問い合わせフォーム</span>
-                <span class="btn-arrow">&gt;</span>
-            </a>
-
-            <div class="tel-box">
-                <div class="tel-main">
-                    <span class="tel-label">TEL</span>
-                    <span class="tel-number">000-0000-0000</span>
-                </div>
-                <p class="tel-hours">受付時間 ｜ 平日 9:00 ~ 17:00</p>
-            </div>
-        </div>
-    </div>
+    <div th:replace="~{layout :: contact}"></div>
 </div>
 
 
@@ -226,68 +186,12 @@
 
             <li class="menu-item">ログイン</li>
         </ul>
-        <div class="imgs">
-            <img src="../img/instagram-white.png" class="imgs-icon" alt="">
-            <img src="../img/facebook-white.png" class="imgs-width" alt="">
-            <img src="../img/x-white.png" class="imgs-width" alt="">
-        </div>
     </div>
 
 
 
 <!-- フッター -->
-<footer class="footer-all">
-    <div class="footer-menu">
-        <div class="footer-top">
-            <img src="../img/象と花-白.png" style="width: 4.5rem;" alt="">
-            <p class="footer-white-text">A BOOK PROJECT</p>
-        </div>
-        <a href="#" class="footer-menu-item-top">
-            <p>お知らせ</p>
-            <p>></p>
-        </a>
-        <a href="#" class="footer-menu-item">
-            <p>企画</p>
-            <p>></p>
-        </a>
-        <a href="#" class="footer-menu-item">
-            <p>象と花プロジェクト</p>
-            <p>></p>
-        </a>
-        <a href="#" class="footer-menu-item">
-            <p>お問い合わせ</p>
-            <p>></p>
-        </a>
-        <a href="#" class="footer-menu-item">
-            <p>サイトのご利用について</p>
-            <p>></p>
-        </a>
-    </div>
-
-
-    <!-- SNSブロック -->
-    <div class="footer-sns">
-        <div class="sns-box">
-            <div class="footer-sns-title">SNS</div>
-            <div class="sns-box-icons">
-                <div class="sns-icons">
-                    <img src="../img/instagram.png" class="sns-icon" alt="">
-                    <img src="../img/facebook.png" class="sns-icon-facebook" alt="">
-                    <img src="../img/x.png" class="sns-icon-x" alt="">
-                </div>
-
-                <div class="sns-labels">
-                    <span>Instagram</span>
-                    <span>Facebook</span>
-                    <span>X（旧Twitter）</span>
-                </div>
-            </div>
-        </div>
-        <div class="footer-line"></div>
-
-        <div class="footer-copy">©Copylight</div>
-    </div>
-</footer>
+<div th:replace="~{layout :: footer}"></div>
 </body>
 </html>
 
@@ -313,23 +217,34 @@
 <script>
     // 企画一覧のタブメニュー
     const tabs = document.querySelectorAll('.tab');
+    const ongoingBox = document.getElementById('ongoing');
+    const pastBox = document.getElementById('past');
 
-    tabs.forEach(tab => {
+    tabs.forEach((tab, index) => {
         tab.addEventListener('click', function () {
-            // 全てのタブからactiveクラスとmarkerを削除
+            // 1. 全てのタブからactiveクラスとmarkerを削除
             tabs.forEach(t => {
                 t.classList.remove('active');
                 const marker = t.querySelector('.marker');
                 if (marker) marker.remove();
             });
 
-            // クリックされたタブにactiveクラスを追加
+            // 2. クリックされたタブにactiveクラスとマーカーを追加
             this.classList.add('active');
-
-            // マーカーを追加
             const marker = document.createElement('span');
             marker.classList.add('marker');
             this.appendChild(marker);
+
+            // 3. コンテンツの表示・非表示の切り替え
+            if (index === 0) {
+                // 「開催中」タブが押された時
+                ongoingBox.classList.remove('hidden');
+                pastBox.classList.add('hidden');
+            } else {
+                // 「過去の企画」タブが押された時
+                ongoingBox.classList.add('hidden');
+                pastBox.classList.remove('hidden');
+            }
         });
     });
 </script>

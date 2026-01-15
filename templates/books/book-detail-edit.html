@@ -1,36 +1,19 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>書評の編集</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/books/book-detail-edit.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
+    <link rel="stylesheet" th:href="@{/css/books/book-detail-edit.css}" href="../css/books/book-detail-edit.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 
 <body>
     <div class="container">
-        <header class="project-header">
-            <div class="logo-placeholder"><img src="../img/象と花実物.png" style="width: 3rem;" alt=""></div>
-            <div style="display: flex;">
-                <div class="mail-icon">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M2 6h20v12H2z" fill="none" stroke="white" stroke-width="2" />
-                        <path d="M2 6l10 7 10-7" fill="none" stroke="white" stroke-width="2" />
-                    </svg>
-                </div>
-
-                <div class="menu-icon" id="menuOpen">
-                    <div class="menu-icon-box">
-                        <span class="span-top"></span>
-                        <span class="span-middle"></span>
-                        <span class="span-bottom"></span>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <div th:replace="~{layout :: header}"></div>
         <div class="breadcrumb-box">
             <div class="breadcrumb">ホーム</div>
             <div class="breadcrumb-middle">></div>
@@ -50,15 +33,15 @@
                         <h3>投稿時の禁止事項</h3>
                     </div>
                     <div style="display: block;">
-                        <div class="forbidden-review">
-                            <img src="../img/book.png" alt="">
+                        <div th:if="${project.enableVisibleBookTitle}" class="forbidden-review">
+                            <img th:src="@{/img/book.png}" src="../img/book.png" alt="">
                             <div class="forbidden-text">
                                 <h4>本のタイトルや著者名を書く</h4>
                                 <p>書名や著者名は書評に記入しないでください。</p>
                             </div>
                         </div>
                         <div class="forbidden-review">
-                            <img src="../img/not_people.png">
+                            <img th:src="@{/img/not_people.png}" src="../img/not_people.png">
                             <div class="forbidden-text">
                                 <h4>他の人を傷つける言葉を書く</h4>
                                 <p>誹謗中傷や攻撃的な言葉遣いは避け、敬意をもって
@@ -66,7 +49,7 @@
                             </div>
                         </div>
                         <div class="forbidden-review">
-                            <img src="../img/face.png">
+                            <img th:src="@{/img/face.png}" src="../img/face.png">
                             <div class="forbidden-text">
                                 <h4>不適切・過激な表現を使う</h4>
                                 <p>公序良俗に反する言葉や、暴力的・性的な内容は
@@ -74,7 +57,7 @@
                             </div>
                         </div>
                         <div class="forbidden-review">
-                            <img src="../img/people.png">
+                            <img th:src="@{/img/people.png}" src="../img/people.png">
                             <div class="forbidden-text">
                                 <h4>個人情報（名前・連絡先など）を書く</h4>
                                 <p>プライバシー保護のため、ご自身や他者の個人
@@ -83,27 +66,33 @@
                         </div>
                     </div>
                 </div>
-                <form id="signup-form">
+                <form id="signup-form" th:action="@{/review/edit/{id}(id=${reviewId})}" method="post" th:object="${reviewForm}">
                     <div class="form-group bio-wrapper">
                         <label for="account-id">書評タイトル<span>（タイトルは20文字以内）</span></label>
-                        <input type="text" id="account-id" name="account-id">
+                        <input th:field="*{reviewTitle}" type="text" id="account-id" name="account-id">
                         <div class="char-count"><span>0</span>/20文字</div>
                     </div>
                     <div class="form-group bio-wrapper bio-bottom">
                         <label for="bio">書評内容<span>（内容は300文字～500文字内）</span></label>
-                        <textarea id="bio" name="bio" rows="6"></textarea>
+                        <textarea th:field="*{reviewContent}" id="bio" name="bio" rows="6"></textarea>
                         <div class="char-count"><span id="current-count">0</span>/500文字</div>
+                    </div>
+                    <input type="hidden" name="" th:field="*{projectId}">
+                    <input type="hidden" name="" th:field="*{bookTitle}">
+                    <input type="hidden" name="" th:field="*{author}">
+                    <input type="hidden" name="" th:field="*{publisher}">
+                    <input type="hidden" name="" th:field="*{isbn}">
+                    <div class="btn-review-box">
+                        <div class="btn-shadow">
+                            <a href="isbn-search.html" class="btn-review btn-register  btn-color-left">戻る</a>
+                        </div>
+                        <div class="btn-shadow">
+                            <button type="submit" class="btn-review btn-register btn-color-right">編集を確定する</button>
+                        </div>
                     </div>
                 </form>
             </div>
-            <div class="btn-review-box">
-                <div class="btn-shadow">
-                    <a href="isbn-search.html" class="btn-review btn-register  btn-color-left">戻る</a>
-                </div>
-                <div class="btn-shadow">
-                    <a href="Book-reivew.html" class="btn-review btn-register btn-color-right">編集を確定する</a>
-                </div>
-            </div>
+
         </main>
 
 

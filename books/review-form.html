@@ -100,15 +100,23 @@
                 </div>
                 <form id="signup-form">
                     <div class="form-group bio-wrapper">
-                        <label for="account-id">書評タイトル<span>（タイトルは20文字以内）</span></label>
+                        <label for="account-id">
+                            書評タイトル<span>（タイトルは20文字以内）</span>
+                        </label>
                         <input type="text" id="account-id" name="account-id">
                         <div class="char-count"><span>0</span>/20文字</div>
+                        <p class="error-message" id="title-error"></p>
                     </div>
+
                     <div class="form-group bio-wrapper bio-bottom">
-                        <label for="bio">書評内容<span>（内容は300文字～500文字内）</span></label>
+                        <label for="bio">
+                            書評内容<span>（内容は300文字～500文字内）</span>
+                        </label>
                         <textarea id="bio" name="bio" rows="6"></textarea>
                         <div class="char-count"><span id="current-count">0</span>/500文字</div>
+                        <p class="error-message" id="content-error"></p>
                     </div>
+
                     <div class="btn-shadow">
                         <a href="signup.html" class="btn btn-register">一時保存</a>
                     </div>
@@ -137,6 +145,7 @@
             // 1. 書評内容文字数カウント
             const bio = document.getElementById('bio');
             const currentCount = document.getElementById('current-count');
+            const contentError = document.getElementById('content-error');
             const maxLength = 500;
             const minLength = 300;
 
@@ -144,10 +153,18 @@
                 bio.addEventListener('input', function () {
                     const length = bio.value.length;
                     currentCount.textContent = length;
-                    if (length > maxLength || length < minLength) {
-                        currentCount.style.color = 'red'; // 範囲外
+
+                    if (length < minLength) {
+                        currentCount.style.color = 'red';
+                        contentError.textContent = `※ ${minLength}文字以上入力してください`;
+                        contentError.style.display = 'block';
+                    } else if (length > maxLength) {
+                        currentCount.style.color = 'red';
+                        contentError.textContent = `※ ${maxLength}文字以内で入力してください`;
+                        contentError.style.display = 'block';
                     } else {
-                        currentCount.style.color = '#888'; // 範囲内
+                        currentCount.style.color = '#888';
+                        contentError.style.display = 'none';
                     }
                 });
             }
@@ -156,18 +173,23 @@
             // ------------------------
             const titleInput = document.getElementById('account-id');
             const titleCountSpan = document.querySelector('.form-group .char-count span'); // 最初のchar-count
-
+            const titleError = document.getElementById('title-error');
             if (titleInput && titleCountSpan) {
                 titleInput.addEventListener('input', function () {
                     const len = titleInput.value.length;
-
                     titleCountSpan.textContent = len; // カウント更新
 
-                    // 1〜20文字範囲内なら灰色、範囲外なら赤
-                    if (len > 20 || len < 1) {
+                    if (len < 1) {
                         titleCountSpan.style.color = 'red';
+                        titleError.textContent = '※ タイトルを入力してください';
+                        titleError.style.display = 'block';
+                    } else if (len > 20) {
+                        titleCountSpan.style.color = 'red';
+                        titleError.textContent = '※ タイトルは20文字以内です';
+                        titleError.style.display = 'block';
                     } else {
                         titleCountSpan.style.color = '#888';
+                        titleError.style.display = 'none';
                     }
                 });
             }

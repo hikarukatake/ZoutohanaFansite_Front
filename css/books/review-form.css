@@ -407,6 +407,13 @@ textarea:focus {
     font-size: 1rem;
 }
 
+.error-message {
+    color: #e53935;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    display: none;
+}
+
 
 /* フッター */
 footer {

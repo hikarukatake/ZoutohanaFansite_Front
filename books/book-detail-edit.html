@@ -136,7 +136,6 @@
                     <span>メール</span>
                     <button class="mail-close" id="mailClose">×</button>
                 </div>
-
                 <ul class="mail-list">
                     <li>
                         <span class="mail-date">2025.01.01</span>
@@ -263,91 +262,7 @@
             </div>
         </footer>
     </div>
-
-
-
-    <script>
-        // ▼▼▼ 要素を取得 ▼▼▼
-        const menuOpen = document.getElementById('menuOpen');   // ハンバーガーメニューのアイコン
-        const menuClose = document.getElementById('menuClose'); // ハンバーガーメニューの閉じるボタン
-        const overlayMenu = document.getElementById('overlayMenu'); // ハンバーガーメニュー本体
-
-        const gearButton = document.querySelector('.settings-icon'); // 歯車アイコン
-        const settingsModal = document.getElementById('settingsModal'); // 設定モーダル本体
-
-        // ▼▼▼ ハンバーガーメニューの動作（既存のまま） ▼▼▼
-        menuOpen.addEventListener('click', () => {
-            overlayMenu.classList.add('active');
-        });
-
-        menuClose.addEventListener('click', () => {
-            overlayMenu.classList.remove('active');
-        });
-
-        // 1. 歯車を押したときの動作
-        gearButton.addEventListener('click', (e) => {
-            // add ではなく toggle にすることで、「開く/閉じる」を繰り返せます
-            settingsModal.classList.toggle('active');
-        });
-
-        // 2. モーダルの背景（黒い部分）を押したときの動作
-        settingsModal.addEventListener('click', (e) => {
-            // クリックした場所が「モーダル本体(settingsModal)」そのものだった場合のみ閉じる
-            // （中の白い箱をクリックしても閉じないようにする判定）
-            if (e.target === settingsModal) {
-                settingsModal.classList.remove('active');
-            }
-        });
-    </script>
-    <script>
-        // メールモーダル
-        const mailIcon = document.querySelector('.mail-icon');
-        const mailModal = document.getElementById('mailModal');
-        const mailClose = document.getElementById('mailClose');
-
-        const detailButtons = document.querySelectorAll('.mail-open-detail');
-        const mailDetailModal = document.getElementById('mailDetailModal');
-        const mailDetailClose = document.getElementById('mailDetailClose');
-
-        mailIcon.addEventListener('click', () => {
-            mailModal.classList.add('active');
-        });
-
-        mailClose.addEventListener('click', () => {
-            mailModal.classList.remove('active');
-        });
-
-        // 背景タップで閉じる
-        mailModal.addEventListener('click', (e) => {
-            if (e.target === mailModal) {
-                mailModal.classList.remove('active');
-            }
-        });
-
-        // ＞ を押したら詳細モーダル
-        detailButtons.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-
-                mailModal.classList.remove('active');
-
-                mailDetailModal.classList.add('active');
-            });
-        });
-
-        // × で閉じる
-        mailDetailClose.addEventListener('click', () => {
-            mailDetailModal.classList.remove('active');
-            mailModal.classList.add('active');
-        });
-
-        // 背景クリックで閉じる
-        mailDetailModal.addEventListener('click', (e) => {
-            if (e.target === mailDetailModal) {
-                mailDetailModal.classList.remove('active');
-            }
-        });
-    </script>
+    <script src="../js/main.js"></script>
 
     <script>
         const openDeleteModal = document.getElementById('openDeleteModal');
@@ -413,7 +328,6 @@
                     }
                 });
             }
-
 
             // 3. 「確認へ」ボタンの取得とクリックイベントの設定
             // 修正ポイント: ボタンのクラスや属性から正しく要素を取得します

@@ -6,54 +6,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>個別通知送信</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../../static/css/admin/admin-style.css">
 </head>
 <body id="projectEdit-page">
     <header></header>
 
-    <main>
-      <h1 id="admin-page-title">個別通知送信</h1>
+    <main id="admin-main">
+      <h1 class="page-title">個別通知送信</h1>
 
-      <div class="admin-page-content">
-        <div>
-          <span>テンプレート名 : </span>
-          <select>
-            <option>一次審査通過連絡</option>
-          </select>
-          <button>呼び出す</button>
-        </div>
-        <textarea></textarea>
-        <div>
-          <p>宛先に間違いがないか再度ご確認ください</p>
-          <button>送信する</button>
+      <div class="table-border-b-strong pb-8">
+        <div class="main-content-card mt-4 p-8">
+          <div class="flex gap-1">
+            <span>テンプレート名 : </span>
+            <select class="select flex-1 w-full">
+              <option>一次審査通過連絡</option>
+            </select>
+            <button class="btn">呼び出す</button>
+          </div>
+          <textarea rows="7" class="input-textarea w-full mt-2"></textarea>
+          <div class="flex gap-4 justify-end">
+            <p class="text-danger">宛先に間違いがないか再度ご確認ください</p>
+            <button class="btn">送信する</button>
+          </div>
         </div>
       </div>
 
-      <div>
-        <h2>宛先 : </h2>
-        <div class="admin-page-content">
-          <div> <!-- 書評カード -->
-            <div> <!-- 書評カードヘッダー -->
+      <div class="mt-8">
+        <h2 class="page-title-sub">宛先 : </h2>
+        <div>
+          <div class="main-content-card p-8 mt-2"> <!-- 書評カード -->
+            <div class="table-border-b-strong flex justify-between pb-4"> <!-- 書評カードヘッダー -->
               <div> <!-- 左側 -->
-                <p>No.<span>100</span></p>
-                <h3>小学生の頃から大好きな一冊</h3>
+                <p class="review-card-sub-info">No.<span>100</span></p>
+                <h3 class="review-card-title">小学生の頃から大好きな一冊</h3>
               </div>
             </div>
 
-            <div> <!-- 書評カードボディ(上)) -->
-              <table> <!-- 左側 -->
+            <div class="table-border-b-strong flex py-4"> <!-- 書評カードボディ(上)) -->
+              <table class="pr-8 mb-auto"> <!-- 左側 -->
                 <tr>
                   <th>プロジェクト名 : </th>
                   <td>冬に読みたい！わたしのおすすめ文庫</td>
                 </tr>
                 <tr>
                   <th>書評ステータス : </th>
-                  <td>
-                    <select>
-                      <option value="">大賞</option>
-                    </select>
-                    <button>更新</button>
-                  </td>
+                  <td>大賞</td>
                 </tr>
                 <tr>
                   <th>得票数 : </th>
@@ -61,37 +58,37 @@
                 </tr>
               </table>
 
-              <table> <!-- 右側 -->
-                <tr>
-                  <th>名前 : </th>
-                  <td>
-                    <a href="">
-                      <span>なまえなまえ</span>(ID:<span>loginID123</span>)
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>居住地 : </th>
-                  <td>岩手県盛岡市</td>
-                </tr>
-                <tr>
-                  <th>年代 : </th>
-                  <td><span>20</span>代</td>
-                </tr>
-                <tr>
-                  <th>性別 : </th>
-                  <td>男</td>
-                </tr>
-                <tr>
-                  <th>自己紹介 : </th>
-                  <td>この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。</td>
-                </tr>
-              </table>
+              <div class="flex-1"> <!-- 右側 -->
+                <table>
+                  <tr>
+                    <th>名前 : </th>
+                    <td>
+                      <a href="">
+                        <span>なまえなまえ</span>(ID:<span>loginID123</span>)
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>居住地 : </th>
+                    <td>岩手県盛岡市</td>
+                  </tr>
+                  <tr>
+                    <th>年代 : </th>
+                    <td><span>20</span>代</td>
+                  </tr>
+                  <tr>
+                    <th>性別 : </th>
+                    <td>男</td>
+                  </tr>
+                </table>
+                <p class="font-bold">自己紹介 : </p>
+                <p>この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。</p>
+              </div>
             </div>
 
-            <div> <!-- 書評カードボディ(下) -->
-              <div>
-                <table>
+            <div class="table-border-b-strong py-4"> <!-- 書評カードボディ(下) -->
+              <div class="flex">
+                <table class="pr-8 mb-auto w-quarter">
                   <tr>
                     <th>ISBN : </th>
                     <td>9784XXXXXXXXXX</td>
@@ -113,23 +110,22 @@
                     <td>文庫</td>
                   </tr>
                 </table>
-                <div>
-                  <p>本文 : </p>
+                <div class="flex-1">
+                  <p class="font-bold">本文 : </p>
                   <p>この本を初めて読んだのは、小学四年生のときでした。表紙のイラストに惹かれて手に取ったのがきっかけでしたが、読み進めるうちに主人公の冒険や葛藤にどんどん引き込まれていったのを今でも覚えています。 あの頃は物語の世界に憧れるだけでしたが、大学生になった今読むと、人生の選択や成長の物語として心に響く部分が多く、まるで自分へのメッセージのように感じます。 文庫版の柔らかい紙の感触や少し黄ばんだページも、懐かしさをより一層引き立ててくれます。何度読み返しても色あせない、僕の原点のような一冊です。</p>
                 </div>
               </div>
               <div>
-                <p>書評のジャンル : </p>
-                <select name="" id=""></select>
+                <p class="mt-4"><span class="font-bold">書評のジャンル : </span>児童書, ファンタジー, 岩手に縁がある作家</p>
               </div>
             </div>
 
-            <div> <!-- 書評カードフッター -->
+            <div class="flex justify-between pt-4"> <!-- 書評カードフッター -->
               <div> <!-- 左側 -->
-                <p>投稿日時 : <span>2025/10/01 12:34</span></p>
-                <p>更新日時 : <span>2025/10/02 23:45</span></p>
+                <p class="review-card-sub-info">投稿日時 : <span>2025/10/01 12:34</span></p>
+                <p class="review-card-sub-info">更新日時 : <span>2025/10/02 23:45</span></p>
               </div>
-              <a href="#">詳細を確認する<span class="material-symbols-outlined">keyboard_double_arrow_right</span></a> <!-- 右側 -->
+              <a href="#" class="icon-center review-card-sub-info text-decoration-none">詳細を確認する<span class="material-symbols-outlined">keyboard_double_arrow_right</span></a> <!-- 右側 -->
             </div>
           </div>
         </div>

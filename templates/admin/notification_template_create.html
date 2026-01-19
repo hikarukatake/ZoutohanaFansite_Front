@@ -6,51 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>個別通知テンプレート作成</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../../static/css/admin/admin-style.css">
 </head>
 <body>
     <header></header>
 
-    <main>
-      <h1 id="admin-page-title">個別通知テンプレート作成</h1>
-      <div class="admin-page-content">
-        <form>
-          <table>
-            <tr>
-              <th>テンプレート名 : </th>
-              <td><input type="text" name="name"></td>
-            </tr>
-            <tr>
-              <th>タイトル : </th>
-              <td><input type="text" name="title"></td>
-            </tr>
-            <tr>
-              <th>本文 : </th>
-              <td>
-                <textarea rows="10" name="content"></textarea>
-              </td>
-            </tr>
-            <tr>
-              <th></th>
-              <td>
-                <p>置き換えタグ<span class="material-symbols-outlined gray-text" title="">help</span></p>
-                <div>
-                  <button>プロジェクト名</button>
-                  <button>書評投稿開始日時</button>
-                  <button>書評投稿終了日時</button>
-                  <button>書評投票開始日時</button>
-                  <button>書評投票終了日時</button>
-                  <button>ユーザーのニックネーム</button>
-                  <button>書評タイトル</button>
-                  <button>書籍タイトル</button>
-                </div>
-              </td>
-            </tr>
-          </table>
+    <main id="admin-main">
+      <h1 class="page-title">個別通知テンプレート作成</h1>
 
-          <div class="button-wrap">
-            <a href="#">キャンセル</a>
-            <input type="submit" value="確認する">
+      <div class="main-content-card mt-4">
+        <form>
+          <div class="table-container">
+            <table>
+              <tr>
+                <th>テンプレート名 : </th>
+                <td><input type="text" name="name" class="input-text w-full"></td>
+              </tr>
+              <tr>
+                <th>タイトル : </th>
+                <td><input type="text" name="title" class="input-text w-full"></td>
+              </tr>
+              <tr>
+                <th>本文 : </th>
+                <td>
+                  <textarea rows="10" name="content" class="input-textarea w-full"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <th></th>
+                <td>
+                  <p class="icon-center">置き換えタグ<span class="material-symbols-outlined text-gray" title="">help</span></p>
+                  <div class="grid-4 gap-1 mt-2">
+                    <button class="btn">プロジェクト名</button>
+                    <button class="btn">書評投稿開始日時</button>
+                    <button class="btn">書評投稿終了日時</button>
+                    <button class="btn">書評投票開始日時</button>
+                    <button class="btn">書評投票終了日時</button>
+                    <button class="btn">ユーザーのニックネーム</button>
+                    <button class="btn">書評タイトル</button>
+                    <button class="btn">書籍タイトル</button>
+                  </div>
+                </td>
+              </tr>
+            </table>
+
+            <div class="btn-wrap mt-4">
+              <a href="#" class="btn">キャンセル</a>
+              <input type="submit" value="確認する" class="btn">
+            </div>
           </div>
         </form>
       </div>

@@ -6,22 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../../static/css/admin/admin-style.css">
 </head>
 <body>
     <header></header>
 
-    <main>
-      <h1 class="page-title">ログイン</h1>
-      <form>
-        <label>ログインID</label>
-        <input type="text">
+    <main id="admin-main" class="center-middle">
+      <div class="w-half">
+        <h1 class="page-title text-center">ログイン</h1>
+        <form class="mt-8">
+          <div>
+            <label>■ ログインID</label>
+            <input type="text" class="input-text w-full">
+          </div>
 
-        <label>パスワード</label>
-        <input type="password">
+          <div class="mt-4">
+            <label>■ パスワード</label>
+            <div class="input-password-wrap">
+              <input type="password" class="input-text w-full">
+              <span class="material-symbols-outlined">visibility_off</span>
+            </div>
+          </div>
 
-        <button type="submit">ログイン</button>
-      </form>
+          <div class="btn-wrap">
+            <button type="submit" class="btn mt-8">ログイン</button>
+          </div>
+        </form>
+      </div>
     </main>
 
     <footer></footer>

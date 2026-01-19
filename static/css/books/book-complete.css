@@ -16,7 +16,8 @@ body {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin-top: 3rem;
+    margin-top: 5rem;
+    margin-bottom: 3rem;
 }
 
 
@@ -95,7 +96,7 @@ body {
 
 /* 登録完了しました全体 */
 .complete-text {
-    margin-bottom: 100px;
+    margin-bottom: 50px;
     text-align: center;
     font-size: 1.1rem;
     color: var(--font-normal);
@@ -162,7 +163,7 @@ h3 {
 }
 
 /* 丸のデザイン */
-.circle {
+.circle-complete {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -177,13 +178,13 @@ h3 {
 }
 
 /* 緑色の丸（アクティブ/ステップ1） */
-.circle.green {
+.circle-complete.green {
     background-color: var(--main-color);
     box-shadow: 0 0 0 5px rgba(60, 179, 113, 0.2);
 }
 
 /* 灰色の丸（その他のステップ） */
-.circle.gray {
+.circle-complete.gray {
     background-color: #ccc;
     box-shadow: 0 0 0 5px rgba(204, 204, 204, 0.3);
     /* 外側の薄いリング表現 */

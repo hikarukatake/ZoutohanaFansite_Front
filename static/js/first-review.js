@@ -11,7 +11,7 @@ window.onload = function () {
 };
 
 /* =========================
-       タップ演出制御
+        タップ演出制御
    ========================= */
 const tapTarget = document.getElementById('tapTarget');
 const bookText = document.getElementById('bookText');
@@ -19,7 +19,10 @@ const nextStep = document.getElementById('nextStep');
 
 let isActivated = false;
 let tutorialStep = 0;
+let visitedBookIds =
+    JSON.parse(localStorage.getItem('visitedBooks') || '[]');
 let hasFinishedModalTutorial = false;
+
 
 // tapTargetが存在する場合ときだけ
 if (tapTarget) {
@@ -42,7 +45,7 @@ if (tapTarget) {
 }
 
 /* =========================
-       本棚・データ制御
+        本棚・データ制御
    ========================= */
 const shelf = document.getElementById('shelf');
 const nextBtn = document.getElementById('nextBtn');
@@ -147,7 +150,7 @@ let bookInterval;
 let isAnimating = false;
 let hasStartedInitial = false;
 
-// ■ 本を1冊生成する関数（修正済）
+// ■ 本を1冊生成する関数
 function createBook(data, index) {
     const book = document.createElement('div');
     book.classList.add('book');
@@ -166,8 +169,24 @@ function createBook(data, index) {
     textDiv.innerText = data.title;
     book.appendChild(textDiv);
 
+    // すでに見た本なら暗くする
+    if (visitedBookIds.includes(data.title)) {
+        book.classList.add('visited');
+    }
+
+
     // --- クリック時のデータ流し込み ---
     book.addEventListener('click', function () {
+        // ========= 既読処理 =========
+            book.classList.add('visited');
+
+            if (!visitedBookIds.includes(data.title)) {
+                visitedBookIds.push(data.title);
+                localStorage.setItem(
+                    'visitedBooks',
+                    JSON.stringify(visitedBookIds)
+                );
+            }
         // 1. チュートリアル中の場合、オーバーレイを消す
         const overlay = document.getElementById('tutorialOverlay');
         if (overlay && overlay.style.display === 'block') {
@@ -177,7 +196,10 @@ function createBook(data, index) {
                 const msg = book.querySelector('.tutorial-msg');
                 if (msg) msg.remove();
             }
-            document.body.classList.remove('no-scroll');
+
+
+            // ↓ ここから既存のモーダル処理
+            openBookModal(data);
         }
 
         // 2. モーダル内の各パーツにデータをセット

@@ -982,3 +982,7 @@ p {
     font-size: 2rem;
     animation: bounce 1.2s infinite;
 }
+
+.book.visited {
+    filter: brightness(0.6);
+}

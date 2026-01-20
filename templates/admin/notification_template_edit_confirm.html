@@ -6,45 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>個別通知テンプレート編集 - 確認</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../../static/css/admin/admin-style.css">
 </head>
 <body>
     <header></header>
 
-    <main>
-      <h1 id="admin-page-title">個別通知テンプレート編集 - 確認</h1>
-      <div class="admin-page-content">
+    <main id="admin-main">
+      <h1 class="page-title">個別通知テンプレート編集 - 確認</h1>
+
+      <div class="main-content-card mt-4">
         <form>
-          <table>
-            <tr>
-              <th>テンプレート名 : </th>
-              <td>
-                一次審査通過連絡
-                <input type="text" name="name" class="hidden" value="一次審査通過連絡">
-              </td>
-            </tr>
-            <tr>
-              <th>タイトル : </th>
-              <td>
-                一次審査通過のお知らせ
-                <input type="text" name="title" class="hidden" value="一次審査通過のお知らせ">
-              </td>
-            </tr>
-            <tr>
-              <th>本文 : </th>
-              <td>
-<span>{user-nickname}</span>さん、こんにちは。
-この度は「<span>{project-name}</span>」へ書評を投稿いただき、誠にありがとうございました。
-あなたが投稿した「<span>{review-title}</span>」が一次審査を通過したことをお知らせします。おめでとうございます！
+          <div class="table-container">
+            <table>
+              <tr>
+                <th>テンプレート名 : </th>
+                <td>
+                  一次審査通過連絡
+                  <input type="text" name="name" class="hidden" value="一次審査通過連絡">
+                </td>
+              </tr>
+              <tr>
+                <th>タイトル : </th>
+                <td>
+                  一次審査通過のお知らせ
+                  <input type="text" name="title" class="hidden" value="一次審査通過のお知らせ">
+                </td>
+              </tr>
+              <tr>
+                <th>本文 : </th>
+                <td>
+<span class="merge-tag-preview">{user-nickname}</span>さん、こんにちは。
+この度は「<span class="merge-tag-preview">{project-name}</span>」へ書評を投稿いただき、誠にありがとうございました。
+あなたが投稿した「<span class="merge-tag-preview">{review-title}</span>」が一次審査を通過したことをお知らせします。おめでとうございます！
 
 今後のスケジュールは以下の通りになります。
 これからも象と花プロジェクトと象と花ファンサイトをよろしくお願いいたします。
 
-<span>{project-voting_start_at}</span> ~ <span>{project-voting_end_at}</span>　二次審査(一般投票)
+<span class="merge-tag-preview">{project-voting_start_at}</span> ~ <span class="merge-tag-preview">{project-voting_end_at}</span>　二次審査(一般投票)
 【ここに日時を手動で入れる】　ノミネート作品を一部さわや書店店舗で販売開始
 【ここに日時を手動で入れる】　大賞発表
 
-                <textarea rows="10" name="content">
+                <textarea rows="10" name="content" class="hidden">
 {user-nickname}さん、こんにちは。
 この度は「{project-name}」へ書評を投稿いただき、誠にありがとうございました。
 あなたが投稿した「{review-title}」が一次審査を通過したことをお知らせします。おめでとうございます！
@@ -55,14 +57,15 @@
 {project-voting_start_at} ~ {project-voting_end_at}　二次審査(一般投票)
 【ここに日時を手動で入れる】　ノミネート作品を一部さわや書店店舗で販売開始
 【ここに日時を手動で入れる】　大賞発表
-                </textarea>
-              </td>
-            </tr>
-          </table>
+                  </textarea>
+                </td>
+              </tr>
+            </table>
 
-          <div class="button-wrap">
-            <a href="#">前に戻る</a>
-            <input type="submit" value="更新する">
+            <div class="btn-wrap mt-4">
+              <a href="#" class="btn">前に戻る</a>
+              <input type="submit" value="更新する" class="btn">
+            </div>
           </div>
         </form>
       </div>

@@ -1,354 +1,452 @@
-    /* =========================
-        初期スクロール制御
-    ========================= */
-    if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-    }
+/* =========================
+       初期スクロール制御
+   ========================= */
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
 
-    // ページ読み込みが完了したらトップへスクロール
-    window.onload = function () {
-        window.scrollTo(0, 0);
-    };
+// ページ読み込みが完了したらトップへスクロール
+window.onload = function () {
+    window.scrollTo(0, 0);
+};
 
-    /* =========================
+/* =========================
         タップ演出制御
-    ========================= */
-    const tapTarget = document.getElementById('tapTarget');
-    const bookText = document.getElementById('bookText');
-    const nextStep = document.getElementById('nextStep');
+   ========================= */
+const tapTarget = document.getElementById('tapTarget');
+const bookText = document.getElementById('bookText');
+const nextStep = document.getElementById('nextStep');
 
-    let isActivated = false;
+let isActivated = false;
+let tutorialStep = 0;
+let hasFinishedModalTutorial = false;
 
-    let tutorialStep = 0;
-    // 10: モーダル開いた
-    // 11: 感想読む
-    // 12: スクロール促す
-    // 13: 自己紹介説明
-    
-    // tapTargetが存在する場合ときだけ
-    if (tapTarget) {
-        // トップの画面がクリックされたときの処理
-        tapTarget.addEventListener('click', function () {
 
-            // 一度実行したら、二度とアニメーションは実行しない
-            // isActivated が true のときは返す
-            if (isActivated) return;
-            isActivated = true;
-            // isActivated をtrueにリセットしたあとにフェイドアウトを実行
-            tapTarget.classList.add('fade-out');
+// tapTargetが存在する場合ときだけ
+if (tapTarget) {
+    tapTarget.addEventListener('click', function () {
+        if (isActivated) return;
+        isActivated = true;
+        tapTarget.classList.add('fade-out');
 
-            // 3秒後に下にスクロール
+        setTimeout(function () {
+            bookText.classList.add('release-fixed');
+            nextStep.scrollIntoView({
+                behavior: 'smooth'
+            });
+
             setTimeout(function () {
-                // スクロール禁止を解除
-                //position: fixed を解除して通常スクロールに戻すclassの設定をしている
-                bookText.classList.add('release-fixed');
+                tapTarget.classList.remove('fade-out');
+            }, 2000);
+        }, 3000);
+    });
+}
 
-                // nextStepまで下のエリアへスクロール
-                nextStep.scrollIntoView({
-                    behavior: 'smooth'
-                });
+/* =========================
+        本棚・データ制御
+   ========================= */
+const shelf = document.getElementById('shelf');
+const nextBtn = document.getElementById('nextBtn');
+const btnArea = document.querySelector('.button-area');
 
-                // 下に移動完了した頃にトップを直す
-                setTimeout(function () {
-                    // これで「上のimg」がまた表示されます
-                    tapTarget.classList.remove('fade-out');
-                }, 2000); // 下に移動してから2秒待機
-            }, 3000); // フェード開始から3秒待機
-        });
+// 30件分のデータ
+const allBooksData = [
+    {
+        title: "君と僕あんたと私とちみがアンタッチャブル",
+        image: "../../static/img/book1.png",
+        content: "静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。ああああああああああああああああああああああああああ",
+        icon: "../../static/img/flower-blue.png",
+        name: "もたーて",
+        age: "40代",
+        gender: "男性",
+        address: "岩手県 盛岡市",
+        text: "静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。あああああああああああああああああああああああああああああああああ"
+    },
+    {
+        title: "アンタッチャブル",
+        image: "../../static/img/book2.png",
+        content: "物語の展開がテンポよく、序盤から引き込まれました。登場人物同士の会話が自然で、関係性がすぐに理解できます。後半に向かって伏線が少しずつ回収され、読み終えたときには納得感がありました。難しい表現が少ないため、普段あまり本を読まない人でも楽しめる一冊だと感じました。",
+        icon: "../../static/img/flower-blue.png",
+        name: "ひかる",
+        age: "20代",
+        gender: "男性",
+        address: "岩手県 盛岡市",
+        text: "ITと本が好き。"
+    },
+    {
+        title: "作品3",
+        image: "../../static/img/book3.png",
+        content: "主人公の成長が物語を通してしっかり描かれており、読後に前向きな気持ちになれる作品でした。失敗や迷いを経験しながらも一歩ずつ進んでいく姿が印象的です。派手さはありませんが、現実に近い描写が多く共感しやすい内容でした。",
+        icon: "../../static/img/flower-blue.png",
+        name: "佐藤",
+        age: "30代",
+        gender: "男性",
+        address: "岩手県 花巻市",
+        text: "小説好きです。"
+    },
+    {
+        title: "作品4",
+        image: "../../static/img/book4.png",
+        content: "世界観の作り込みが丁寧で、読み始めてすぐに物語の中へ入り込めました。情景描写が細かく、風景が頭に浮かびやすいのが魅力です。物語後半では意外な展開もあり、最後まで飽きずに楽しめました。",
+        icon: "../../static/img/flower-blue.png",
+        name: "高橋",
+        age: "50代",
+        gender: "女性",
+        address: "岩手県 北上市",
+        text: "ゆっくり読書派。"
+    },
+    {
+        title: "作品5",
+        image: "../../static/img/book1.png",
+        content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。特別な出来事がなくても、人の心は大きく動くのだと改めて感じさせられます。落ち着いた雰囲気で、夜に読むのがおすすめです。",
+        icon: "../../static/img/flower-blue.png",
+        name: "鈴木",
+        age: "20代",
+        gender: "女性",
+        address: "岩手県 盛岡市",
+        text: "本と映画が好き。"
+    },
+    { title: "作品6", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品7", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品8", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品9", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品10", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品11", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品12", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品13", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品14", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品15", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品16", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品17", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品18", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品19", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品20", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品21", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品22", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品23", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品24", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品25", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品26", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品27", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品28", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品29", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "作品30", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+];
+
+let currentStartIndex = 0;
+const BATCH_SIZE = 9;
+
+// 位置データ
+const angles = [-2, 3, -1, 2, -3, 1, -1, 2, -2];
+const offsets = [
+    [-5, 0], [0, 30], [5, 60],
+    [-3, 30], [2, 60], [3, 90],
+    [-5, 60], [0, 90], [5, 120]
+];
+
+let bookInterval;
+let isAnimating = false;
+let hasStartedInitial = false;
+
+// ■ 本を1冊生成する関数
+function createBook(data, index) {
+    const book = document.createElement('div');
+    book.classList.add('book');
+
+    // 最初のセットの1冊目だけIDを振る（チュートリアル用）
+    if (index === 0 && currentStartIndex === 0) {
+        book.id = "firstBook";
     }
-    // 本を棚に落とすアニメーション
-    const shelf = document.getElementById('shelf');
-    const nextBtn = document.getElementById('nextBtn');
-    const btnArea = document.querySelector('.button-area');
 
-    /* 1. 画像URLリスト */
-    const imageList = [
-        '../img/book2.png', '../img/book1.png', '../img/book2.png',
-        '../img/book2.png', '../img/book3.png', '../img/book4.png',
-        '../img/book2.png', '../img/book4.png', '../img/book4.png'
-    ];
+    // 見た目とテキストの設定
+    book.style.backgroundImage = `url('${data.image}')`;
+    book.style.pointerEvents = 'none'; // 落下中はクリック不可
 
-    /* 2. 定着時の位置データ */
-    const angles = [-2, 3, -1, 2, -3, 1, -1, 2, -2];
-    const offsets = [
-        [-5, 0], [0, 30], [5, 60],
-        [-3, 30], [2, 60], [3, 90],
-        [-5, 60], [0, 90], [5, 120]
-    ];
+    const textDiv = document.createElement('div');
+    textDiv.classList.add('book-text-overlay');
+    textDiv.innerText = data.title;
+    book.appendChild(textDiv);
 
-    const MAX_BOOKS = 9;
-    let booksOnShelf = 0;
-    let bookInterval;
-    let isAnimating = false; // ボタン連打防止用
-    let hasStartedInitial = false; // 初回スタート済みかどうかの判定用
+    // --- クリック時のデータ流し込み ---
+    book.addEventListener('click', function () {
+        // ========= 既読処理 =========
+            book.classList.add('visited');
+        // 1. チュートリアル中の場合、オーバーレイを消す
+        const overlay = document.getElementById('tutorialOverlay');
+        if (overlay && overlay.style.display === 'block') {
+            overlay.style.display = 'none';
+            if (book.id === "firstBook") {
+                book.classList.remove('highlight');
+                const msg = book.querySelector('.tutorial-msg');
+                if (msg) msg.remove();
+            }
 
-    // ■ 本を1冊生成する関数
-    function createBook() {
-        if (booksOnShelf >= MAX_BOOKS) {
+
+            // ↓ ここから既存のモーダル処理
+            openBookModal(data);
+        }
+
+        // 2. モーダル内の各パーツにデータをセット
+        // アイコン・名前・属性・プロフィール文
+        const iconElem = document.getElementById('modalIcon');
+        if (iconElem) iconElem.src = data.icon;
+
+        const nameElem = document.getElementById('modalName');
+        if (nameElem) nameElem.innerText = data.name;
+
+        const infoElem = document.getElementById('modalInfo');
+        if (infoElem) infoElem.innerText = `${data.age} / ${data.gender} / ${data.address}`;
+
+        const profileTextElem = document.getElementById('modalProfileText');
+        if (profileTextElem) profileTextElem.innerText = data.text;
+
+        // 3. 【重要】感想テキストエリアを「初期状態」に作り直す
+        // これをやらないと、前回の改行処理でIDが消えているため、次のデータが流し込めません
+        const textBox = document.querySelector('.modal-textFirst-box');
+        if (textBox) {
+            textBox.innerHTML = `
+                <img src="../../static/img/rose.png" class="modal-rose" alt="">
+                <h3 id="modalTitle">${data.title}</h3>
+                <p id="textFirst" class="modal-textFirst">${data.content}</p>
+            `;
+        }
+
+        // 4. 文字分割処理の実行（復活した textFirst に対して行う）
+        splitTextToParagraphs("textFirst", "modal-textFirst", 18);
+
+        // 5. モーダル表示
+        const modal = document.getElementById('bookDetailModal');
+        modal.style.display = 'flex';
+        document.body.classList.add('no-scroll');
+
+        // 6. モーダル内チュートリアル開始（黒いオーバーレイ）
+        startModalTutorial();
+    });
+
+    // 落下角度の設定
+    const fallAngle = (Math.random() * 60) - 30;
+    book.style.setProperty('--fall-angle', fallAngle + 'deg');
+
+    shelf.appendChild(book);
+
+    // 着地アニメーション
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            book.classList.add('landed');
+            // indexに対応した固定位置へ移動
+            const posIndex = index % 9;
+            const angle = angles[posIndex] || 0;
+            const offsetX = offsets[posIndex] ? offsets[posIndex][0] : 0;
+            const offsetY = offsets[posIndex] ? offsets[posIndex][1] : 0;
+
+            book.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${angle}deg)`;
+        });
+    });
+}
+
+// ■ 落下ループ開始
+function startFallingBooks() {
+    if (bookInterval) clearInterval(bookInterval);
+    // ボタンを隠している
+    if (btnArea) btnArea.classList.remove('show');
+    if (nextBtn) nextBtn.disabled = true;
+    let countInBatch = 0; // 今回のセットで何冊出したか
+
+    bookInterval = setInterval(() => {
+        const dataIndex = currentStartIndex + countInBatch;
+
+        // 9冊出し切った か 全データ終了時
+        if (countInBatch >= BATCH_SIZE || dataIndex >= allBooksData.length) {
             clearInterval(bookInterval);
-            if (nextBtn) nextBtn.disabled = false;
-            if (btnArea) btnArea.classList.add('show');
-            isAnimating = false;
-
-            // 9冊目が着地してから少し待ってチュートリアル開始
-            setTimeout(startTutorial, 800);
+            finishBatch(); // 終了処理へ
             return;
         }
 
-        const index = booksOnShelf;
-        const book = document.createElement('div');
-        book.classList.add('book');
+        // 本を生成
+        createBook(allBooksData[dataIndex], countInBatch);
 
-        book.style.pointerEvents = 'none'; 
+        countInBatch++;
+    }, 500);
+}
 
-        if (index === 0) book.id = "firstBook"; // 1冊目を特定
-        book.style.backgroundImage = `url('${imageList[index]}')`;
-
-        const textDiv = document.createElement('div');
-        textDiv.classList.add('book-text-overlay');
-        textDiv.innerText = `君と僕との出会いは唐揚げと肉ま`;
-        book.appendChild(textDiv);
-
-        // --- ★ここからクリックイベントの追加 ---
-        book.addEventListener('click', function () {
-            const modal = document.getElementById('bookDetailModal');
-            const overlay = document.getElementById('tutorialOverlay');
-            
-            // 【初回のチュートリアル中のみ実行する処理】
-            // オーバーレイが表示されている時にクリックされた場合
-            if (overlay.style.display === 'block') {
-                overlay.style.display = 'none'; // 暗い背景を消す
-                const firstBook = document.getElementById('firstBook');
-                if (firstBook) {
-                    firstBook.classList.remove('highlight'); // 光る演出を消す
-                    const msg = firstBook.querySelector('.tutorial-msg');
-                    if (msg) msg.remove(); // メッセージを消す
-                }
-                document.body.classList.remove('no-scroll'); // 一旦解除
-                console.log("チュートリアル演出を終了しました");
-            }
-
-            // 【共通の処理】モーダルを表示
-            // どの本を押しても、初回でも、2回目以降でも実行されます
-            modal.style.display = 'flex';
-            document.body.classList.add('no-scroll');
-
-            tutorialStep = 10;
-            startModalTutorial();
-
-            // （応用）クリックした本の情報をモーダルに入れる場合
-            document.getElementById('modalTitle').innerText = `作品 No.${index + 1}`;
-        });
-        const fallAngle = (Math.random() * 60) - 30;
-        book.style.setProperty('--fall-angle', fallAngle + 'deg');
-
-        shelf.appendChild(book);
-        booksOnShelf++;
-
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                book.classList.add('landed');
-                const angle = angles[index] || 0;
-                const offsetX = offsets[index] ? offsets[index][0] : 0;
-                const offsetY = offsets[index] ? offsets[index][1] : 0;
-                book.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${angle}deg)`;
-            });
-        });
+// ■ バッチ終了時の処理（ボタン表示など）
+function finishBatch() {
+    isAnimating = false;
+    if (nextBtn) {
+        nextBtn.disabled = false;
+        // 次のデータがあるかチェックしてボタンの文言を変える
+        if (currentStartIndex + BATCH_SIZE >= allBooksData.length) {
+            nextBtn.innerText = "最初に戻る";
+        } else {
+            nextBtn.innerText = "次の作品へ";
+        }
     }
+    if (btnArea) btnArea.classList.add('show');
 
-    // ■ チュートリアル：本を光らせてメッセージを出す
+    // 全ての本のポインターイベントを有効化（クリックできるようにする）
+    document.querySelectorAll('.book').forEach(b => b.style.pointerEvents = 'auto');
 
-    function startTutorial() {
-        const overlay = document.getElementById('tutorialOverlay');
-        const firstBook = document.getElementById('firstBook');
-        const MODAL_SCROLL_TUTORIAL_KEY = 'seenModalScrollTutorial';
-
-        const allBooks = document.querySelectorAll('.book');
-        allBooks.forEach(b => {
-            b.style.pointerEvents = 'auto';
-        });
-        if (!firstBook) return;
-
-        // スクロールを禁止し、チュートリアル画面（オーバーレイ）を出す
-        document.body.classList.add('no-scroll');
-        overlay.style.display = 'block';
-
-        // 1冊目を強調
-        firstBook.classList.add('highlight');
-
-        // 「本を選んでみて！」というガイドを出す
-        const msg = document.createElement('div');
-        msg.classList.add('tutorial-msg');
-        msg.innerText = '本を選んでみましょう！';
-        firstBook.appendChild(msg);
-
-        console.log("チュートリアル開始");
+    // 初回（1〜9冊目）の時だけチュートリアル開始
+    if (currentStartIndex === 0) {
+        setTimeout(startTutorial, 800);
     }
-    // 変数を定義（スクリプトの上のほうで定義してもOK）
-    const modal = document.getElementById('bookDetailModal');
-    const closeBtn = document.getElementById('closeModal');
+}
 
-    function startModalTutorial() {
-        showScrollOverlay();
+// ■ 「次へ」ボタン処理
+nextBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (isAnimating) return;
+    isAnimating = true;
+    nextBtn.disabled = true;
+
+    const existingBooks = document.querySelectorAll('.book');
+    existingBooks.forEach((book, i) => {
+        // 現在のX位置（offsets）を維持したまま下に落とす
+        const posIndex = i % 9;
+        const currentOffsetX = offsets[posIndex] ? offsets[posIndex][0] : 0;
+
+        book.style.transition = 'transform 0.6s ease-in, opacity 0.6s ease-in';
+        // Y軸を150vhにして画面外へ
+        book.style.transform = `translate(${currentOffsetX}px, 150vh) rotate(10deg)`;
+        book.style.opacity = '0';
+    });
+
+    setTimeout(() => {
+        shelf.innerHTML = '';
+
+        // インデックスを進める
+        currentStartIndex += BATCH_SIZE;
+
+        // 30件超えたらリセット
+        if (currentStartIndex >= allBooksData.length) {
+            currentStartIndex = 0;
+        }
+
+        startFallingBooks();
+    }, 700);
+});
+
+// ■ 初期スタートトリガー（画面クリック）
+document.addEventListener('click', function () {
+    if (hasStartedInitial) return;
+    hasStartedInitial = true;
+    console.log("クリック検知：4秒後に本が降り始めます");
+
+    setTimeout(function () {
+        startFallingBooks();
+    }, 4000);
+});
+
+// ■ チュートリアル関数群
+function startTutorial() {
+    const overlay = document.getElementById('tutorialOverlay');
+    const firstBook = document.getElementById('firstBook');
+    if (!firstBook) return;
+
+    document.body.classList.add('no-scroll');
+    overlay.style.display = 'block';
+    firstBook.classList.add('highlight');
+
+    const msg = document.createElement('div');
+    msg.classList.add('tutorial-msg');
+    msg.innerText = '本を選んでみましょう！';
+    firstBook.appendChild(msg);
+}
+
+// モーダル関連変数
+const modal = document.getElementById('bookDetailModal');
+const closeBtn = document.getElementById('closeModal');
+const modalScrollOverlay = document.getElementById('modalScrollOverlay');
+
+if (closeBtn) {
+    closeBtn.addEventListener('click', function () {
+        modal.style.display = 'none';
+        document.body.classList.remove('no-scroll');
+    });
+}
+
+// モーダル外クリックで閉じる
+window.addEventListener('click', function (event) {
+    if (event.target == modal) {
+        modal.style.display = 'none';
+        document.body.classList.remove('no-scroll');
     }
+});
 
+// モーダル内スクロール制御
+function startModalTutorial() {
+    // すでに完了していたら何もしない
+    if (hasFinishedModalTutorial) return;
 
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function () {
-            modal.style.display = 'none';
-            document.body.classList.remove('no-scroll'); // スクロール禁止を解除
-        });
+    if (modalScrollOverlay) {
+        modalScrollOverlay.style.display = 'flex';
+        tutorialStep = 12;
     }
+}
 
-    const modalContent = document.querySelector('.modal-content');
-    if (modalContent) {
+function hideScrollOverlay() {
+    if (modalScrollOverlay) {
+        modalScrollOverlay.style.display = 'none';
+        tutorialStep = 13;
+
+        hasFinishedModalTutorial = true;
+    }
+}
+
+if (modalScrollOverlay) {
+    modalScrollOverlay.addEventListener('click', hideScrollOverlay);
+}
+
+const modalContent = document.querySelector('.modal-content');
+if (modalContent) {
     modalContent.addEventListener('scroll', () => {
-
         if (tutorialStep === 12 && modalContent.scrollTop > 20) {
             hideScrollOverlay();
         }
-
     });
 }
-    function showScrollOverlay() {
-        const overlay = document.getElementById('modalScrollOverlay');
-        overlay.style.display = 'flex';
-        tutorialStep = 12;
-    }
-    function hideScrollOverlay() {
-        const overlay = document.getElementById('modalScrollOverlay');
-        overlay.style.display = 'none';
 
-        tutorialStep = 13;
-    }
-    const modalScrollOverlay = document.getElementById('modalScrollOverlay');
+// ■ テキスト整形関数（改行）
+function splitTextToParagraphs(textId, className, maxLength) {
+    const originalP = document.getElementById(textId);
+    if (!originalP) return;
 
-    if (modalScrollOverlay) {
-        modalScrollOverlay.addEventListener('click', hideScrollOverlay);
-    }
+    const container = originalP.parentElement;
+    const text = originalP.textContent.trim();
+    // コンテナ内の他の要素を退避（もしあれば）
+    const title = container.querySelector("h3");
+    const img = container.querySelector("img");
 
-
-
-
-    function endModalTutorial() {
-        document.getElementById('modalTutorial').style.display = 'none';
+    const lines = [];
+    for (let i = 0; i < text.length; i += maxLength) {
+        lines.push(text.slice(i, i + maxLength));
     }
 
+    container.innerHTML = "";
 
+    if (img) container.appendChild(img);
+    if (title) container.appendChild(title);
 
-    // 背景（モーダルの外側の黒い部分）をクリックした時も閉じる
-    window.addEventListener('click', function (event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-            document.body.classList.remove('no-scroll');
-        }
+    lines.forEach(line => {
+        const p = document.createElement("p");
+        p.className = className;
+        p.textContent = line;
+        container.appendChild(p);
     });
-    // ■ 落下ループ開始
-    function startFallingBooks() {
-        if (bookInterval) clearInterval(bookInterval);
-        bookInterval = setInterval(createBook, 500);
-    }
+}
 
-    // ■ 「次へ」ボタンで「ストン」と落とす処理
-    nextBtn.addEventListener('click', function (e) {
-        // ボタンのクリックが documentのクリックイベントに伝播しないように止める（念のため）
-        e.stopPropagation();
-
-        if (isAnimating) return;
-        isAnimating = true;
-        nextBtn.disabled = true;
-
-        const existingBooks = document.querySelectorAll('.book');
-
-        existingBooks.forEach((book, i) => {
-            const currentOffsetX = offsets[i] ? offsets[i][0] : 0;
-            const currentAngle = angles[i] || 0;
-
-            // 加速しながら下にストンと落とす
-            book.style.transition = 'transform 0.6s ease-in, opacity 0.6s ease-in';
-            book.style.transform = `translate(${currentOffsetX}px, 150vh) rotate(${currentAngle}deg)`;
-            book.style.opacity = '0.5';
+// タブメニュー制御
+const tabs = document.querySelectorAll('.tab');
+tabs.forEach(tab => {
+    tab.addEventListener('click', function () {
+        tabs.forEach(t => {
+            t.classList.remove('active');
+            const marker = t.querySelector('.marker');
+            if (marker) marker.remove();
         });
-
-        // 落ちきったらリセットして再開
-        setTimeout(() => {
-            shelf.innerHTML = '';
-            booksOnShelf = 0;
-            startFallingBooks();
-        }, 700);
+        this.classList.add('active');
+        const marker = document.createElement('span');
+        marker.classList.add('marker');
+        this.appendChild(marker);
     });
-
-
-    // ■ 画面のどこかをクリックしたら、10秒後にスタート
-    document.addEventListener('click', function () {
-        // すでにスタート待機中、またはスタート済みなら何もしない
-        if (hasStartedInitial) return;
-
-        hasStartedInitial = true;
-        console.log("クリック検知：10秒後に本が降り始めます");
-
-        setTimeout(function () {
-            startFallingBooks();
-        }, 4000); // 10秒待機
-    });
-
-
-    // 企画一覧のタブメニュー
-    const tabs = document.querySelectorAll('.tab');
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function () {
-            // 全てのタブからactiveクラスとmarkerを削除
-            tabs.forEach(t => {
-                t.classList.remove('active');
-                const marker = t.querySelector('.marker');
-                if (marker) marker.remove();
-            });
-
-            // クリックされたタブにactiveクラスを追加
-            this.classList.add('active');
-
-            // マーカーを追加
-            const marker = document.createElement('span');
-            marker.classList.add('marker');
-            this.appendChild(marker);
-        });
-    });
-
-    // モーダル内のテキストを20文字ごとに改行して表示する
-    document.addEventListener("DOMContentLoaded", () => {
-
-        splitTextToParagraphs("textFirst", "modal-textFirst", 18);
-        splitTextToParagraphs("textSecond", "modal-textSecond", 18);
-
-    });
-
-    function splitTextToParagraphs(textId, className, maxLength) {
-        const originalP = document.getElementById(textId);
-        if (!originalP) return;
-
-        const container = originalP.parentElement;
-        const text = originalP.textContent.trim();
-        const title = container.querySelector("h3");
-        const img = container.querySelector("img");
-
-        const lines = [];
-        for (let i = 0; i < text.length; i += maxLength) {
-            lines.push(text.slice(i, i + maxLength));
-        }
-
-        // 元のp削除
-        container.innerHTML = "";
-
-        if (img) container.appendChild(img);
-        if (title) container.appendChild(title);
-
-        // 新しいpを追加
-        lines.forEach(line => {
-            const p = document.createElement("p");
-            p.className = className;
-            p.textContent = line;
-            container.appendChild(p);
-        });
-    }
-
+});

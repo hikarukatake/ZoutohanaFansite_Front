@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html lang="ja">
 
 
 
@@ -8,13 +8,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>書評の登録</title>
-    <link rel="stylesheet" th:href="@{/css/books/review-form.css}" href="../css/books/review-form.css">
-    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
+    <link rel="stylesheet" href="../css/books/review-form.css">
+    <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
     <header class="signup-header">
+        <a href="../books/isbn-search.html" class="back-link">&lt;&nbsp;&nbsp;もどる</a>
         <div class="step-indicator">
             <div class="step">
                 <div class="step-number">1</div>
@@ -37,7 +38,7 @@
         </div>
     </header>
 
-    <main th:if="${draft}">
+    <main>
         <div class="form-container">
             <div class="current-step-title">
                 <span>02</span>
@@ -65,14 +66,14 @@
                     </div>
                     <div style="display: block;">
                         <div class="forbidden-review">
-                            <img th:src="@{/img/book.png}" src="../img/book.png" alt="">
+                            <img src="../img/book.png" alt="">
                             <div class="forbidden-text">
                                 <h4>本のタイトルや著者名を書く</h4>
                                 <p>書名や著者名は書評に記入しないでください。</p>
                             </div>
                         </div>
                         <div class="forbidden-review">
-                            <img th:src="@{/img/not_people.png}" src="../img/not_people.png">
+                            <img src="../img/not_people.png">
                             <div class="forbidden-text">
                                 <h4>他の人を傷つける言葉を書く</h4>
                                 <p>誹謗中傷や攻撃的な言葉遣いは避け、敬意をもって
@@ -80,7 +81,7 @@
                             </div>
                         </div>
                         <div class="forbidden-review">
-                            <img th:src="@{/img/face.png}" src="../img/face.png">
+                            <img src="../img/face.png">
                             <div class="forbidden-text">
                                 <h4>不適切・過激な表現を使う</h4>
                                 <p>公序良俗に反する言葉や、暴力的・性的な内容は
@@ -88,7 +89,7 @@
                             </div>
                         </div>
                         <div class="forbidden-review">
-                            <img th:src="@{/img/people.png}" src="../img/people.png">
+                            <img src="../img/people.png">
                             <div class="forbidden-text">
                                 <h4>個人情報（名前・連絡先など）を書く</h4>
                                 <p>プライバシー保護のため、ご自身や他者の個人
@@ -97,147 +98,53 @@
                         </div>
                     </div>
                 </div>
-                <form id="signup-form" th:action="@{/review/write}" method="post" th:object="${review}">
-                    <input type="hidden" th:field="*{projectId}">
-                    <input type="hidden" th:field="*{bookTitle}">
-                    <input type="hidden" th:field="*{bookAuthor}">
-                    <input type="hidden" th:field="*{bookPublisher}">
-                    <input type="hidden" th:field="*{bookIsbn}">
+                <form id="signup-form">
                     <div class="form-group bio-wrapper">
-                        <label for="account-id">書評タイトル<span>（タイトルは20文字以内）</span></label>
-                        <input type="text" id="account-id" name="account-id" th:field="*{reviewTitle}">
+                        <label for="account-id">
+                            書評タイトル<span>（タイトルは20文字以内）</span>
+                        </label>
+                        <input type="text" id="account-id" name="account-id">
                         <div class="char-count"><span>0</span>/20文字</div>
-                    </div>
-                    <div class="form-group bio-wrapper bio-bottom">
-                        <label for="bio">書評内容<span>（内容は300文字～500文字内）</span></label>
-                        <textarea id="bio" name="bio" rows="6" th:field="*{reviewContent}"></textarea>
-                        <div class="char-count"><span id="current-count">0</span>/500文字</div>
-                    </div>
-                    <div class="btn-shadow">
-                        <button th:formaction="@{/review/draft}" type="submit" class="btn btn-register">一時保存</button>
+                        <p class="error-message" id="title-error"></p>
                     </div>
 
+                    <div class="form-group bio-wrapper bio-bottom">
+                        <label for="bio">
+                            書評内容<span>（内容は300文字～500文字内）</span>
+                        </label>
+                        <textarea id="bio" name="bio" rows="6"></textarea>
+                        <div class="char-count"><span id="current-count">0</span>/500文字</div>
+                        <p class="error-message" id="content-error"></p>
+                    </div>
+
+                    <div class="btn-shadow">
+                        <a href="signup.html" class="btn btn-register">一時保存</a>
+                    </div>
+                </form>
                 <div class="text-keep-box">
                     <p class="text-keep">一時保存されました</p>
                     <p class="text-keep">マイページから内容の確認や編集を続けることができます</p>
                 </div>
+            </div>
             <div class="btn-review-box">
                 <div class="btn-shadow">
-                    <button type="submit" class="btn-review btn-register btn-color-right">確認へ</button>
+                    <a href="isbn-search.html" class="btn-review btn-register  btn-color-left">書籍登録へ戻る</a>
                 </div>
-            </div>
-                </form>
+                <div class="btn-shadow">
+                    <a href="Book-reivew.html" class="btn-review btn-register btn-color-right">確認へ</a>
+                </div>
             </div>
             <footer>@copylite</footer>
 
         </div>
     </main>
-
-    <main th:unless="${draft}">
-        <div class="form-container">
-            <div class="current-step-title">
-                <span>02</span>
-                <h2>書評の登録</h2>
-            </div>
-            <div class="info-box">
-                <p class="book-review">ここでは、読んでみて感じたことを、あなたの
-                    言葉で自由に書いてください。</p>
-                <p class="book-review">「どんな気持ちになったか」
-                    「どの場面が心に残ったか」
-                    「読み終えたあとにどんな余韻が残ったか」など、
-                    思いついたことをそのまま綴っていただいて
-                    大丈夫です。</p>
-                <p class="book-review">また、文庫Xは作品の招待を伏せたまま読書を
-                    楽しむ企画です。
-                    そのため、以下の<span class="text-bold">注意事項</span>に注意して、書評を
-                    お書きください。</p>
-                <p class="book-review">もし投稿内容が禁止事項に反している場合、
-                    一次審査の段階で掲載を見送らせていただくことがあります。</p>
-
-                <div class="forbidden-box">
-                    <div class="info-box-title">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <h3>投稿時の禁止事項</h3>
-                    </div>
-                    <div style="display: block;">
-                        <div class="forbidden-review">
-                            <img th:src="@{/img/book.png}" src="../img/book.png" alt="">
-                            <div class="forbidden-text">
-                                <h4>本のタイトルや著者名を書く</h4>
-                                <p>書名や著者名は書評に記入しないでください。</p>
-                            </div>
-                        </div>
-                        <div class="forbidden-review">
-                            <img th:src="@{/img/not_people.png}" src="../img/not_people.png">
-                            <div class="forbidden-text">
-                                <h4>他の人を傷つける言葉を書く</h4>
-                                <p>誹謗中傷や攻撃的な言葉遣いは避け、敬意をもって
-                                    感想を共有しましょう。</p>
-                            </div>
-                        </div>
-                        <div class="forbidden-review">
-                            <img th:src="@{/img/face.png}" src="../img/face.png">
-                            <div class="forbidden-text">
-                                <h4>不適切・過激な表現を使う</h4>
-                                <p>公序良俗に反する言葉や、暴力的・性的な内容は
-                                    投稿できません。</p>
-                            </div>
-                        </div>
-                        <div class="forbidden-review">
-                            <img th:src="@{/img/people.png}" src="../img/people.png">
-                            <div class="forbidden-text">
-                                <h4>個人情報（名前・連絡先など）を書く</h4>
-                                <p>プライバシー保護のため、ご自身や他者の個人
-                                    情報を記載しないでください。</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <form id="signup-form" th:action="@{/review/write}" method="post" th:object="${reviewForm}">
-                    <input type="hidden" th:field="*{projectId}">
-                    <input type="hidden" th:field="*{bookTitle}">
-                    <input type="hidden" th:field="*{author}">
-                    <input type="hidden" th:field="*{publisher}">
-                    <input type="hidden" th:field="*{isbn}">
-                    <div class="form-group bio-wrapper">
-                        <label for="account-id">書評タイトル<span>（タイトルは20文字以内）</span></label>
-                        <input type="text" id="account-id" name="account-id" th:field="*{reviewTitle}">
-                        <div class="char-count"><span>0</span>/20文字</div>
-                    </div>
-                    <div class="form-group bio-wrapper bio-bottom">
-                        <label for="bio">書評内容<span>（内容は300文字～500文字内）</span></label>
-                        <textarea id="bio" name="bio" rows="6" th:field="*{reviewContent}"></textarea>
-                        <div class="char-count"><span id="current-count">0</span>/500文字</div>
-                    </div>
-                    <div class="btn-shadow">
-                        <button th:formaction="@{/review/draft}" type="submit" class="btn btn-register">一時保存</button>
-                    </div>
-
-                    <div class="text-keep-box">
-                        <p class="text-keep">一時保存されました</p>
-                        <p class="text-keep">マイページから内容の確認や編集を続けることができます</p>
-                    </div>
-                    <div class="btn-review-box">
-                        <div class="btn-shadow">
-                            <a th:href="@{/review(id=${reviewForm.projectId})}" href="isbn-search.html" class="btn-review btn-register  btn-color-left">書籍登録へ戻る</a>
-                        </div>
-                        <div class="btn-shadow">
-                            <button type="submit" class="btn-review btn-register btn-color-right">確認へ</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <footer>@copylite</footer>
-
-        </div>
-    </main>
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
             // 1. 書評内容文字数カウント
             const bio = document.getElementById('bio');
             const currentCount = document.getElementById('current-count');
+            const contentError = document.getElementById('content-error');
             const maxLength = 500;
             const minLength = 300;
 
@@ -245,10 +152,18 @@
                 bio.addEventListener('input', function () {
                     const length = bio.value.length;
                     currentCount.textContent = length;
-                    if (length > maxLength || length < minLength) {
-                        currentCount.style.color = 'red'; // 範囲外
+
+                    if (length < minLength) {
+                        currentCount.style.color = 'red';
+                        contentError.textContent = `※ ${minLength}文字以上入力してください`;
+                        contentError.style.display = 'block';
+                    } else if (length > maxLength) {
+                        currentCount.style.color = 'red';
+                        contentError.textContent = `※ ${maxLength}文字以内で入力してください`;
+                        contentError.style.display = 'block';
                     } else {
-                        currentCount.style.color = '#888'; // 範囲内
+                        currentCount.style.color = '#888';
+                        contentError.style.display = 'none';
                     }
                 });
             }
@@ -257,18 +172,23 @@
             // ------------------------
             const titleInput = document.getElementById('account-id');
             const titleCountSpan = document.querySelector('.form-group .char-count span'); // 最初のchar-count
-
+            const titleError = document.getElementById('title-error');
             if (titleInput && titleCountSpan) {
                 titleInput.addEventListener('input', function () {
                     const len = titleInput.value.length;
-
                     titleCountSpan.textContent = len; // カウント更新
 
-                    // 1〜20文字範囲内なら灰色、範囲外なら赤
-                    if (len > 20 || len < 1) {
+                    if (len < 1) {
                         titleCountSpan.style.color = 'red';
+                        titleError.textContent = '※ タイトルを入力してください';
+                        titleError.style.display = 'block';
+                    } else if (len > 20) {
+                        titleCountSpan.style.color = 'red';
+                        titleError.textContent = '※ タイトルは20文字以内です';
+                        titleError.style.display = 'block';
                     } else {
                         titleCountSpan.style.color = '#888';
+                        titleError.style.display = 'none';
                     }
                 });
             }

@@ -6,66 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>お知らせ編集・情報</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../../static/css/admin/admin-style.css">
 </head>
 <body>
     <header></header>
 
-    <main>
-      <h1 id="admin-page-title">お知らせ編集・情報</h1>
-      <div class="admin-page-content">
+    <main id="admin-main">
+      <h1 class="page-title">お知らせ編集・情報</h1>
+
+      <div class="main-content-card mt-4">
         <form>
-          <table>
-            <th>公開/非公開 : </th>
-              <td>
-                <div class="radio-wrap">
-                  <label><input type="radio" name="published" value="TRUE">公開</label>
-                  <label><input type="radio" name="published" value="FALSE">非公開</label>
-                </div>
-              </td>
-            </tr>
-            <tr> <!-- 濃い下線クラスつける -->
-              <!-- 削除機能は後で実装 -->
-              <th>削除</th>
-              <td><button>このプロジェクトを削除する</button></td>
-            </tr>
+          <div class="table-container">
+            <table>
+              <tr>
+                <th>公開/非公開 : </th>
+                <td>
+                  <div class="radio-wrap">
+                    <label><input type="radio" name="published" value="TRUE" class="scale-bigger" checked>公開</label>
+                    <label><input type="radio" name="published" value="FALSE" class="scale-bigger">非公開</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th class="table-border-b-strong">削除 : </th>
+                <td class="table-border-b-strong"><button class="btn btn-danger">このプロジェクトを削除する</button></td>
+              </tr>
 
-            <tr>
-              <th>カテゴリー : </th>
-              <td>
-                <input type="radio" name="category" class="hidden" value="DONATION">
-              </td>
-            </tr>
-            <tr>
-              <th>タイトル : </th>
-              <td>
-                <input type="text" name="title" class="hidden" value="先月寄贈した本(2025年10月)">
-              </td>
-            </tr>
-            <tr>
-              <th>本文 : </th>
-              <td>
-                <p>
-                  　いつも「象と花」の活動にご協力いただき、ありがとうございます。　皆さまからお預かりした本の査定金額をもとに、2025年10月は計20冊の本を病気とたたかう子供たちへ贈ることができました。
-                  　今回の寄贈先は、岩手医科大学附属病院の小児病棟と、盛岡市の児童養護施設4か所です。 　絵本や図鑑、児童文学、そして将来の夢を応援するような専門書など、子供たちの希望や興味に合わせた本をお届けしました。
-                </p>
-              </td>
-              <textarea rows="10" name="content">
-　いつも「象と花」の活動にご協力いただき、ありがとうございます。　皆さまからお預かりした本の査定金額をもとに、2025年10月は計20冊の本を病気とたたかう子供たちへ贈ることができました。
-　今回の寄贈先は、岩手医科大学附属病院の小児病棟と、盛岡市の児童養護施設4か所です。 　絵本や図鑑、児童文学、そして将来の夢を応援するような専門書など、子供たちの希望や興味に合わせた本をお届けしました。
-              </textarea></td>
-            </tr>
-            <tr>
-              <th>投稿日時(表示される日時) : </th>
-              <td>
-                2025/11/01 12:00
-                <input type="datetime-local" name="postedAt" value="2025/11/01 12:00">
-              </td>
-            </tr>
-          </table>
+              <tr>
+                <th>カテゴリー : </th>
+                <td>
+                  <div class="radio-wrap">
+                    <label><input type="radio" name="category" value="PROJECT" class="scale-bigger" checked>企画情報</label>
+                    <label><input type="radio" name="category" value="DONATION" class="scale-bigger">寄贈情報</label>
+                    <label><input type="radio" name="category" value="ELSE" class="scale-bigger">その他情報</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>タイトル : </th>
+                <td>
+                  <input type="text" name="title" class="input-text w-full" value="先月寄贈した本(2025年10月)">
+                </td>
+              </tr>
+              <tr>
+                <th>本文 : </th>
+                <td>
+                  <textarea rows="10" name="content" class="input-textarea w-full">
+    　いつも「象と花」の活動にご協力いただき、ありがとうございます。　皆さまからお預かりした本の査定金額をもとに、2025年10月は計20冊の本を病気とたたかう子供たちへ贈ることができました。
+    　今回の寄贈先は、岩手医科大学附属病院の小児病棟と、盛岡市の児童養護施設4か所です。 　絵本や図鑑、児童文学、そして将来の夢を応援するような専門書など、子供たちの希望や興味に合わせた本をお届けしました。
+                  </textarea>
+                </td>
+              </tr>
+              <tr>
+                <th>投稿日時(表示される日時) : </th>
+                <td>
+                  <input type="datetime-local" name="postedAt" class="input-datetime" value="2025-11-01T12:00">
+                </td>
+              </tr>
+            </table>
 
-          <div class="button-wrap">
-            <input type="submit" value="確認する">
+            <div class="btn-wrap mt-4">
+              <input type="submit" value="確認する" class="btn">
+            </div>
           </div>
         </form>
       </div>

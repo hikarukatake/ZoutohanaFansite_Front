@@ -1,0 +1,545 @@
+@charset "utf-8";
+
+:root {
+	--check-red: #ff0000;
+  --check-pink: #f700ff;
+  --check-purple: #a600ff;
+  --check-sky: #0099ff;
+  --check-blue: #0000ff;
+  --check-green: #00ff73;
+  --check-yellow: #ffee00;
+  --check-orange: #ff9d00;
+
+  --admin-bg-gray: #f2f2f2;
+  --admin-border-gray: #cccccc;
+  --admin-text-gray: #a6a6a6;
+  --admin-text-red: #e35252;
+  --admin-table-border-light: 0.5px solid #d9d9d9;
+  --admin-table-border-strong: 0.5px solid #b8b8b8;
+  --admin-box-shadow: 0px 2px 20px 0px rgba(0, 0, 0, 0.25);
+  --admin-box-shadow-sm: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+
+  --theme-green: #449872;
+  --theme-pink: #FF6C84;
+  --theme-yellow: #F5B84C;
+  --theme-blue: #00BCD4;
+  --theme-black: #393939;
+  --theme-gray: #A0B0B7;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, main, div, span, h1, h2, h3, h4, p, ol, ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+#admin-main {
+  padding: 1rem 2rem;
+  max-width: 1536px;
+  margin: 0 auto;
+}
+
+.main-content {
+  padding: 0 1rem;
+}
+
+.main-content-card {
+  background-color: var(--admin-bg-gray);
+  border-radius: 1.5rem;
+  box-shadow: var(--admin-box-shadow-sm);
+}
+
+.review-card {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
+  padding: 0rem 2rem;
+}
+
+.review-card-title {
+  font-size: 1.5rem;
+  font-weight: normal;
+}
+
+.review-card-sub-info {
+  color: var(--admin-text-gray);
+  font-size: 1rem;
+}
+
+.review-card-status {
+  background-color: #cdcdcd;
+  border: none;
+  border-radius: 100vmax;
+  padding: 0.2rem 0.7rem;
+}
+
+/* ========== tailwind系 ========== */
+.bg-gray {
+  background-color: var(--admin-bg-gray);
+}
+
+.flex {
+  display: flex;
+  align-items:center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-end {
+  justify-content: end;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.gap-1 {
+  gap: 0.25rem;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.ml-4 {
+  margin-left: 1rem;
+}
+
+.ml-8 {
+  margin-left: 2rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
+.mb-auto {
+  margin-bottom: auto;
+}
+
+.p-8 {
+  padding: 2rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.pt-4 {
+  padding-top: 1rem;
+}
+
+.pb-4 {
+  padding-bottom: 1rem;
+}
+
+.pb-8 {
+  padding-bottom: 2rem;
+}
+
+.pl-4 {
+  padding-left: 1rem;
+}
+
+.pl-8 {
+  padding-left: 2rem;
+}
+
+.pr-1 {
+  padding-right: 0.25rem;
+}
+
+.pr-8 {
+  padding-right: 2rem;
+}
+
+.center-middle {
+  display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.icon-center {
+	display: inline-flex;
+	align-items: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-danger {
+  color: var(--admin-text-red);
+}
+
+.text-gray {
+  color: var(--admin-text-gray);
+}
+
+.text-black {
+  color: black;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.font-sm {
+  font-size: 0.8rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.w-half {
+  width: 50%;
+}
+
+.w-quarter {
+  width: 25%;
+}
+
+/* ========== 独自 ========== */
+.select {
+  padding: 0.5rem;
+  border: 1px solid var(--admin-border-gray);
+  border-radius: 3px;
+}
+
+.scale-bigger {
+  scale: calc(1.5);
+}
+
+.btn {
+  padding: 0.4rem 0.6rem;
+  background-color: #d9d9d9;
+  color: black;
+  text-decoration: none;
+  border: 0.5px solid var(--admin-border-gray);
+  border-radius: 3px;
+  font-size: 1rem;
+}
+
+.btn-sm {
+  padding: 0.2rem 0.3rem;
+  background-color: #d9d9d9;
+  color: var(--admin-text-gray);
+  text-decoration: none;
+  border: 0.5px solid var(--admin-border-gray);
+  border-radius: 3px;
+  font-size: 0.8rem;
+}
+
+.btn-danger {
+  color: var(--admin-text-red);
+}
+
+.btn .material-symbols-outlined {
+  font-size: 1rem;
+}
+
+.btn-file::file-selector-button {
+  padding: 0.4rem 0.6rem;
+  background-color: #d9d9d9;
+  color: black;
+  text-decoration: none;
+  border: 0.5px solid var(--admin-border-gray);
+  border-radius: 3px;
+}
+
+.input-text {
+  padding: 0.5rem;
+  border: 0.1px solid var(--admin-border-gray);
+  border-radius: 3px;
+}
+
+.input-textarea {
+  padding: 0.5rem;
+  border: 0.1px solid var(--admin-border-gray);
+  border-radius: 3px;
+  resize: vertical;
+}
+
+.input-datetime {
+  padding: 0.5rem;
+  border: 0.1px solid var(--admin-border-gray);
+  border-radius: 3px;
+}
+
+.input-datetime::-webkit-calendar-picker-indicator {
+  transform: scale(1.3);
+  position: relative;
+}
+
+.input-password-wrap {
+  position: relative;
+}
+
+.input-password-wrap .material-symbols-outlined {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: normal;
+}
+
+.page-title-count {
+  font-size: 1rem;
+  color: var(--admin-text-gray);
+  margin-left: 0.5rem;
+}
+
+.page-title-sub {
+  font-size: 1.5rem;
+  font-weight: normal;
+}
+
+
+.list-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: var(--admin-box-shadow);
+}
+
+.table-border-r {
+  border-right: var(--admin-table-border-light);
+}
+
+.list-table th {
+  background-color: var(--admin-bg-gray);
+}
+
+.list-table th,
+.list-table td {
+  padding: 0.5rem;
+}
+
+.table-content-tr + .table-content-tr {
+  border-top: var(--admin-table-border-strong);
+}
+
+/* .list-table .table-icon-td {
+  padding-left: 2rem;
+} */
+
+.table-border-b-light {
+  border-bottom: var(--admin-table-border-light);
+}
+
+.table-border-b-strong {
+  border-bottom: var(--admin-table-border-strong);
+}
+
+.status-green {
+  display: inline-flex;
+	align-items: center;
+  color: green;
+  gap: 0.2rem;
+}
+
+
+.status-blue {
+  display: inline-flex;
+	align-items: center;
+  color: blue;
+  gap: 0.2rem;
+}
+
+.table-container {
+  padding: 2rem 3rem;
+  text-align: center;
+}
+
+.table-container table {
+  border-collapse: collapse;
+  display: inline-table;
+  width: 100%;
+}
+
+.table-container th {
+  text-align: right;
+  vertical-align: top;
+  padding: 1rem;
+  width: 15rem;
+}
+
+.table-container td {
+  text-align: left;
+  padding: 1rem 0rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.btn-wrap {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.radio-wrap {
+  display: flex;
+  gap: 2rem;
+}
+
+.radio-wrap label {
+  cursor: pointer;
+}
+
+.radio-wrap input[type="radio"] {
+  transform: scale(1.5);
+  margin-right: 0.5rem;
+  accent-color: black;
+}
+
+.themeColor-wrap {
+  width: 50%;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.themeColor-wrap input[type="radio"] {
+  display: none;
+}
+
+.color-dot,
+.color-dot-confirm {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  color: white;
+  display: inline-block;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.2s;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.color-dot span {
+  display: none;
+}
+
+input[type="radio"]:checked + .color-dot {
+  outline: 2px solid white;
+  outline-offset: -5px;
+}
+
+input[type="radio"]:checked + .color-dot span {
+  display: inline;
+}
+
+.merge-tag-preview {
+  background-color: black;
+  color: white;
+  padding: 0 0.2rem;
+}
+
+.progressbar {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.progressbar li { /* 未完了の文字 */
+  position: relative;
+  list-style-type: none;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--admin-text-gray);
+  font-weight: bold;
+  width: 100%;
+}
+
+.progressbar li:before { /* 未完了の線 */
+  position: absolute;
+  z-index: 0;
+  top: 38px;
+  left: -50%;
+  width: 100%;
+  height: 8px;
+  content: '';
+  background-color: var(--admin-border-gray);
+}
+
+.progressbar li:after { /* 未完了の丸 */
+  display: block;
+  width: 25px;
+  height: 25px;
+  margin: 7px auto 20px auto;
+  content: '';
+  text-align: center;
+  border-radius: 50%;
+  background-color: var(--admin-border-gray);
+  position: relative;
+  z-index: 1;
+}
+
+.progressbar li:first-child:before {
+  content: none;
+}
+
+.progressbar li.active, /* 完了した文字 */
+.progressbar li.complete{
+  color: black;
+}
+
+.progressbar li.active:before,  /* 完了した線 */
+.progressbar li.complete:before {
+  background-color: #808080;
+}
+
+.progressbar li.active:after, /* 完了した丸 */
+.progressbar li.complete:after {
+  background-color: #808080;
+}

@@ -19,8 +19,6 @@ const nextStep = document.getElementById('nextStep');
 
 let isActivated = false;
 let tutorialStep = 0;
-let visitedBookIds =
-    JSON.parse(localStorage.getItem('visitedBooks') || '[]');
 let hasFinishedModalTutorial = false;
 
 
@@ -169,24 +167,10 @@ function createBook(data, index) {
     textDiv.innerText = data.title;
     book.appendChild(textDiv);
 
-    // すでに見た本なら暗くする
-    if (visitedBookIds.includes(data.title)) {
-        book.classList.add('visited');
-    }
-
-
     // --- クリック時のデータ流し込み ---
     book.addEventListener('click', function () {
         // ========= 既読処理 =========
             book.classList.add('visited');
-
-            if (!visitedBookIds.includes(data.title)) {
-                visitedBookIds.push(data.title);
-                localStorage.setItem(
-                    'visitedBooks',
-                    JSON.stringify(visitedBookIds)
-                );
-            }
         // 1. チュートリアル中の場合、オーバーレイを消す
         const overlay = document.getElementById('tutorialOverlay');
         if (overlay && overlay.style.display === 'block') {

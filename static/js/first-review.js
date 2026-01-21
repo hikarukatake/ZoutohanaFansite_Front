@@ -20,6 +20,7 @@ const nextStep = document.getElementById('nextStep');
 let isActivated = false;
 let tutorialStep = 0;
 let hasFinishedModalTutorial = false;
+let currentOpenedBook = null;
 
 
 // tapTargetが存在する場合ときだけ
@@ -169,8 +170,9 @@ function createBook(data, index) {
 
     // --- クリック時のデータ流し込み ---
     book.addEventListener('click', function () {
-        // ========= 既読処理 =========
-            book.classList.add('visited');
+        // 今開いた本を記録
+        currentOpenedBook = book;
+
         // 1. チュートリアル中の場合、オーバーレイを消す
         const overlay = document.getElementById('tutorialOverlay');
         if (overlay && overlay.style.display === 'block') {
@@ -180,10 +182,6 @@ function createBook(data, index) {
                 const msg = book.querySelector('.tutorial-msg');
                 if (msg) msg.remove();
             }
-
-
-            // ↓ ここから既存のモーダル処理
-            openBookModal(data);
         }
 
         // 2. モーダル内の各パーツにデータをセット
@@ -298,6 +296,8 @@ nextBtn.addEventListener('click', function (e) {
     if (isAnimating) return;
     isAnimating = true;
     nextBtn.disabled = true;
+    // クリックされたら即座にボタンエリアを隠す
+    if (btnArea) btnArea.classList.remove('show');
 
     const existingBooks = document.querySelectorAll('.book');
     existingBooks.forEach((book, i) => {
@@ -342,7 +342,6 @@ function startTutorial() {
     const overlay = document.getElementById('tutorialOverlay');
     const firstBook = document.getElementById('firstBook');
     if (!firstBook) return;
-
     document.body.classList.add('no-scroll');
     overlay.style.display = 'block';
     firstBook.classList.add('highlight');
@@ -362,6 +361,12 @@ if (closeBtn) {
     closeBtn.addEventListener('click', function () {
         modal.style.display = 'none';
         document.body.classList.remove('no-scroll');
+
+    // 既読にする
+    if(currentOpenedBook){
+        currentOpenedBook.classList.add('visited');
+        currentOpenedBook = null;
+    }
     });
 }
 

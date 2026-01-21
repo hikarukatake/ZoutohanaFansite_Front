@@ -986,3 +986,34 @@ p {
 .book.visited {
     filter: brightness(0.8);
 }
+
+/* ▼ お気に入り（しおり）表示用クラス */
+.book.is-favorite::after {
+    content: "";
+    display: block;
+    position: absolute;
+    
+    /* 通知バッジのような右上の位置 */
+    top: -50px;   /* 上に少しはみ出す */
+    left: 0px;
+    /* 画像のサイズ（お好みで調整してください） */
+    width: 100px; 
+    height: 100px;
+    
+    /* 画像の設定 */
+    background-image: url('../../img/favarite.png'); /* 画像パス */
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+    /* 文字や本本体より手前に表示 */
+    z-index: -999; 
+    
+    /* （お好みで）ポヨンと出るアニメーション */
+    animation: popIcon 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ポヨンと出るアニメーション定義 */
+@keyframes popIcon {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}

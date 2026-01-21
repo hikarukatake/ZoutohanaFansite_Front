@@ -225,6 +225,11 @@ function createBook(data, index) {
     const fallAngle = (Math.random() * 60) - 30;
     book.style.setProperty('--fall-angle', fallAngle + 'deg');
 
+    // これはお気に入りのしおりを挟むための強制的につけている処理
+    if (index === 2) {
+        book.classList.add('is-favorite');
+    }
+
     shelf.appendChild(book);
 
     // 着地アニメーション

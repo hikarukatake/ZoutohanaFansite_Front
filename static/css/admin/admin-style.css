@@ -31,7 +31,7 @@
   box-sizing: border-box;
 }
 
-html, body, main, div, span, h1, h2, h3, h4, p, ol, ul, li {
+* {
   margin: 0;
   padding: 0;
 }
@@ -40,81 +40,26 @@ html {
   font-size: 16px;
 }
 
-#admin-main {
-  padding: 1rem 2rem;
-  max-width: 1536px;
-  margin: 0 auto;
-}
 
-.main-content {
-  padding: 0 1rem;
-}
-
-.main-content-card {
-  background-color: var(--admin-bg-gray);
-  border-radius: 1.5rem;
-  box-shadow: var(--admin-box-shadow-sm);
-}
-
-.review-card {
-  background-color: white;
-  border-radius: 1rem;
-  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
-  padding: 0rem 2rem;
-}
-
-.review-card-title {
-  font-size: 1.5rem;
-  font-weight: normal;
-}
-
-.review-card-sub-info {
-  color: var(--admin-text-gray);
-  font-size: 1rem;
-}
-
-.review-card-status {
-  background-color: #cdcdcd;
-  border: none;
-  border-radius: 100vmax;
-  padding: 0.2rem 0.7rem;
-}
 
 /* ========== tailwind系 ========== */
 .bg-gray {
   background-color: var(--admin-bg-gray);
 }
 
-.flex {
-  display: flex;
-  align-items:center;
+.cursor-help {
+  cursor: help;
 }
 
-.justify-between {
-  justify-content: space-between;
+.hidden {
+  display: none;
 }
 
-.justify-end {
-  justify-content: end;
+.scale-bigger {
+  scale: calc(1.5);
 }
 
-.flex-1 {
-  flex: 1;
-}
-
-.gap-1 {
-  gap: 0.25rem;
-}
-
-.gap-4 {
-  gap: 1rem;
-}
-
-.grid-4 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-
+/* ---------- margin ---------- */
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -125,6 +70,10 @@ html {
 
 .mt-8 {
   margin-top: 2rem;
+}
+
+.mb-auto {
+  margin-bottom: auto;
 }
 
 .ml-2 {
@@ -143,17 +92,14 @@ html {
   margin-right: 0.5rem;
 }
 
-.mb-auto {
-  margin-bottom: auto;
+.mx-auto {
+  margin: 0 auto;
 }
 
+
+/* ---------- padding ---------- */
 .p-8 {
   padding: 2rem;
-}
-
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
 }
 
 .pt-4 {
@@ -166,6 +112,11 @@ html {
 
 .pb-8 {
   padding-bottom: 2rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .pl-4 {
@@ -184,19 +135,70 @@ html {
   padding-right: 2rem;
 }
 
-.center-middle {
-  display:flex;
-	justify-content:center;
-	align-items:center;
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
+
+/* ---------- flex ---------- */
+.flex {
+  display: flex;
+  align-items:center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-end {
+  justify-content: end;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+
+/* ---------- grid ---------- */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+
+/* ---------- gap ---------- */
+.gap-1 {
+  gap: 0.25rem;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+/* ---------- font ---------- */
+.font-bold {
+  font-weight: bold;
+}
+
+.font-sm {
+  font-size: 0.8rem;
+}
+
+
+/* ---------- text ---------- */
 .text-center {
   text-align: center;
-}
-
-.icon-center {
-	display: inline-flex;
-	align-items: center;
 }
 
 .text-right {
@@ -219,14 +221,12 @@ html {
   text-decoration: none;
 }
 
-.font-bold {
-  font-weight: bold;
+.underline {
+  text-decoration: underline;
 }
 
-.font-sm {
-  font-size: 0.8rem;
-}
 
+/* ---------- width ---------- */
 .w-full {
   width: 100%;
 }
@@ -239,86 +239,38 @@ html {
   width: 25%;
 }
 
-/* ========== 独自 ========== */
-.select {
-  padding: 0.5rem;
-  border: 1px solid var(--admin-border-gray);
-  border-radius: 3px;
+/* ---------- 配置 ---------- */
+.items-start {
+  align-items: start;
 }
 
-.scale-bigger {
-  scale: calc(1.5);
+.center-middle {
+  display:flex;
+	justify-content:center;
+	align-items:center;
 }
 
-.btn {
-  padding: 0.4rem 0.6rem;
-  background-color: #d9d9d9;
-  color: black;
-  text-decoration: none;
-  border: 0.5px solid var(--admin-border-gray);
-  border-radius: 3px;
-  font-size: 1rem;
+.icon-center {
+	display: inline-flex;
+	align-items: center;
 }
 
-.btn-sm {
-  padding: 0.2rem 0.3rem;
-  background-color: #d9d9d9;
-  color: var(--admin-text-gray);
-  text-decoration: none;
-  border: 0.5px solid var(--admin-border-gray);
-  border-radius: 3px;
-  font-size: 0.8rem;
+
+/* ========== パーツ ========== */
+#admin-main {
+  padding: 1rem 2rem;
+  max-width: 1536px;
+  margin: 0 auto;
 }
 
-.btn-danger {
-  color: var(--admin-text-red);
+.main-content {
+  padding: 0 1rem;
 }
 
-.btn .material-symbols-outlined {
-  font-size: 1rem;
-}
-
-.btn-file::file-selector-button {
-  padding: 0.4rem 0.6rem;
-  background-color: #d9d9d9;
-  color: black;
-  text-decoration: none;
-  border: 0.5px solid var(--admin-border-gray);
-  border-radius: 3px;
-}
-
-.input-text {
-  padding: 0.5rem;
-  border: 0.1px solid var(--admin-border-gray);
-  border-radius: 3px;
-}
-
-.input-textarea {
-  padding: 0.5rem;
-  border: 0.1px solid var(--admin-border-gray);
-  border-radius: 3px;
-  resize: vertical;
-}
-
-.input-datetime {
-  padding: 0.5rem;
-  border: 0.1px solid var(--admin-border-gray);
-  border-radius: 3px;
-}
-
-.input-datetime::-webkit-calendar-picker-indicator {
-  transform: scale(1.3);
-  position: relative;
-}
-
-.input-password-wrap {
-  position: relative;
-}
-
-.input-password-wrap .material-symbols-outlined {
-  position: absolute;
-  right: 10px;
-  top: 5px;
+.main-content-card {
+  background-color: var(--admin-bg-gray);
+  border-radius: 1.5rem;
+  box-shadow: var(--admin-box-shadow-sm);
 }
 
 .page-title {
@@ -337,7 +289,21 @@ html {
   font-weight: normal;
 }
 
+.merge-tag-preview {  /* 個別通知テンプレートの置き換えタグ */
+  background-color: black;
+  color: white;
+  padding: 0 0.2rem;
+}
 
+#qrImg-preview {
+  max-width: 200px;
+  max-height: 200px;
+  border: 1px solid var(--admin-border-gray);
+  margin-top: 1rem;
+}
+
+
+/* ---------- テーブル ---------- */
 .list-table {
   width: 100%;
   border-collapse: collapse;
@@ -361,31 +327,12 @@ html {
   border-top: var(--admin-table-border-strong);
 }
 
-/* .list-table .table-icon-td {
-  padding-left: 2rem;
-} */
-
 .table-border-b-light {
   border-bottom: var(--admin-table-border-light);
 }
 
 .table-border-b-strong {
   border-bottom: var(--admin-table-border-strong);
-}
-
-.status-green {
-  display: inline-flex;
-	align-items: center;
-  color: green;
-  gap: 0.2rem;
-}
-
-
-.status-blue {
-  display: inline-flex;
-	align-items: center;
-  color: blue;
-  gap: 0.2rem;
 }
 
 .table-container {
@@ -411,77 +358,21 @@ html {
   padding: 1rem 0rem;
 }
 
-.hidden {
-  display: none;
+.status-green {
+  display: inline-flex;
+	align-items: center;
+  color: green;
+  gap: 0.2rem;
 }
 
-.btn-wrap {
-  display: flex;
-  gap: 2rem;
-  justify-content: center;
+.status-blue {
+  display: inline-flex;
+	align-items: center;
+  color: blue;
+  gap: 0.2rem;
 }
 
-.radio-wrap {
-  display: flex;
-  gap: 2rem;
-}
-
-.radio-wrap label {
-  cursor: pointer;
-}
-
-.radio-wrap input[type="radio"] {
-  transform: scale(1.5);
-  margin-right: 0.5rem;
-  accent-color: black;
-}
-
-.themeColor-wrap {
-  width: 50%;
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(12, 1fr);
-}
-
-.themeColor-wrap input[type="radio"] {
-  display: none;
-}
-
-.color-dot,
-.color-dot-confirm {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  color: white;
-  display: inline-block;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: 0.2s;
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.color-dot span {
-  display: none;
-}
-
-input[type="radio"]:checked + .color-dot {
-  outline: 2px solid white;
-  outline-offset: -5px;
-}
-
-input[type="radio"]:checked + .color-dot span {
-  display: inline;
-}
-
-.merge-tag-preview {
-  background-color: black;
-  color: white;
-  padding: 0 0.2rem;
-}
-
+/* ---------- 企画カード プログレスバー ---------- */
 .progressbar {
   position: relative;
   margin: 0;
@@ -542,4 +433,276 @@ input[type="radio"]:checked + .color-dot span {
 .progressbar li.active:after, /* 完了した丸 */
 .progressbar li.complete:after {
   background-color: #808080;
+}
+
+
+/* ---------- 書評カード ---------- */
+.review-card {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
+  padding: 0rem 2rem;
+}
+
+.review-card-title {
+  font-size: 1.5rem;
+  font-weight: normal;
+}
+
+.review-card-sub-info {
+  color: var(--admin-text-gray);
+  font-size: 1rem;
+}
+
+.review-card-status {
+  background-color: #cdcdcd;
+  border: none;
+  border-radius: 100vmax;
+  padding: 0.2rem 0.7rem;
+}
+
+
+/* ---------- モーダル ---------- */
+.modal { /* モーダルの背景を暗くするやつ */
+  /* display: none; コーディング中なのでコメントアウト　モーダル作り終わったら後で戻す */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.25);
+}
+
+.modal > div {
+  height: 100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+.modal-content { /* モーダル自体 */
+  background-color: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 800px;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.modal-close {
+  cursor: pointer;
+}
+
+.modal-close .material-symbols-outlined {
+  font-size: 2rem;
+}
+
+.modal-option-wrap li {
+  list-style-type: none;
+}
+
+.modal-option-wrap > li + li {
+  margin-top: 1.5rem;
+}
+
+.modal-option-wrap input[type=checkbox] {
+  scale: calc(1.5);
+}
+
+.modal-checkbox-child {
+  margin-left: 1.5rem;
+}
+
+.modal-checkbox-child li {
+  margin-top: 0.5rem;
+}
+
+.notification-confirm-preview,
+.change-confirm-preview {
+  border: 1px solid var(--admin-border-gray);
+  padding: 0.5rem 1rem;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.notification-confirm-preview li,
+.change-confirm-preview li {
+  margin-left: 1.5rem;
+}
+
+/* ----- エリア確認用 ----- */
+/* .modal-option-wrap {
+  background-color: var(--check-blue);
+}
+
+.modal-option-wrap > li {
+  background-color: var(--check-green);
+}
+
+.modal-checkbox-parent {
+  background-color: var(--check-orange);
+}
+
+.modal-checkbox-child {
+  background-color: var(--check-pink);
+}
+
+.modal-checkbox-child li {
+  background-color: var(--check-sky);
+} */
+
+
+/* ---------- フォーム関連 ---------- */
+.select {
+  padding: 0.5rem;
+  border: 1px solid var(--admin-border-gray);
+  border-radius: 3px;
+}
+
+/* ----- input ----- */
+.input-text {
+  padding: 0.5rem;
+  border: 0.1px solid var(--admin-border-gray);
+  border-radius: 3px;
+}
+
+.input-textarea {
+  padding: 0.5rem;
+  border: 0.1px solid var(--admin-border-gray);
+  border-radius: 3px;
+  resize: vertical;
+}
+
+.input-datetime {
+  padding: 0.5rem;
+  border: 0.1px solid var(--admin-border-gray);
+  border-radius: 3px;
+}
+
+.input-datetime::-webkit-calendar-picker-indicator {
+  transform: scale(1.3);
+  position: relative;
+}
+
+
+/* ----- ラジオ ----- */
+.radio-wrap {
+  display: flex;
+  gap: 2rem;
+}
+
+.radio-wrap label {
+  cursor: pointer;
+}
+
+.radio-wrap input[type="radio"] {
+  transform: scale(1.5);
+  margin-right: 0.5rem;
+  accent-color: black;
+}
+
+
+/* ---- パスワード ----- */
+.input-password-wrap {
+  position: relative;
+}
+
+.input-password-wrap .material-symbols-outlined {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+
+#password-visible-icon {
+  cursor: pointer;
+}
+
+
+/* ----- テーマカラー ----- */
+.themeColor-wrap {
+  width: 50%;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.themeColor-wrap input[type="radio"] {
+  display: none;
+}
+
+.color-dot,
+.color-dot-confirm {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  color: white;
+  display: inline-block;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.2s;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.color-dot span {
+  display: none;
+}
+
+input[type="radio"]:checked + .color-dot {
+  outline: 2px solid white;
+  outline-offset: -5px;
+}
+
+input[type="radio"]:checked + .color-dot span {
+  display: inline;
+}
+
+
+/* ---------- ボタン ---------- */
+.btn {
+  padding: 0.4rem 0.6rem;
+  background-color: #d9d9d9;
+  color: black;
+  text-decoration: none;
+  border: 0.5px solid var(--admin-border-gray);
+  border-radius: 3px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-sm {
+  padding: 0.2rem 0.3rem;
+  background-color: #d9d9d9;
+  color: var(--admin-text-gray);
+  text-decoration: none;
+  border: 0.5px solid var(--admin-border-gray);
+  border-radius: 3px;
+  font-size: 0.8rem;
+}
+
+.btn-danger {
+  color: var(--admin-text-red);
+}
+
+.btn .material-symbols-outlined {
+  font-size: 1rem;
+}
+
+.btn-file::file-selector-button {
+  padding: 0.4rem 0.6rem;
+  background-color: #d9d9d9;
+  color: black;
+  text-decoration: none;
+  border: 0.5px solid var(--admin-border-gray);
+  border-radius: 3px;
+}
+
+.btn-wrap {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
 }

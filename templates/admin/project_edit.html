@@ -14,302 +14,245 @@
     <main id="admin-main">
       <h1 class="page-title">企画編集・情報</h1>
 
-      <!-- あとでここにタブパーツ入れる -->
-      <div class="main-content-card mt-4"> <!-- 「企画について」タブの中身 -->
-        <form>
-          <div class="table-container">
-            <table>
-              <tr>
-                <th>公開/非公開 : </th>
-                <td>
-                  <div class="radio-wrap">
-                    <label><input type="radio" name="published" value="TRUE" class="scale-bigger" checked>公開</label>
-                    <label><input type="radio" name="published" value="FALSE" class="scale-bigger">非公開</label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th>ステータス : </th>
-                <td>
-                  <select name="status" class="select w-half">
-                    <option value="BEFORE_SUBMISSION">書評投稿期間前</option>
-                    <option value="DURING_SUBMISSION">書評作成・投稿期間中</option>
-                    <option value="FIRST_PHASE">一次審査中</option>
-                    <option value="SECOND_PHASE_VOTING">二次審査(投票)中</option>
-                    <option value="SECOND_PHASE_VERIFY">二次審査(確認)中</option>
-                    <option value="SECOND_PHASE_RESULT">二次審査結果発表</option>
-                    <option value="AWARD_ANNOUNCEMENT">大賞発表</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <th>QRコード : </th>
-                <td class="flex gap-4">
-                  <button id="qrImg-showButton" class="btn">表示する</button>
-                  <button id="qrImg-downloadButton" class="btn">ダウンロードする</button>
-                  <img id="qrImg-preview">
-                </td>
-              </tr>
-              <tr>
-                <!-- 削除機能は後で実装 -->
-                <th class="table-border-b-strong">削除</th>
-                <td class="table-border-b-strong"><button class="btn btn-danger">このプロジェクトを削除する</button></td>
-              </tr>
-
-              <tr>
-                <th>企画名 : </th>
-                <td>
-                  <input type="text" name="name" class="input-text w-full">
-                  <p class="text-danger"></p>
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  <span class="icon-center gap-1">
-                    企画URL<span class="material-symbols-outlined text-gray" title="企画ページのURLの末尾につく文字列です。">help</span> : </th>
-                  </span>
-                <td>
-                  <input type="text" name="urlKey" id="urlKey-input" class="input-text w-full">
-                  <span class="text-gray">https://zoutohana-fansite.com/project/</span><span id="urlKey-preview" class="text-gray">_____</span>
-                  <p class="text-danger"></p>
-                </td>
-              </tr>
-              <tr>
-                <th class="table-border-b-light">説明 : </th>
-                <td class="table-border-b-light"><textarea rows="10" name="introduction" class="input-textarea w-full"></textarea></td>
-              </tr>
-
-              <tr>
-                <th>企画期間 : </th>
-                <td>
-                  <input type="datetime-local" name="projectStartAt" class="input-datetime">
-                  <span class="wave-dash">～</span>
-                  <input type="datetime-local" name="projectEndAt" class="input-datetime">
-                </td>
-              </tr>
-              <tr>
-                <th>書評作成・投稿期間 : </th>
-                <td>
-                  <input type="datetime-local" name="submissionStartAt" class="input-datetime">
-                  <span class="wave-dash">～</span>
-                  <input type="datetime-local" name="submissionEndAt" class="input-datetime">
-                </td>
-              </tr>
-              <tr>
-                <th class="table-border-b-light">書評投票(二次審査)期間 : </th>
-                <td class="table-border-b-light">
-                  <input type="datetime-local" name="votingStartAt" class="input-datetime">
-                  <span class="wave-dash">～</span>
-                  <input type="datetime-local" name="votingEndAt" class="input-datetime">
-                </td>
-              </tr>
-
-              <tr>
-                <th>書籍タイトル : </th>
-                <td>
-                  <div class="radio-wrap">
-                    <label><input type="radio" name="enableVisibleBookTitle" value="FALSE" class="scale-bigger" checked>表示しない</label>
-                    <label><input type="radio" name="enableVisibleBookTitle" value="TRUE" class="scale-bigger">表示する</label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th>書評タイトル : </th>
-                <td>
-                  <div class="radio-wrap">
-                    <label><input type="radio" name="enableVisibleReviewTitle" value="FALSE" class="scale-bigger" checked>表示しない</label>
-                    <label><input type="radio" name="enableVisibleReviewTitle" value="TRUE" class="scale-bigger">表示する</label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th class="table-border-b-light">投稿者情報 : </th>
-                <td class="table-border-b-light">
-                  <div class="radio-wrap">
-                    <label><input type="radio" name="enableVisibleUserInfo" value="FALSE" class="scale-bigger" checked>表示しない</label>
-                    <label><input type="radio" name="enableVisibleUserInfo" value="TRUE" class="scale-bigger"s>表示する</label>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <th>テーマカラー : </th>
-                <td>
-                  <div class="themeColor-wrap">
-                    <label>
-                      <input type="radio" name="themeColor" value="GREEN" checked>
-                      <span class="color-dot" style="background:var(--theme-green);" title="GREEN : みどり">
-                        <span class="material-symbols-outlined">check</span>
-                      </span>
-                    </label>
-
-                    <label>
-                      <input type="radio" name="themeColor" value="PINK">
-                      <span class="color-dot" style="background:var(--theme-pink);" title="PINK : もも">
-                        <span class="material-symbols-outlined">check</span>
-                      </span>
-                    </label>
-
-                    <label>
-                      <input type="radio" name="themeColor" value="YELLOW">
-                      <span class="color-dot" style="background:var(--theme-yellow);" title="YELLOW : き">
-                        <span class="material-symbols-outlined">check</span>
-                      </span>
-                    </label>
-
-                    <label>
-                      <input type="radio" name="themeColor" value="BLUE">
-                      <span class="color-dot" style="background:var(--theme-blue);" title="BLUE : あお">
-                        <span class="material-symbols-outlined">check</span>
-                      </span>
-                    </label>
-
-                    <label>
-                      <input type="radio" name="themeColor" value="BLACK">
-                      <span class="color-dot" style="background:var(--theme-black);" title="BLACK : くろ">
-                        <span class="material-symbols-outlined">check</span>
-                      </span>
-                    </label>
-
-                    <label>
-                      <input type="radio" name="themeColor" value="GRAY">
-                      <span class="color-dot" style="background:var(--theme-gray);" title="GRAY : はい">
-                        <span class="material-symbols-outlined">check</span>
-                      </span>
-                    </label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th>ロゴ画像 : </th>
-                <td id="projectInput-td">
-                  <div>
-                    <input type="file" accept="image/*" name="mainImg" id="mainImg-input" class="btn-file">
-                    <img id="mainImg-preview">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th>PDF : </th>
-                <td id="projectInput-td">
-                  <div>
-                    <input type="file" accept="application/pdf" name="pdf" multiple id="pdf-input" class="btn-file">
-                    <ul id="pdf-list-ul"></ul>
-                  </div>
-                </td>
-              </tr>
-            </table>
-
-            <div class="button-wrap mt-4">
-              <a href="#" class="btn">キャンセル</a>
-              <input type="submit" value="確認する" class="btn">
-            </div>
-          </form>
-        </div>
+      <div class="tab-menu w-full mt-2">
+        <ul class="tab-list">
+          <li class="tab-item active" tabindex="0">企画について</li>
+          <li class="tab-item" tabindex="0">投稿された書評について</li>
+        </ul>
       </div>
 
-      <div class="main-content-card mt-4 p-8"> <!-- 「投稿された書評について」タブの中身 -->
-        <div class="table-border-b-strong pb-8"> <!-- 「通知一括送信」部分 -->
-          <h2 class="page-title-sub">通知一括送信</h2>
-          <div class="flex gap-1 mt-2">
-            <span>テンプレート名 : </span>
-            <select class="select flex-1 w-full">
-              <option>一次審査通過連絡</option>
-            </select>
-            <button class="btn">呼び出す</button>
-          </div>
-          <textarea rows="7" class="input-textarea w-full mt-2"></textarea>
-          <div class="flex gap-1">
-            <span>宛先 : </span>
-            <select class="select flex-1 w-full">
-              <option>ステータスが「一次審査通過」の書評すべて</option>
-            </select>
-            <button class="btn">確認する</button>
-          </div>
-        </div>
+      <div class="tab-content">
+        <div class="main-content-card tab-panel active"> <!-- 「企画について」タブの中身 -->
+          <form>
+            <div class="table-container">
+              <table>
+                <tr>
+                  <th>公開/非公開 : </th>
+                  <td>
+                    <div class="radio-wrap">
+                      <label><input type="radio" name="published" value="TRUE" class="scale-bigger" checked>公開</label>
+                      <label><input type="radio" name="published" value="FALSE" class="scale-bigger">非公開</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>ステータス : </th>
+                  <td>
+                    <select name="status" class="select w-half">
+                      <option value="BEFORE_SUBMISSION">書評投稿期間前</option>
+                      <option value="DURING_SUBMISSION">書評作成・投稿期間中</option>
+                      <option value="FIRST_PHASE">一次審査中</option>
+                      <option value="SECOND_PHASE_VOTING">二次審査(投票)中</option>
+                      <option value="SECOND_PHASE_VERIFY">二次審査(確認)中</option>
+                      <option value="SECOND_PHASE_RESULT">二次審査結果発表</option>
+                      <option value="AWARD_ANNOUNCEMENT">大賞発表</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <th>QRコード : </th>
+                  <td>
+                    <div class="flex gap-4">
+                      <button type="button" id="qrImg-showButton" class="btn">表示する</button>
+                      <button type="button" id="qrImg-downloadButton" class="btn">ダウンロードする</button>
+                    </div>
+                    <img id="qrImg-preview" src="../../static/img/flower-blue.png" class="hidden">
+                  </td>
+                </tr>
+                <tr>
+                  <!-- 削除機能は後で実装 -->
+                  <th class="table-border-b-strong">削除 : </th>
+                  <td class="table-border-b-strong"><button type="button" class="btn btn-danger" data-modal-target="delete-confirm-modal">このプロジェクトを削除する</button></td>
+                </tr>
 
-        <div class="pb-8"> <!-- 「書評閲覧」部分 -->
-          <h2 class="page-title-sub">書評閲覧</h2>
-          <div class="flex gap-1 mt-2">
-            <a href="#" class="btn icon-center">
-              <span class="material-symbols-outlined scale-bigger pr-1">library_books</span>すべての書評を確認
-            </a>
-            <button class="btn icon-center">
-              <span class="material-symbols-outlined scale-bigger pr-1">csv</span>
-              <span class="material-symbols-outlined scale-bigger pr-1">download_2</span>
-              すべての書評をCSV形式で出力
-            </button>
-          </div>
-        </div>
+                <tr>
+                  <th>企画名 : </th>
+                  <td>
+                    <input type="text" name="name" class="input-text w-full">
+                    <p class="text-danger"></p>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <span class="icon-center gap-1">
+                      企画URL<span class="material-symbols-outlined text-gray cursor-help" title="企画ページのURLの末尾につく文字列です。">help</span> : </th>
+                    </span>
+                  <td>
+                    <input type="text" name="urlKey" id="urlKey-input" class="input-text w-full">
+                    <span class="text-gray">https://zoutohana-fansite.com/project/</span><span id="urlKey-preview" class="text-gray">_____</span>
+                    <p class="text-danger"></p>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="table-border-b-light">説明 : </th>
+                  <td class="table-border-b-light"><textarea rows="10" name="introduction" class="input-textarea w-full"></textarea></td>
+                </tr>
 
-        <div class="pb-8"> <!-- 「大賞の書評」部分 -->
-          <h2 class="page-title-sub">大賞の書評</h2>
-          <div class="review-card mt-2"> <!-- 書評カード -->
-            <div class="table-border-b-strong flex justify-between py-4"> <!-- 書評カードヘッダー -->
-              <div> <!-- 左側 -->
-                <p class="review-card-sub-info">No.<span>100</span></p>
-                <h3 class="review-card-title">小学生の頃から大好きな一冊</h3>
-                <p class="review-card-sub-info ml-4"><span>なまえなまえ</span>(ID:<span>loginID123</span>)</p>
-              </div>
-              <h3 class="review-card-title"> <!-- 右側 -->
-                <span>123</span>
-                票
-              </h3>
-            </div>
-            <div class="table-border-b-strong flex py-4"> <!-- 書評カードボディ -->
-              <table class="pr-8 mb-auto">
                 <tr>
-                  <th>ISBN : </th>
-                  <td>9784XXXXXXXXXX</td>
+                  <th>企画期間 : </th>
+                  <td>
+                    <input type="datetime-local" name="projectStartAt" class="input-datetime">
+                    <span class="wave-dash">～</span>
+                    <input type="datetime-local" name="projectEndAt" class="input-datetime">
+                  </td>
                 </tr>
                 <tr>
-                  <th>タイトル : </th>
-                  <td>風の図書館</td>
+                  <th>書評作成・投稿期間 : </th>
+                  <td>
+                    <input type="datetime-local" name="submissionStartAt" class="input-datetime">
+                    <span class="wave-dash">～</span>
+                    <input type="datetime-local" name="submissionEndAt" class="input-datetime">
+                  </td>
                 </tr>
                 <tr>
-                  <th>出版社 : </th>
-                  <td>ABC出版</td>
+                  <th class="table-border-b-light">書評投票(二次審査)期間 : </th>
+                  <td class="table-border-b-light">
+                    <input type="datetime-local" name="votingStartAt" class="input-datetime">
+                    <span class="wave-dash">～</span>
+                    <input type="datetime-local" name="votingEndAt" class="input-datetime">
+                  </td>
+                </tr>
+
+                <tr>
+                  <th>書籍タイトル : </th>
+                  <td>
+                    <div class="radio-wrap">
+                      <label><input type="radio" name="enableVisibleBookTitle" value="FALSE" class="scale-bigger" checked>表示しない</label>
+                      <label><input type="radio" name="enableVisibleBookTitle" value="TRUE" class="scale-bigger">表示する</label>
+                    </div>
+                  </td>
                 </tr>
                 <tr>
-                  <th>著者 : </th>
-                  <td>田中太郎</td>
+                  <th>書評タイトル : </th>
+                  <td>
+                    <div class="radio-wrap">
+                      <label><input type="radio" name="enableVisibleReviewTitle" value="FALSE" class="scale-bigger" checked>表示しない</label>
+                      <label><input type="radio" name="enableVisibleReviewTitle" value="TRUE" class="scale-bigger">表示する</label>
+                    </div>
+                  </td>
                 </tr>
                 <tr>
-                  <th>形式 : </th>
-                  <td>文庫</td>
+                  <th class="table-border-b-light">投稿者情報 : </th>
+                  <td class="table-border-b-light">
+                    <div class="radio-wrap">
+                      <label><input type="radio" name="enableVisibleUserInfo" value="FALSE" class="scale-bigger" checked>表示しない</label>
+                      <label><input type="radio" name="enableVisibleUserInfo" value="TRUE" class="scale-bigger"s>表示する</label>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <th>テーマカラー : </th>
+                  <td>
+                    <div class="themeColor-wrap">
+                      <label>
+                        <input type="radio" name="themeColor" value="GREEN" checked>
+                        <span class="color-dot" style="background:var(--theme-green);" title="GREEN : みどり">
+                          <span class="material-symbols-outlined">check</span>
+                        </span>
+                      </label>
+
+                      <label>
+                        <input type="radio" name="themeColor" value="PINK">
+                        <span class="color-dot" style="background:var(--theme-pink);" title="PINK : もも">
+                          <span class="material-symbols-outlined">check</span>
+                        </span>
+                      </label>
+
+                      <label>
+                        <input type="radio" name="themeColor" value="YELLOW">
+                        <span class="color-dot" style="background:var(--theme-yellow);" title="YELLOW : き">
+                          <span class="material-symbols-outlined">check</span>
+                        </span>
+                      </label>
+
+                      <label>
+                        <input type="radio" name="themeColor" value="BLUE">
+                        <span class="color-dot" style="background:var(--theme-blue);" title="BLUE : あお">
+                          <span class="material-symbols-outlined">check</span>
+                        </span>
+                      </label>
+
+                      <label>
+                        <input type="radio" name="themeColor" value="BLACK">
+                        <span class="color-dot" style="background:var(--theme-black);" title="BLACK : くろ">
+                          <span class="material-symbols-outlined">check</span>
+                        </span>
+                      </label>
+
+                      <label>
+                        <input type="radio" name="themeColor" value="GRAY">
+                        <span class="color-dot" style="background:var(--theme-gray);" title="GRAY : はい">
+                          <span class="material-symbols-outlined">check</span>
+                        </span>
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>ロゴ画像 : </th>
+                  <td id="projectInput-td">
+                    <div>
+                      <input type="file" accept="image/*" name="mainImg" id="mainImg-input" class="btn-file">
+                      <img id="mainImg-preview">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>PDF : </th>
+                  <td id="projectInput-td">
+                    <div>
+                      <input type="file" accept="application/pdf" name="pdf" multiple id="pdf-input" class="btn-file">
+                      <ul id="pdf-list-ul"></ul>
+                    </div>
+                  </td>
                 </tr>
               </table>
-              <div class="flex-1">
-                <p>本文 : </p>
-                <p>この本を初めて読んだのは、小学四年生のときでした。表紙のイラストに惹かれて手に取ったのがきっかけでしたが、読み進めるうちに主人公の冒険や葛藤にどんどん引き込まれていったのを今でも覚えています。 あの頃は物語の世界に憧れるだけでしたが、大学生になった今読むと、人生の選択や成長の物語として心に響く部分が多く、まるで自分へのメッセージのように感じます。 文庫版の柔らかい紙の感触や少し黄ばんだページも、懐かしさをより一層引き立ててくれます。何度読み返しても色あせない、僕の原点のような一冊です。</p>
+
+              <div class="button-wrap mt-4">
+                <a href="#" class="btn">キャンセル</a>
+                <input type="submit" value="確認する" class="btn">
               </div>
-            </div>
-            <div class="flex justify-between py-4"> <!-- 書評カードフッター -->
-              <div> <!-- 左側 -->
-                <p class="review-card-sub-info">投稿日時 : <span>2025/10/01 12:34</span></p>
-                <p class="review-card-sub-info">更新日時 : <span>2025/10/02 23:45</span></p>
-              </div>
-              <a href="#" class="icon-center review-card-sub-info text-decoration-none">詳細を確認する<span class="material-symbols-outlined ml-2">keyboard_double_arrow_right</span></a> <!-- 右側 -->
-            </div>
+            </form>
           </div>
         </div>
 
-        <div> <!-- 「ノミネートした書評」部分 -->
-          <h2 class="page-title-sub">ノミネートした書評</h2>
-          <div class="flex justify-between mt-2"> <!-- メニュー部分 -->
-            <div> <!-- メニュー左部分(並び替え) -->
-              <select class="select">
-                <option>得票数</option>
+        <div class="main-content-card p-8 tab-panel"> <!-- 「投稿された書評について」タブの中身 -->
+          <div class="table-border-b-strong pb-8"> <!-- 「通知一括送信」部分 -->
+            <h2 class="page-title-sub">通知一括送信</h2>
+            <div class="flex gap-1 mt-2">
+              <span>テンプレート名 : </span>
+              <select class="select flex-1 w-full">
+                <option>一次審査通過連絡</option>
               </select>
-              順
+              <button type="submit" class="btn">呼び出す</button>
             </div>
-            <div class="flex gap-1"> <!-- メニュー右部分(検索) -->
-              <input type="text" class="input-text flex-1" placeholder="検索">
-              <button class="btn"><span class="material-symbols-outlined">search</span></button>
+            <textarea rows="7" class="input-textarea w-full mt-2"></textarea>
+            <div class="flex gap-1">
+              <span>宛先 : </span>
+              <select class="select flex-1 w-full">
+                <option>ステータスが「一次審査通過」の書評すべて</option>
+              </select>
+              <button type="button" class="btn" data-modal-target="notification-confirm-modal">確認する</button>
             </div>
           </div>
 
-          <div> <!-- 書評カードを並べる部分 -->
+          <div class="pb-8"> <!-- 「書評閲覧」部分 -->
+            <h2 class="page-title-sub">書評閲覧</h2>
+            <div class="flex gap-1 mt-2">
+              <a href="#" class="btn icon-center">
+                <span class="material-symbols-outlined scale-bigger pr-1">library_books</span>すべての書評を確認
+              </a>
+              <button type="button" class="btn icon-center">
+                <span class="material-symbols-outlined scale-bigger pr-1">csv</span>
+                <span class="material-symbols-outlined scale-bigger pr-1">download_2</span>
+                すべての書評をCSV形式で出力
+              </button>
+            </div>
+          </div>
+
+          <div class="pb-8"> <!-- 「大賞の書評」部分 -->
+            <h2 class="page-title-sub">大賞の書評</h2>
             <div class="review-card mt-2"> <!-- 書評カード -->
               <div class="table-border-b-strong flex justify-between py-4"> <!-- 書評カードヘッダー -->
                 <div> <!-- 左側 -->
@@ -355,19 +298,156 @@
                   <p class="review-card-sub-info">投稿日時 : <span>2025/10/01 12:34</span></p>
                   <p class="review-card-sub-info">更新日時 : <span>2025/10/02 23:45</span></p>
                 </div>
-                <a href="#" class="icon-center review-card-sub-info text-decoration-none">詳細を確認する<span class="material-symbols-outlined">keyboard_double_arrow_right</span></a> <!-- 右側 -->
+                <a href="#" class="icon-center review-card-sub-info text-decoration-none">詳細を確認する<span class="material-symbols-outlined ml-2">keyboard_double_arrow_right</span></a> <!-- 右側 -->
               </div>
             </div>
           </div>
 
-          <div class="pagination" id="pagination"></div>
-        </div>
+          <div> <!-- 「ノミネートした書評」部分 -->
+            <h2 class="page-title-sub">ノミネートした書評</h2>
+            <div class="flex justify-between mt-2"> <!-- メニュー部分 -->
+              <div> <!-- メニュー左部分(並び替え) -->
+                <select class="select">
+                  <option>得票数</option>
+                </select>
+                順
+              </div>
+              <div class="flex gap-1"> <!-- メニュー右部分(検索) -->
+                <input type="text" class="input-text flex-1" placeholder="検索">
+                <button type="submit" class="btn"><span class="material-symbols-outlined">search</span></button>
+              </div>
+            </div>
 
+            <div> <!-- 書評カードを並べる部分 -->
+              <div class="review-card mt-2"> <!-- 書評カード -->
+                <div class="table-border-b-strong flex justify-between py-4"> <!-- 書評カードヘッダー -->
+                  <div> <!-- 左側 -->
+                    <p class="review-card-sub-info">No.<span>100</span></p>
+                    <h3 class="review-card-title">小学生の頃から大好きな一冊</h3>
+                    <p class="review-card-sub-info ml-4"><span>なまえなまえ</span>(ID:<span>loginID123</span>)</p>
+                  </div>
+                  <h3 class="review-card-title"> <!-- 右側 -->
+                    <span>123</span>
+                    票
+                  </h3>
+                </div>
+                <div class="table-border-b-strong flex py-4"> <!-- 書評カードボディ -->
+                  <table class="pr-8 mb-auto">
+                    <tr>
+                      <th>ISBN : </th>
+                      <td>9784XXXXXXXXXX</td>
+                    </tr>
+                    <tr>
+                      <th>タイトル : </th>
+                      <td>風の図書館</td>
+                    </tr>
+                    <tr>
+                      <th>出版社 : </th>
+                      <td>ABC出版</td>
+                    </tr>
+                    <tr>
+                      <th>著者 : </th>
+                      <td>田中太郎</td>
+                    </tr>
+                    <tr>
+                      <th>形式 : </th>
+                      <td>文庫</td>
+                    </tr>
+                  </table>
+                  <div class="flex-1">
+                    <p>本文 : </p>
+                    <p>この本を初めて読んだのは、小学四年生のときでした。表紙のイラストに惹かれて手に取ったのがきっかけでしたが、読み進めるうちに主人公の冒険や葛藤にどんどん引き込まれていったのを今でも覚えています。 あの頃は物語の世界に憧れるだけでしたが、大学生になった今読むと、人生の選択や成長の物語として心に響く部分が多く、まるで自分へのメッセージのように感じます。 文庫版の柔らかい紙の感触や少し黄ばんだページも、懐かしさをより一層引き立ててくれます。何度読み返しても色あせない、僕の原点のような一冊です。</p>
+                  </div>
+                </div>
+                <div class="flex justify-between py-4"> <!-- 書評カードフッター -->
+                  <div> <!-- 左側 -->
+                    <p class="review-card-sub-info">投稿日時 : <span>2025/10/01 12:34</span></p>
+                    <p class="review-card-sub-info">更新日時 : <span>2025/10/02 23:45</span></p>
+                  </div>
+                  <a href="#" class="icon-center review-card-sub-info text-decoration-none">詳細を確認する<span class="material-symbols-outlined">keyboard_double_arrow_right</span></a> <!-- 右側 -->
+                </div>
+              </div>
+            </div>
+
+            <div class="pagination" id="pagination"></div>
+          </div>
+        </div>
       </div>
     </main>
 
+    <div id="delete-confirm-modal" class="modal">
+      <div>
+        <div class="modal-content">
+          <div class="flex justify-between items-start">
+            <h2 class="page-title mx-auto">注意</h2>
+            <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
+          </div>
+
+          <div class="mt-8">
+            <p>この企画を削除すると、<span class="font-bold underline">関連するすべての書評データも同時に削除されます。</span></p>
+            <p><span class="font-bold underline text-danger">削除したデータは復元できません。</span></p>
+            <p class="mt-4">削除を実行するには、以下の入力欄に企画URLを入力してください。</p>
+          </div>
+
+          <div class="mt-8">
+            <p>企画URL : <span>winter-bunko</span></p>
+            <form>
+              <input type="text" class="input-text w-full" placeholder="winter-bunko">
+              <div class="btn-wrap mt-8">
+                <button type="submit" class="btn btn-danger"><span class="px-8">削除する</span></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="notification-confirm-modal" class="modal">
+      <div>
+        <div class="modal-content">
+          <div class="flex justify-between items-start">
+            <h2 class="page-title mx-auto">確認</h2>
+            <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
+          </div>
+
+          <div class="mt-8">
+            <p>以下の内容・宛先で通知を送信してよろしいですか？</p>
+          </div>
+
+          <div class="mt-8">
+            <h3 class="page-title-sub">内容</h3>
+            <p class="notification-confirm-preview">
+              <span class="merge-tag-preview">{user-nickname}</span>さん、こんにちは。
+              この度は「<span class="merge-tag-preview">{project-name}</span>」へ書評を投稿いただき、誠にありがとうございました。
+              あなたが投稿した「<span class="merge-tag-preview">{review-title}</span>」が一次審査を通過したことをお知らせします。おめでとうございます！
+
+              今後のスケジュールは以下の通りになります。
+              これからも象と花プロジェクトと象と花ファンサイトをよろしくお願いいたします。
+
+              <span class="merge-tag-preview">{project-voting_start_at}</span> ~ <span class="merge-tag-preview">{project-voting_end_at}</span>　二次審査(一般投票)
+              2025/08/01　ノミネート作品を一部さわや書店店舗で販売開始
+              2025/08/31　大賞発表
+            </p>
+          </div>
+
+          <div class="mt-8">
+            <h3 class="page-title-sub">宛先<span class="page-title-count">(<span>1</span>件)</span></h3>
+            <ol class="notification-confirm-preview">
+              <li>[No.<span>93</span>] <span>冬の魔法をほんの少し信じたくなる</span>(書籍 : <span>雪明かりの魔法使い</span>)</li>
+            </ol>
+          </div>
+
+          <div class="btn-wrap mt-8">
+            <button type="button" class="btn" data-modal-close>キャンセル</button>
+            <button type="submit" class="btn">送信する</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <footer></footer>
 
-    <script src="js/project-detail.js"></script>
+    <script src="../../static/js/admin/project-detail.js"></script>
+    <script src="../../static/js/admin/admin-general.js"></script>
 </body>
 </html>

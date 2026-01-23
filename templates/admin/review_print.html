@@ -15,17 +15,19 @@
       <h1 class="page-title">書評印刷</h1>
 
       <div class="main-content-card mt-4 p-8">
-        <h2 class="page-title-sub">印刷機能の使い方<span class="font-sm text-gray">(クリックして閉じる)</span></h2>
-        <ol class="ml-8">
-          <li class="mt-2">「印刷する情報」のチェックボックスで、カードに印刷する情報を選択します。書評本文の一部を編集(例:誤字を修正)することもできます。</li>
-          <li class="mt-2">「印刷データを作成する」ボタンを押します。書評カードの印刷データがPDF形式で生成され、自動でダウンロードされます。</li>
-          <li class="mt-2">PDFを選択し、PCの印刷メニューから印刷部数を設定して印刷してください。</li>
-        </ol>
-        <ul class="ml-8 mt-8">
-          <li>印刷データには4枚分の書評カードが配置されています。A4サイズで印刷することで、1枚が文庫本と同じサイズになります。</li>
-        </ul>
+        <h2 class="page-title-sub icon-center toggle-title"><span class="material-symbols-outlined text-gray scale-bigger mr-2">help</span>印刷機能の使い方<span class="font-sm text-gray ml-2 toggle-text">(クリックして開く)</span></h2>
+        <div class="toggle-body">
+          <ol class="ml-8">
+            <li class="mt-2">「印刷する情報」のチェックボックスで、カードに印刷する情報を選択します。書評本文の一部を編集(例:誤字を修正)することもできます。</li>
+            <li class="mt-2">「印刷データを作成する」ボタンを押します。書評カードの印刷データがPDF形式で生成され、自動でダウンロードされます。</li>
+            <li class="mt-2">PDFを選択し、PCの印刷メニューから印刷部数を設定して印刷してください。</li>
+          </ol>
+          <ul class="ml-8 mt-8">
+            <li>印刷データには4枚分の書評カードが配置されています。A4サイズで印刷することで、1枚が文庫本と同じサイズになります。</li>
+          </ul>
+        </div>
       </div>
-      <div class="main-content-card p-8">
+      <div class="main-content-card p-8 mt-8">
         <h2 class="page-title-sub">印刷する情報</h2>
         <form>
           <table class="w-full pr-">
@@ -67,7 +69,7 @@
           <div class="pt-4">
             <div class="flex justify-between icon">
               <label>書評本文</label>
-              <button class="btn">編集をリセット</button>
+              <button type="button" class="btn">編集をリセット</button>
             </div>
             <textarea rows="10" class="input-textarea w-full mt-2">この本を初めて読んだのは、小学四年生のときでした。表紙のイラストに惹かれて手に取ったのがきっかけでしたが、読み進めるうちに主人公の冒険や葛藤にどんどん引き込まれていったのを今でも覚えています。 あの頃は物語の世界に憧れるだけでしたが、大学生になった今読むと、人生の選択や成長の物語として心に響く部分が多く、まるで自分へのメッセージのように感じます。 文庫版の柔らかい紙の感触や少し黄ばんだページも、懐かしさをより一層引き立ててくれます。何度読み返しても色あせない、僕の原点のような一冊です。</textarea>
           </div>
@@ -82,6 +84,6 @@
 
     <footer></footer>
 
-    <script src=""></script>
+    <script src="../../static/js/admin/admin-general.js"></script>
 </body>
 </html>

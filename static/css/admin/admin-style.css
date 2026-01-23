@@ -60,6 +60,10 @@ html {
 }
 
 /* ---------- margin ---------- */
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -302,6 +306,19 @@ html {
   margin-top: 1rem;
 }
 
+.toggle-title {
+  cursor: pointer;
+}
+
+.toggle-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.toggle-body.is-open {
+  max-height: 1000px;
+}
 
 /* ---------- テーブル ---------- */
 .list-table {
@@ -462,9 +479,116 @@ html {
 }
 
 
+/* ---------- 書評ジャンル複数選択 ---------- */
+  #multi-select-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    align-items: center;
+    padding: 0.2rem;
+    border: 0.1px solid var(--admin-border-gray);
+    border-radius: 3px;
+    border-radius: 4px;
+    background-color: white;
+    cursor: text;
+  }
+
+  #multi-select-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-left: 0.3rem;
+  }
+
+  .multi-select-tag {
+    display: flex;
+    gap: 0.2rem;
+    background-color: #d9d9d9;
+    padding: 0 0.5rem;
+    border-radius: 4px;
+    align-items: center;
+  }
+
+  .multi-select-tag button {
+    scale: calc(0.8);
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  #genre-input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    flex: 1;
+    min-width: 80px;
+    font-size: 14px;
+    padding: 0.5rem 0;
+  }
+
+  #multi-select-tags + #genre-input {
+    margin-left: 0.5rem;
+  }
+
+  #multi-select-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
+  }
+
+  .multi-select-option {
+    padding: 6px 8px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .multi-select-option:hover {
+    background: #eee;
+  }
+
+
+/* ---------- タブ切り替え ---------- */
+.tab-list {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.tab-item { /* タブ */
+  background-color: #d9d9d9;
+  margin-top: 0.5rem;
+  padding: 0.5em 1.2em;
+  border-radius: 1rem 1rem 0 0;
+  cursor: pointer;
+}
+
+.tab-item.active {  /* 選択されているタブ */
+  background-color: var(--admin-bg-gray);
+  margin-top: 0;
+  font-weight: bold;
+  box-shadow: 0px -3px 4px -2px rgba(0, 0, 0, 0.25), -4px 0px 4px -3px rgba(0, 0, 0, 0.25), 4px 0px 4px -3px rgba(0, 0, 0, 0.25);
+}
+
+.tab-panel {  /* タブの中身 */
+  display: none;
+}
+
+.tab-panel.active { /* 選択されているタブの中身 */
+  display: block;
+  border-top-left-radius: 0;
+}
+
+
 /* ---------- モーダル ---------- */
 .modal { /* モーダルの背景を暗くするやつ */
-  /* display: none; コーディング中なのでコメントアウト　モーダル作り終わったら後で戻す */
+  display: none;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -509,6 +633,7 @@ html {
 
 .modal-option-wrap input[type=checkbox] {
   scale: calc(1.5);
+  margin-right: 0.3rem;
 }
 
 .modal-checkbox-child {

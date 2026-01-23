@@ -29,12 +29,12 @@
               </tr>
               <tr>
                 <th>タイトル : </th>
-                <td><input type="text" name="title" value="一次審査通貨のお知らせ" class="input-text w-full"></td>
+                <td><input type="text" name="title" value="一次審査通過のお知らせ" class="input-text w-full"></td>
               </tr>
               <tr>
                 <th>本文 : </th>
                 <td>
-                  <textarea rows="10" name="content" class="input-textarea w-full">
+                  <textarea rows="10" name="content" class="input-textarea w-full" id="template-textarea">
   {user-nickname}さん、こんにちは。
   この度は「{project-name}」へ書評を投稿いただき、誠にありがとうございました。
   あなたが投稿した「{review-title}」が一次審査を通過したことをお知らせします。おめでとうございます！
@@ -51,16 +51,16 @@
               <tr>
                 <th></th>
                 <td>
-                  <p class="icon-center">置き換えタグ<span class="material-symbols-outlined text-gray">help</span></p>
+                  <p class="icon-center">置き換えタグ<span class="material-symbols-outlined text-gray cursor-help" title="個別通知送信時、自動的に各プロジェクト・書評・ユーザの情報に置換されます">help</span></p>
                   <div class="grid-4 gap-1 mt-2">
-                    <button class="btn">プロジェクト名</button>
-                    <button class="btn">書評投稿開始日時</button>
-                    <button class="btn">書評投稿終了日時</button>
-                    <button class="btn">書評投票開始日時</button>
-                    <button class="btn">書評投票終了日時</button>
-                    <button class="btn">ユーザーのニックネーム</button>
-                    <button class="btn">書評タイトル</button>
-                    <button class="btn">書籍タイトル</button>
+                    <button type="button" class="btn merge-tag" data-tag="{project-name}">プロジェクト名</button>
+                    <button type="button" class="btn merge-tag" data-tag="{project-submissionStartAt}">書評投稿開始日時</button>
+                    <button type="button" class="btn merge-tag" data-tag="{project-submissionEndAt}">書評投稿終了日時</button>
+                    <button type="button" class="btn merge-tag" data-tag="{project-votingStartAt}">書評投票開始日時</button>
+                    <button type="button" class="btn merge-tag" data-tag="{project-votingEndAt}">書評投票終了日時</button>
+                    <button type="button" class="btn merge-tag" data-tag="{user-nickname}">ユーザーのニックネーム</button>
+                    <button type="button" class="btn merge-tag" data-tag="{review-title}">書評タイトル</button>
+                    <button type="button" class="btn merge-tag" data-tag="{book-title}">書籍タイトル</button>
                   </div>
                 </td>
               </tr>
@@ -77,6 +77,6 @@
 
     <footer></footer>
 
-    <script src=""></script>
+    <script src="../../static/js/admin/admin-general.js"></script>
 </body>
 </html>

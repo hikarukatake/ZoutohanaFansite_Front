@@ -1,6 +1,6 @@
 <!-- 【管理者ログイン】 -->
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,14 +10,13 @@
 </head>
 <body>
     <header></header>
-
     <main id="admin-main" class="center-middle">
-      <div class="w-half">
+      <div class="w-half" th:action="@{/admin/login}" method="post">
         <h1 class="page-title text-center">ログイン</h1>
         <form class="mt-8">
           <div>
             <label>■ ログインID</label>
-            <input type="text" class="input-text w-full">
+            <input type="text" class="input-text w-full" name="username">
           </div>
 
           <div class="mt-4">

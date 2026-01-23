@@ -120,7 +120,7 @@
                 <a href="#" class="settings-row">
                     <span class="settings-icon-img">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2">
-                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M11 4H4a2 2 0 0 0-2svg14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                             <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                         </svg>
                     </span>
@@ -135,7 +135,6 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                             <circle cx="8.5" cy="7" r="4"></circle>
-                            <line x1="20" y1="8" x2="20" y2="14"></line>
                             <line x1="23" y1="11" x2="17" y2="11"></line>
                         </svg>
                     </span>
@@ -144,6 +143,86 @@
                 </a>
             </div>
         </div>
+
+                <!-- メールモーダル -->
+        <div class="mail-modal-overlay" id="mailModal">
+            <div class="mail-modal">
+                <div class="mail-modal-header">
+                    <span>メール</span>
+                    <button class="mail-close" id="mailClose">×</button>
+                </div>
+                <ul class="mail-list">
+                    <li>
+                        <span class="mail-date">2025.01.01</span>
+                        <div class="mail-flex">
+                            <p>あなたの書評が選ばれました。</p>
+                            <p class="mail-open-detail">></p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="mail-date">2025.01.01</span>
+                        <div class="mail-flex">
+                            <p>新たに寄贈しました</p>
+                            <p class="mail-open-detail">></p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="mail-date">2025.01.01</span>
+                        <div class="mail-flex">
+                            <p>「文庫X 1.0」終了のお知らせ</p>
+                            <p class="mail-open-detail">></p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="mail-date">2025.01.01</span>
+                        <div class="mail-flex">
+                            <p>サイトのメンテナンスについて</p>
+                            <p class="mail-open-detail">></p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="page-nav">
+                    <button class="nav-circle prev">＜</button>
+                    <button class="nav-circle next">＞</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- メール詳細モーダル -->
+        <div class="mail-modal-overlay" id="mailDetailModal">
+            <div class="mail-modal">
+                <div class="mail-modal-header">
+                    <span>メール</span>
+                    <button class="mail-close" id="mailDetailClose">×</button>
+                </div>
+                <article class="mail-detail-box">
+                    <h1 class="main-title">【書評コンテスト】結果発表！</h1>
+                    <p class="date">2025.01.01</p>
+                    <div class="current-sub-title">
+                        <h2 class="sub-title">第1次選考の結果を発表しました！</h2>
+                    </div>
+                    <p class="content-text">
+                        書評コンテストにたくさんのご応募をいただき、誠にありがとうございました。<br>
+                        どの作品にも作者の想いや読書への情熱が込められており、選考委員一同、非常に熱心に審査を行いました。
+                    </p>
+
+                    <p class="content-text">
+                        第1次選考では、以下の点を中心に審査を実施しました。
+                    </p>
+                </article>
+                <div class="page-nav-box">
+                    <button class="nav-circle-box prev">＜</button>
+
+                    <a href="#" class="nav-center">
+                        一覧に戻る
+                    </a>
+
+                    <button class="nav-circle-box next">＞</button>
+                </div>
+            </div>
+        </div>
+
         <!-- 削除確認モーダル -->
         <div class="delete-overlay" id="deleteModal">
             <div class="delete-content">
@@ -212,66 +291,8 @@
             </div>
         </footer>
     </div>
-
-
-
-    <script>
-        // ▼▼▼ 要素を取得 ▼▼▼
-        const menuOpen = document.getElementById('menuOpen');   // ハンバーガーメニューのアイコン
-        const menuClose = document.getElementById('menuClose'); // ハンバーガーメニューの閉じるボタン
-        const overlayMenu = document.getElementById('overlayMenu'); // ハンバーガーメニュー本体
-
-        const gearButton = document.querySelector('.settings-icon'); // 歯車アイコン
-        const settingsModal = document.getElementById('settingsModal'); // 設定モーダル本体
-
-        // ▼▼▼ ハンバーガーメニューの動作（既存のまま） ▼▼▼
-        menuOpen.addEventListener('click', () => {
-            overlayMenu.classList.add('active');
-        });
-
-        menuClose.addEventListener('click', () => {
-            overlayMenu.classList.remove('active');
-        });
-
-        // 1. 歯車を押したときの動作
-        gearButton.addEventListener('click', (e) => {
-            // add ではなく toggle にすることで、「開く/閉じる」を繰り返せます
-            settingsModal.classList.toggle('active');
-        });
-
-        // 2. モーダルの背景（黒い部分）を押したときの動作
-        settingsModal.addEventListener('click', (e) => {
-            // クリックした場所が「モーダル本体(settingsModal)」そのものだった場合のみ閉じる
-            // （中の白い箱をクリックしても閉じないようにする判定）
-            if (e.target === settingsModal) {
-                settingsModal.classList.remove('active');
-            }
-        });
-    </script>
-    <script>
-        const openDeleteModal = document.getElementById('openDeleteModal');
-        const deleteModal = document.getElementById('deleteModal');
-        const deleteCancel = document.getElementById('deleteCancel');
-
-        // 削除モーダルを開く
-        openDeleteModal.addEventListener('click', (e) => {
-            e.preventDefault();
-            deleteModal.classList.add('active');
-            settingsModal.classList.remove('active'); // 設定モーダルを閉じる
-        });
-
-        // 「もどる」ボタン
-        deleteCancel.addEventListener('click', () => {
-            deleteModal.classList.remove('active');
-        });
-
-        // 背景クリックで閉じる
-        deleteModal.addEventListener('click', (e) => {
-            if (e.target === deleteModal) {
-                deleteModal.classList.remove('active');
-            }
-        });
-    </script>
+    <script src="../js/main.js"></script>
+    <script src="../js/book-detail.js"></script>
 
     <script src="../js/mypage.js"></script>
 </body>

@@ -53,6 +53,26 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* 通知バッジ */
+.mail-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background-color: #ff3b30; /* 赤 */
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 999px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    box-shadow: 0 0 0 2px #fff;
+}
+
 .mail-icon svg {
     width: 26px;
     height: 26px;

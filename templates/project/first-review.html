@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/project/first-review.css">
+    <link rel="stylesheet" href="../../static/css/main.css">
+    <link rel="stylesheet" href="../../static/css/project/first-review.css">
     <style>
 
     </style>
@@ -288,61 +288,54 @@
             <div class="modal-content">
                 <div class="modal-box">
                     <div class="modal-textFirst-box">
-                        <img src="../img/rose.png" class="modal-rose" alt="">
-                        <h3>心を奪われた作品</h3>
+                        <img src="../../static/img/rose.png" class="modal-rose" alt="">
+
+                        <h3 id="modalTitle">作品タイトル</h3>
+
                         <p id="textFirst" class="modal-textFirst">
-                            最近の読書の中でも特に心に残った一冊でした。読み進めるほど登場人物の気持ちに寄り添えるようになり、自分の日常を見つめ直すきっかけにもなりました。読み終えたあとは温かい余韻が残り、しばらくその世界に浸っていたくなる作品でした。読み進めるほど共感する場面が増え、自分の経験と重ね合わせながら楽しめました。静かで優しい雰囲気の中に、少しずつ変わっていく気持ちが繊細に表されていて、読んでいて胸が温かくなる作品でした。
                         </p>
                     </div>
-                    <div class="modal-textSecond-box">
-                        <img src="../img/rose.png" class="modal-rose" alt="">
-                        <p id="textSecond" class="modal-textSecond">
-                            最近の読書の中でも特に心に残った一冊でした。読み進めるほど登場人物の気持ちに寄り添えるようになり、自分の日常を見つめ直すきっかけにもなりました。読み終えたあとは温かい余韻が残り、しばらくその世界に浸っていたくなる作品でした。読み進めるほど共感する場面が増え、自分の経験と重ね合わせながら楽しめました。静かで優しい雰囲気の中に、少しずつ変わっていく気持ちが繊細に表されていて、読んでいて胸が温かくなる作品でした。
+
+                    <div class="modal-textSecond-box" style="display:none;"> <img src="../../static/img/rose.png"
+                            class="modal-rose" alt="">
+                        <p id="textSecond" class="modal-textSecond"></p>
+                    </div>
+                </div>
+
+                <div class="modal-buttons">
+                    <div class="modal-button"><img src="../../static/img/vote.png" alt="" class="modal-img">投票</div>
+                    <div class="modal-button"><img src="../../static/img/tagu.png" alt="" class="modal-img-book">ブックマーク
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <img id="modalIcon" src="" class="profile-icon" alt="icon">
+
+                        <h3 id="modalName" class="profile-name">名前</h3>
+                    </div>
+
+                    <div class="profile-tags">
+                        <p id="modalInfo" style="font-size: 0.9rem; color: #555;"></p>
+                    </div>
+
+                    <hr class="profile-line">
+
+                    <div class="profile-bio">
+                        <p id="modalProfileText">
+                            ここに自己紹介が入ります。
                         </p>
                     </div>
-                </div>
-            </div>
-            <div class="modal-buttons">
-                <div class="modal-button"><img src="../img/vote.png" alt="" class="modal-img">投票</div>
-                <div class="modal-button"><img src="../img/tagu.png" alt="" class="modal-img-book">ブックマーク</div>
-            </div>
-            <div class="profile-card">
-                <div class="profile-header">
-                    <div class="profile-icon">
-                    </div>
-                    <h3 class="profile-name">もたーて</h3>
-                </div>
-
-                <div class="profile-tags">
-                    <span class="tag">40代</span>
-                    <div class="divider"></div>
-                    <span class="tag">男性</span>
-                </div>
-
-                <div class="profile-location">
-                    <img src="../img/address.png" alt="address icon" class="location-icon">
-                    <p class="location-text">岩手県 盛岡市 在住</p>
-                </div>
-
-                <hr class="profile-line">
-
-                <div class="profile-bio">
-                    <p>
-                        読んだ本の感想を気ままに投稿しています。<br>
-                        印象に残った言葉や心に響いたシーンなど、そのとき感じたことを綴っています。<br>
-                        同じ作品が好きな方と感想を語り合えたらうれしいです。
-                    </p>
                 </div>
             </div>
         </div>
-        <!-- モーダル内：黒背景スクロールチュートリアル -->
+
         <div id="modalScrollOverlay" class="modal-scroll-overlay" style="display:none;">
             <div class="scroll-guide">
                 <p>下にスクロールしてみよう</p>
                 <span class="arrow">↓</span>
             </div>
         </div>
-
     </div>
 
 
@@ -401,6 +394,6 @@
     </footer>
 </body>
 
-<script src="../js/first-review.js"></script>
+<script src="../../static/js/first-review.js"></script>
 
 </html>

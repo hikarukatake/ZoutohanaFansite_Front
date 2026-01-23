@@ -1,51 +1,39 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>マイページ再現（メニュー付き）</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/books/mypage.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/books/mypage.css}" href="../../static/css/books/mypage.css">
 </head>
 
 <body>
     <div class="container">
-        <header class="project-header">
-            <div class="logo-placeholder"><img src="../img/象と花実物.png" style="width: 3rem;" alt=""></div>
-            <div style="display: flex;">
-                <div class="mail-icon">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M2 6h20v12H2z" fill="none" stroke="white" stroke-width="2" />
-                        <path d="M2 6l10 7 10-7" fill="none" stroke="white" stroke-width="2" />
-                    </svg>
-                </div>
-
-                <div class="menu-icon" id="menuOpen">
-                    <div class="menu-icon-box">
-                        <span class="span-top"></span>
-                        <span class="span-middle"></span>
-                        <span class="span-bottom"></span>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <div th:replace="~{layout :: header}"></div>
         <div class="breadcrumb-box">
-            <div class="breadcrumb">ホーム</div>
+            <a th:href="@{/}"><div class="breadcrumb">ホーム</div></a>
             <div class="breadcrumb-middle">></div>
             <div class="breadcrumb">マイページ</div>
         </div>
+        <div th:if="${toast != null}" th:text="${toast}"></div>
         <div class="all-box">
             <section class="card">
                 <div class="profile-header">
                     <div class="profile-box">
-                        <h3 class="profile-name" id="profile-name">ユーザー名が取得できませんでした</h3>
-                        <p class="profile-id" id="profile-id">ユーザーIDが取得できませんでした</p>
+                        <h3 class="profile-name" th:text="${user.nickname}">象と花 太郎</h3>
+                        <p class="profile-id" th:text="${'@' + user.loginId}">@hanako_elephant</p>
                     </div>
-                    <div class="settings-icon"><img src="../img/gear.png" alt="" width="18px"></div>
+                    <div class="settings-icon"><img th:src="@{/img/gear.png}" src="../img/gear.png" alt="" width="18px"></div>
                 </div>
                 <hr class="divider-green">
-                <div class="profile-text" id="profile-text">自己紹介が取得できませんでした</div>
+                <div class="profile-text" th:if="${user.selfIntroduction != null}" th:text="${user.selfIntroduction}">
+                    本とコーヒーを愛する大学生です。特にミステリー小説が好きで、最近は北欧ミステリーにハマっています。皆さんの素敵な書評を楽しみにしています！
+                </div>
+                <div class="profile-text" th:unless="${user.selfIntroduction != null}">
+                    自己紹介がありません
+                </div>
             </section>
 
             <div class="section-title-area">
@@ -54,7 +42,75 @@
             </div>
 
             <!-- 開催中の企画 -->
-            <div class="active-event" id="active-event">
+            <div class="active-event" th:if="${!projects.isEmpty()}" th:each="project : ${projects}">
+                <div class="my-image-box" th:attr="style=${project.mainImgUrl != null}
+              ? 'background-image: url(' + @{/api/image/{name}(name=${project.mainImgUrl})} + ');'
+              : 'background-image: url(' + @{/img/img.png} + ');'">
+                    <section class="card-event">
+                        <div class="event-info">
+                            <div class="event-title" th:text="${project.name}">2026年 新春ミステリー祭</div>
+                            <div class="count-number-box" th:switch="${project.status.name()}">
+                                <div th:case="'BEFORE_SUBMISSION'">
+                                    <span>投稿開始まで</span>
+                                    <span>あと</span>
+                                    <span th:style="'color: ' + ${project.themeColor.getDbValue()}" th:text="${project.lastDate}" class="count-unit">12</span>
+                                    <span>日</span>
+                                </div>
+                                <div th:case="'DURING_SUBMISSION'">
+                                    <span>投稿終了まで</span>
+                                    <span>あと</span>
+                                    <span th:style="'color: ' + ${project.themeColor.getDbValue()}" th:text="${project.lastDate}" class="count-unit">12</span>
+                                    <span>日</span>
+                                </div>
+                                <div th:case="'FIRST_PHASE'">
+                                    <span>一次審査中</span>
+                                </div>
+                                <div th:case="'SECOND_PHASE_VOTING'">
+                                    <span>投票終了まで</span>
+                                    <span>あと</span>
+                                    <span th:style="'color: ' + ${project.themeColor.getDbValue()}" th:text="${project.lastDate}" class="count-unit">12</span>
+                                    <span>日</span>
+                                </div>
+                                <div th:case="'SECOND_PHASE_VERIFY'">
+                                    <span>投票結果集計中</span>
+                                </div>
+                                <div th:case="'SECOND_PHASE_RESULT'">
+                                    <span>投票結果発表中</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="action-button" th:switch="${project.status.name()}" th:style="'background-color: ' + ${project.themeColor.getDbValue()}">
+                            <a class="a-text" th:case="'BEFORE_SUBMISSION'" th:href="@{/project/{urlKey}(urlKey=${project.urlKey})}">
+                                <span class="btn-main-text" th:text="${project.name + ' の詳細を見る'}">新春ミステリー祭 の書評を書く</span>
+                                <span class="btn-plus">＋</span>
+                            </a>
+                            <a class="a-text" th:case="'DURING_SUBMISSION'" th:href="@{/review(id=${project.id})}">
+                                <span class="btn-main-text" th:text="${project.draft ? '下書き保存した書評があります' : project.name + ' の書評を書く'}">新春ミステリー祭 の書評を書く</span>
+                                <span class="btn-sub-text">あなたのお気に入りの一冊を共有しよう</span>
+                                <span class="btn-plus">＋</span>
+                            </a>
+                            <a class="a-text" th:case="'FIRST_PHASE'" th:href="@{/project/{urlKey}(urlKey=${project.urlKey})}">
+                                <span class="btn-main-text" th:text="${project.name + ' の詳細を見る'}">新春ミステリー祭 の書評を書く</span>
+                                <span class="btn-plus">＋</span>
+                            </a>
+                            <a class="a-text" th:case="'SECOND_PHASE_VOTING'" th:href="@{/project/{urlKey}(urlKey=${project.urlKey})}">
+                                <span class="btn-main-text" th:text="${project.name + ' の投票をする'}">新春ミステリー祭 の書評を書く</span>
+                                <span class="btn-sub-text">あなたのお気に入りの書評に投票しよう</span>
+                                <span class="btn-plus">＋</span>
+                            </a>
+                            <a class="a-text" th:case="'SECOND_PHASE_VERIFY'" th:href="@{/project/{urlKey}(urlKey=${project.urlKey})}">
+                                <span class="btn-main-text" th:text="${project.name + ' の詳細を見る'}">新春ミステリー祭 の書評を書く</span>
+                                <span class="btn-plus">＋</span>
+                            </a>
+                            <a class="a-text" th:case="'SECOND_PHASE_RESULT'" th:href="@{/project/{urlKey}(urlKey=${project.urlKey})}">
+                                <span class="btn-main-text" th:text="${project.name + ' の投票結果を見る'}">新春ミステリー祭 の書評を書く</span>
+                                <span class="btn-plus">＋</span>
+                            </a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="active-event" id="active-event" th:unless="${!projects.isEmpty()}">
                 <p>開催中の企画はありません</p>
             </div>
 
@@ -63,7 +119,29 @@
                 <h2 class="section-title">投稿した書評</h2>
                 <div class="seciton-green"></div>
             </div>
-            <div class="book-card-box">
+            <div class="book-card-block" th:if="${!reviews.isEmpty()}">
+                <div class="book-card" th:each="review : ${reviews}">
+                    <div class="card-header">
+<!--                        <div class="title-row" style="display: flex; justify-content: space-between;">-->
+                        <div class="title-row" style="display: flex; justify-content: space-between;">
+                            <h2 class="book-title" th:text="${review.bookTitle}">虚ろな十字架</h2>
+                            <span class="vote-count" th:text="${review.voteCount + '票'}">24 票</span>
+                        </div>
+                        <p class="author-name" th:text="${'著者名 : ' + review.bookAuthor}">著者名 ： 東野 圭吾</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="description" th:text="${review.reviewContent}">
+                            死刑制度の是非を問う重厚なテーマ。読み終わった後も「本当の償いとは何か」という問いが頭から離れません......
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="tag" th:text="${review.project.name}" th:style="'color: ' + ${review.project.themeColor.getDbValue()}">ミステリー特集</span>
+                        <a th:href="@{/mypage/review/detail/{id}(id=${review.id})}" href="#" class="details-link">詳細へ ></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="book-card-box" th:unless="${!reviews.isEmpty()}">
                 <div class="book-card-block" id="book-card-block">
                     <p>まだ書評を投稿していません</p>
                 </div>
@@ -107,7 +185,7 @@
 
                 <div class="settings-line"></div>
 
-                <a href="#" class="settings-row">
+                <a th:href="@{/auth/leave}" class="settings-row">
                     <span class="settings-icon-img">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -123,57 +201,7 @@
 
         </div>
         <!-- フッター -->
-        <footer class="footer-all">
-            <div class="footer-menu">
-                <div class="footer-top">
-                    <img src="../img/象と花-白.png" style="width: 4.5rem;" alt="">
-                    <p class="footer-white-text">A BOOK PROJECT</p>
-                </div>
-                <a href="#" class="footer-menu-item-top">
-                    <p>お知らせ</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>企画</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>象と花プロジェクト</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>お問い合わせ</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>サイトのご利用について</p>
-                    <p>></p>
-                </a>
-            </div>
-
-            <!-- SNSブロック -->
-            <div class="footer-sns">
-                <div class="sns-box">
-                    <div class="footer-sns-title">SNS</div>
-                    <div class="sns-box-icons">
-                        <div class="sns-icons">
-                            <img src="../img/instagram.png" class="sns-icon" alt="">
-                            <img src="../img/facebook.png" class="sns-icon-facebook" alt="">
-                            <img src="../img/x.png" class="sns-icon-x" alt="">
-                        </div>
-
-                        <div class="sns-labels">
-                            <span>Instagram</span>
-                            <span>Facebook</span>
-                            <span>X（旧Twitter）</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-line"></div>
-
-                <div class="footer-copy">©Copylight</div>
-            </div>
-        </footer>
+        <div th:replace="~{layout :: footer}"></div>
     </div>
 
 

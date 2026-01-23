@@ -23,9 +23,9 @@
             順
           </div>
           <div class="flex gap-1"> <!-- メニュー右部分(絞り込み・検索) -->
-            <button class="btn">絞り込みオプション</button>
+            <button type="button" class="btn" data-modal-target="filter-option-modal">絞り込みオプション</button>
             <input type="text" class="input-text" placeholder="検索">
-            <button class="btn"><span class="material-symbols-outlined scale-bigger">search</span></button>
+            <button type="submit" class="btn"><span class="material-symbols-outlined scale-bigger">search</span></button>
             <a href="#" class="btn">
               <span class="material-symbols-outlined scale-bigger pr-1">library_add</span>
               新しいお知らせを登録
@@ -61,8 +61,59 @@
       </div>
     </main>
 
+    <div id="filter-option-modal" class="modal">
+      <div>
+        <div class="modal-content">
+          <div class="flex justify-between items-start">
+            <h2 class="page-title-sub">絞り込みオプション</h2>
+            <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
+          </div>
+
+          <form>
+            <ul class="modal-option-wrap mt-4 ml-4">
+              <li>
+                <label><input type="checkbox" class="modal-checkbox-parent">公開/非公開</label>
+                <ul class="modal-checkbox-child grid-3">
+                  <li><label><input type="checkbox">公開</label></li>
+                  <li><label><input type="checkbox">非公開</label></li>
+                </ul>
+              </li>
+              <li>
+                <label><input type="checkbox" class="modal-checkbox-parent">カテゴリー</label>
+                <ul class="modal-checkbox-child grid-3">
+                  <li><label><input type="checkbox">寄贈情報</label></li>
+                  <li><label><input type="checkbox">企画情報</label></li>
+                  <li><label><input type="checkbox">その他情報</label></li>
+                </ul>
+              </li>
+              <li>
+                <label><input type="checkbox">作成日時</label>
+                <div class="modal-checkbox-child mt-2">
+                  <input type="datetime-local" class="input-datetime">
+                  <span class="wave-dash">～</span>
+                  <input type="datetime-local" class="input-datetime">
+                </div>
+              </li>
+              <li>
+                <label><input type="checkbox">表示される投稿日時</label>
+                <div class="modal-checkbox-child mt-2">
+                  <input type="datetime-local" class="input-datetime">
+                  <span class="wave-dash">～</span>
+                  <input type="datetime-local" class="input-datetime">
+                </div>
+              </li>
+            </ul>
+
+            <div class="btn-wrap mt-8">
+              <button type="submit" class="btn"><span class="px-8">絞り込む</span></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <footer></footer>
 
-    <script src=""></script>
+    <script src="../../static/js/admin/admin-general.js"></script>
 </body>
 </html>

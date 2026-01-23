@@ -24,9 +24,9 @@
           順
         </div>
         <div class="flex gap-1"> <!-- メニュー右部分(絞り込み・検索) -->
-          <button class="btn">絞り込みオプション</button>
+          <button type="button" class="btn" data-modal-target="filter-option-modal">絞り込みオプション</button>
           <input type="text" class="input-text" placeholder="検索">
-          <button class="btn"><span class="material-symbols-outlined scale-bigger">search</span></button>
+          <button type="submit" class="btn"><span class="material-symbols-outlined scale-bigger">search</span></button>
         </div>
       </div>
       <div class="flex gap-1 mt-2"> <!-- チェックしたもの一括実行 -->
@@ -36,7 +36,7 @@
             <option>のステータスを一次審査通過にする</option>
           </select>
         </div>
-        <button class="btn">実行</button>
+        <button type="submit" class="btn" data-modal-target="change-confirm-modal">実行</button>
       </div>
 
       <table class="list-table mt-4">
@@ -68,8 +68,118 @@
     </div>
   </main>
 
+  <div id="filter-option-modal" class="modal">
+    <div>
+      <div class="modal-content">
+        <div class="flex justify-between items-start">
+          <h2 class="page-title-sub">絞り込みオプション</h2>
+          <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
+        </div>
+
+        <form>
+          <ul class="modal-option-wrap mt-4 ml-4">
+            <li>
+              <label><input type="checkbox" class="modal-checkbox-parent">ステータス</label>
+              <ul class="modal-checkbox-child grid-3">
+                <li><label><input type="checkbox">大賞</label></li>
+                <li><label><input type="checkbox">二次審査通過</label></li>
+                <li><label><input type="checkbox">一次審査通過</label></li>
+                <li><label><input type="checkbox">チェック後</label></li>
+                <li><label><input type="checkbox">チェック前</label></li>
+              </ul>
+            </li>
+            <li>
+              <label><input type="checkbox" class="modal-checkbox-parent">フォーマット</label>
+              <ul class="modal-checkbox-child grid-5">
+                <li><label><input type="checkbox">文庫</label></li>
+              </ul>
+            </li>
+            <li>
+              <label><input type="checkbox" class="modal-checkbox-parent">投稿者の性別</label>
+              <ul class="modal-checkbox-child grid-5">
+                <li><label><input type="checkbox">男</label></li>
+                <li><label><input type="checkbox">女</label></li>
+                <li><label><input type="checkbox">選択しない</label></li>
+              </ul>
+            </li>
+            <li>
+              <label><input type="checkbox" class="modal-checkbox-parent">投稿者の年代</label>
+              <ul class="modal-checkbox-child grid-5">
+                <li><label><input type="checkbox">~9歳</label></li>
+                <li><label><input type="checkbox">10代</label></li>
+                <li><label><input type="checkbox">20代</label></li>
+                <li><label><input type="checkbox">30代</label></li>
+                <li><label><input type="checkbox">40代</label></li>
+                <li><label><input type="checkbox">50代</label></li>
+                <li><label><input type="checkbox">60代</label></li>
+                <li><label><input type="checkbox">70代</label></li>
+                <li><label><input type="checkbox">80代</label></li>
+                <li><label><input type="checkbox">90歳~</label></li>
+              </ul>
+            </li>
+            <li>
+              <label><input type="checkbox" class="modal-checkbox-parent">投稿者の居住地</label>
+              <ul class="modal-checkbox-child">
+                <li><label><input type="checkbox">岩手県</label></li>
+                <li>
+                  <label><input type="checkbox" class="modal-checkbox-parent">東北(岩手県以外)</label>
+                  <ul class="modal-checkbox-child grid-5">
+                    <li><label><input type="checkbox">青森県</label></li>
+                    <li><label><input type="checkbox">宮城県</label></li>
+                    <li><label><input type="checkbox">秋田県</label></li>
+                    <li><label><input type="checkbox">山形県</label></li>
+                    <li><label><input type="checkbox">福島県</label></li>
+                  </ul>
+                </li>
+                <li><label><input type="checkbox">東北以外</label></li>
+              </ul>
+            </li>
+            <li>
+              <label><input type="checkbox">書評投稿日時</label>
+              <div class="modal-checkbox-child mt-2">
+                <input type="datetime-local" name="projectStartAt" class="input-datetime">
+                <span class="wave-dash">～</span>
+                <input type="datetime-local" name="projectEndAt" class="input-datetime">
+              </div>
+            </li>
+          </ul>
+
+          <div class="btn-wrap mt-8">
+            <button type="submit" class="btn"><span class="px-8">絞り込む</span></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="change-confirm-modal" class="modal">
+    <div>
+      <div class="modal-content">
+        <div class="flex justify-between items-start">
+          <h2 class="page-title mx-auto">確認</h2>
+          <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
+        </div>
+
+        <div class="mt-8">
+          <p>チェックを入れた書評(<span>1</span>件)のステータスを「<span>二次審査通過</span>」に変更してよろしいですか？</p>
+        </div>
+
+        <div class="mt-8">
+          <ol class="change-confirm-preview">
+            <li>[No.<span>93</span>] <span>冬の魔法をほんの少し信じたくなる</span>(書籍 : <span>雪明かりの魔法使い</span>)</li>
+          </ol>
+        </div>
+
+        <div class="btn-wrap mt-8">
+          <button type="button" class="btn" data-modal-close>キャンセル</button>
+          <button type="submit" class="btn">変更する</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer></footer>
 
-  <script src=""></script>
+  <script src="../../static/js/admin/admin-general.js"></script>
 </body>
 </html>

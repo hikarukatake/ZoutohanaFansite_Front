@@ -23,9 +23,9 @@
             順
           </div>
           <div class="flex gap-1"> <!-- メニュー右部分(絞り込み・検索) -->
-            <button class="btn">絞り込みオプション</button>
+            <button type="button" class="btn" data-modal-target="filter-option-modal">絞り込みオプション</button>
             <input type="text" class="input-text" placeholder="検索">
-            <button class="btn"><span class="material-symbols-outlined scale-bigger">search</span></button>
+            <button type="submit" class="btn"><span class="material-symbols-outlined scale-bigger">search</span></button>
             <a href="#" class="btn icon-center"><span class="material-symbols-outlined scale-bigger pr-1">library_add</span>新しい企画を登録</a>
           </div>
         </div>
@@ -41,7 +41,7 @@
                   <span>
                       https://zoutohana-fansite.jp/project/<span class="text-black">winter-bunko</span>
                   </span>
-                  <button class="btn-sm">
+                  <button type="button" class="btn-sm">
                       <span class="material-symbols-outlined font-sm">content_copy</span>
                   </button>
               </p>
@@ -92,9 +92,9 @@
 
             <div class="pt-4 flex justify-between"> <!-- 企画カードフッター -->
               <div> <!-- 左側 -->
-                <button class="btn">次のステータス(<span>投票期間中</span>)に進める</button>
+                <button type="button" class="btn">次のステータス(<span>投票期間中</span>)に進める</button>
                 <a href="" class="btn">編集する</a>
-                <button class="btn btn-danger">削除する</button>
+                <button type="button" class="btn btn-danger">削除する</button>
               </div>
               <a href="" class="icon-center review-card-sub-info text-decoration-none">詳細を確認する<span class="material-symbols-outlined">double_arrow</span></a>
             </div>
@@ -105,8 +105,55 @@
       </div>
     </main>
 
+    <div id="filter-option-modal" class="modal">
+      <div>
+        <div class="modal-content">
+          <div class="flex justify-between items-start">
+            <h2 class="page-title-sub">絞り込みオプション</h2>
+            <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
+          </div>
+
+          <form>
+            <ul class="modal-option-wrap mt-4 ml-4">
+              <li>
+                <label><input type="checkbox" class="modal-checkbox-parent">ステータス</label>
+                <ul class="modal-checkbox-child grid-3">
+                  <li><label><input type="checkbox">書評投稿期間前</label></li>
+                  <li><label><input type="checkbox">書評投稿期間中</label></li>
+                  <li><label><input type="checkbox">一次審査中</label></li>
+                  <li><label><input type="checkbox">二次審査(投票)中</label></li>
+                  <li><label><input type="checkbox">二次審査(確認)中</label></li>
+                  <li><label><input type="checkbox">二次審査結果発表</label></li>
+                  <li><label><input type="checkbox">対象発表</label></li>
+                </ul>
+              </li>
+              <li>
+                <label><input type="checkbox" class="modal-checkbox-parent">公開/非公開</label>
+                <ul class="modal-checkbox-child grid-5">
+                  <li><label><input type="checkbox">公開</label></li>
+                  <li><label><input type="checkbox">非公開</label></li>
+                </ul>
+              </li>
+              <li>
+                <label><input type="checkbox">企画開催期間</label>
+                <div class="modal-checkbox-child mt-2">
+                  <input type="datetime-local" name="projectStartAt" class="input-datetime">
+                  <span class="wave-dash">～</span>
+                  <input type="datetime-local" name="projectEndAt" class="input-datetime">
+                </div>
+              </li>
+            </ul>
+
+            <div class="btn-wrap mt-8">
+              <button type="submit" class="btn"><span class="px-8">絞り込む</span></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <footer></footer>
 
-    <script src=""></script>
+  <script src="../../static/js/admin/admin-general.js"></script>
 </body>
 </html>

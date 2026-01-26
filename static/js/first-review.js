@@ -1,5 +1,5 @@
 /* =========================
-       初期スクロール制御
+        初期スクロール制御
    ========================= */
 if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
@@ -53,7 +53,7 @@ const btnArea = document.querySelector('.button-area');
 // 30件分のデータ
 const allBooksData = [
     {
-        title: "君と僕あんたと私とちみがアンタッチャブル",
+        title: "小学生の頃から大好きな一冊",
         image: "../../static/img/book1.png",
         content: "静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。ああああああああああああああああああああああああああ",
         icon: "../../static/img/flower-blue.png",
@@ -64,7 +64,7 @@ const allBooksData = [
         text: "静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。あああああああああああああああああああああああああああああああああ"
     },
     {
-        title: "アンタッチャブル",
+        title: "読後、心がポカポカになる一冊",
         image: "../../static/img/book2.png",
         content: "物語の展開がテンポよく、序盤から引き込まれました。登場人物同士の会話が自然で、関係性がすぐに理解できます。後半に向かって伏線が少しずつ回収され、読み終えたときには納得感がありました。難しい表現が少ないため、普段あまり本を読まない人でも楽しめる一冊だと感じました。",
         icon: "../../static/img/flower-blue.png",
@@ -75,7 +75,7 @@ const allBooksData = [
         text: "ITと本が好き。"
     },
     {
-        title: "作品3",
+        title: "最後の一行で鳥肌！",
         image: "../../static/img/book3.png",
         content: "主人公の成長が物語を通してしっかり描かれており、読後に前向きな気持ちになれる作品でした。失敗や迷いを経験しながらも一歩ずつ進んでいく姿が印象的です。派手さはありませんが、現実に近い描写が多く共感しやすい内容でした。",
         icon: "../../static/img/flower-blue.png",
@@ -86,7 +86,7 @@ const allBooksData = [
         text: "小説好きです。"
     },
     {
-        title: "作品4",
+        title: "ココア片手に読みたい奇跡",
         image: "../../static/img/book4.png",
         content: "世界観の作り込みが丁寧で、読み始めてすぐに物語の中へ入り込めました。情景描写が細かく、風景が頭に浮かびやすいのが魅力です。物語後半では意外な展開もあり、最後まで飽きずに楽しめました。",
         icon: "../../static/img/flower-blue.png",
@@ -97,7 +97,7 @@ const allBooksData = [
         text: "ゆっくり読書派。"
     },
     {
-        title: "作品5",
+        title: "心に沁みる日常の風景",
         image: "../../static/img/book1.png",
         content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。特別な出来事がなくても、人の心は大きく動くのだと改めて感じさせられます。落ち着いた雰囲気で、夜に読むのがおすすめです。",
         icon: "../../static/img/flower-blue.png",
@@ -107,10 +107,11 @@ const allBooksData = [
         address: "岩手県 盛岡市",
         text: "本と映画が好き。"
     },
-    { title: "作品6", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品7", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品8", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品9", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "寒い冬でも心温まる物語", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "笑って泣ける青春ストーリー", image: "../../static/img/book4.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "小さな町に隠れた秘密", image: "../../static/img/book3.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "笑いあり涙ありのミステリー", image: "../../static/img/book4.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { title: "君とあなたとわたしでアンタッチャブル", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
     { title: "作品10", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
     { title: "作品11", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
     { title: "作品12", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
@@ -398,22 +399,34 @@ function hideScrollOverlay() {
     if (modalScrollOverlay) {
         modalScrollOverlay.style.display = 'none';
         tutorialStep = 13;
-
-        hasFinishedModalTutorial = true;
     }
 }
 
+// マウスホイールで進む（PC）
+modalScrollOverlay.addEventListener('wheel', function () {
+    if (tutorialStep === 12) {
+        hideScrollOverlay();
+    }
+}, { once: true });
+
+// スマホのスワイプで進む
+let touchStartY = 0;
+
+modalScrollOverlay.addEventListener('touchstart', function (e) {
+    touchStartY = e.touches[0].clientY;
+});
+
+modalScrollOverlay.addEventListener('touchmove', function (e) {
+    const currentY = e.touches[0].clientY;
+
+    // 上にスワイプ（＝下にスクロールしようとした）
+    if (touchStartY - currentY > 20 && tutorialStep === 12) {
+        hideScrollOverlay();
+    }
+}, { once: true });
+
 if (modalScrollOverlay) {
     modalScrollOverlay.addEventListener('click', hideScrollOverlay);
-}
-
-const modalContent = document.querySelector('.modal-content');
-if (modalContent) {
-    modalContent.addEventListener('scroll', () => {
-        if (tutorialStep === 12 && modalContent.scrollTop > 20) {
-            hideScrollOverlay();
-        }
-    });
 }
 
 // ■ テキスト整形関数（改行）
@@ -460,3 +473,167 @@ tabs.forEach(tab => {
         this.appendChild(marker);
     });
 });
+
+/* ==============================================
+    以下、新規追加：ボタン説明チュートリアル
+   ============================================== */
+
+// 1. スクロールを監視して、ボタンが見えたら発動
+const modalContent = document.querySelector('.modal-content');
+const buttonsArea = document.getElementById('modalButtonsArea'); // ★HTMLにid="modalButtonsArea"をつけてください
+
+if (modalContent) {
+    modalContent.addEventListener('scroll', () => {
+        // ステップ12（誘導中）でスクロールしたら、誘導表示を消してステップ13へ
+        if (tutorialStep === 12 && modalContent.scrollTop > 20) {
+            hideScrollOverlay();
+        }
+
+        // ステップ13（読書中）で、ボタンエリアが見えたらステップ14へ
+        if (tutorialStep === 13) {
+            // ボタンエリア（投票・ブックマーク）の位置を取得
+            // ★HTML側で <div class="modal-buttons" id="modalButtonsArea"> とIDを振る必要があります
+            const targetButtons = document.querySelector('.modal-buttons'); 
+            
+            if (targetButtons) {
+                const rect = targetButtons.getBoundingClientRect();
+                // 画面の下から100pxくらいの位置に入ってきたら発動
+                if (rect.top < window.innerHeight - 100) {
+                    startVoteTutorial();
+                }
+            }
+        }
+    });
+}
+
+// 2. 投票ボタンの説明開始
+function startVoteTutorial() {
+    tutorialStep = 14; // 多重発動防止
+
+    // スクロール禁止
+    if(modalContent) modalContent.style.overflow = 'hidden';
+
+    // ボタンを画面中央へ持ってくる
+    const targetButtons = document.querySelector('.modal-buttons');
+    if(targetButtons) {
+        targetButtons.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // 少し待ってから演出開始
+    setTimeout(() => {
+        // 全体を暗くするオーバーレイを表示（本棚用のを再利用）
+        const overlay = document.getElementById('tutorialOverlay');
+        if (overlay) {
+            overlay.style.display = 'block';
+            overlay.style.pointerEvents = 'none'; // オーバーレイ自体のクリックは無視
+        }
+
+        // 投票ボタンを特定（IDがない場合はクラスから取得）
+        // ★HTML側で <div id="voteBtn"> をつけるのが確実ですが、クラスで探すなら以下
+        const btns = document.querySelectorAll('.modal-button');
+        const voteBtn = btns[0]; // 1つめが投票
+
+        if (voteBtn) {
+            voteBtn.classList.add('highlight');
+            voteBtn.style.pointerEvents = 'auto'; // ここだけ押せるように
+
+            // 吹き出し作成
+            const msg = document.createElement('div');
+            msg.className = 'tutorial-msg';
+            msg.innerText = '気に入ったら投票！';
+            // スタイル調整（必要であればCSSで調整）
+            msg.style.position = 'absolute';
+            msg.style.top = '-50px';
+            msg.style.left = '50%';
+            msg.style.transform = 'translateX(-50%)';
+            msg.style.whiteSpace = 'nowrap';
+            msg.style.background = '#fff';
+            msg.style.padding = '5px 10px';
+            msg.style.borderRadius = '5px';
+            msg.style.color = '#333';
+            msg.style.fontWeight = 'bold';
+            
+            voteBtn.appendChild(msg);
+
+            // クリックしたら次（ブックマーク）へ
+            voteBtn.addEventListener('click', function onVote(e) {
+                // 実際の投票処理をしたくない場合は e.preventDefault();
+                e.stopPropagation();
+                voteBtn.removeEventListener('click', onVote);
+                
+                // 次へ
+                startBookmarkTutorial();
+            }, { once: true });
+        }
+    }, 600);
+}
+
+// 3. ブックマークボタンの説明
+function startBookmarkTutorial() {
+    // 投票ボタンの片付け
+    const btns = document.querySelectorAll('.modal-button');
+    const voteBtn = btns[0];
+    if (voteBtn) {
+        voteBtn.classList.remove('highlight');
+        const msg = voteBtn.querySelector('.tutorial-msg');
+        if (msg) msg.remove();
+    }
+
+    // ブックマークボタンの設定
+    const bookmarkBtn = btns[1]; // 2つめがブックマーク
+    if (bookmarkBtn) {
+        bookmarkBtn.classList.add('highlight');
+        bookmarkBtn.style.pointerEvents = 'auto';
+
+        const msg = document.createElement('div');
+        msg.className = 'tutorial-msg';
+        msg.innerText = 'あとで読むならこれ';
+        // スタイル
+        msg.style.position = 'absolute';
+        msg.style.top = '-50px';
+        msg.style.left = '50%';
+        msg.style.transform = 'translateX(-50%)';
+        msg.style.whiteSpace = 'nowrap';
+        msg.style.background = '#fff';
+        msg.style.padding = '5px 10px';
+        msg.style.borderRadius = '5px';
+        msg.style.color = '#333';
+        msg.style.fontWeight = 'bold';
+
+        bookmarkBtn.appendChild(msg);
+
+        // クリックしたら終了
+        bookmarkBtn.addEventListener('click', function onBookmark(e) {
+            e.stopPropagation();
+            bookmarkBtn.removeEventListener('click', onBookmark);
+            finishButtonTutorial();
+        }, { once: true });
+    }
+}
+
+// 4. チュートリアル終了
+function finishButtonTutorial() {
+    const btns = document.querySelectorAll('.modal-button');
+    const bookmarkBtn = btns[1];
+    
+    // 片付け
+    if (bookmarkBtn) {
+        bookmarkBtn.classList.remove('highlight');
+        const msg = bookmarkBtn.querySelector('.tutorial-msg');
+        if (msg) msg.remove();
+    }
+
+    // オーバーレイ非表示
+    const overlay = document.getElementById('tutorialOverlay');
+    if (overlay) {
+        overlay.style.display = 'none';
+        overlay.style.pointerEvents = 'auto';
+    }
+
+    // スクロールロック解除
+    if(modalContent) modalContent.style.overflow = 'auto';
+
+    // ★ここでようやく全完了
+    hasFinishedModalTutorial = true;
+    tutorialStep = 99;
+}

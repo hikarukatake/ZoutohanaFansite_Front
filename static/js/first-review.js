@@ -51,89 +51,91 @@ const nextBtn = document.getElementById('nextBtn');
 const btnArea = document.querySelector('.button-area');
 
 // 30件分のデータ
-const allBooksData = [
-    {
-        title: "小学生の頃から大好きな一冊",
-        image: "../../static/img/book1.png",
-        content: "静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。ああああああああああああああああああああああああああ",
-        icon: "../../static/img/flower-blue.png",
-        name: "もたーて",
-        age: "40代",
-        gender: "男性",
-        address: "岩手県 盛岡市",
-        text: "静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。あああああああああああああああああああああああああああああああああ"
-    },
-    {
-        title: "読後、心がポカポカになる一冊",
-        image: "../../static/img/book2.png",
-        content: "物語の展開がテンポよく、序盤から引き込まれました。登場人物同士の会話が自然で、関係性がすぐに理解できます。後半に向かって伏線が少しずつ回収され、読み終えたときには納得感がありました。難しい表現が少ないため、普段あまり本を読まない人でも楽しめる一冊だと感じました。",
-        icon: "../../static/img/flower-blue.png",
-        name: "ひかる",
-        age: "20代",
-        gender: "男性",
-        address: "岩手県 盛岡市",
-        text: "ITと本が好き。"
-    },
-    {
-        title: "最後の一行で鳥肌！",
-        image: "../../static/img/book3.png",
-        content: "主人公の成長が物語を通してしっかり描かれており、読後に前向きな気持ちになれる作品でした。失敗や迷いを経験しながらも一歩ずつ進んでいく姿が印象的です。派手さはありませんが、現実に近い描写が多く共感しやすい内容でした。",
-        icon: "../../static/img/flower-blue.png",
-        name: "佐藤",
-        age: "30代",
-        gender: "男性",
-        address: "岩手県 花巻市",
-        text: "小説好きです。"
-    },
-    {
-        title: "ココア片手に読みたい奇跡",
-        image: "../../static/img/book4.png",
-        content: "世界観の作り込みが丁寧で、読み始めてすぐに物語の中へ入り込めました。情景描写が細かく、風景が頭に浮かびやすいのが魅力です。物語後半では意外な展開もあり、最後まで飽きずに楽しめました。",
-        icon: "../../static/img/flower-blue.png",
-        name: "高橋",
-        age: "50代",
-        gender: "女性",
-        address: "岩手県 北上市",
-        text: "ゆっくり読書派。"
-    },
-    {
-        title: "心に沁みる日常の風景",
-        image: "../../static/img/book1.png",
-        content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。特別な出来事がなくても、人の心は大きく動くのだと改めて感じさせられます。落ち着いた雰囲気で、夜に読むのがおすすめです。",
-        icon: "../../static/img/flower-blue.png",
-        name: "鈴木",
-        age: "20代",
-        gender: "女性",
-        address: "岩手県 盛岡市",
-        text: "本と映画が好き。"
-    },
-    { title: "寒い冬でも心温まる物語", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "笑って泣ける青春ストーリー", image: "../../static/img/book4.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "小さな町に隠れた秘密", image: "../../static/img/book3.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "笑いあり涙ありのミステリー", image: "../../static/img/book4.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "君とあなたとわたしでアンタッチャブル", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品10", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品11", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品12", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品13", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品14", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品15", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品16", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品17", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品18", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品19", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品20", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品21", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品22", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品23", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品24", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品25", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品26", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品27", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品28", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品29", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { title: "作品30", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-];
+let allBooksData;
+//     [{
+//         title: "君と僕あんたと私とちみがアンタッチャブル",
+//         image: "../../static/img/book1.png",
+//         content: "静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。ああああああああああああああああああああああああああ",
+//         icon: "../../static/img/flower-blue.png",
+//         name: "もたーて",
+//         age: "40代",
+//         gender: "男性",
+//         address: "岩手県 盛岡市",
+//         text: "静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。あああああああああああああああああああああああああああああああああ"
+//     },
+//     {
+//         title: "アンタッチャブル",
+//         image: "../../static/img/book2.png",
+//         content: "物語の展開がテンポよく、序盤から引き込まれました。登場人物同士の会話が自然で、関係性がすぐに理解できます。後半に向かって伏線が少しずつ回収され、読み終えたときには納得感がありました。難しい表現が少ないため、普段あまり本を読まない人でも楽しめる一冊だと感じました。",
+//         icon: "../../static/img/flower-blue.png",
+//         name: "ひかる",
+//         age: "20代",
+//         gender: "男性",
+//         address: "岩手県 盛岡市",
+//         text: "ITと本が好き。"
+//     },
+//     {
+//         title: "作品3",
+//         image: "../../static/img/book3.png",
+//         content: "主人公の成長が物語を通してしっかり描かれており、読後に前向きな気持ちになれる作品でした。失敗や迷いを経験しながらも一歩ずつ進んでいく姿が印象的です。派手さはありませんが、現実に近い描写が多く共感しやすい内容でした。",
+//         icon: "../../static/img/flower-blue.png",
+//         name: "佐藤",
+//         age: "30代",
+//         gender: "男性",
+//         address: "岩手県 花巻市",
+//         text: "小説好きです。"
+//     },
+//     {
+//         title: "作品4",
+//         image: "../../static/img/book4.png",
+//         content: "世界観の作り込みが丁寧で、読み始めてすぐに物語の中へ入り込めました。情景描写が細かく、風景が頭に浮かびやすいのが魅力です。物語後半では意外な展開もあり、最後まで飽きずに楽しめました。",
+//         icon: "../../static/img/flower-blue.png",
+//         name: "高橋",
+//         age: "50代",
+//         gender: "女性",
+//         address: "岩手県 北上市",
+//         text: "ゆっくり読書派。"
+//     },
+//     {
+//         title: "作品5",
+//         image: "../../static/img/book1.png",
+//         content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。特別な出来事がなくても、人の心は大きく動くのだと改めて感じさせられます。落ち着いた雰囲気で、夜に読むのがおすすめです。",
+//         icon: "../../static/img/flower-blue.png",
+//         name: "鈴木",
+//         age: "20代",
+//         gender: "女性",
+//         address: "岩手県 盛岡市",
+//         text: "本と映画が好き。"
+//     },
+//     { title: "作品6", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品7", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品8", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品9", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品10", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品11", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品12", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品13", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品14", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品15", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品16", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品17", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品18", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品19", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品20", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品21", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品22", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品23", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品24", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品25", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品26", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品27", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品28", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品29", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品30", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品30", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品31", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+//     { title: "作品32", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+// ];
 
 let currentStartIndex = 0;
 const BATCH_SIZE = 9;
@@ -150,24 +152,64 @@ let bookInterval;
 let isAnimating = false;
 let hasStartedInitial = false;
 
+// 現在のURLパス（例: /projects/my-awesome-book）を取得
+const pathname = window.location.pathname;
+
+// パスを "/" で分割して配列にし、最後の要素を取得
+const urlKey = pathname.split('/').pop();
+
+const STORAGE_KEY = 'visited';
+
+fetchReviewData();
+
+async function fetchReviewData() {
+    try {
+        // 1. APIを叩く（Spring BootのURL）
+        const response = await fetch('/api/reviews/' + urlKey);
+
+        // 2. レスポンスが正常（200 OKなど）かチェック
+        if (!response.ok) {
+            throw new Error(`HTTPエラー: ${response.status}`);
+        }
+
+        // 3. JSONをパースして変数 'data' に格納
+        allBooksData = await response.json();
+
+        // --- ここから下で 'data' を自由に使う ---
+        // console.log("取得したデータ:", allBooksData);
+
+    } catch (error) {
+        // ネットワークエラーやJSON解析エラーの処理
+        console.error("データ取得に失敗しました:", error);
+    }
+}
+
 // ■ 本を1冊生成する関数
 function createBook(data, index) {
     const book = document.createElement('div');
     book.classList.add('book');
-
-    // 最初のセットの1冊目だけIDを振る（チュートリアル用）
-    if (index === 0 && currentStartIndex === 0) {
-        book.id = "firstBook";
-    }
-
     // 見た目とテキストの設定
     book.style.backgroundImage = `url('${data.image}')`;
     book.style.pointerEvents = 'none'; // 落下中はクリック不可
 
     const textDiv = document.createElement('div');
     textDiv.classList.add('book-text-overlay');
+
+
+    book.id = data.id;
+
+    // 最初のセットの1冊目だけIDを振る（チュートリアル用）
+    if (index === 0 && currentStartIndex === 0) {
+        book.id = "firstBook";
+        addVisitedId(data.id);
+    }
+
     textDiv.innerText = data.title;
     book.appendChild(textDiv);
+
+    if(isVisited(data.id)){
+        book.classList.add('visited');
+    }
 
     // --- クリック時のデータ流し込み ---
     book.addEventListener('click', function () {
@@ -225,11 +267,6 @@ function createBook(data, index) {
     // 落下角度の設定
     const fallAngle = (Math.random() * 60) - 30;
     book.style.setProperty('--fall-angle', fallAngle + 'deg');
-
-    // これはお気に入りのしおりを挟むための強制的につけている処理
-    if (index === 2) {
-        book.classList.add('is-favorite');
-    }
 
     shelf.appendChild(book);
 
@@ -336,7 +373,7 @@ nextBtn.addEventListener('click', function (e) {
 document.addEventListener('click', function () {
     if (hasStartedInitial) return;
     hasStartedInitial = true;
-    console.log("クリック検知：4秒後に本が降り始めます");
+    // console.log("クリック検知：4秒後に本が降り始めます");
 
     setTimeout(function () {
         startFallingBooks();
@@ -368,11 +405,13 @@ if (closeBtn) {
         modal.style.display = 'none';
         document.body.classList.remove('no-scroll');
 
-    // 既読にする
-    if(currentOpenedBook){
-        currentOpenedBook.classList.add('visited');
-        currentOpenedBook = null;
-    }
+        // 既読にする
+        if (currentOpenedBook) {
+            currentOpenedBook.classList.add('visited');
+            addVisitedId(currentOpenedBook.id);
+            currentOpenedBook = null;
+            
+        }
     });
 }
 
@@ -474,6 +513,34 @@ tabs.forEach(tab => {
     });
 });
 
+function addVisitedId(id) {
+    // 現在のリストを取得し、配列にパース（データがなければ空配列）
+    const currentData = localStorage.getItem(STORAGE_KEY);
+    let visitedIds = currentData ? JSON.parse(currentData) : [];
+
+    // 重複チェック：まだ含まれていない場合のみ追加
+    if (!visitedIds.includes(id)) {
+        visitedIds.push(id);
+        // 文字列化して保存
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(visitedIds));
+    }
+
+    // console.log('localstrageに保存:' + id);
+}
+
+function isVisited(id) {
+    const currentData = localStorage.getItem(STORAGE_KEY);
+    if (!currentData) return false;
+
+    const visitedIds = JSON.parse(currentData);
+    // 配列の中に引数のIDが存在するか判定
+    if(visitedIds.includes(id)){
+        console.log('isVisited : true');
+    }else{
+        console.log('isVisited : false');
+    }
+    return visitedIds.includes(id);
+}
 /* ==============================================
     以下、新規追加：ボタン説明チュートリアル
    ============================================== */

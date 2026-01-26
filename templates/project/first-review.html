@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../../static/css/main.css">
-    <link rel="stylesheet" href="../../static/css/project/first-review.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/project/first-review.css}" href="../../static/css/project/first-review.css">
     <style>
 
     </style>
@@ -394,6 +394,6 @@
     </footer>
 </body>
 
-<script src="../../static/js/first-review.js"></script>
+<script th:src="@{/js/first-review.js}" src="../../static/js/first-review.js"></script>
 
 </html>

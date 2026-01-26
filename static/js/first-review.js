@@ -1,5 +1,5 @@
 /* =========================
-       初期スクロール制御
+        初期スクロール制御
    ========================= */
 if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
@@ -438,22 +438,34 @@ function hideScrollOverlay() {
     if (modalScrollOverlay) {
         modalScrollOverlay.style.display = 'none';
         tutorialStep = 13;
-
-        hasFinishedModalTutorial = true;
     }
 }
 
+// マウスホイールで進む（PC）
+modalScrollOverlay.addEventListener('wheel', function () {
+    if (tutorialStep === 12) {
+        hideScrollOverlay();
+    }
+}, { once: true });
+
+// スマホのスワイプで進む
+let touchStartY = 0;
+
+modalScrollOverlay.addEventListener('touchstart', function (e) {
+    touchStartY = e.touches[0].clientY;
+});
+
+modalScrollOverlay.addEventListener('touchmove', function (e) {
+    const currentY = e.touches[0].clientY;
+
+    // 上にスワイプ（＝下にスクロールしようとした）
+    if (touchStartY - currentY > 20 && tutorialStep === 12) {
+        hideScrollOverlay();
+    }
+}, { once: true });
+
 if (modalScrollOverlay) {
     modalScrollOverlay.addEventListener('click', hideScrollOverlay);
-}
-
-const modalContent = document.querySelector('.modal-content');
-if (modalContent) {
-    modalContent.addEventListener('scroll', () => {
-        if (tutorialStep === 12 && modalContent.scrollTop > 20) {
-            hideScrollOverlay();
-        }
-    });
 }
 
 // ■ テキスト整形関数（改行）
@@ -528,4 +540,167 @@ function isVisited(id) {
         console.log('isVisited : false');
     }
     return visitedIds.includes(id);
+}
+/* ==============================================
+    以下、新規追加：ボタン説明チュートリアル
+   ============================================== */
+
+// 1. スクロールを監視して、ボタンが見えたら発動
+const modalContent = document.querySelector('.modal-content');
+const buttonsArea = document.getElementById('modalButtonsArea'); // ★HTMLにid="modalButtonsArea"をつけてください
+
+if (modalContent) {
+    modalContent.addEventListener('scroll', () => {
+        // ステップ12（誘導中）でスクロールしたら、誘導表示を消してステップ13へ
+        if (tutorialStep === 12 && modalContent.scrollTop > 20) {
+            hideScrollOverlay();
+        }
+
+        // ステップ13（読書中）で、ボタンエリアが見えたらステップ14へ
+        if (tutorialStep === 13) {
+            // ボタンエリア（投票・ブックマーク）の位置を取得
+            // ★HTML側で <div class="modal-buttons" id="modalButtonsArea"> とIDを振る必要があります
+            const targetButtons = document.querySelector('.modal-buttons'); 
+            
+            if (targetButtons) {
+                const rect = targetButtons.getBoundingClientRect();
+                // 画面の下から100pxくらいの位置に入ってきたら発動
+                if (rect.top < window.innerHeight - 100) {
+                    startVoteTutorial();
+                }
+            }
+        }
+    });
+}
+
+// 2. 投票ボタンの説明開始
+function startVoteTutorial() {
+    tutorialStep = 14; // 多重発動防止
+
+    // スクロール禁止
+    if(modalContent) modalContent.style.overflow = 'hidden';
+
+    // ボタンを画面中央へ持ってくる
+    const targetButtons = document.querySelector('.modal-buttons');
+    if(targetButtons) {
+        targetButtons.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // 少し待ってから演出開始
+    setTimeout(() => {
+        // 全体を暗くするオーバーレイを表示（本棚用のを再利用）
+        const overlay = document.getElementById('tutorialOverlay');
+        if (overlay) {
+            overlay.style.display = 'block';
+            overlay.style.pointerEvents = 'none'; // オーバーレイ自体のクリックは無視
+        }
+
+        // 投票ボタンを特定（IDがない場合はクラスから取得）
+        // ★HTML側で <div id="voteBtn"> をつけるのが確実ですが、クラスで探すなら以下
+        const btns = document.querySelectorAll('.modal-button');
+        const voteBtn = btns[0]; // 1つめが投票
+
+        if (voteBtn) {
+            voteBtn.classList.add('highlight');
+            voteBtn.style.pointerEvents = 'auto'; // ここだけ押せるように
+
+            // 吹き出し作成
+            const msg = document.createElement('div');
+            msg.className = 'tutorial-msg';
+            msg.innerText = '気に入ったら投票！';
+            // スタイル調整（必要であればCSSで調整）
+            msg.style.position = 'absolute';
+            msg.style.top = '-50px';
+            msg.style.left = '50%';
+            msg.style.transform = 'translateX(-50%)';
+            msg.style.whiteSpace = 'nowrap';
+            msg.style.background = '#fff';
+            msg.style.padding = '5px 10px';
+            msg.style.borderRadius = '5px';
+            msg.style.color = '#333';
+            msg.style.fontWeight = 'bold';
+            
+            voteBtn.appendChild(msg);
+
+            // クリックしたら次（ブックマーク）へ
+            voteBtn.addEventListener('click', function onVote(e) {
+                // 実際の投票処理をしたくない場合は e.preventDefault();
+                e.stopPropagation();
+                voteBtn.removeEventListener('click', onVote);
+                
+                // 次へ
+                startBookmarkTutorial();
+            }, { once: true });
+        }
+    }, 600);
+}
+
+// 3. ブックマークボタンの説明
+function startBookmarkTutorial() {
+    // 投票ボタンの片付け
+    const btns = document.querySelectorAll('.modal-button');
+    const voteBtn = btns[0];
+    if (voteBtn) {
+        voteBtn.classList.remove('highlight');
+        const msg = voteBtn.querySelector('.tutorial-msg');
+        if (msg) msg.remove();
+    }
+
+    // ブックマークボタンの設定
+    const bookmarkBtn = btns[1]; // 2つめがブックマーク
+    if (bookmarkBtn) {
+        bookmarkBtn.classList.add('highlight');
+        bookmarkBtn.style.pointerEvents = 'auto';
+
+        const msg = document.createElement('div');
+        msg.className = 'tutorial-msg';
+        msg.innerText = 'あとで読むならこれ';
+        // スタイル
+        msg.style.position = 'absolute';
+        msg.style.top = '-50px';
+        msg.style.left = '50%';
+        msg.style.transform = 'translateX(-50%)';
+        msg.style.whiteSpace = 'nowrap';
+        msg.style.background = '#fff';
+        msg.style.padding = '5px 10px';
+        msg.style.borderRadius = '5px';
+        msg.style.color = '#333';
+        msg.style.fontWeight = 'bold';
+
+        bookmarkBtn.appendChild(msg);
+
+        // クリックしたら終了
+        bookmarkBtn.addEventListener('click', function onBookmark(e) {
+            e.stopPropagation();
+            bookmarkBtn.removeEventListener('click', onBookmark);
+            finishButtonTutorial();
+        }, { once: true });
+    }
+}
+
+// 4. チュートリアル終了
+function finishButtonTutorial() {
+    const btns = document.querySelectorAll('.modal-button');
+    const bookmarkBtn = btns[1];
+    
+    // 片付け
+    if (bookmarkBtn) {
+        bookmarkBtn.classList.remove('highlight');
+        const msg = bookmarkBtn.querySelector('.tutorial-msg');
+        if (msg) msg.remove();
+    }
+
+    // オーバーレイ非表示
+    const overlay = document.getElementById('tutorialOverlay');
+    if (overlay) {
+        overlay.style.display = 'none';
+        overlay.style.pointerEvents = 'auto';
+    }
+
+    // スクロールロック解除
+    if(modalContent) modalContent.style.overflow = 'auto';
+
+    // ★ここでようやく全完了
+    hasFinishedModalTutorial = true;
+    tutorialStep = 99;
 }

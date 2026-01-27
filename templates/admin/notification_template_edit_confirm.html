@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>個別通知テンプレート編集 - 確認</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="../../static/css/admin/admin-style.css">
+    <link rel="stylesheet" href="../../static/css/admin/admin-style.css" th:href="@{/css/admin/admin-style.css}">
 </head>
 <body>
     <header></header>
@@ -63,16 +63,12 @@
             </table>
 
             <div class="btn-wrap mt-4">
-              <a href="#" class="btn">前に戻る</a>
+              <a href="#" th:href="@{}" class="btn">前に戻る</a>
               <input type="submit" value="更新する" class="btn">
             </div>
           </div>
         </form>
       </div>
     </main>
-
-    <footer></footer>
-
-    <script src=""></script>
 </body>
 </html>

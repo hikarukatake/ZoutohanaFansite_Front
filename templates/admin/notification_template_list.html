@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>個別通知テンプレート一覧</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-  <link rel="stylesheet" href="../../static/css/admin/admin-style.css">
+  <link rel="stylesheet" href="../../static/css/admin/admin-style.css" th:href="@{/css/admin/admin-style.css}">
 </head>
 <body>
   <header></header>
@@ -25,7 +25,7 @@
         <div> <!-- メニュー右部分(検索) -->
           <input type="text" class="input-text" placeholder="検索">
           <button type="submit" class="btn"><span class="material-symbols-outlined scale-bigger">search</span></button>
-          <a href="#" class="btn">
+          <a href="#" th:href="@{}" class="btn">
             <span class="material-symbols-outlined scale-bigger pr-1">library_add</span>
             新しいテンプレートを登録
           </a>
@@ -44,8 +44,8 @@
           <td class="table-border-r">一次審査通過連絡</td>
           <td class="table-border-r">一次審通過のお知らせ</td>
           <td class="flex gap-4 center-middle">
-            <a href="#" class="btn">編集する</a>
-            <a href="#" class="btn btn-danger">削除する</a>
+            <a href="#" th:href="@{}" class="btn">編集する</a>
+            <a href="#" th:href="@{}" class="btn btn-danger">削除する</a>
           </td>
         </tr>
       </table>
@@ -53,9 +53,5 @@
       <div class="pagination" id="pagination"></div>
     </div>
   </main>
-
-  <footer></footer>
-
-  <script src=""></script>
 </body>
 </html>

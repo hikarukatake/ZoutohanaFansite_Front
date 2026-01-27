@@ -1,5 +1,22 @@
 "use strict";
 
+// ========== ヘッダーのハンバーガーメニュー ==========
+function updateMenuIcon() {
+  const menuBtnCheck = document.getElementById('menu-btn-check');
+  const menuBtn = document.getElementById('menu-btn');
+  if (!menuBtn || !menuBtnCheck) return;
+
+  function updateIcon() {
+    menuBtn.textContent = menuBtnCheck.checked ? 'close' : 'menu';
+  }
+
+  updateIcon();
+  menuBtnCheck.addEventListener('change', updateIcon);
+}
+
+window.addEventListener('DOMContentLoaded', updateMenuIcon);
+window.addEventListener('pageshow', updateMenuIcon);
+
 // ========== パスワードの表示非表示ボタン ==========
 document.addEventListener("DOMContentLoaded", () => {
   const viewicon = document.getElementById('password-visible-icon');
@@ -231,7 +248,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const hiddenInput = document.getElementById("genres-hidden");
 
   form.addEventListener("submit", () => {
-    hiddenInput.value = selectedItems.join(","); // それか JSON.stringify(selectedItems)
+    // hiddenInput.value = selectedItems.join(",");
+    JSON.stringify(selectedItems);
   });
 });
 

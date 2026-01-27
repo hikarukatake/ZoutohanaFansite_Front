@@ -9,8 +9,11 @@
     <link rel="stylesheet" href="../../static/css/admin/admin-style.css" th:href="@{/css/admin/admin-style.css}">
 </head>
 <body>
-    <div th:replace="~{layout-admin :: header}"></div>
-    <main id="admin-main" class="center-middle">
+  <header id="admin-header">
+    <img id="admin-header-logo" src="../../static/img/象と花-white-color.png" th:src="@{/img/象と花-white-color.png}">
+  </header>
+
+  <main id="admin-main" class="center-middle">
       <div class="w-half">
         <h1 class="page-title text-center">ログイン</h1>
         <form class="mt-8" th:action="@{/admin/login}" method="post">

@@ -26,7 +26,7 @@
             <button type="button" class="btn" data-modal-target="filter-option-modal">絞り込みオプション</button>
             <input type="text" class="input-text" placeholder="検索">
             <button type="submit" class="btn"><span class="material-symbols-outlined scale-bigger">search</span></button>
-            <a href="#" th:href="@{}" class="btn icon-center"><span class="material-symbols-outlined scale-bigger pr-1">library_add</span>新しい企画を登録</a>
+            <a href="#" th:href="@{/}" class="btn icon-center"><span class="material-symbols-outlined scale-bigger pr-1">library_add</span>新しい企画を登録</a>
           </div>
         </div>
 
@@ -93,10 +93,10 @@
             <div class="pt-4 flex justify-between"> <!-- 企画カードフッター -->
               <div> <!-- 左側 -->
                 <button type="button" class="btn">次のステータス(<span>投票期間中</span>)に進める</button>
-                <a href="" th:href="@{}" class="btn">編集する</a>
+                <a href="#" th:href="@{/}" class="btn">編集する</a>
                 <button type="button" class="btn btn-danger">削除する</button>
               </div>
-              <a href="" th:href="@{}" class="icon-center review-card-sub-info text-decoration-none">詳細を確認する<span class="material-symbols-outlined">double_arrow</span></a>
+              <a href="#" th:href="@{/}" class="icon-center review-card-sub-info text-decoration-none">詳細を確認する<span class="material-symbols-outlined">double_arrow</span></a>
             </div>
           </div>
         </div>

@@ -71,7 +71,7 @@ p {
     display: block;
     justify-content: center;
     align-items: center;
-    transition: opacity 3s ease;
+    transition: opacity 1s ease;
     opacity: 1;
     position: relative;
 }
@@ -695,8 +695,6 @@ p {
     position: relative;
     margin-bottom: 32px;
     background-color: var(--back-color);
-
-
     box-shadow: 6px 6px 10px -4px rgba(0, 0, 0, 0.25);
 }
 
@@ -813,13 +811,27 @@ p {
 .modal-button {
     display: flex;
     justify-content: center;
-    background-color: var(--sub-color);
+    background-color: white;
     width: 35%;
-    height: 35px;
+    height: 45px;
     padding: 10px;
     border-radius: 5px;
     align-items: center;
     gap: 10px;
+    border: none;
+    color: var(--sub-color);
+    border: 2px solid var(--sub-color);
+}
+
+.modal-button:hover {
+    background-color: var(--sub-color);
+    color: white;
+}
+
+
+.modal-button-clicked { /* voteBtn, bookmarkBtnクリックしたときこのクラスを追加で */
+    background-color: var(--sub-color);
+    color: white;
 }
 
 .modal-img {

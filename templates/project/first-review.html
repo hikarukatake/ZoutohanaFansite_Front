@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
     <link rel="stylesheet" th:href="@{/css/project/first-review.css}" href="../../static/css/project/first-review.css">
     <style>
@@ -303,9 +304,8 @@
                 </div>
 
                 <div class="modal-buttons" id="modalButtonsArea">
-                    <div id="voteBtn" class="modal-button"><img src="../../static/img/vote.png" alt="" class="modal-img">投票</div>
-                    <div id="bookmarkBtn" class="modal-button"><img src="../../static/img/tagu.png" alt="" class="modal-img-book">ブックマーク
-                    </div>
+                    <button id="voteBtn" onclick="Sample(id)" class="modal-button"><span class="material-symbols-outlined">how_to_vote</span>投票</button>
+                    <button id="bookmarkBtn" onclick="Sample(id)" class="modal-button"><span class="material-symbols-outlined">bookmark</span>ブックマーク</button>
                 </div>
 
                 <div class="profile-card">

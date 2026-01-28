@@ -562,22 +562,19 @@ html {
   z-index: 1;
 }
 
-.progressbar li:first-child:before {
+.progressbar li:first-child:before {  /* 1つ目の丸には前の線つけない */
   content: none;
 }
 
-.progressbar li.active, /* 完了した文字 */
-.progressbar li.complete{
+.progressbar li.complete{ /* 完了した文字 */
   color: black;
 }
 
-.progressbar li.active:before,  /* 完了した線 */
-.progressbar li.complete:before {
+.progressbar li.complete:before { /* 完了した線 */
   background-color: #808080;
 }
 
-.progressbar li.active:after, /* 完了した丸 */
-.progressbar li.complete:after {
+.progressbar li.complete:after { /* 完了した丸 */
   background-color: #808080;
 }
 

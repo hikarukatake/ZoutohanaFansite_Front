@@ -36,6 +36,25 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+// ========== 企画カードのURLコピー ==========
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const url = btn.dataset.url;
+      const icon = btn.querySelector('.material-symbols-outlined');
+
+      try {
+        await navigator.clipboard.writeText(url);
+        icon.textContent = 'check';
+
+      } catch (e) {
+        console.error('コピー失敗', e);
+      }
+    });
+  });
+});
+
+
 // ========== タブ切り替え ==========
 document.addEventListener("DOMContentLoaded", () => {
 const tabItems = document.querySelectorAll(".tab-item");

@@ -811,7 +811,7 @@ p {
 .modal-button {
     display: flex;
     justify-content: center;
-    background-color: var(--sub-color);
+    background-color: white;
     width: 35%;
     height: 45px;
     padding: 10px;
@@ -819,6 +819,18 @@ p {
     align-items: center;
     gap: 10px;
     border: none;
+    color: var(--sub-color);
+    border: 2px solid var(--sub-color);
+}
+
+.modal-button:hover {
+    background-color: var(--sub-color);
+    color: white;
+}
+
+
+.modal-button-clicked { /* voteBtn, bookmarkBtnクリックしたときこのクラスを追加で */
+    background-color: var(--sub-color);
     color: white;
 }
 

@@ -304,7 +304,7 @@ html {
   min-width: 300px;
   min-height: 200px;
   object-fit: cover;
-  background-color: var(--admin-text-gray);
+  background-color: var(--admin-border-gray);
 }
 
 .merge-tag-preview {  /* 個別通知テンプレートの置き換えタグ */

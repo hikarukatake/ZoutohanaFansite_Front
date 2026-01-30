@@ -790,31 +790,26 @@ function isFavorite(id) {
 // 自分が投票している作品の表示
 function oneShintobook(data) {
     const oneShintoContainer = document.querySelector('.one-book-shinto-box');
-    if (!oneShintoContainer || !data) return;
 
-    // 1. 大枠 (class="one-book-shinto-set")
+    // 大枠 (class="one-book-shinto-set")
     const setDiv = document.createElement('div');
     setDiv.classList.add('one-book-shinto-set');
 
-    // 2. 本の本体 (class="one-book")
+    // 本の本体 (class="one-book")
     const oneBook = document.createElement('div');
     oneBook.classList.add('one-book');
     oneBook.style.backgroundImage = `url('${data.image}')`;
 
-    // クリックイベント
     oneBook.addEventListener('click', function() {
         Allbook(data, oneBook);
     });
 
-    // 3. 本の上の文字 (class="one-book-text-overlay")
+    // 本の上の文字 (class="one-book-text-overlay")
     const overlay = document.createElement('div');
     overlay.classList.add('one-book-text-overlay');
     overlay.innerHTML = data.title;
     oneBook.appendChild(overlay); // 本の中に文字を入れる
 
-    // --------------------------------------------------
-    // ★ここから追加：投稿者エリア (.pen-box)
-    // --------------------------------------------------
     const penBox = document.createElement('div');
     penBox.classList.add('pen-box');
 
@@ -832,14 +827,7 @@ function oneShintobook(data) {
     // pen-box の中に画像とテキストを入れる
     penBox.appendChild(penImg);
     penBox.appendChild(penText);
-
-
-    // --- 最終組み立て ---
-    
-    // セットの中に「本」を入れる
     setDiv.appendChild(oneBook);
-
-    // セットの中に「投稿者エリア」を入れる（本の下に来ます）
     setDiv.appendChild(penBox);
 
     // 画面の箱に追加して表示完了

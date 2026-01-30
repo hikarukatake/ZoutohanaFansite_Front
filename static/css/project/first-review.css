@@ -1062,3 +1062,14 @@ p {
     0% { transform: scale(0); opacity: 0; }
     100% { transform: scale(1); opacity: 1; }
 }
+
+/* =========================
+   神棚エリア全体のレイアウト
+   ========================= */
+.book-shinto-box {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 4rem;
+}

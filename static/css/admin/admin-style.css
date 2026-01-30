@@ -511,6 +511,15 @@ html {
   padding: 1rem 0rem;
 }
 
+.table-row-link {
+  color: var(--admin-text-gray);
+}
+
+.table-row-link:hover {
+  color: black;
+  font-weight: bold;
+}
+
 .status-green {
   display: inline-flex;
 	align-items: center;
@@ -522,6 +531,20 @@ html {
   display: inline-flex;
 	align-items: center;
   color: blue;
+  gap: 0.2rem;
+}
+
+.status-gray {
+  display: inline-flex;
+	align-items: center;
+  color: gray;
+  gap: 0.2rem;
+}
+
+.status-red {
+  display: inline-flex;
+	align-items: center;
+  color: red;
   gap: 0.2rem;
 }
 
@@ -723,7 +746,7 @@ html {
 .modal { /* モーダルの背景を暗くするやつ */
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;

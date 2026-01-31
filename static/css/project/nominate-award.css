@@ -10,6 +10,7 @@ body {
 body.no-scroll {
     overflow: hidden;
     height: 100%;
+    background-color: var(--back-color);
 }
 
 h1 {
@@ -18,6 +19,10 @@ h1 {
 
 p {
     margin: 0;
+}
+
+section {
+    background-color: var(--back-color);
 }
 
 .book-text {
@@ -60,14 +65,11 @@ p {
 .img-box {
     padding-top: 200px;
     width: 100%;
-    height: 78vh;
+    height: 90vh;
     background-image: url(../../img/back-book.png);
     background-size: cover;
-    /* ←全体にフィット（必要なら拡大縮小） */
     background-repeat: no-repeat;
-    /* ←繰り返しを止める */
     background-position: center;
-    /* ←中央に置く */
     display: block;
     justify-content: center;
     align-items: center;
@@ -79,54 +81,16 @@ p {
 /* 動作確認用に下にコンテンツがないとスクロールできないのでダミーを追加 */
 .next-section {
     width: 100%;
-    height: 100vh;
-    background-image: url(../../img/book-flow.png);
+    background-color: var(--back-color);
     display: block;
     justify-content: center;
     align-items: center;
     font-size: 24px;
     background-size: cover;
-    /* ←全体にフィット（必要なら拡大縮小） */
     background-repeat: no-repeat;
-    /* ←繰り返しを止める */
     background-position: center;
-    /* ←中央に置く */
 }
 
-.look-review {
-    border-bottom: 2px solid #00BCD4;
-    line-height: 2;
-}
-
-/* --- 本棚エリア --- */
-.shelf-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 110px);
-    gap: 15px;
-    justify-content: center;
-    position: relative;
-}
-
-/* 新規追加 */
-.grid-cell {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-.falling-book {
-    position: fixed;
-    top: -200px;
-    width: 110px;
-    height: 140px;
-    background-size: cover;
-    border-radius: 4px;
-    z-index: 100;
-    pointer-events: none;
-}
 
 /* --- 本のスタイル --- */
 .book {
@@ -164,7 +128,7 @@ p {
     border: 2px solid rgb(160, 160, 160);
     border-radius: 4px;
 
-    z-index: -1;
+    z-index: 0;
     transform: translate(-8px, -8px);
 }
 
@@ -185,155 +149,12 @@ p {
 }
 
 
-
-.book.landed {
-
-    /* 定着位置：ズレ(offset)と角度(angle)はJSで個別に指定 */
-    opacity: 1;
-    /* transformはJSで上書きされます */
-}
-
-@keyframes fallThrough {
-    0% {
-        transform: translateY(0) rotate(0deg);
-    }
-
-    100% {
-        transform: translateY(120vh) rotate(180deg);
-    }
-}
-
-
-/* ボタンのスタイル */
-.button-area {
-    text-align: center;
-    margin-top: 30px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-}
-
-.button-area.show {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.next-btn {
-    padding: 10px 30px;
-    margin-top: 100px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    background: #333;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-}
-
-.next-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* 本が下に落ちていくときのアニメーション用クラス */
-.book.fall-out {
-    /* インラインスタイルでtranslateを設定しているため、!importantで強制的に書き換えるか、
-        JSで値を計算するほうが確実ですが、今回はJSで制御するため
-       ここでは transition の設定のみ確認しておきます */
-    transition: transform 0.8s ease-in !important;
-    opacity: 0;
-}
-
-.totalling-box {
-    width: 75%;
-    padding-top: 50px;
-    margin-bottom: 5px;
-}
-
-.looking-box {
-    width: 75%;
-    display: flex;
-    justify-content: flex-end;
-    margin-left: auto;
-    margin-bottom: 5px;
-}
-
-.totalling-text {
-    border-bottom: 2px solid #808C91;
-    color: var(--font-normal);
-    width: 75%;
-    margin: 0 auto;
-    text-align: center;
-    line-height: 1.7;
-    font-weight: bold;
-    font-size: 30px;
-}
-
-.tab-wrapper {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    /* タブの間隔 */
-    margin: 30px 0;
-    padding: 1rem;
-}
-
-.tab {
-    width: 80%;
-    position: relative;
-    padding-bottom: 10px;
-    font-size: 16px;
-    color: var(--font-normal);
-    cursor: pointer;
-    text-align: center;
-    font-weight: bold;
-}
-
-/* 下線（緑のライン） */
-.tab::after {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 3px;
-    background: var(--main-color);
-    margin-top: 5px;
-    opacity: 0.4;
-    transition: opacity 0.3s;
-}
-
-.tab.active::after {
-    opacity: 1;
-}
-
-.marker {
-    position: absolute;
-    left: 50%;
-    bottom: 0px;
-    /* 位置の微調整 */
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 12px solid var(--main-color);
-    /* 緑の三角形 */
-    z-index: 1;
-}
-
-/* 全ての書評 */
-.all-book-box {
-    border-radius: 30px 30px 30px 30px;
-    background-color: white;
-    border: solid #BEBEBE 1px;
-    margin-top: 400px;
-    box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.3);
-}
-
 .all-book {
     background-image: url('../../img/book2.png');
     position: relative;
     /* ← 疑似要素の基準 */
-    width: 100px;
-    height: 150px;
+    width: 140px;
+    height: 200px;
     /* 本なので高さも必要 */
     background-size: cover;
     background-position: center;
@@ -396,7 +217,6 @@ p {
 .one-book-box {
     padding-top: 100px;
     width: 100%;
-    height: 50vh;
     background-color: var(--back-color);
 }
 
@@ -422,7 +242,6 @@ p {
     color: var(--font-normal);
 
 }
-
 
 .one-book-text-overlay {
     writing-mode: vertical-rl;
@@ -491,93 +310,13 @@ p {
     margin: 30px;
 }
 
-/* チュートリアル用の暗い背景 */
-#tutorialOverlay {
-    position: fixed;
-    top: 30px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    /* 背景を黒くして透過 */
-    z-index: 1000;
-    display: none;
-    /* 最初は隠しておく */
-    pointer-events: auto;
-}
-
-/* 1冊目の本を浮かび上がらせる（黄色い光） */
-.highlight {
-    position: relative;
-    z-index: 1001 !important;
-    /* 背景より上に表示 */
-    box-shadow: 0 0 20px 10px rgba(255, 255, 0, 0.6);
-    /* 黄色い光 */
-    transform: scale(1.05) !important;
-    /* 少し大きくして強調 */
-    transition: box-shadow 0.3s ease;
-    cursor: pointer;
-}
-
-/* チュートリアルメッセージ */
-.tutorial-msg {
-    position: absolute;
-    top: 400%;
-    left: 30%;
-    background: #fff;
-    color: var(--font-normal);
-    font-size: 20px;
-    padding: 14px 23px;
-    border-radius: 35px;
-    font-weight: bold;
-    white-space: nowrap;
-    z-index: 1002;
-    border: 3px solid white;
-    box-shadow: inset 0 0 0 2px var(--sub-color);
-}
-
-/* モーダルのボタンにrelativeを追加（吹き出しの位置基準にするため） */
-.modal-button {
-    position: relative; 
-    /* 既存のスタイルに追記、または新規追加 */
-}
-
-/* チュートリアル中のクリック誘導のため */
-.modal-button.highlight {
-    cursor: pointer;
-}
-
-/* 吹き出しの位置調整（ボタンの上に出す） */
-.modal-button .tutorial-msg {
-    top: -60px; /* ボタンの上に表示 */
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    font-size: 14px;
-    padding: 8px 16px;
-}
-
-/* 吹き出しの三角形（下向き） */
-.modal-button .tutorial-msg::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-top: 10px solid #fff;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-}
-
-
-
 /* pen */
 .pen-box {
     display: flex;
     justify-content: center;
     color: var(--font-normal);
     gap: 10px;
-    margin-bottom: 20px;
+    padding-bottom: 20px;
 }
 
 .pen-text {
@@ -590,34 +329,10 @@ p {
     padding: 3px;
 }
 
-/* share */
-.share-box {
-    display: flex;
-    justify-content: center;
-    color: white;
-    gap: 10px;
-    width: 75%;
-    margin: 0 auto;
-    height: 55px;
-    align-items: center;
-    border-radius: 10px;
-    background-color: var(--sub-color);
-}
-
-.share-text {
-    font-size: 18px;
-}
-
-.share {
-    width: 20px;
-    height: 20px;
-    padding: 3px;
-    padding-right: 5px;
-}
-
 .posted-by {
     color: var(--font-normal);
     margin-top: 20px;
+    font-size: 15px;
 }
 
 /* 投稿者 */
@@ -644,7 +359,9 @@ p {
     font-size: 25px;
 }
 
+
 /* モーダル全体の背景 */
+
 .modal-overlay {
     display: none;
     /* 最初は隠す */
@@ -660,7 +377,8 @@ p {
     justify-content: center;
 }
 
-/* モーダルの箱 */
+/* 本をタップしたときのモーダル */
+
 .modal-content {
     width: 95%;
     margin-left: auto;
@@ -680,6 +398,24 @@ p {
     width: 6px;
 }
 
+.modal-textFirst-award-box,
+.modal-textSecond-box {
+    width: 87%;
+    margin: 0 auto;
+    padding: 10px 20px;
+    /* 内側の線 */
+    border: 1px solid var(--font-bold);
+    /* 外側の線 */
+    outline: 1px solid var(--font-bold);
+    outline-offset: 2px;
+    /* ← ★ここが「二重線の間隔」 */
+    position: relative;
+    margin-bottom: 32px;
+    background-color: var(--back-color);
+    text-align: center;
+
+    box-shadow: 6px 6px 10px -4px rgba(0, 0, 0, 0.25);
+}
 .modal-textFirst-box,
 .modal-textSecond-box {
     width: 80%;
@@ -695,6 +431,8 @@ p {
     position: relative;
     margin-bottom: 32px;
     background-color: var(--back-color);
+
+
     box-shadow: 6px 6px 10px -4px rgba(0, 0, 0, 0.25);
 }
 
@@ -721,6 +459,7 @@ p {
     border-bottom: 1px dashed var(--font-normal);
     color: var(--font-normal);
 }
+
 
 .modal-box::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.2);
@@ -786,8 +525,18 @@ p {
 
 .modal-textFirst {
     font-size: 18px;
+    padding: 10px;
     line-height: 1.6;
     text-align: left;
+    color: var(--font-normal);
+}
+
+.modal-award-textFirst{
+    font-size: 16px;
+    line-height: 2.2;
+    padding: 5px;
+    text-align: center;
+    border-bottom: 1px dashed var(--font-normal);
     color: var(--font-normal);
 }
 
@@ -811,27 +560,13 @@ p {
 .modal-button {
     display: flex;
     justify-content: center;
-    background-color: white;
+    background-color: var(--sub-color);
     width: 35%;
-    height: 45px;
+    height: 35px;
     padding: 10px;
     border-radius: 5px;
     align-items: center;
     gap: 10px;
-    border: none;
-    color: var(--sub-color);
-    border: 2px solid var(--sub-color);
-}
-
-.modal-button:hover {
-    background-color: var(--sub-color);
-    color: white;
-}
-
-
-.modal-button-clicked { /* voteBtn, bookmarkBtnクリックしたときこのクラスを追加で */
-    background-color: var(--sub-color);
-    color: white;
 }
 
 .modal-img {
@@ -875,7 +610,26 @@ p {
     margin-bottom: 10px;
 }
 
+.profile-awrad-header {
+    width: 90%;
+    margin: 0 auto;
+    gap: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
 .profile-icon {
+    width: 60px;
+    height: 60px;
+    background-color: #fff9c4;
+    /* 薄い黄色 */
+    border: 4px solid #fce4ec;
+    /* 薄いピンクの枠線 */
+    border-radius: 50%;
+}
+
+.profile-awrad-icon {
     width: 60px;
     height: 60px;
     background-color: #fff9c4;
@@ -957,110 +711,326 @@ p {
 .profile-bio p {
     margin: 0;
     word-break: break-all;
-
 }
 
-/* =========================
-   モーダル内チュートリアル
-========================= */
+.profile-award-bio {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--font-normal);
+    width: 95%;
+    margin: 0 auto;
+    text-align: left;
+}
 
-.modal-tutorial {
-    position: fixed;
-    bottom: 12%;
-    left: 50%;
-    transform: translateX(-50%);
+.profile-award-bio p {
+    margin: 0;
+    word-break: break-all;
+}
+
+/* 大賞ノミネート作品一覧 */
+
+.award-display-area{
+}
+
+.award-header {
     text-align: center;
-    z-index: 10000;
-    pointer-events: none;
+    padding: 30px;
+    width: 400px;
 }
 
-.modal-tutorial p {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
+.award-frame {
+    position: relative;
+    padding: 40px 20px;
+    margin-bottom: 30px;
 }
 
-.modal-tutorial .arrow {
-    font-size: 2rem;
-    animation: bounce 1.2s infinite;
+.award-box {
+    width: 100%;
+    height: 100%;
+    border-top: 1px solid #D4AF37;
+    border-bottom: 1px solid #D4AF37;
+    padding: 30px 0px;
 }
 
-@keyframes bounce {
-    0% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(12px);
-    }
-
-    100% {
-        transform: translateY(0);
-    }
+.award-label {
+    color: #D4AF37;
+    font-weight: bold;
+    letter-spacing: 0.2em;
+    margin-bottom: 10px;
 }
 
-/* =========================
-   モーダル内スクロール案内（黒背景）
-========================= */
+.award-title {
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.5;
+    margin: 0;
+}
 
-.modal-scroll-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.85);
-    z-index: 10001;
+.award-title::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: #D4AF37;
+    margin: 16px auto 0;
+}
+
+/* 枠線（角だけ） */
+.frame {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-color: #D4AF37;
+}
+
+.frame.top {
+    top: 0;
+    left: 0;
+    border-top: 3px solid #D4AF37;
+    border-left: 3px solid #D4AF37;
+}
+
+.frame.bottom {
+    bottom: 0;
+    right: 0;
+    border-bottom: 3px solid #D4AF37;
+    border-right: 3px solid #D4AF37;
+}
+
+.frame.left {
+    bottom: 0;
+    left: 0;
+    border-bottom: 3px solid #D4AF37;
+    border-left: 3px solid #D4AF37;
+}
+
+.frame.right {
+    top: 0;
+    right: 0;
+    border-top: 3px solid #D4AF37;
+    border-right: 3px solid #D4AF37;
+}
+
+/* 説明文 */
+.award-text {
+    font-size: 17px;
+    line-height: 2;
+    color: var(font-bold);
+}
+
+.award-text-ex {
+    font-size: 17px;
+    line-height: 2;
+    color: var(--font-normal);
+    margin-top: 10px;
+}
+
+.shop-area {
+    background-color: var(--back-color);
+    color: var(--font-normal);
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* フィルター */
+.area-filter {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.filter-btn {
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--sub-color);
+    background: #fff;
+    color: var(--sub-color);
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.filter-btn.active {
+    background: var(--sub-color);
+    color: #fff;
+}
+
+/* エリア見出し */
+.area-title {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    width: 90%;
+    gap: 12px;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.area-title span {
+    font-weight: bold;
+    color: var(--sub-color);
+    letter-spacing: 0.1em;
+}
+
+.area-title hr {
+    flex: 1;
+    border: none;
+    border-top: 2px solid #B7B7B7;
+}
+
+/* 店舗カード */
+.shop-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.shop-info h3 {
+    margin: 0 0 12px;
+    font-size: 18px;
+}
+
+.shop-detail {
+    margin: 6px 0;
+    font-size: 14px;
+    color: var(--font-normal);
+}
+
+/* アイコン共通 */
+.icon {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 6px;
+    color: var(--sub-color);
+}
+
+/* SVG本体 */
+.icon-svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--sub-color)
+}
+
+
+.shop-detail .icon {
+    margin-right: 6px;
+}
+
+/* 矢印ボタン */
+.shop-arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #D6E3DC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sub-color);
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.shop-arrow a{
+    text-decoration: none;
+    color: var(--sub-color);
+}
+
+
+/* share */
+.share-box {
     display: flex;
     justify-content: center;
+    color: white;
+    gap: 10px;
+    width: 75%;
+    margin: 0 auto;
+    height: 55px;
+    align-items: center;
+    border-radius: 10px;
+    background-color: var(--sub-color);
+}
+
+.share-text {
+    font-size: 18px;
+}
+
+.share {
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    padding-right: 5px;
+}
+
+.posted-by {
+    color: var(--font-normal);
+    margin-top: 20px;
+}
+
+
+/* 全ての書評 */
+.all-book-box {
+    border-radius: 30px 30px 30px 30px;
+    background-color: white;
+    border: solid #BEBEBE 1px;
+    margin-top: 400px;
+    box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.all-landed {
+    opacity: 1;
+}
+
+.book-shinto-box {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.thema-shinto-altar {
+    width: 150px;
+    height: 40px;
+    background-color: var(--sub-color);
+    border-radius: 10px;
+    margin-top: -30px;
+    box-shadow: 5px 4px 10px rgba(0, 0, 0, 0.3);
+
+}
+
+.book-shinto-set {
+    position: relative;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
-.scroll-guide {
+
+/* 投稿者 */
+.vote-box {
+    width: 100%;
+    height: 40px;
+    color: var(--font-bold);
+    font-weight: 700;
+    border-radius: 30px;
+    border: var(--sub-color) 1px solid;
     text-align: center;
-    color: #fff;
-    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
 }
 
-.scroll-guide p {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+.vote {
+    font-size: 15px;
+    padding-left: 5px;
 }
 
-.scroll-guide .arrow {
-    font-size: 2rem;
-    animation: bounce 1.2s infinite;
-}
-
-.book.visited {
-    filter: brightness(0.8);
-}
-
-/* ▼ お気に入り（しおり）表示用クラス */
-.book.is-favorite::after {
-    content: "";
-    display: block;
-    position: absolute;
-    
-    /* 通知バッジのような右上の位置 */
-    top: -50px;   /* 上に少しはみ出す */
-    left: 0px;
-    /* 画像のサイズ（お好みで調整してください） */
-    width: 100px; 
-    height: 100px;
-    
-    /* 画像の設定 */
-    background-image: url('../../img/favarite.png'); /* 画像パス */
-    background-size: contain;
-    background-repeat: no-repeat;
-    
-    /* 文字や本本体より手前に表示 */
-    z-index: -999; 
-    
-    /* （お好みで）ポヨンと出るアニメーション */
-    animation: popIcon 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* ポヨンと出るアニメーション定義 */
-@keyframes popIcon {
-    0% { transform: scale(0); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+.vote-text {
+    font-size: 25px;
 }
 
 /* =========================
@@ -1073,4 +1043,129 @@ p {
     box-sizing: border-box;
     gap: 4rem;
 }
+/* --- 神棚全体 --- */
+.book-shinto-container {
+    width: 100%;
+    overflow: hidden;
+    padding-bottom: 50px;
+    background-color: var(--back-color); /* 背景色が必要なら */
+}
 
+/* --- 横スクロール行の修正 --- */
+.shinto-scroll-row {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    width: 100%;
+    
+    /* ▼▼ 修正箇所：上下の余白を広げる ▼▼ */
+    /* 元々 20px だったのを 50px くらいに増やすと影やズレが収まります */
+    padding: 10px 0; 
+    
+    /* スクロールバー隠し */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.shinto-scroll-row::-webkit-scrollbar {
+    display: none;
+}
+
+/* --- 本のセット --- */
+.book-shinto-set {
+    flex: 0 0 auto;
+    position: relative;
+    width: 150px;    /* 本の幅 */
+    margin-right: 30px; /* 本と本の間隔 (gapの代わり) */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/* =======================================================
+   大賞表示エリア専用 (.modal-overlay-award)
+   ※ポップアップ用とは別の、表示専用クラス
+   ======================================================= */
+
+/* 大枠：最初から表示(block)、位置は固定せずそのまま(relative) */
+.modal-overlay-award {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: auto;
+    background: transparent; /* 背景のグレーはなし */
+    z-index: 1;
+    padding: 0;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+/* 中身のレイアウト調整 */
+.modal-overlay-award .modal-content {
+    /* 既存のアニメーションや固定位置をリセット */
+    animation: none;
+    position: static;
+    margin: 0 auto;
+    width: 100%;
+    transform: none;
+    opacity: 1;
+
+    /* 感想とプロフィールを横並びにする設定 */
+    display: flex;
+    flex-wrap: wrap;       /* スマホなど画面が狭いときは縦並び */
+    justify-content: center;
+    align-items: flex-start; /* 上揃え */
+    gap: 30px;             /* 左右の間隔 */
+}
+
+/* 左側の感想ボックスの幅 */
+.modal-overlay-award .modal-box {
+    flex: 1;               /* 幅を自動で広げる */
+    min-width: 300px;      /* 狭くなりすぎないように */
+    box-sizing: border-box;
+}
+
+/* 右側のプロフィールカードの幅 */
+.modal-overlay-award .profile-card {
+    flex: 1;               /* 幅を自動で広げる */
+    min-width: 300px;      /* 狭くなりすぎないように */
+    margin: 0;             /* 余計なマージン削除 */
+    box-sizing: border-box;
+    background-color: var(--back-color);
+    margin: 10px;
+}
+
+/* 参加作品 */
+.join-book{
+    padding: 10px;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.join-book h3{
+    font-size: 27px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+}
+
+.join-book hr{
+    margin: 5px;
+    background-color: #808C91;
+    padding: 0.7px 0;
+}
+
+.join-book p{
+    font-size: 20px;
+    text-align: center;
+}
+
+/* 選択中のボタンのスタイル */
+.filter-btn.active {
+    background-color: #333; /* 好きな色に変更してください */
+    color: #fff;
+    font-weight: bold;
+}
+
+/* 非表示にするためのクラス */
+.hide {
+    display: none;
+}

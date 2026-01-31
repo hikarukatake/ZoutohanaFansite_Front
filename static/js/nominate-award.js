@@ -216,7 +216,7 @@ window.addEventListener('click', function (event) {
         モーダル内のテキストを20文字ごとに改行して表示する
     ========================= */
     document.addEventListener("DOMContentLoaded", () => {
-
+        // ここで何文字で改行するか決めている
         splitTextToParagraphs("textFirst", "modal-textFirst", 20);
         splitTextToParagraphs("textSecond", "modal-textSecond", 18);
 
@@ -237,7 +237,7 @@ window.addEventListener('click', function (event) {
         }
 
         // 元のp削除
-        container.innerHTML = "";     
+        container.innerHTML = "";
 
         if (img) container.appendChild(img);
         if (title) container.appendChild(title);
@@ -300,8 +300,6 @@ function oneShintobook(data) {
 }
 
 
-// ▼▼▼ JSONデータを受け取って神棚リストを作成する関数（修正版） ▼▼▼
-// 第2引数 targetSelector で「どの箱に入れるか」を指定できるように変更
 function createShintoShelf(booksData, targetSelector) {
     
     // 指定された箱（棚）を取得
@@ -525,7 +523,7 @@ function renderRightSection(data) {
 
 
 /* =========================================================
-   ▼▼▼ ページ読み込み完了時の処理（ここが重要） ▼▼▼
+    ページ読み込み完了時の処理
    ========================================================= */
 window.onload = function () {
     if ('scrollRestoration' in history) {
@@ -541,44 +539,50 @@ window.onload = function () {
 
 
     // --- 2つ目のエリア（追加） ---
-    // ▼ ここで新しいIDを指定して呼び出します ▼
-    
-    // 例：20〜30番目のデータを表示（ずらしなし）
+    // 20〜30番目のデータを表示（ずらしなし）
     createInfiniteRow(allBooksData.slice(20, 30), '#shelf-row-3', false);
 
-    // 例：もし4段目も同じデータでよければ（ずらしあり）
-    // もしデータが足りなければ slice(0, 10) などで再利用してもOKです
+    // もし4段目も同じデータでよければ（ずらしあり）
     createInfiniteRow(allBooksData.slice(20, 30), '#shelf-row-4', true);
 
 
     // その他の初期化
     oneShintobook(allBooksData[0]);
     const awardData = allBooksData[0];
-    renderLeftSection(awardData);   
-    renderRightSection(awardData);  
+    renderLeftSection(awardData);
+    renderRightSection(awardData);
 };
 
 
-// 販売拠点
+
+/* =========================================================
+                            販売拠点
+   ========================================================= */
+
+// DOMContentLoadedこれは画像などが読み込まれる前に動かないようにしている
 document.addEventListener('DOMContentLoaded', () => {
-    // ボタンと、フィルタリング対象（カードと見出し）を取得
+    // ここでfilter-btnクラスがついているボタン三つを入れている
     const filterBtns = document.querySelectorAll('.filter-btn');
+    // これはshop-card.area-titleクラスがついている要素を入れている
     const filterItems = document.querySelectorAll('.shop-card, .area-title');
 
+    // すべて 岩手 青森すべてのボタンを見るまで繰り返す
     filterBtns.forEach(btn => {
+        // その岩手ボタンがクリックされたら実行する
         btn.addEventListener('click', () => {
-            // 1. ボタンのactiveクラスを切り替え
+            // 今ついてるactiveにしているボタンをいったん全部みて外す
             filterBtns.forEach(b => b.classList.remove('active'));
+            // クリックされたボタンにactiveをつける
             btn.classList.add('active');
 
-            // 2. クリックされたボタンのfilter値を取得 (all, iwate, aomori)
+            // htmlに書いてあるそれぞれall iwate aomoriのボタンをおしてそれを読み取りどれを表示させるか
             const filterValue = btn.getAttribute('data-filter');
 
-            // 3. すべてのアイテムを確認して表示・非表示を切り替え
+            // すべてのアイテムを確認して表示・非表示を切り替え
             filterItems.forEach(item => {
                 // そのアイテムが持っているエリア情報を取得
                 const itemArea = item.getAttribute('data-area');
-
+                // ここでさっき取得したどれを表示させるかのfilterValueをif文で判定
                 if (filterValue === 'all') {
                     // 「すべて」なら全部表示（hideクラスを外す）
                     item.classList.remove('hide');

@@ -55,6 +55,47 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+// ========== 一覧表示で空のパラメータを送らない ==========
+document.addEventListener('DOMContentLoaded', () => {
+    const forms = document.querySelectorAll('form');
+
+    forms.forEach(form => {
+        form.addEventListener('submit', e => {
+            removeEmptyInputs(form);
+        });
+    });
+
+    document.querySelectorAll('select').forEach(select => {
+        select.addEventListener('change', () => {
+            const form = select.closest('form');
+            if (form) {
+                removeEmptyInputs(form);
+                form.submit();
+            }
+        });
+    });
+
+    document.querySelectorAll('button[onclick*="submit"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const form = btn.closest('form');
+            if (form) {
+                removeEmptyInputs(form);
+                form.submit();
+            }
+        });
+    });
+
+    function removeEmptyInputs(form) {
+        const inputs = form.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            if (input.value === '') {
+                input.removeAttribute('name');
+            }
+        });
+    }
+});
+
+
 // ========== タブ切り替え ==========
 document.addEventListener("DOMContentLoaded", () => {
 const tabItems = document.querySelectorAll(".tab-item");
@@ -141,6 +182,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+// ---------- モーダル内のすべてのチェックを外す ----------
+const clearAllCheckbox = document.getElementById('clear-all-checkbox');
+
+if (clearAllCheckbox) {
+  clearAllCheckbox.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    document
+      .querySelectorAll('#filter-option-modal input[type=checkbox]')
+      .forEach(cb => {
+        cb.checked = false;
+        cb.indeterminate = false;
+      });
+  });
+}
 
 
 // ========== 書籍ジャンル複数選択 ==========

@@ -101,7 +101,7 @@ p {
 /* --- 本棚エリア --- */
 .shelf-grid {
     display: grid;
-    grid-template-columns: repeat(3, 110px);
+    grid-template-columns: repeat(3, 120px);
     gap: 15px;
     justify-content: center;
     position: relative;
@@ -433,8 +433,8 @@ p {
     font-weight: bold;
 
     position: absolute;
-    top: 50px;
-    left: 65px;
+    top: 40px;
+    left: 60px;
 
     color: var(--font-normal);
     z-index: 2;
@@ -714,7 +714,7 @@ p {
 
 .modal-textFirst,
 .modal-textSecond {
-    font-size: 16px;
+    font-size: 18px;
     line-height: 2.2;
     padding: 10px;
     text-align: left;
@@ -1072,5 +1072,33 @@ p {
     width: 100%;
     box-sizing: border-box;
     gap: 4rem;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+/* ボタンの見た目を完全リセット */
+.pagination button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 25px;
+    color: var(--font-bold);
+    cursor: pointer;
+    color: var(--font-normal);
+}
+
+
+/* 無効状態 */
+.pagination button:disabled {
+    color: #aaa;
+    cursor: default;
+    text-decoration: none;
 }
 

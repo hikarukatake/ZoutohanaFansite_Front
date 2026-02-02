@@ -9,6 +9,12 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <style th:inline="css">
+        :root {
+            --main-color: [(${project.themeColor.dbValue})];
+            --sub-color: [(${project.themeColor.dbValue})];
+        }
+    </style>
     <link rel="stylesheet" th:href="@{/css/project/first-review.css}" href="../../static/css/project/first-review.css">
     <style>
 
@@ -61,19 +67,19 @@
         </div>
         <div class="one-book-shinto-box">
         </div>
-        <!-- <div class="one-book-shinto-box">
-            <div class="one-book-shinto-set">
-                <div class="one-book">
-                    <div class="one-book-text-overlay">
-                        この作品のここが<br>すごいこのいこ
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!-- <div class="pen-box">
+<!--        <div class="one-book-shinto-box">-->
+<!--            <div class="one-book-shinto-set">-->
+<!--                <div class="one-book">-->
+<!--                    <div class="one-book-text-overlay">-->
+<!--                        この作品のここが<br>すごいこのいこ-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="pen-box">
             <img src="../img/pen.png" class="pen" alt="">
             <p class="pen-text">投稿者：象さん</p>
-        </div> -->
+        </div>
         <div class="share-box">
             <img src="../img/share.png" class="share">
             <p class="share-text">この書評をシェアする</p>

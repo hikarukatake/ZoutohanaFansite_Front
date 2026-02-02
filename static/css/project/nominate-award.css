@@ -1169,3 +1169,8 @@ section {
 .hide {
     display: none;
 }
+
+.award-modalText{
+    font-size: 0.9rem;
+    color: var(--font-normal);
+}

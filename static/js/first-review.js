@@ -51,6 +51,7 @@ const nextBtn = document.getElementById('nextBtn');
 const btnArea = document.querySelector('.button-area');
 
 // 30件分のデータ
+<<<<<<< Updated upstream
 let allBooksData;
 //     [{
 //         title: "君と僕あんたと私とちみがアンタッチャブル",
@@ -136,6 +137,98 @@ let allBooksData;
 //     { title: "作品31", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
 //     { title: "作品32", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
 // ];
+=======
+let allBooksData=
+    [{
+        id:1,
+        title: "君と僕あんたと私とちみがアンタッチャブル",
+        image: "../../static/img/book1.png",
+        content: "静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。ああああああああああああああああああああああああああ",
+        icon: "../../static/img/flower-blue.png",
+        name: "もたーて",
+        age: "40代",
+        gender: "男性",
+        address: "岩手県 盛岡市",
+        text: "静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。あああああああああああああああああああああああああああああああああ"
+    },
+    {
+        id:2,
+        title: "アンタッチャブル",
+        image: "../../static/img/book2.png",
+        content: "物語の展開がテンポよく、序盤から引き込まれました。登場人物同士の会話が自然で、関係性がすぐに理解できます。後半に向かって伏線が少しずつ回収され、読み終えたときには納得感がありました。難しい表現が少ないため、普段あまり本を読まない人でも楽しめる一冊だと感じました。",
+        icon: "../../static/img/flower-blue.png",
+        name: "ひかる",
+        age: "20代",
+        gender: "男性",
+        address: "岩手県 盛岡市",
+        text: "ITと本が好き。"
+    },
+    {
+        id:3,
+        title: "作品3",
+        image: "../../static/img/book3.png",
+        content: "主人公の成長が物語を通してしっかり描かれており、読後に前向きな気持ちになれる作品でした。失敗や迷いを経験しながらも一歩ずつ進んでいく姿が印象的です。派手さはありませんが、現実に近い描写が多く共感しやすい内容でした。",
+        icon: "../../static/img/flower-blue.png",
+        name: "佐藤",
+        age: "30代",
+        gender: "男性",
+        address: "岩手県 花巻市",
+        text: "小説好きです。"
+    },
+    {
+        id:4,
+        title: "作品4",
+        image: "../../static/img/book4.png",
+        content: "世界観の作り込みが丁寧で、読み始めてすぐに物語の中へ入り込めました。情景描写が細かく、風景が頭に浮かびやすいのが魅力です。物語後半では意外な展開もあり、最後まで飽きずに楽しめました。",
+        icon: "../../static/img/flower-blue.png",
+        name: "高橋",
+        age: "50代",
+        gender: "女性",
+        address: "岩手県 北上市",
+        text: "ゆっくり読書派。"
+    },
+    {
+        id:5,
+        title: "作品5",
+        image: "../../static/img/book1.png",
+        content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。特別な出来事がなくても、人の心は大きく動くのだと改めて感じさせられます。落ち着いた雰囲気で、夜に読むのがおすすめです。",
+        icon: "../../static/img/flower-blue.png",
+        name: "鈴木",
+        age: "20代",
+        gender: "女性",
+        address: "岩手県 盛岡市",
+        text: "本と映画が好き。"
+    },
+    { id:6, title: "作品6", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:7, title: "作品7", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:8, title: "作品8", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:9, title: "作品9", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:10, title: "作品10", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:11, title: "作品11", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:12, title: "作品12", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:13, title: "作品13", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:14, title: "作品14", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:15, title: "作品15", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:16, title: "作品16", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:17, title: "作品17", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:18, title: "作品18", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:19, title: "作品19", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:20, title: "作品20", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:21, title: "作品21", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:22, title: "作品22", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:23, title: "作品23", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:24, title: "作品24", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:25, title: "作品25", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:26, title: "作品26", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:27, title: "作品27", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:28, title: "作品28", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:29, title: "作品29", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:30, title: "作品30", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:31, title: "作品30", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:32, title: "作品31", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+    { id:33, title: "作品32", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
+];
+>>>>>>> Stashed changes
 
 let currentStartIndex = 0;
 const BATCH_SIZE = 9;
@@ -188,6 +281,18 @@ async function fetchReviewData() {
 function createBook(data, index) {
     const book = document.createElement('div');
     book.classList.add('book');
+<<<<<<< Updated upstream
+=======
+
+    // 本のHTMLにidを付与している
+    book.id = data.id;
+    // 最初の一冊目をidではなくclassで指定
+    if(index    ===0 && currentStartIndex ===0){  
+        book.classList.add("first-book-target");
+    }
+
+
+>>>>>>> Stashed changes
     // 見た目とテキストの設定
     book.style.backgroundImage = `url('${data.image}')`;
     book.style.pointerEvents = 'none'; // 落下中はクリック不可
@@ -207,12 +312,36 @@ function createBook(data, index) {
     textDiv.innerText = data.title;
     book.appendChild(textDiv);
 
+<<<<<<< Updated upstream
     if(isVisited(data.id)){
+=======
+    // しおり（お気に入り）保存済みならクラスを付与
+    if (isFavorite(data.id)) {
+        book.classList.add('is-favorite');
+    }else if(isVisited(data.id)){
+>>>>>>> Stashed changes
         book.classList.add('visited');
     }
 
     // --- クリック時のデータ流し込み ---
     book.addEventListener('click', function () {
+<<<<<<< Updated upstream
+=======
+        // いま開いた本がどれかを投票ボタンに教えている
+        // モーダルにある投票ボタンを捕まえている
+        const voteBtn = document.getElementById('voteBtn');
+        const bookmarkBtn = document.getElementById('bookmarkBtn');
+        // sample関数に本のIDを入れて呼び出すように設定
+        if(voteBtn){
+            voteBtn.setAttribute('onclick',`vote(${data.id})`);
+        }
+
+        if(bookmarkBtn){
+            bookmarkBtn.setAttribute('onclick', `favorite(${data.id})`);
+        }
+
+
+>>>>>>> Stashed changes
         // 今開いた本を記録
         currentOpenedBook = book;
 
@@ -521,11 +650,293 @@ function isVisited(id) {
     if (!currentData) return false;
 
     const visitedIds = JSON.parse(currentData);
+    // console.log(currentData);
     // 配列の中に引数のIDが存在するか判定
+<<<<<<< Updated upstream
     if(visitedIds.includes(id)){
         console.log('isVisited : true');
     }else{
         console.log('isVisited : false');
     }
     return visitedIds.includes(id);
+=======
+    // if(visitedIds.includes(String(id))){
+    //     console.log(`isVisited : true ${id}`);
+    // }else{
+    //     console.log(`isVisited : false ${id}`);
+    // }
+    return visitedIds.includes(String(id));
+}
+/* ==============================================
+    新規追加：ボタン説明チュートリアル
+   ============================================== */
+
+// 1. スクロールを監視して、ボタンが見えたら発動
+const modalContent = document.querySelector('.modal-content');
+const buttonsArea = document.getElementById('modalButtonsArea'); // ★HTMLにid="modalButtonsArea"をつけてください
+
+if (modalContent) {
+    modalContent.addEventListener('scroll', () => {
+        // ステップ12（誘導中）でスクロールしたら、誘導表示を消してステップ13へ
+        if (tutorialStep === 12 && modalContent.scrollTop > 20) {
+            hideScrollOverlay();
+        }
+
+        // ステップ13（読書中）で、ボタンエリアが見えたらステップ14へ
+        if (tutorialStep === 13) {
+            // ボタンエリア（投票・ブックマーク）の位置を取得
+            // ★HTML側で <div class="modal-buttons" id="modalButtonsArea"> とIDを振る必要があります
+            const targetButtons = document.querySelector('.modal-buttons'); 
+            
+            if (targetButtons) {
+                const rect = targetButtons.getBoundingClientRect();
+                // 画面の下から100pxくらいの位置に入ってきたら発動
+                if (rect.top < window.innerHeight - 100) {
+                    startVoteTutorial();
+                }
+            }
+        }
+    });
+}
+
+// 2. 投票ボタンの説明開始
+function startVoteTutorial() {
+    tutorialStep = 14; // 多重発動防止
+
+    // スクロール禁止
+    if(modalContent) modalContent.style.overflow = 'hidden';
+
+    // ボタンを画面中央へ持ってくる
+    const targetButtons = document.querySelector('.modal-buttons');
+    if(targetButtons) {
+        targetButtons.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // 少し待ってから演出開始
+    setTimeout(() => {
+        // 全体を暗くするオーバーレイを表示（本棚用のを再利用）
+        const overlay = document.getElementById('tutorialOverlay');
+        if (overlay) {
+            overlay.style.display = 'block';
+            overlay.style.pointerEvents = 'none'; // オーバーレイ自体のクリックは無視
+        }
+
+        // 投票ボタンを特定（IDがない場合はクラスから取得）
+        // ★HTML側で <div id="voteBtn"> をつけるのが確実ですが、クラスで探すなら以下
+        const btns = document.querySelectorAll('.modal-button');
+        const voteBtn = btns[0]; // 1つめが投票
+
+        if (voteBtn) {
+            voteBtn.classList.add('highlight');
+            voteBtn.style.pointerEvents = 'auto'; // ここだけ押せるように
+
+            // 吹き出し作成
+            const msg = document.createElement('div');
+            msg.className = 'tutorial-msg';
+            msg.innerText = '気に入ったら投票！';
+            // スタイル調整（必要であればCSSで調整）
+            msg.style.position = 'absolute';
+            msg.style.top = '-50px';
+            msg.style.left = '50%';
+            msg.style.transform = 'translateX(-50%)';
+            msg.style.whiteSpace = 'nowrap';
+            msg.style.background = '#fff';
+            msg.style.padding = '5px 10px';
+            msg.style.borderRadius = '5px';
+            msg.style.color = '#333';
+            msg.style.fontWeight = 'bold';
+            
+            voteBtn.appendChild(msg);
+
+            // クリックしたら次（ブックマーク）へ
+            voteBtn.addEventListener('click', function onVote(e) {
+                // 実際の投票処理をしたくない場合は e.preventDefault();
+                e.stopPropagation();
+                voteBtn.removeEventListener('click', onVote);
+                
+                // 次へ
+                startBookmarkTutorial();
+            }, { once: true });
+        }
+    }, 600);
+}
+
+// 3. ブックマークボタンの説明
+function startBookmarkTutorial() {
+    // 投票ボタンの片付け
+    const btns = document.querySelectorAll('.modal-button');
+    const voteBtn = btns[0];
+    if (voteBtn) {
+        voteBtn.classList.remove('highlight');
+        const msg = voteBtn.querySelector('.tutorial-msg');
+        if (msg) msg.remove();
+    }
+
+    // ブックマークボタンの設定
+    const bookmarkBtn = btns[1]; // 2つめがブックマーク
+    if (bookmarkBtn) {
+        bookmarkBtn.classList.add('highlight');
+        bookmarkBtn.style.pointerEvents = 'auto';
+
+        const msg = document.createElement('div');
+        msg.className = 'tutorial-msg';
+        msg.innerText = 'あとで読むならこれ';
+        // スタイル
+        msg.style.position = 'absolute';
+        msg.style.top = '-50px';
+        msg.style.left = '50%';
+        msg.style.transform = 'translateX(-50%)';
+        msg.style.whiteSpace = 'nowrap';
+        msg.style.background = '#fff';
+        msg.style.padding = '5px 10px';
+        msg.style.borderRadius = '5px';
+        msg.style.color = '#333';
+        msg.style.fontWeight = 'bold';
+
+        bookmarkBtn.appendChild(msg);
+
+        // クリックしたら終了
+        bookmarkBtn.addEventListener('click', function onBookmark(e) {
+            e.stopPropagation();
+            bookmarkBtn.removeEventListener('click', onBookmark);
+            finishButtonTutorial();
+        }, { once: true });
+    }
+}
+
+// 4. チュートリアル終了
+function finishButtonTutorial() {
+    const btns = document.querySelectorAll('.modal-button');
+    const bookmarkBtn = btns[1];
+    
+    // 片付け
+    if (bookmarkBtn) {
+        bookmarkBtn.classList.remove('highlight');
+        const msg = bookmarkBtn.querySelector('.tutorial-msg');
+        if (msg) msg.remove();
+    }
+
+    // オーバーレイ非表示
+    const overlay = document.getElementById('tutorialOverlay');
+    if (overlay) {
+        overlay.style.display = 'none';
+        overlay.style.pointerEvents = 'auto';
+    }
+
+    // スクロールロック解除
+    if(modalContent) modalContent.style.overflow = 'auto';
+
+    // ★ここでようやく全完了
+    hasFinishedModalTutorial = true;
+    tutorialStep = 99;
+}
+
+
+// ====================しおりの付与=========================
+function favorite(id) {
+    // ボタンを押したらその推された本のidを受け取ってtargetBookに代入
+    const targetBook = document.getElementById(id);
+
+    if (targetBook) {
+        if(isFavorite(id)){
+            targetBook.classList.remove('is-favorite');
+            removeFavoriteId(id);
+        }else{
+            // 2. CSSクラス「is-favorite」をつける
+            targetBook.classList.add('is-favorite');
+            // 3. ローカルストレージに保存
+            addFavoriteId(id);
+        }
+        
+    } else {
+        console.error("対象の本が見つかりませんでした。ID: " + id);
+    }
+}
+
+/* ==============================================
+        しおりローカルストレージに登録しする処理
+   ============================================== */
+const FAVORITE_KEY = 'favorites';
+const VOTE_KEY = 'vote';
+
+// IDを保存する関数
+function addFavoriteId(id) {
+    const currentData = localStorage.getItem(FAVORITE_KEY);
+    let favIds = currentData ? JSON.parse(currentData) : [];
+
+    // まだ保存されていなければ追加
+    if (!favIds.includes(id)) {
+        favIds.push(id);
+        localStorage.setItem(FAVORITE_KEY, JSON.stringify(favIds));
+    }
+}
+
+function removeFavoriteId(id) {
+    const currentData = localStorage.getItem(FAVORITE_KEY);
+    
+    if (currentData) {
+        let favIds = JSON.parse(currentData);
+
+        // 指定したidを除外した新しい配列を作成
+        const updatedFavIds = favIds.filter(favId => favId !== id);
+
+        // 配列の内容に変化があれば（＝実際に削除されたら）保存
+        if (favIds.length !== updatedFavIds.length) {
+            localStorage.setItem(FAVORITE_KEY, JSON.stringify(updatedFavIds));
+        }
+    }
+}
+
+// 保存済みかチェックする関数
+function isFavorite(id) {
+    const currentData = localStorage.getItem(FAVORITE_KEY);
+    if (!currentData) return false;
+
+    const favIds = JSON.parse(currentData);
+    return favIds.includes(id);
+}
+
+function vote(id){
+    const currentData = localStorage.getItem(VOTE_KEY);
+    let voteIds = currentData ? JSON.parse(currentData) : [];
+
+    if(isVote()){
+        // 投票減算処理
+        fetch(`/api/reviews/vote/dec/${id}` , {method: 'POST'});
+
+        // 指定したidを除外した新しい配列を作成
+        const updatedVoteIds = voteIds.filter(favId => favId !== id);
+
+        // 配列の内容に変化があれば（＝実際に削除されたら）保存
+        if (voteIds.length !== updatedVoteIds.length) {
+            localStorage.setItem(VOTE_KEY, JSON.stringify(updatedVoteIds));
+        }
+
+    }else{
+        // 投票加算処理
+        fetch(`/api/reviews/vote/${id}`, {method: 'POST'});
+        voteIds.push(id);
+        localStorage.setItem(VOTE_KEY, JSON.stringify(voteIds));
+    }
+}
+
+
+function isVote(){
+    const currentData = localStorage.getItem(VOTE_KEY);
+
+    const voteIds = currentData ? JSON.parse(currentData) : [];
+
+    // もし空配列なら通信せずにfalseを返しても良い（最適化）
+    if (voteIds.length === 0) return true;
+        const response = fetch(`/api/reviews/voted/${urlKey}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            // 配列をそのままJSON化してBodyに詰める
+            body: JSON.stringify(voteIds)
+        });
+
+        return response.status === 200;
+>>>>>>> Stashed changes
 }

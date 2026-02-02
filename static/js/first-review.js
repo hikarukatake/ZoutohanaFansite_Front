@@ -510,33 +510,28 @@ if (modalScrollOverlay) {
     modalScrollOverlay.addEventListener('click', hideScrollOverlay);
 }
 
-// ■ テキスト整形関数（改行）
-function splitTextToParagraphs(textId, className, maxLength) {
+function splitTextToParagraphs(textId, className) {
     const originalP = document.getElementById(textId);
     if (!originalP) return;
 
-    const container = originalP.parentElement;
+    // テキストを取得（改行を保持）
     const text = originalP.textContent.trim();
-    // コンテナ内の他の要素を退避（もしあれば）
+    const container = originalP.parentElement;
+
+    // タイトルと画像を退避
     const title = container.querySelector("h3");
     const img = container.querySelector("img");
 
-    const lines = [];
-    for (let i = 0; i < text.length; i += maxLength) {
-        lines.push(text.slice(i, i + maxLength));
-    }
-
+    // コンテナを空にして再構築
     container.innerHTML = "";
-
     if (img) container.appendChild(img);
     if (title) container.appendChild(title);
 
-    lines.forEach(line => {
-        const p = document.createElement("p");
-        p.className = className;
-        p.textContent = line;
-        container.appendChild(p);
-    });
+    // 1つのpタグに集約して流し込む
+    const p = document.createElement("p");
+    p.className = className;
+    p.textContent = text; // ここで分割せずそのまま入れる
+    container.appendChild(p);
 }
 
 // タブメニュー制御

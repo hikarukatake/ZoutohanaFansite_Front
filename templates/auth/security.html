@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>セキュリティ</title>
-    <link rel="stylesheet" th:href="@{/css/auth/security.css}" href="../css/auth/security.css">
-    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
+    <link rel="stylesheet" th:href="@{/css/auth/security.css}" href="../../static/css/auth/security.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -41,11 +41,11 @@
                     <p class="intro-text">パスワードを変更する際に必要になります。</p>
                 </div>
                 <div class="security-code">
-                    <p th:text="${securityKey}" class="security-code-text">AAAA-AAAA</p>
+                    <p th:text="${securityKey}" id="copy-text" class="security-code-text">AAAA-AAAA</p>
                     <p class="space">|</p>
                     <div class="copy-box">
                         <img th:src="@{/img/draft2.png}" src="../img/darft2.png" class="security-img" alt="">
-                        <p>Copy</p>
+                        <button id="copy-button">Copy</button>
                     </div>
                 </div>
                 <div class="border-security"></div>
@@ -72,6 +72,16 @@
             </div>
         </div>
     </main>
+    <script>
+        document.getElementById('copy-button').addEventListener('click', () => {
+            const text = document.getElementById('copy-text').value;
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert("テキストをコピーしました: " + text);
+            });
+        });
+
+    </script>
 </body>
 
 </html>

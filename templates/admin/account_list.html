@@ -12,7 +12,7 @@
 <div th:replace="~{layout-admin :: header}"></div>
 
 <main id="admin-main">
-    <h1 class="page-title">利用者一覧<span class="page-title-count">(<span th:text="${users.size()}">0</span>件)</span></h1>
+    <h1 class="page-title">利用者一覧<span class="page-title-count" th:text="'(' + ${users.size()} + '件)'">(0件)</span></h1>
 
     <div class="main-content">
         <div class="flex justify-between mt-2"> <!-- テーブルの上のメニュー部分 -->
@@ -96,11 +96,8 @@
                 <td th:text="${user.loginId}">-----</td>
                 <td th:text="${user.nickname}" class="table-border-r">-----</td>
                 <td th:text="${user.gender.label}" class="text-center">-----</td>
-                <td class="text-center">
-                    <span th:text="${user.birthYear}">0000</span>年
-                    (<span th:text="${user.age}">0</span>歳)
-                </td>
-                <td th:text="${user.address}" class="text-center">-----県-----市</td>
+                <td th:text="${user.birthYear} + '年 (' + ${user.age} + '歳)'" class="text-center">0000年 (0歳)</td>
+                <td th:text="${user.address}" class="text-center">-----県 -----市</td>
                 <td th:text="${#temporals.format(user.createdAt, 'yyyy/MM/dd HH:mm')}" class="text-center">0000/00/00 00:00</td>
                 <td th:text="${user.reviewCount}" class="text-center">0</td>
                 <td class="text-center">

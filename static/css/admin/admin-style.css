@@ -14,6 +14,8 @@
   --admin-border-gray: #cccccc;
   --admin-text-gray: #a6a6a6;
   --admin-text-red: #e35252;
+  --zoutohana-green: #338895;
+
   --admin-table-border-light: 0.5px solid #d9d9d9;
   --admin-table-border-strong: 0.5px solid #b8b8b8;
   --admin-box-shadow: 0px 2px 20px 0px rgba(0, 0, 0, 0.25);
@@ -116,6 +118,11 @@ html {
 
 .pb-8 {
   padding-bottom: 2rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .py-4 {
@@ -293,6 +300,13 @@ html {
   font-weight: normal;
 }
 
+.project-card-thumbnail {
+  min-width: 300px;
+  min-height: 200px;
+  object-fit: cover;
+  background-color: var(--admin-border-gray);
+}
+
 .merge-tag-preview {  /* 個別通知テンプレートの置き換えタグ */
   background-color: black;
   color: white;
@@ -318,6 +332,128 @@ html {
 
 .toggle-body.is-open {
   max-height: 1000px;
+}
+
+/* ---------- ヘッダー ---------- */
+#admin-header {
+  background-color: var(--zoutohana-green);
+  height: 4rem;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+}
+
+#admin-header-logo {
+  max-width: 3rem;
+  max-height: 3rem;
+}
+
+/* ---------- ヘッダーのハンバーガーボタン ---------- */
+#menu-btn {
+  font-size: 40px;
+  position: absolute;
+  top: 8px;
+  right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: auto;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.3s ease;
+  color: white;
+  height: 50px;
+  width: 50px;
+
+}
+
+#menu-btn-check:checked + #menu-btn {
+  transform: rotate(90deg);
+}
+
+#menu-btn-check {
+  display: none;
+}
+
+/* ---------- ヘッダーのハンバーガーボタンで開閉するメニュー ---------- */
+#nav-menu {
+  background-color: white;
+  box-shadow: 0 0 25px -5px rgba(0, 0, 0, 0.25);
+  text-align: left;
+  max-height: 100vh;
+  overflow-y: auto;
+
+  position: fixed;
+  top: 4rem;
+  right: 2rem;
+  z-index: 10;
+
+  opacity: 0;
+  transform: translateY(-10px);
+  visibility: hidden;
+
+  transition: all 0.5s;
+}
+
+#admin-header:has(#menu-btn-check:checked) #nav-menu {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+#nav-menu ul {
+  position: relative;
+  top: 30%;
+  margin: 0;
+  padding: 0;
+}
+
+#nav-menu ul li {
+  list-style: none;
+  border: var(--admin-table-border-light);
+  height: 100%;
+}
+
+#nav-menu #current-page {
+  font-weight: bold;
+  background-color: var(--admin-bg-gray);
+}
+
+#nav-menu a,
+#nav-menu #current-page,
+#nav-menu button {
+  color: black;
+  text-decoration: none;
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+  display: block;
+}
+
+#nav-menu a span {
+  border-bottom: 2px solid transparent;
+}
+
+#nav-menu a:hover > span {
+  color: var(--zoutohana-green);
+  font-weight: bold;
+  border-bottom: 2px solid var(--zoutohana-green);
+}
+
+#nav-menu button {
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  color: var(--admin-text-red);
+  font-size: 1rem;
+}
+
+#nav-menu button:hover {
+  background-color: var(--admin-text-red);
+  color: white;
 }
 
 /* ---------- テーブル ---------- */
@@ -375,6 +511,15 @@ html {
   padding: 1rem 0rem;
 }
 
+.table-row-link {
+  color: var(--admin-text-gray);
+}
+
+.table-row-link:hover {
+  color: black;
+  font-weight: bold;
+}
+
 .status-green {
   display: inline-flex;
 	align-items: center;
@@ -386,6 +531,20 @@ html {
   display: inline-flex;
 	align-items: center;
   color: blue;
+  gap: 0.2rem;
+}
+
+.status-gray {
+  display: inline-flex;
+	align-items: center;
+  color: gray;
+  gap: 0.2rem;
+}
+
+.status-red {
+  display: inline-flex;
+	align-items: center;
+  color: red;
   gap: 0.2rem;
 }
 
@@ -433,22 +592,19 @@ html {
   z-index: 1;
 }
 
-.progressbar li:first-child:before {
+.progressbar li:first-child:before {  /* 1つ目の丸には前の線つけない */
   content: none;
 }
 
-.progressbar li.active, /* 完了した文字 */
-.progressbar li.complete{
+.progressbar li.complete{ /* 完了した文字 */
   color: black;
 }
 
-.progressbar li.active:before,  /* 完了した線 */
-.progressbar li.complete:before {
+.progressbar li.complete:before { /* 完了した線 */
   background-color: #808080;
 }
 
-.progressbar li.active:after, /* 完了した丸 */
-.progressbar li.complete:after {
+.progressbar li.complete:after { /* 完了した丸 */
   background-color: #808080;
 }
 
@@ -590,7 +746,7 @@ html {
 .modal { /* モーダルの背景を暗くするやつ */
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;

@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>書評詳細</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="../../static/css/admin/admin-style.css">
+    <link rel="stylesheet" href="../../static/css/admin/admin-style.css" th:href="@{/css/admin/admin-style.css}">
 </head>
 <body id="projectEdit-page">
-    <header></header>
+    <div th:replace="~{layout-admin :: header}"></div>
 
     <main id="admin-main">
       <h1 class="page-title">書評詳細</h1>
@@ -49,7 +49,7 @@
                 <tr>
                   <th>名前 : </th>
                   <td>
-                    <a href="">
+                    <a href="#" th:href="@{/}">
                       <span>なまえなまえ</span>(ID:<span>loginID123</span>)
                     </a>
                   </td>
@@ -118,14 +118,14 @@
               <p class="review-card-sub-info">投稿日時 : <span>2025/10/01 12:34</span></p>
               <p class="review-card-sub-info">更新日時 : <span>2025/10/02 23:45</span></p>
             </div>
-            <a href="#" class="icon-center review-card-sub-info text-decoration-none">詳細を確認する<span class="material-symbols-outlined">keyboard_double_arrow_right</span></a> <!-- 右側 -->
+            <a href="#" th:href="@{/}" class="icon-center review-card-sub-info text-decoration-none">詳細を確認する<span class="material-symbols-outlined">keyboard_double_arrow_right</span></a> <!-- 右側 -->
           </div>
         </div>
 
         <div class="btn-wrap mt-8">
           <button type="button" class="btn btn-danger" data-modal-target="delete-confirm-modal">削除する</button>
-          <a href="" class="btn">個別通知を送る</a>
-          <a href="" class="btn">印刷する</a>
+          <a href="#" th:href="@{/}" class="btn">個別通知を送る</a>
+          <a href="#" th:href="@{/}" class="btn">印刷する</a>
         </div>
       </div>
     </main>
@@ -157,8 +157,6 @@
       </div>
     </div>
 
-    <footer></footer>
-
-    <script src="../../static/js/admin/admin-general.js"></script>
+    <script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/admin-general.js}"></script>
 </body>
 </html>

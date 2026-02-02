@@ -1,5 +1,22 @@
 "use strict";
 
+// ========== ヘッダーのハンバーガーメニュー ==========
+function updateMenuIcon() {
+  const menuBtnCheck = document.getElementById('menu-btn-check');
+  const menuBtn = document.getElementById('menu-btn');
+  if (!menuBtn || !menuBtnCheck) return;
+
+  function updateIcon() {
+    menuBtn.textContent = menuBtnCheck.checked ? 'close' : 'menu';
+  }
+
+  updateIcon();
+  menuBtnCheck.addEventListener('change', updateIcon);
+}
+
+window.addEventListener('DOMContentLoaded', updateMenuIcon);
+window.addEventListener('pageshow', updateMenuIcon);
+
 // ========== パスワードの表示非表示ボタン ==========
 document.addEventListener("DOMContentLoaded", () => {
   const viewicon = document.getElementById('password-visible-icon');
@@ -16,6 +33,66 @@ document.addEventListener("DOMContentLoaded", () => {
       viewicon.innerText = 'visibility_off';
     }
   });
+});
+
+
+// ========== 企画カードのURLコピー ==========
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const url = btn.dataset.url;
+      const icon = btn.querySelector('.material-symbols-outlined');
+
+      try {
+        await navigator.clipboard.writeText(url);
+        icon.textContent = 'check';
+
+      } catch (e) {
+        console.error('コピー失敗', e);
+      }
+    });
+  });
+});
+
+
+// ========== 一覧表示で空のパラメータを送らない ==========
+document.addEventListener('DOMContentLoaded', () => {
+    const forms = document.querySelectorAll('form');
+
+    forms.forEach(form => {
+        form.addEventListener('submit', e => {
+            removeEmptyInputs(form);
+        });
+    });
+
+    document.querySelectorAll('select').forEach(select => {
+        select.addEventListener('change', () => {
+            const form = select.closest('form');
+            if (form) {
+                removeEmptyInputs(form);
+                form.submit();
+            }
+        });
+    });
+
+    document.querySelectorAll('button[onclick*="submit"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const form = btn.closest('form');
+            if (form) {
+                removeEmptyInputs(form);
+                form.submit();
+            }
+        });
+    });
+
+    function removeEmptyInputs(form) {
+        const inputs = form.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            if (input.value === '') {
+                input.removeAttribute('name');
+            }
+        });
+    }
 });
 
 
@@ -105,6 +182,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+// ---------- モーダル内のすべてのチェックを外す ----------
+const clearAllCheckbox = document.getElementById('clear-all-checkbox');
+
+if (clearAllCheckbox) {
+  clearAllCheckbox.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    document
+      .querySelectorAll('#filter-option-modal input[type=checkbox]')
+      .forEach(cb => {
+        cb.checked = false;
+        cb.indeterminate = false;
+      });
+  });
+}
 
 
 // ========== 書籍ジャンル複数選択 ==========
@@ -231,7 +324,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const hiddenInput = document.getElementById("genres-hidden");
 
   form.addEventListener("submit", () => {
-    hiddenInput.value = selectedItems.join(","); // それか JSON.stringify(selectedItems)
+    // hiddenInput.value = selectedItems.join(",");
+    JSON.stringify(selectedItems);
   });
 });
 

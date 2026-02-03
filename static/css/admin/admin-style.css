@@ -158,6 +158,14 @@ html {
   align-items:center;
 }
 
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 .justify-between {
   justify-content: space-between;
 }
@@ -234,6 +242,10 @@ html {
 
 .underline {
   text-decoration: underline;
+}
+
+.hover-bold:hover {
+  font-weight: bold;
 }
 
 
@@ -606,6 +618,17 @@ html {
 
 .progressbar li.complete:after { /* 完了した丸 */
   background-color: #808080;
+}
+
+/* ---------- 利用者カード ---------- */
+.user-card-title {
+  font-size:1.8rem;
+  font-weight: normal;
+}
+
+.user-card-sub-info {
+  color: var(--admin-text-gray);
+  font-size: 1.2rem;
 }
 
 

@@ -566,17 +566,17 @@ window.onload = function () {
 
     // --- 1つ目のエリア（既存） ---
     // 0〜10番目
-    createInfiniteRow(allBooksData.slice(0, 10), '#shelf-row-1', false);
+    createInfiniteRow(allBooksData.slice(1, 4), '#shelf-row-1', false);
     // 10〜20番目（ずらしあり）
-    createInfiniteRow(allBooksData.slice(10, 20), '#shelf-row-2', true);
+    createInfiniteRow(allBooksData.slice(5, 9), '#shelf-row-2', true);
 
 
     // --- 2つ目のエリア（追加） ---
     // 20〜30番目のデータを表示（ずらしなし）
-    createInfiniteRow(allBooksData.slice(20, 30), '#shelf-row-3', false);
+    createInfiniteRow(allBooksData.slice(10, 20), '#shelf-row-3', false);
 
     // もし4段目も同じデータでよければ（ずらしあり）
-    createInfiniteRow(allBooksData.slice(20, 30), '#shelf-row-4', true);
+    createInfiniteRow(allBooksData.slice(21, 30), '#shelf-row-4', true);
 
 
     // その他の初期化

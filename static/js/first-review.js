@@ -12,7 +12,7 @@ window.onload = async function () {
     // 10個データをとってきてる
     // --------------------------------------------------------------------------------------
     // ページネーションapi取得
-     await createPagination(2);
+    await createPagination(2);
 
     if (await isVote()) {
         const voteData = await getVoteReviewData();

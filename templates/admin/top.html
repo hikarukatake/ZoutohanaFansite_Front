@@ -22,11 +22,11 @@
                     </h2>
                     <p class="review-card-sub-info ml-4">
                         <span>
-                            https://zoutohana-fansite.jp/project/<span class="text-black" th:text="${project.urlKey}">URL-key</span>
+                            https://zoutohana-fansite.jp/project/<span class="text-black" th:text="${project.urlKey}">-----</span>
                         </span>
                         <button
                             type="button"
-                            class="btn-sm"
+                            class="btn-sm copy-btn"
                             th:data-url="'https://zoutohana-fansite.jp/project/' + ${project.urlKey}">
                             <span class="material-symbols-outlined font-sm">content_copy</span>
                         </button>
@@ -45,31 +45,19 @@
                     <div class="flex"> <!-- 画像・日付等情報(flex) -->
                         <img src="../../static/img/NO-IMAGE.png" th:src="@{/api/images/project.main_img_url}" class="project-card-thumbnail">
                         <div class="mb-auto pl-4">
-                            <h3 class="page-title-sub">
-                                <span th:text="${#temporals.format(project.projectStartAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00</span>
-                                <span>~</span>
-                                <span th:text="${#temporals.format(project.projectEndAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00</span>
-                            </h3>
+                            <h3 class="page-title-sub"th:text="${#temporals.format(project.projectStartAt, 'yyyy/MM/dd HH:mm')} + ' ~ ' + ${#temporals.format(project.projectEndAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00 ~ 2025/01/01 12:00</h3>
                             <table>
                                 <tr>
                                     <th>書評投稿期間 : </th>
-                                    <td>
-                                        <span th:text="${#temporals.format(project.submissionStartAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00</span>
-                                        <span>~</span>
-                                        <span th:text="${#temporals.format(project.submissionEndAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00</span>
-                                    </td>
+                                    <td th:text="${#temporals.format(project.submissionStartAt, 'yyyy/MM/dd HH:mm')} + ' ~ ' + ${#temporals.format(project.submissionEndAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00 ~ 2025/01/01 12:00</td>
                                 </tr>
                                 <tr>
                                     <th>書評投票期間 : </th>
-                                    <td>
-                                        <span th:text="${#temporals.format(project.votingStartAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00</span>
-                                        <span>~</span>
-                                        <span th:text="${#temporals.format(project.votingEndAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00</span>
-                                    </td>
+                                    <td th:text="${#temporals.format(project.votingStartAt, 'yyyy/MM/dd HH:mm')} + ' ~ ' + ${#temporals.format(project.votingEndAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00</td>
                                 </tr>
                                 <tr>
                                     <th>投稿された書評 : </th>
-                                    <td><span th:text="${project.reviewCount}">123</span>件</td>
+                                    <td th:text="${project.reviewCount} + '件'">0件</td>
                                 </tr>
                             </table>
                         </div>
@@ -77,45 +65,43 @@
                 </div>
 
                 <div class="pt-4 flex justify-between"> <!-- 企画カードフッター -->
-                    <div> <!-- 左側 -->
+                    <div>
                         <button type="button" class="btn">次のステータス(<span>投票期間中</span>)に進める</button>  <!-- TODO:後で考える -->
-                        <button type="button" class="btn btn-danger" data-modal-target="delete-confirm-modal">削除する</button>
+                        <button type="button" class="btn btn-danger" th:data-modal-target="'delete-confirm-modal-' + ${project.id}">削除する</button>
                     </div>
-                    <a href="project_edit.html" th:href="@{/project_edit/{urlKey}(urlKey=${project.urlKey})}" class="icon-center review-card-sub-info text-decoration-none">詳細を確認する<span class="material-symbols-outlined">double_arrow</span></a>
+                    <a href="project_edit.html" th:href="@{/project_edit/{urlKey}(urlKey=${project.urlKey})}" class="icon-center review-card-sub-info text-decoration-none hover-bold">詳細を確認する<span class="material-symbols-outlined">double_arrow</span></a>
+                </div>
+
+                <div th:id="'delete-confirm-modal-' + ${project.id}" class="modal">
+                    <div>
+                        <div class="modal-content">
+                            <div class="flex justify-between items-start">
+                                <h2 class="page-title mx-auto">注意</h2>
+                                <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
+                            </div>
+
+                            <div class="mt-8">
+                                <p>この企画を削除すると、<span class="font-bold underline">関連するすべての書評データも同時に削除されます</span>。</p>
+                                <p class="font-bold underline text-danger">削除したデータは復元できません。</p>
+                                <p class="mt-4">削除を実行するには、以下の入力欄に企画URLを入力してください。</p>
+                            </div>
+
+                            <div class="mt-8">
+                                <p>企画URL : <span th:text="${project.urlKey}">URL-key</span></p>
+                                <form th:action="@{/project/delete}" method="post">
+                                    <input type="hidden" name="projectId" th:value="${project.id}">
+                                    <input type="text" class="input-text w-full" th:placeholder="${project.urlKey}">
+                                    <div class="btn-wrap mt-8">
+                                        <button type="submit" class="btn btn-danger"><span class="px-8">削除する</span></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
-
-    <div id="delete-confirm-modal" class="modal">
-        <div>
-            <div class="modal-content">
-                <div class="flex justify-between items-start">
-                    <h2 class="page-title mx-auto">注意</h2>
-                    <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
-                </div>
-
-                <div class="mt-8">
-                    <p>この企画を削除すると、<span class="font-bold underline">関連するすべての書評データも同時に削除されます。</span></p>
-                    <p><span class="font-bold underline text-danger">削除したデータは復元できません。</span></p>
-                    <p class="mt-4">削除を実行するには、以下の入力欄に企画URLを入力してください。</p>
-                </div>
-
-                <div class="mt-8">
-                    <p>企画URL : <span th:text="${project.urlKey}">URL-key</span></p>
-                    <form th:action="@{/project/delete}" method="post">
-                        <input type="hidden" name="projectId" th:value="${project.id}">
-                        <input type="text" class="input-text w-full" th:placeholder="${project.urlKey}">
-                        <div class="btn-wrap mt-8">
-                            <button type="submit" class="btn btn-danger"><span class="px-8">削除する</span></button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/admin-general.js}"></script>
-    <!-- TODO:利用者アカウント一覧では読み込めてるのにTOPでは読み込めない -->
+<script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/admin-general.js}"></script>
 </body>
 </html>

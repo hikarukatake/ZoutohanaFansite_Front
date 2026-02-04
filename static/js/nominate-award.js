@@ -335,26 +335,26 @@ function createShintoShelf(booksData, targetSelector) {
         shintoContainer.appendChild(setDiv);
     });
 }
-/* =========================================================
-   基本設定・データ
-   ========================================================= */
-const ITEM_WIDTH = 180; // 本の幅(150px) + 余白(30px)
-
-// ... (allBooksData や 他の初期化コードはそのまま) ...
 
 
 /* =========================================================
-   ▼▼▼ 無限スクロール & ズラし表示用の関数 ▼▼▼
+                    無限スクロール
    ========================================================= */
+// 本の幅(150px) + 余白(30px)
+// 本一冊の場所をどれくらいとるか
+const ITEM_WIDTH = 180;
+//originalDataどの本を並べるか本のデータ
+//containerIdどこにいれるか htmlにつけた場所に設置するため
+//isOffsetずらすかどうか
 function createInfiniteRow(originalData, containerId, isOffset) {
+    // メインをcontainerにいれる
     const container = document.querySelector(containerId);
-    if (!container || originalData.length === 0) return;
 
-    // --- データを3倍（左・中・右）に増やしてループを作る ---
+    // [セット1（左用）] - [セット2（メイン表示用）] - [セット3（右用）]
     // これにより 9番目の次に 0番目が見えるようになります
     const loopData = [...originalData, ...originalData, ...originalData];
 
-    // 1セット分の幅（ピクセル）
+    // 1800px = 10冊 × 180px これは10冊並べたとしたらこのくらい長くなります世の横幅サイズを入れた
     const singleSetWidth = originalData.length * ITEM_WIDTH;
 
     // DOM生成
@@ -379,17 +379,19 @@ function createInfiniteRow(originalData, containerId, isOffset) {
         setDiv.appendChild(allBook);
         container.appendChild(setDiv);
     });
-
-    // --- 初期位置の設定 ---
-    // 真ん中のセットの先頭を表示させる（これで左スクロールも可能になる）
+    // 無限スクロールをするためにスタート位置を0からにしてしまうと左が壁になってしまうので
+    // さっき10データ分の横幅を調べたその例1800pxからスタートすることで二番目のデータたちからスタートでき左には一つ目のデータたちがいるようにしている
     let startPos = singleSetWidth;
 
-    // ★「ずらし(isOffset)」が true なら、本の半分(90px)だけ右にずらす
+    // isOffsetが true なら、本の半分(90px)だけ右にずらす
+    // これで2行あるうちの下だけずらしている
     if (isOffset) {
+        // これスタート位置を180 /2で本を半分ずらしている
         startPos += (ITEM_WIDTH / 2);
     }
 
-    // スクロール位置を適用
+    // スクロールのスタート位置をここで設定している
+    // 
     container.scrollLeft = startPos;
 
     // --- 無限ループの監視イベント ---
@@ -409,12 +411,28 @@ function createInfiniteRow(originalData, containerId, isOffset) {
 
 
 /* =========================================================
-   大賞表示用関数（左：感想）
+    大賞表示用関数(文字)
    ========================================================= */
 function renderLeftSection(data) {
-    const target = document.getElementById('award-left-target');
-    if (!target) return;
+    //     <div id="award-left-target">
 
+    //     <div class="modal-box">
+
+    //         <div class="modal-textFirst-award-box">
+    //             <img src="../../static/img/rose.png" class="modal-rose" alt="">
+    //             <h3 id="award-modalTitle">title</h3>
+    //             <p id="award-textFirst" class="modal-textFirst">content</p>
+    //         </div>
+
+    //         <div class="modal-textSecond-award-box" style="display: none;">
+    //             <img src="../../static/img/rose.png" class="modal-rose">
+    //             <p id="award-textSecond" class="modal-textSecond"></p>
+    //         </div>
+
+    //     </div>
+
+    // </div>
+    const target = document.getElementById('award-left-target');
     const modalBox = document.createElement('div');
     modalBox.classList.add('modal-box');
 
@@ -466,13 +484,30 @@ function renderLeftSection(data) {
 }
 
 /* =========================================================
-   大賞表示用関数（右：プロフィール）
+   大賞表示用関数（プロフィール）
    ========================================================= */
 function renderRightSection(data) {
-    const target = document.getElementById('award-right-target');
-    if (!target) return;
 
-    // ヘッダー
+    // <div id="award-right-target">
+
+    // <div class="profile-awrad-header">
+    //     <img id="award-modalIcon" class="profile-awrad-icon" src="（data.iconのURL）" alt="icon">
+    //     <h3 id="award-modalName" class="profile-name">（data.nameの中身）</h3>
+    // </div>
+
+    // <div class="profile-tags">
+    //     <p id="award-modalInfo" style="font-size: 0.9rem; color: #555;">
+    //         （20代） / （女性） / （東京都） </p>
+    // </div>
+
+    // <hr class="profile-line">
+
+    // <div class="profile-award-bio">
+    //     <p id="award-modalProfileText">（data.textの中身：自己紹介文など）</p>
+    // </div>
+
+    // </div>
+    const target = document.getElementById('award-right-target');
     const profileHeader = document.createElement('div');
     profileHeader.classList.add('profile-awrad-header');
 
@@ -496,10 +531,8 @@ function renderRightSection(data) {
 
         const infoP = document.createElement('p');
         infoP.id = "award-modalInfo"; 
-        infoP.style.fontSize = "0.9rem";
-        infoP.style.color = "#555";
+        infoP.classList.add('award-modalText');
         infoP.innerText = `${data.age} / ${data.gender} / ${data.address}`;
-
     profileTags.appendChild(infoP);
 
     // 線
@@ -546,7 +579,6 @@ function renderRightSection(data) {
     const participationReviewsResponse = await fetch(`/api/reviews/participation/${urlKey}`);
     const participationReviews = await participationReviewsResponse.json();
     const participationReviewsLength = participationReviews.length;
-    console.log(participationReviews);
 
 
     // 20〜30番目のデータを表示（ずらしなし）

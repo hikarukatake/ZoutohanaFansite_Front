@@ -55,6 +55,25 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+// ========== 期間選択 ==========
+document.addEventListener('DOMContentLoaded', function () {
+    const periodCheck = document.getElementById('periodCheck');
+    const startAt = document.getElementById('startAt');
+    const endAt = document.getElementById('endAt');
+
+    const toggleDatetime = () => {
+        const enabled = periodCheck.checked;
+        startAt.disabled = !enabled;
+        endAt.disabled = !enabled;
+    };
+
+    periodCheck.addEventListener('change', toggleDatetime);
+
+    toggleDatetime();
+});
+
+
+
 // ========== 一覧表示で空のパラメータを送らない ==========
 document.addEventListener('DOMContentLoaded', () => {
     const forms = document.querySelectorAll('form');

@@ -12,7 +12,10 @@
     <div th:replace="~{layout-admin :: header}"></div>
 
     <main id="admin-main">
-        <h1 class="page-title">開催中の企画</h1>
+        <h1 class="page-title flex justify-between">
+            <span>開催中の企画</span>
+            <a href="project_list.html" th:href="@{/admin/project/list}" class="icon-center review-card-sub-info text-decoration-none hover-bold">企画一覧<span class="material-symbols-outlined">double_arrow</span></a>
+        </h1>
 
         <div class="main-content mt-4" th:each="project : ${projects}"> <!-- 企画カードを並べる部分 -->
             <div class="main-content-card p-8 mt-2"> <!-- 企画カード -->
@@ -36,11 +39,12 @@
                 <div class="py-4 table-border-b-strong"> <!-- 企画カードボディ -->
                     <ul class="progressbar"> <!-- 進捗部分 -->
                         <li th:classappend="${project.status.getOrder() >= 1} ? 'complete'">投稿期間前</li>
-                        <li th:classappend="${project.status.getOrder() >= 2} ? 'complete'">投稿期間中</li>
+                        <li th:classappend="${project.status.getOrder() >= 2} ? 'complete'">投稿期間</li>
                         <li th:classappend="${project.status.getOrder() >= 3} ? 'complete'">一次審査</li>
-                        <li th:classappend="${project.status.getOrder() >= 4} ? 'complete'">二次審査</li>
-                        <li th:classappend="${project.status.getOrder() >= 5} ? 'complete'">ノミネート決定</li>
-                        <li th:classappend="${project.status.getOrder() >= 6} ? 'complete'">大賞決定</li>
+                        <li th:classappend="${project.status.getOrder() >= 4} ? 'complete'">二次審査(投票)</li>
+                        <li th:classappend="${project.status.getOrder() >= 5} ? 'complete'">二次審査(確認)</li>
+                        <li th:classappend="${project.status.getOrder() >= 6} ? 'complete'">ノミネート決定</li>
+                        <li th:classappend="${project.status.getOrder() >= 7} ? 'complete'">大賞決定</li>
                     </ul>
                     <div class="flex"> <!-- 画像・日付等情報(flex) -->
                         <img src="../../static/img/NO-IMAGE.png" th:src="@{/api/images/project.main_img_url}" class="project-card-thumbnail">

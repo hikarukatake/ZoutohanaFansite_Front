@@ -4,7 +4,7 @@
 <mapper namespace="com.example.zoutohanafansite.mapper.ProjectMapper">
     <select id="getAllProjects"
             parameterType="com.example.zoutohanafansite.entity.form.ProjectSearchForm"
-            resultType="com.example.zoutohanafansite.entity.admin.project.AdminProjectCard">
+            resultType="com.example.zoutohanafansite.entity.admin.project.ProjectCard">
 
         SELECT
         p.*,

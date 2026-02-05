@@ -1,12 +1,18 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../../static/css/main.css">
-    <link rel="stylesheet" href="../../static/css/project/nominate-works.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <style th:inline="css">
+        :root {
+            --main-color: [(${project.themeColor.dbValue})];
+            --sub-color: [(${project.themeColor.dbValue})];
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/project/nominate-works.css}" href="../../static/css/project/nominate-works.css">
     <style>
 
     </style>
@@ -268,10 +274,10 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-buttons">
-                <div class="modal-button"><img src="../img/vote.png" alt="" class="modal-img">投票</div>
-                <div class="modal-button"><img src="../img/tagu.png" alt="" class="modal-img-book">ブックマーク</div>
-            </div>
+<!--            <div class="modal-buttons">-->
+<!--                <div class="modal-button"><img src="../img/vote.png" alt="" class="modal-img">投票</div>-->
+<!--                <div class="modal-button"><img src="../img/tagu.png" alt="" class="modal-img-book">ブックマーク</div>-->
+<!--            </div>-->
             <div class="profile-card">
                 <div class="profile-header">
                     <div class="profile-icon">
@@ -357,7 +363,7 @@
             <div class="footer-copy">©Copylight</div>
         </div>
     </footer>
-    <script src="../../static/js/nominate-works.js" defer></script>
+    <script th:src="@{/js/nominate-works.js}" src="../../static/js/nominate-works.js" defer></script>
 </body>
 
 

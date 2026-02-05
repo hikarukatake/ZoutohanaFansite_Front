@@ -47,6 +47,11 @@
         });
     }
 
+    const pathname = window.location.pathname;
+    const urlKey = pathname.split('/').pop();
+
+    const VOTE_KEY = 'vote';
+
 
         // 30件分のデータ
 let allBooksData =
@@ -275,7 +280,7 @@ async function createShintoShelf(booksData) {
 
         let voteCount;
         if(data.voteCount !== null){
-            voteCount = data.voteCount;
+            voteCount = data.vote;
             // 受け取った投票数をpタグで表示し投票数エリアに入れている
         }else{
             voteCount = "-";
@@ -385,21 +390,41 @@ function oneShintobook(data) {
 /* =========================================================
     ページ読み込み完了時の処理
    ========================================================= */
-window.onload = function () {
+window.onload = async function () {
     if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
     }
     window.scrollTo(0, 0);
 
-    const nominateBooks = allBooksData.slice(0, 10);
-
-    createShintoShelf(nominateBooks);
+    const nominateBooksResponse = await fetch(`/api/reviews/nominate/${urlKey}`);
+    const nominateBooks = await nominateBooksResponse.json();
+    console.log(nominateBooks);
+    await createShintoShelf(nominateBooks);
 
     // その他の初期化
-    oneShintobook(allBooksData[0]);
-    const awardData = allBooksData[0];
-    renderLeftSection(awardData);
-    renderRightSection(awardData);
+
+    const currentData = localStorage.getItem(VOTE_KEY);
+
+    const voteIds = currentData ? JSON.parse(currentData) : [];
+
+    if (voteIds.length !== 0){
+        const voteReviewResponse = await fetch(`/api/reviews/voted/${urlKey}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            // 配列をそのままJSON化してBodyに詰める
+            body: JSON.stringify(voteIds)
+        });
+
+        if(voteReviewResponse.status === 200){
+            const voteReview = await voteReviewResponse.json();
+            console.log(voteReview);
+            oneShintobook(voteReview);
+        }
+
+    }
+
 };
 
 

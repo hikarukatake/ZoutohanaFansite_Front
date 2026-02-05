@@ -10,7 +10,7 @@
 </head>
 <body>
   <header id="admin-header" th:fragment="header">
-    <img id="admin-header-logo" src="../../static/img/象と花-white-color.png" th:src="@{/img/象と花-white-color.png}">
+    <img id="admin-header-logo" src="../../static/img/zoutohana-white-color.png" th:src="@{/img/zoutohana-white-color.png}">
     <label id="menu-btn-container">
       <input type="checkbox" id="menu-btn-check">
       <span class="material-symbols-outlined" id="menu-btn">menu</span>
@@ -18,7 +18,7 @@
     <nav id="nav-menu">
       <ul>
         <li><a href="top.html" th:href="@{/admin/dash}"><span class="icon-center"><span class="material-symbols-outlined mr-2">home</span>TOP</span></a></li>
-        <li><a href="project_list.html" th:href="@{/}"><span class="icon-center"><span class="material-symbols-outlined mr-2">library_books</span>企画一覧</span></a></li>
+        <li><a href="project_list.html" th:href="@{/admin/project/list}"><span class="icon-center"><span class="material-symbols-outlined mr-2">library_books</span>企画一覧</span></a></li>
         <li><a href="project_create.html" th:href="@{/}"><span class="icon-center"><span class="material-symbols-outlined mr-2">library_add</span>企画作成</span></a></li>
         <li><a href="book_genre_list.html" th:href="@{/}"><span class="icon-center"><span class="material-symbols-outlined mr-2">tag</span>企画ジャンル一覧</span></a></li>
         <li><a href="account_list.html" th:href="@{/admin/account/list}"><span class="icon-center"><span class="material-symbols-outlined mr-2">account_circle</span>利用者一覧</span></a></li>

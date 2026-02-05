@@ -9,149 +9,209 @@
     <link rel="stylesheet" href="../../static/css/admin/admin-style.css" th:href="@{/css/admin/admin-style.css}">
 </head>
 <body>
-    <div th:replace="~{layout-admin :: header}"></div>
+<div th:replace="~{layout-admin :: header}"></div>
 
-    <main id="admin-main">
-      <h1 class="page-title">企画一覧<span class="page-title-count">(1件)</span></h1>
+<main id="admin-main">
+    <h1 class="page-title">企画一覧<span class="page-title-count" th:text="'(' + ${projects.size()} + '件)'">(0件)</span></h1>
 
-      <div class="main-content">
+    <div class="main-content">
         <div class="flex justify-between mt-2"> <!-- テーブルの上のメニュー部分 -->
-          <div> <!-- メニュー左部分(並び替え) -->
-            <select class="select">
-              <option>登録日時</option>
-            </select>
-            順
-          </div>
-          <div class="flex gap-1"> <!-- メニュー右部分(絞り込み・検索) -->
-            <button type="button" class="btn" data-modal-target="filter-option-modal">絞り込みオプション</button>
-            <input type="text" class="input-text" placeholder="検索">
-            <button type="submit" class="btn"><span class="material-symbols-outlined scale-bigger">search</span></button>
-            <a href="#" th:href="@{/}" class="btn icon-center"><span class="material-symbols-outlined scale-bigger pr-1">library_add</span>新しい企画を登録</a>
-          </div>
+            <div class="flex gap-1"> <!-- メニュー左部分(並び替え) -->
+                <form method="GET" th:action="@{/admin/project/list}">
+                    <input type="hidden" name="keyword" th:value="${form.keyword}">
+                    <th:block th:each="s : ${form.status}">
+                        <input type="hidden" name="status" th:value="${s}">
+                    </th:block>
+                    <th:block th:each="p : ${form.published}">
+                        <input type="hidden" name="published" th:value="${p}">
+                    </th:block>
+                    <input type="hidden" name="startAt" th:value="${form.startAt}">
+                    <input type="hidden" name="endAt" th:value="${form.endAt}">
+
+                    <select name="sort" class="select">
+                        <option value="created_desc" th:selected="${form.sort == 'created_desc'}">登録日時(新→旧)</option>
+                        <option value="created_asc" th:selected="${form.sort == 'created_asc'}">登録日時(旧→新)</option>
+                        <option value="startAt_asc" th:selected="${form.sort == 'startAt_asc'}">開始日時(昔→今)</option>
+                        <option value="startAt_desc" th:selected="${form.sort == 'startAt_desc'}">開始日時(今→昔)</option>
+                        <option value="endAt_asc" th:selected="${form.sort == 'endAt_asc'}">終了日時(昔→今)</option>
+                        <option value="endAt_desc" th:selected="${form.sort == 'endAt_desc'}">終了日時(今→昔)</option>
+                        <option value="urlKey_asc" th:selected="${form.sort == 'urlKey_asc'}">企画URL(A→Z)</option>
+                        <option value="urlKey_desc" th:selected="${form.sort == 'urlKey_desc'}">企画URL(Z→A)</option>
+                    </select>
+                </form>
+                順
+            </div>
+            <div class="flex gap-1"> <!-- メニュー右部分(絞り込み・検索) -->
+                <button type="button" class="btn" data-modal-target="filter-option-modal">絞り込みオプション</button>
+                <form method="GET" th:action="@{/admin/project/list}" class="flex gap-1">
+                    <input type="hidden" name="sort" th:value="${form.sort}">
+                    <th:block th:each="s : ${form.status}">
+                        <input type="hidden" name="status" th:value="${s}">
+                    </th:block>
+                    <th:block th:each="p : ${form.published}">
+                        <input type="hidden" name="published" th:value="${p}">
+                    </th:block>
+                    <input type="hidden" name="startAt" th:value="${form.startAt}">
+                    <input type="hidden" name="endAt" th:value="${form.endAt}">
+
+                    <input type="search" name="keyword" class="input-text" placeholder="検索" th:value="${form.keyword}">
+                    <button type="submit" class="btn"><span class="material-symbols-outlined scale-bigger mt-2">search</span></button>
+                </form>
+            </div>
         </div>
 
-        <div class="mt-4"> <!-- 企画カードを並べる部分 -->
-          <div class="main-content-card p-8 mt-2"> <!-- 企画カード -->
-            <div class="table-border-b-strong pb-4"> <!-- 企画カードヘッダー -->
-              <h2 class="review-card-title icon-center">
-                <span>冬に読みたい！わたしのおすすめ文庫</span>
-                <span class="ml-4 text-gray font-sm icon-center"><span class="material-symbols-outlined pr-1">visibility_off</span>非公開</span>
-              </h2>
-              <p class="review-card-sub-info ml-4">
-                  <span>
-                      https://zoutohana-fansite.jp/project/<span class="text-black">winter-bunko</span>
-                  </span>
-                  <button type="button" class="btn-sm">
-                      <span class="material-symbols-outlined font-sm">content_copy</span>
-                  </button>
-              </p>
-            </div>
-
-            <div class="py-4 table-border-b-strong"> <!-- 企画カードボディ -->
-              <ul class="progressbar"> <!-- 進捗部分 -->
-                <li class="complete">投稿期間前</li>
-                <li class="complete">投稿期間中</li>
-                <li>一次審査</li>
-                <li>二次審査</li>
-                <li>ノミネート決定</li>
-                <li>大賞決定</li>
-              </ul>
-              <div class="flex"> <!-- 画像・日付等情報 -->
-                <img src="../../static/img/book-giri.png" th:src="@{/img/book-giri.png}">
-                <div class="mb-auto pl-4">
-                  <h3 class="page-title-sub">
-                    <span>2025/10/27 12:00</span>
-                    <span>~</span>
-                    <span>2025/11/19 12:00</span>
-                  </h3>
-                  <table>
-                    <tr>
-                      <th>書評投稿期間 : </th>
-                      <td>
-                          <span>2025/10/27 12:00</span>
-                          <span>~</span>
-                          <span>2025/11/09 12:00</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>書評投票期間 : </th>
-                      <td>
-                          <span>2025/10/27 12:00</span>
-                          <span>~</span>
-                          <span>2025/11/09 12:00</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>投稿された書評 : </th>
-                      <td><span>123</span>件</td>
-                    </tr>
-                  </table>
+        <div class="main-content mt-4" th:each="project : ${projects}"> <!-- 企画カードを並べる部分 -->
+            <div class="main-content-card p-8 mt-2"> <!-- 企画カード -->
+                <div class="table-border-b-strong pb-4"> <!-- 企画カードヘッダー -->
+                    <h2 class="review-card-title icon-center">
+                        <span th:text="${project.name}">企画名が取得できませんでした</span>
+                        <span th:if="${!project.published}" class="text-gray icon-center ml-4">
+                            <span class="material-symbols-outlined mr-2 mt-1">visibility_off</span>非公開
+                        </span>
+                    </h2>
+                    <p class="review-card-sub-info ml-4">
+                            <span>
+                                https://zoutohana-fansite.jp/project/<span class="text-black" th:text="${project.urlKey}">-----</span>
+                            </span>
+                        <button
+                                type="button"
+                                class="btn-sm copy-btn"
+                                th:data-url="'https://zoutohana-fansite.jp/project/' + ${project.urlKey}">
+                            <span class="material-symbols-outlined font-sm">content_copy</span>
+                        </button>
+                    </p>
                 </div>
-              </div>
-            </div>
 
-            <div class="pt-4 flex justify-between"> <!-- 企画カードフッター -->
-              <div> <!-- 左側 -->
-                <button type="button" class="btn">次のステータス(<span>投票期間中</span>)に進める</button>
-                <a href="#" th:href="@{/}" class="btn">編集する</a>
-                <button type="button" class="btn btn-danger">削除する</button>
-              </div>
-              <a href="#" th:href="@{/}" class="icon-center review-card-sub-info text-decoration-none hover-bold">詳細を確認する<span class="material-symbols-outlined">double_arrow</span></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="pagination" id="pagination"></div>
-      </div>
-    </main>
-
-    <div id="filter-option-modal" class="modal">
-      <div>
-        <div class="modal-content">
-          <div class="flex justify-between items-start">
-            <h2 class="page-title-sub">絞り込みオプション</h2>
-            <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
-          </div>
-
-          <form>
-            <ul class="modal-option-wrap mt-4 ml-4">
-              <li>
-                <label><input type="checkbox" class="modal-checkbox-parent">ステータス</label>
-                <ul class="modal-checkbox-child grid-3">
-                  <li><label><input type="checkbox">書評投稿期間前</label></li>
-                  <li><label><input type="checkbox">書評投稿期間中</label></li>
-                  <li><label><input type="checkbox">一次審査中</label></li>
-                  <li><label><input type="checkbox">二次審査(投票)中</label></li>
-                  <li><label><input type="checkbox">二次審査(確認)中</label></li>
-                  <li><label><input type="checkbox">二次審査結果発表</label></li>
-                  <li><label><input type="checkbox">対象発表</label></li>
-                </ul>
-              </li>
-              <li>
-                <label><input type="checkbox" class="modal-checkbox-parent">公開/非公開</label>
-                <ul class="modal-checkbox-child grid-5">
-                  <li><label><input type="checkbox">公開</label></li>
-                  <li><label><input type="checkbox">非公開</label></li>
-                </ul>
-              </li>
-              <li>
-                <label><input type="checkbox">企画開催期間</label>
-                <div class="modal-checkbox-child mt-2">
-                  <input type="datetime-local" name="projectStartAt" class="input-datetime">
-                  <span class="wave-dash">～</span>
-                  <input type="datetime-local" name="projectEndAt" class="input-datetime">
+                <div class="py-4 table-border-b-strong"> <!-- 企画カードボディ -->
+                    <ul class="progressbar"> <!-- 進捗部分 -->
+                        <li th:classappend="${project.status.getOrder() >= 1} ? 'complete'">投稿期間前</li>
+                        <li th:classappend="${project.status.getOrder() >= 2} ? 'complete'">投稿期間</li>
+                        <li th:classappend="${project.status.getOrder() >= 3} ? 'complete'">一次審査</li>
+                        <li th:classappend="${project.status.getOrder() >= 4} ? 'complete'">二次審査(投票)</li>
+                        <li th:classappend="${project.status.getOrder() >= 5} ? 'complete'">二次審査(確認)</li>
+                        <li th:classappend="${project.status.getOrder() >= 6} ? 'complete'">ノミネート決定</li>
+                        <li th:classappend="${project.status.getOrder() >= 7} ? 'complete'">大賞決定</li>
+                    </ul>
+                    <div class="flex"> <!-- 画像・日付等情報(flex) -->
+                        <img src="../../static/img/NO-IMAGE.png" th:src="@{/api/images/project.main_img_url}" class="project-card-thumbnail">
+                        <div class="mb-auto pl-4">
+                            <h3 class="page-title-sub"th:text="${#temporals.format(project.projectStartAt, 'yyyy/MM/dd HH:mm')} + ' ~ ' + ${#temporals.format(project.projectEndAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00 ~ 2025/01/01 12:00</h3>
+                            <table>
+                                <tr>
+                                    <th>書評投稿期間 : </th>
+                                    <td th:text="${#temporals.format(project.submissionStartAt, 'yyyy/MM/dd HH:mm')} + ' ~ ' + ${#temporals.format(project.submissionEndAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00 ~ 2025/01/01 12:00</td>
+                                </tr>
+                                <tr>
+                                    <th>書評投票期間 : </th>
+                                    <td th:text="${#temporals.format(project.votingStartAt, 'yyyy/MM/dd HH:mm')} + ' ~ ' + ${#temporals.format(project.votingEndAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00</td>
+                                </tr>
+                                <tr>
+                                    <th>投稿された書評 : </th>
+                                    <td th:text="${project.reviewCount} + '件'">0件</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-              </li>
-            </ul>
 
-            <div class="btn-wrap mt-8">
-              <button type="submit" class="btn"><span class="px-8">絞り込む</span></button>
+                <div class="pt-4 flex justify-between"> <!-- 企画カードフッター -->
+                    <div>
+                        <button type="button" class="btn">次のステータス(<span>投票期間中</span>)に進める</button>  <!-- TODO:後で考える -->
+                        <button type="button" class="btn btn-danger" th:data-modal-target="'delete-confirm-modal-' + ${project.id}">削除する</button>   <!-- TODO:後で実装 -->
+                    </div>
+                    <a href="project_edit.html" th:href="@{/project_edit/{urlKey}(urlKey=${project.urlKey})}" class="icon-center review-card-sub-info text-decoration-none hover-bold">
+                        詳細を確認する<span class="material-symbols-outlined">double_arrow</span>
+                    </a>
+                </div>
+
+                <div th:id="'delete-confirm-modal-' + ${project.id}" class="modal">
+                    <div>
+                        <div class="modal-content">
+                            <div class="flex justify-between items-start">
+                                <h2 class="page-title mx-auto">注意</h2>
+                                <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
+                            </div>
+
+                            <div class="mt-8">
+                                <p>この企画を削除すると、<span class="font-bold underline">関連するすべての書評データも同時に削除されます</span>。</p>
+                                <p class="font-bold underline text-danger">削除したデータは復元できません。</p>
+                                <p class="mt-4">削除を実行するには、以下の入力欄に企画URLを入力してください。</p>
+                            </div>
+
+                            <div class="mt-8">
+                                <p>企画URL : <span th:text="${project.urlKey}">URL-key</span></p>
+                                <form th:action="@{/project/delete}" method="post">
+                                    <input type="hidden" name="projectId" th:value="${project.id}">
+                                    <input type="text" class="input-text w-full" th:placeholder="${project.urlKey}">
+                                    <div class="btn-wrap mt-8">
+                                        <button type="submit" class="btn btn-danger"><span class="px-8">削除する</span></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </form>
         </div>
-      </div>
+        <div th:if="${#lists.isEmpty(projects)}" class="main-content-card p-8 mt-4">
+            <p class="text-center">該当する企画はありませんでした</p>
+        </div>
     </div>
+</main>
 
-  <script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/admin-general.js}"></script>
+<div id="filter-option-modal" class="modal">
+    <div>
+        <div class="modal-content">
+            <div class="flex justify-between items-start">
+                <h2 class="page-title-sub">絞り込みオプション</h2>
+                <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
+            </div>
+
+            <form method="GET" th:action="@{/admin/project/list}">
+                <input type="hidden" name="keyword" th:value="${form.keyword}">
+                <input type="hidden" name="sort" th:value="${form.sort}">
+
+                <ul class="modal-option-wrap mt-4 ml-4">
+                    <li>
+                        <label><input type="checkbox" class="modal-checkbox-parent">ステータス</label>
+                        <ul class="modal-checkbox-child grid-3">
+                            <li><label><input type="checkbox" name="status" value="書評投稿期間前" th:checked="${form.status != null and form.status.contains('書評投稿期間前')}">書評投稿期間前</label></li>
+                            <li><label><input type="checkbox" name="status" value="書評投稿期間" th:checked="${form.status != null and form.status.contains('書評投稿期間')}">書評投稿期間</label></li>
+                            <li><label><input type="checkbox" name="status" value="一次審査" th:checked="${form.status != null and form.status.contains('一次審査')}">一次審査</label></li>
+                            <li><label><input type="checkbox" name="status" value="二次審査投票" th:checked="${form.status != null and form.status.contains('二次審査投票')}">二次審査(投票)</label></li>
+                            <li><label><input type="checkbox" name="status" value="二次審査確認" th:checked="${form.status != null and form.status.contains('二次審査確認')}">二次審査(確認)</label></li>
+                            <li><label><input type="checkbox" name="status" value="ノミネート決定" th:checked="${form.status != null and form.status.contains('ノミネート決定')}">ノミネート決定</label></li>
+                            <li><label><input type="checkbox" name="status" value="大賞決定" th:checked="${form.status != null and form.status.contains('大賞決定')}">大賞決定</label></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <label><input type="checkbox" class="modal-checkbox-parent">公開/非公開</label>
+                        <ul class="modal-checkbox-child grid-5">
+                            <li><label><input type="checkbox" name="published" value="公開" th:checked="${form.published != null and form.published.contains('公開')}">公開</label></li>
+                            <li><label><input type="checkbox" name="published" value="非公開" th:checked="${form.published != null and form.published.contains('非公開')}">非公開</label></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" id="periodCheck" class="modal-checkbox-parent" th:checked="${form.startAt != null and form.endAt != null}">企画開催期間
+                        </label>
+                        <div class="w-full ml-6">
+                            <input type="datetime-local" name="startAt" th:value="${form.startAt}" id="startAt" class="input-datetime" disabled>
+                            ~
+                            <input type="datetime-local" name="endAt" th:value="${form.endAt}" id="endAt" class="input-datetime" disabled>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="btn-wrap mt-8">
+                    <button id="clear-all-checkbox" class="btn btn-danger">リセット</button>
+                    <button type="submit" class="btn">絞り込む</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/admin-general.js}"></script>
 </body>
 </html>

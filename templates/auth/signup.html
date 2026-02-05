@@ -6,16 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新規登録</title>
 
-    <link rel="stylesheet" th:href="@{/css/auth/signup.css}" href="../css/auth/signup.css">
-    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
+    <link rel="stylesheet" th:href="@{/css/auth/signup.css}" href="../../static/css/auth/signup.css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" href="../../static/css/header.css">
+    <link rel="stylesheet" th:href="@{/css/footer.css}" href="../../static/css/footer.css">
+    <link rel="stylesheet" th:href="@{/css/form-container.css}" href="../../static/css/form-container.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
+
     <header class="signup-header">
         <a th:href="@{/login(id=${param.id})}" href="login.html" class="back-link">&lt;&nbsp;&nbsp;もどる</a>
         <h1><i class="fas fa-user-plus"></i> 新規登録</h1>
     </header>
+
     <main>
         <div class="form-container">
             <form th:action="@{/signup(id=${param.id})}" method="post" id="signup-form" th:object="${signupForm}">
@@ -27,43 +33,43 @@
                     <label for="nickname">ニックネーム</label>
                     <input th:field="*{nickname}" type="text" id="nickname" name="nickname">
                 </div>
+
                 <div class="form-group">
-                    <input type="hidden" name="icon" value="1">
+                    <input type="hidden" name="icon" id="iconValue" value="5">
                     <label>アイコン</label>
+
                     <div class="icon-grid">
+                        <!-- 花 -->
+                        <div class="icon" data-value="1">
+                            <img src="../../static/img/flower-pink.png" class="flower" alt="花１">
+                        </div>
+                        <div class="icon" data-value="2">
+                            <img src="../../static/img/flower-blue.png" class="flower" alt="花２">
+                        </div>
+                        <div class="icon" data-value="3">
+                            <img src="../../static/img/flower-purple.png" class="flower" alt="花３">
+                        </div>
+                        <div class="icon" data-value="4">
+                            <img src="../../static/img/flower-green.png" class="flower" alt="花４">
+                        </div>
 
-                        <!-- 上段：花 -->
-                        <div class="icon">
-                            <img src="../img/flower-pink.png" class="flower" alt="">
-                        </div>
-                        <div class="icon">
-                            <img src="../img/flower-blue.png" class="flower" alt="">
-                        </div>
-                        <div class="icon">
-                            <img src="../img/flower-purple.png" class="flower" alt="">
-                        </div>
-                        <div class="icon">
-                            <img src="../img/flower-green.png" class="flower" alt="">
-                        </div>
-
-                        <!-- 下段：象 -->
-                        <div class="icon active">
-                            <img src="../img/elephant-pink.png" class="elephant" alt="">
+                        <!-- 象 -->
+                        <div class="icon active" data-value="5">
+                            <img src="../../static/img/elephant-pink.png" class="elephant" alt="象１">
                             <span class="badge"></span>
                         </div>
-                        <div class="icon">
-                            <img src="../img/elephant-blue.png" class="elephant" alt="">
+                        <div class="icon" data-value="6">
+                            <img src="../../static/img/elephant-blue.png" class="elephant" alt="象２">
                         </div>
-                        <div class="icon">
-                            <img src="../img/elephant-purple.png" class="elephant" alt="">
+                        <div class="icon" data-value="7">
+                            <img src="../../static/img/elephant-purple.png" class="elephant" alt="象３">
                         </div>
-                        <div class="icon">
-                            <img src="../img/elephant-green.png" class="elephant" alt="">
+                        <div class="icon" data-value="8">
+                            <img src="../../static/img/elephant-green.png" class="elephant" alt="象４">
                         </div>
-
                     </div>
-
                 </div>
+
                 <div class="form-group">
                     <label for="postal-code">居住地</label>
                     <div class="postal-code-wrapper">
@@ -76,7 +82,8 @@
                         <span id="city"></span>
                         <input id="form-address" type="hidden" th:field="*{address}">
                     </div>
-                    <div th:unless="${signupForm.address == null}" class="address-display" th:with="addressParts=${#strings.arraySplit(signupForm.address, ' ')}">
+                    <div th:unless="${signupForm.address == null}" class="address-display"
+                        th:with="addressParts=${#strings.arraySplit(signupForm.address, ' ')}">
                         <span id="prefecture" th:text="${addressParts[0]}"></span>
                         <span id="city" th:text="${addressParts[1]}"></span>
                         <input id="form-address" type="hidden" th:field="*{address}">
@@ -84,11 +91,14 @@
                 </div>
                 <div class="form-group">
                     <label for="birth-year">生年</label>
-                    <select th:if="${signupForm.birthYear == null}" id="birth-year" name="birth-year" th:field="*{birthYear}">
+                    <select th:if="${signupForm.birthYear == null}" id="birth-year" name="birth-year"
+                        th:field="*{birthYear}">
                         <option value="" selected hidden>選択してください</option>
                     </select>
-                    <select th:unless="${signupForm.birthYear == null}" id="birth-year" name="birth-year" th:field="*{birthYear}">
-                        <option th:value="${signupForm.birthYear}" th:text="${signupForm.birthYear}" selected hidden></option>
+                    <select th:unless="${signupForm.birthYear == null}" id="birth-year" name="birth-year"
+                        th:field="*{birthYear}">
+                        <option th:value="${signupForm.birthYear}" th:text="${signupForm.birthYear}" selected hidden>
+                        </option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -114,7 +124,8 @@
                 <div class="form-group">
                     <label for="password-confirm">パスワード確認</label>
                     <div class="password-wrapper">
-                        <input th:field="*{confirmPassword}" type="password" id="password-confirm" name="password-confirm">
+                        <input th:field="*{confirmPassword}" type="password" id="password-confirm"
+                            name="password-confirm">
                         <i class="fas fa-eye-slash toggle-password"></i>
                     </div>
                 </div>
@@ -124,17 +135,27 @@
                     <div class="char-count"><span id="current-count">0</span>/300文字</div>
                 </div>
 
-            <hr class="form-divider">
-            <p class="terms-notice">
-                本サービスをご利用いただく前に、以下の利用規
-                <br>約をよくお読みください。
-            </p>
+                <hr class="form-divider">
+                <p class="terms-notice">
+                    本サービスをご利用いただく前に、以下の利用規
+                    <br>約をよくお読みください。
+                </p>
 
-            <a href="#" class="btn btn-terms" id="open-terms">利用規約へ</a>
+                <a href="#" class="btn btn-terms" id="open-terms">利用規約へ</a>
 
-            <button type="submit" class="btn-confirmation btn-submit" id="btn-to-confirm" disabled>確認へ</button>
+                <button type="submit" class="btn-confirmation btn-submit" id="btn-to-confirm" disabled>確認へ</button>
             </form>
+
+            <footer class="footer-inside">
+                <p>&copy; 象と花プロジェクト</p>
+            </footer>
+
         </div>
+
+        <footer class="footer-outside">
+            <p>&copy; 象と花プロジェクト</p>
+        </footer>
+
     </main>
 
     <div class="modal-overlay" id="terms-modal">
@@ -354,12 +375,37 @@
             }
 
         });
+
+        document.querySelectorAll('.icon').forEach(icon => {
+            icon.addEventListener('click', () => {
+
+                // active 全解除
+                document.querySelectorAll('.icon').forEach(i => {
+                    i.classList.remove('active');
+
+                    // badge も消す
+                    const badge = i.querySelector('.badge');
+                    if (badge) badge.remove();
+                });
+
+                // active 付与
+                icon.classList.add('active');
+
+                // badge 追加
+                const badge = document.createElement('span');
+                badge.classList.add('badge');
+                icon.appendChild(badge);
+
+                // hidden に値セット
+                document.getElementById('iconValue').value = icon.dataset.value;
+            });
+        });
         // jsでセットテーマを変えてcssの色を一括で変更するやり方
         // window.addEventListener("DOMContentLoaded", () => {
         //     setLightTheme();
         // });
     </script>
-<!--    <script src="../js/theme.js"></script>-->
+
 </body>
 
 </html>

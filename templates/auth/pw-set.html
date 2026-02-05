@@ -8,8 +8,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>パスワード設定画面</title>
-    <link rel="stylesheet" th:href="@{/css/auth/pw-set.css}" href="../css/auth/pw-set.css">
-    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
+
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" href="../../static/css/header.css">
+    <link rel="stylesheet" th:href="@{/css/footer.css}" href="../../static/css/footer.css">
+    <link rel="stylesheet" th:href="@{/css/form-container.css}" href="../../static/css/form-container.css">
+    <link rel="stylesheet" th:href="@{/css/auth/pw-set.css}" href="../../static/css/auth/pw-set.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -44,7 +49,8 @@
                 <h2>パスワード設定</h2>
             </div>
 
-            <form id="signup-form" th:action="@{/password-reset/input-password(id=${id})}" th:object="${newPasswordForm}" method="post">
+            <form id="signup-form" th:action="@{/password-reset/input-password(id=${id})}"
+                th:object="${newPasswordForm}" method="post">
                 <input type="hidden" th:field="*{loginId}">
                 <div class="explanation">
                     <p>新たなパスワードを設定してください。</p>
@@ -59,7 +65,8 @@
                 <div class="form-group">
                     <label for="password-confirm">新しいパスワード確認 <span> (確認)</span></label>
                     <div class="password-wrapper">
-                        <input th:field="*{confirmPassword}" type="password" id="password-confirm" name="password-confirm">
+                        <input th:field="*{confirmPassword}" type="password" id="password-confirm"
+                            name="password-confirm">
                         <i class="fas fa-eye-slash toggle-password"></i>
                     </div>
                 </div>
@@ -80,27 +87,33 @@
                     </button>
                 </div>
 
+                <footer class="footer-inside">
+                    <p>&copy; 象と花プロジェクト</p>
+                </footer>
             </form>
-
-            <footer>@copylite</footer>
-
         </div>
+
+        <footer class="footer-outside">
+            <p>&copy; 象と花プロジェクト</p>
+        </footer>
+
     </main>
+
     <script>
         // パスワード表示切替
-            document.querySelectorAll('.toggle-password').forEach(function (icon) {
-                icon.addEventListener('click', function () {
-                    const input = this.previousElementSibling;
-                    if (input.type === 'password') {
-                        input.type = 'text';
-                        this.classList.remove('fa-eye-slash');
-                        this.classList.add('fa-eye');
-                    } else {
-                        input.type = 'password';
-                        this.classList.remove('fa-eye');
-                        this.classList.add('fa-eye-slash');
-                    }
-                });
+        document.querySelectorAll('.toggle-password').forEach(function (icon) {
+            icon.addEventListener('click', function () {
+                const input = this.previousElementSibling;
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                } else {
+                    input.type = 'password';
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                }
             });
+        });
     </script>
 </body>

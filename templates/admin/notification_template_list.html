@@ -1,6 +1,6 @@
 <!-- 【個別通知テンプレート】 -->
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,17 +15,15 @@
     <h1 class="page-title">個別通知テンプレート一覧</h1>
 
     <div class="main-content">
-      <div class="flex justify-between gap-1 mt-2"> <!-- テーブルの上のメニュー部分 -->
-        <div> <!-- メニュー左部分(並び替え) -->
-          <select class="select">
-            <option>ID</option>
-          </select>
-          順
+      <div class="flex justify-end gap-1 mt-2"> <!-- テーブルの上のメニュー部分 -->
+        <div>
+          <form th:action="@{/admin/notification/template}"><!-- メニュー右部分(検索) -->
+            <input name="s" type="text" class="input-text" placeholder="検索">
+            <button type="submit" class="btn"><span class="material-symbols-outlined scale-bigger">search</span></button>
+          </form>
         </div>
-        <div> <!-- メニュー右部分(検索) -->
-          <input type="text" class="input-text" placeholder="検索">
-          <button type="submit" class="btn"><span class="material-symbols-outlined scale-bigger">search</span></button>
-          <a href="#" th:href="@{/}" class="btn">
+        <div>
+          <a href="#" th:href="@{/admin/notification/template/create}" class="btn">
             <span class="material-symbols-outlined scale-bigger pr-1">library_add</span>
             新しいテンプレートを登録
           </a>
@@ -39,13 +37,15 @@
           <th class="table-border-r">タイトル</th>
           <th class="w-quarter"></th>
         </tr>
-        <tr>
-          <td class="table-border-r text-right">1</td>
-          <td class="table-border-r">一次審査通過連絡</td>
-          <td class="table-border-r">一次審通過のお知らせ</td>
+        <tr th:each="nt : ${notificationTemplates}">
+          <td th:text="${nt.id}" class="table-border-r text-right">1</td>
+          <td th:text="${nt.name}" class="table-border-r">一次審査通過連絡</td>
+          <td th:text="${nt.title}" class="table-border-r">一次審通過のお知らせ</td>
           <td class="flex gap-4 center-middle">
-            <a href="#" th:href="@{/}" class="btn">編集する</a>
-            <a href="#" th:href="@{/}" class="btn btn-danger">削除する</a>
+            <a href="#" th:href="@{/admin/notification/template/edit/{id}(id=${nt.id})}" class="btn">編集する</a>
+            <form th:action="@{/admin/notification/template/delete/{id}(id=${nt.id})}" method="post">
+              <button type="submit" class="btn btn-danger">削除する</button>
+            </form>
           </td>
         </tr>
       </table>

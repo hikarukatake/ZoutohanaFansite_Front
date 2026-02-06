@@ -1,6 +1,6 @@
 <!-- 【個別通知テンプレート編集】 -->
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,26 +15,26 @@
       <h1 class="page-title">個別通知テンプレート編集</h1>
 
       <div class="main-content-card mt-4">
-        <form>
+        <form th:action="@{/admin/notification/template/edit/{id}(id=${id})}" th:object="${form}" method="post">
           <div class="table-container">
             <table>
               <tr>
                 <th class="table-border-b-strong">削除 : </th>
-                <td class="table-border-b-strong"><button class="btn btn-danger">このプロジェクトを削除する</button></td>
+                <td class="table-border-b-strong"><button th:formaction="@{/admin/notification/template/delete/{id}(id=${id})}" class="btn btn-danger">このプロジェクトを削除する</button></td>
               </tr>
 
               <tr>
                 <th>テンプレート名 : </th>
-                <td><input type="text" name="name" value="一次審査通過連絡" class="input-text w-full"></td>
+                <td><input th:field="*{templateName}" type="text" name="name" value="一次審査通過連絡" class="input-text w-full"></td>
               </tr>
               <tr>
                 <th>タイトル : </th>
-                <td><input type="text" name="title" value="一次審査通過のお知らせ" class="input-text w-full"></td>
+                <td><input th:field="*{title}" type="text" name="title" value="一次審査通過のお知らせ" class="input-text w-full"></td>
               </tr>
               <tr>
                 <th>本文 : </th>
                 <td>
-                  <textarea rows="10" name="content" class="input-textarea w-full" id="template-textarea">
+                  <textarea th:field="*{content}" rows="10" name="content" class="input-textarea w-full" id="template-textarea">
   {user-nickname}さん、こんにちは。
   この度は「{project-name}」へ書評を投稿いただき、誠にありがとうございました。
   あなたが投稿した「{review-title}」が一次審査を通過したことをお知らせします。おめでとうございます！
@@ -67,7 +67,7 @@
             </table>
 
             <div class="btn-wrap mt-4">
-              <a href="#" th:href="@{/}" class="btn">キャンセル</a>
+              <a href="#" th:href="@{/admin/notification/template}" class="btn">キャンセル</a>
               <input type="submit" value="確認する" class="btn">
             </div>
           </div>

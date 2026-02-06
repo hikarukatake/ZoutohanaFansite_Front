@@ -35,6 +35,31 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// ==========企画URLのプレビュー==========
+function initUrlKeyPreview() {
+  const urlKeyInput = document.getElementById('urlKey-input');
+  const urlKeyPreview = document.getElementById('urlKey-preview');
+
+  if (!urlKeyInput || !urlKeyPreview) return;
+
+  function updateUrlKeyPreview() {
+    if(urlKeyInput.value === ''){
+      urlKeyPreview.textContent = '_____'
+    } else {
+      urlKeyPreview.textContent = urlKeyInput.value
+    }
+  }
+
+  urlKeyInput.addEventListener('input', updateUrlKeyPreview);
+  updateUrlKeyPreview();
+  console.log('urlKeyPreview listener setup complete');
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initUrlKeyPreview);
+} else {
+  initUrlKeyPreview();
+}
 
 // ========== 企画カードのURLコピー ==========
 document.addEventListener('DOMContentLoaded', () => {
@@ -87,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('select').forEach(select => {
         select.addEventListener('change', () => {
             const form = select.closest('form');
-            if (form) {
+            if (form && !form.classList.contains('no-auto-submit')) {
                 removeEmptyInputs(form);
                 form.submit();
             }

@@ -1,28 +1,40 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>書評の編集</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
-    <link rel="stylesheet" th:href="@{/css/books/book-detail-edit.css}" href="../css/books/book-detail-edit.css">
+
+
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/header.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/footer.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/form-container.css">
+
+    <link rel="stylesheet" th:href="@{/css/books/book-detail-edit.css}"
+        href="../../static/css/books/book-detail-edit.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 
 <body>
     <div class="container">
         <div th:replace="~{layout :: header}"></div>
-        <div class="breadcrumb-box">
-            <div class="breadcrumb">ホーム</div>
-            <div class="breadcrumb-middle">></div>
-            <div class="breadcrumb">マイページ</div>
-            <div class="breadcrumb-middle">></div>
-            <div class="breadcrumb">書評の編集</div>
-        </div>
+
         <main>
+
             <div class="form-container">
+
+                <div class="breadcrumb-box">
+                    <div class="breadcrumb">ホーム</div>
+                    <div class="breadcrumb-middle">></div>
+                    <div class="breadcrumb">マイページ</div>
+                    <div class="breadcrumb-middle">></div>
+                    <div class="breadcrumb">書評の編集</div>
+                </div>
+
                 <div class="current-step-title">
                     <h2>書評の編集</h2>
                 </div>
@@ -34,14 +46,14 @@
                     </div>
                     <div style="display: block;">
                         <div th:if="${project.enableVisibleBookTitle}" class="forbidden-review">
-                            <img th:src="@{/img/book.png}" src="../img/book.png" alt="">
+                            <img th:src="@{/img/book.png}" src="../../static/img/book.png" alt="">
                             <div class="forbidden-text">
                                 <h4>本のタイトルや著者名を書く</h4>
                                 <p>書名や著者名は書評に記入しないでください。</p>
                             </div>
                         </div>
                         <div class="forbidden-review">
-                            <img th:src="@{/img/not_people.png}" src="../img/not_people.png">
+                            <img th:src="@{/img/not_people.png}" src="../../static/img/not_people.png">
                             <div class="forbidden-text">
                                 <h4>他の人を傷つける言葉を書く</h4>
                                 <p>誹謗中傷や攻撃的な言葉遣いは避け、敬意をもって
@@ -49,7 +61,7 @@
                             </div>
                         </div>
                         <div class="forbidden-review">
-                            <img th:src="@{/img/face.png}" src="../img/face.png">
+                            <img th:src="@{/img/face.png}" src="../../static/img/face.png">
                             <div class="forbidden-text">
                                 <h4>不適切・過激な表現を使う</h4>
                                 <p>公序良俗に反する言葉や、暴力的・性的な内容は
@@ -57,7 +69,7 @@
                             </div>
                         </div>
                         <div class="forbidden-review">
-                            <img th:src="@{/img/people.png}" src="../img/people.png">
+                            <img th:src="@{/img/people.png}" src="../../static/img/people.png">
                             <div class="forbidden-text">
                                 <h4>個人情報（名前・連絡先など）を書く</h4>
                                 <p>プライバシー保護のため、ご自身や他者の個人
@@ -66,7 +78,8 @@
                         </div>
                     </div>
                 </div>
-                <form id="signup-form" th:action="@{/review/edit/{id}(id=${reviewId})}" method="post" th:object="${reviewForm}">
+                <form id="signup-form" th:action="@{/review/edit/{id}(id=${reviewId})}" method="post"
+                    th:object="${reviewForm}">
                     <div class="form-group bio-wrapper">
                         <label for="account-id">書評タイトル<span>（タイトルは20文字以内）</span></label>
                         <input th:field="*{reviewTitle}" type="text" id="account-id" name="account-id">
@@ -198,59 +211,6 @@
             </div>
         </div>
 
-
-        <!-- フッター -->
-        <footer class="footer-all">
-            <div class="footer-menu">
-                <div class="footer-top">
-                    <img src="../img/zoutohana-white.png" style="width: 4.5rem;" alt="">
-                    <p class="footer-white-text">A BOOK PROJECT</p>
-                </div>
-                <a href="#" class="footer-menu-item-top">
-                    <p>お知らせ</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>企画</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>象と花プロジェクト</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>お問い合わせ</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>サイトのご利用について</p>
-                    <p>></p>
-                </a>
-            </div>
-
-            <!-- SNSブロック -->
-            <div class="footer-sns">
-                <div class="sns-box">
-                    <div class="footer-sns-title">SNS</div>
-                    <div class="sns-box-icons">
-                        <div class="sns-icons">
-                            <img src="../img/instagram.png" class="sns-icon" alt="">
-                            <img src="../img/facebook.png" class="sns-icon-facebook" alt="">
-                            <img src="../img/x.png" class="sns-icon-x" alt="">
-                        </div>
-
-                        <div class="sns-labels">
-                            <span>Instagram</span>
-                            <span>Facebook</span>
-                            <span>X（旧Twitter）</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-line"></div>
-
-                <div class="footer-copy">©Copylight</div>
-            </div>
-        </footer>
     </div>
 
 

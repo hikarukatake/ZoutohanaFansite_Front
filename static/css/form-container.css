@@ -11,7 +11,7 @@
   box-sizing: border-box;
 }
 
-/* === デスクトップ向け (1025px以上) === */
+/* === デスクトップ向け === */
 @media screen and (min-width: 798px) {
   main {
     display: flex;

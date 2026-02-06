@@ -5,46 +5,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>書評の詳細</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/books/book-detail.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" href="../../static/css/header.css">
+    <link rel="stylesheet" th:href="@{/css/footer.css}" href="../../static/css/footer.css">
+    <link rel="stylesheet" th:href="@{/css/}" href="../../static/css/form-container.css">
+    <link rel="stylesheet" href="../../static/css/books/book-detail.css">
 </head>
 
 <body>
     <div class="container">
-        <header class="project-header">
-            <div class="logo-placeholder"><img src="../img/zoutohana-jitsubutsu.png" style="width: 3rem;" alt=""></div>
-            <div style="display: flex;">
-                <div class="mail-icon">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M2 6h20v12H2z" fill="none" stroke="white" stroke-width="2" />
-                        <path d="M2 6l10 7 10-7" fill="none" stroke="white" stroke-width="2" />
-                    </svg>
-                </div>
 
-                <div class="menu-icon" id="menuOpen">
-                    <div class="menu-icon-box">
-                        <span class="span-top"></span>
-                        <span class="span-middle"></span>
-                        <span class="span-bottom"></span>
-                    </div>
-                </div>
+
+
+
+
+        <!-- <div id="settingsModal" class="modal-overlay">
+            <div class="modal-content">
+                <h3>設定</h3>
+                <ul>
+                    <li><a href="#" id="openDeleteModal">投稿を削除する</a></li>
+                    <li>その他設定項目...</li>
+                </ul>
             </div>
-        </header>
+        </div> -->
+
+
         <div class="breadcrumb-box">
-            <div class="breadcrumb">ホーム</div>
-            <div class="breadcrumb-middle">></div>
-            <div class="breadcrumb">マイページ</div>
-            <div class="breadcrumb-middle">></div>
-            <div class="breadcrumb">書評の詳細</div>
+
+            <div style="display: flex; width: 500px;">
+                <div class="breadcrumb">ホーム</div>
+                <div class="breadcrumb-middle">></div>
+                <div class="breadcrumb">マイページ</div>
+                <div class="breadcrumb-middle">></div>
+                <div class="breadcrumb">書評の詳細</div>
+            </div>
+
+
+            <div class="settings-icon">
+                <div class="gear-radius">
+                    <img src="../../static/img/gear.png" alt="" width="18px">
+                </div>
+            </div>
+
         </div>
 
-        <div class="settings-icon">
-            <div class="gear-radius">
-                <img src="../img/gear.png" alt="" width="18px">
-            </div>
-        </div>
 
         <section class="card">
+
+
             <div class="review-container">
                 <!-- タイトル -->
                 <div class="review-title">
@@ -144,7 +152,7 @@
             </div>
         </div>
 
-                <!-- メールモーダル -->
+        <!-- メールモーダル -->
         <div class="mail-modal-overlay" id="mailModal">
             <div class="mail-modal">
                 <div class="mail-modal-header">
@@ -238,63 +246,11 @@
             </div>
         </div>
 
-        <!-- フッター -->
-        <footer class="footer-all">
-            <div class="footer-menu">
-                <div class="footer-top">
-                    <img src="../img/zoutohana-white.png" style="width: 4.5rem;" alt="">
-                    <p class="footer-white-text">A BOOK PROJECT</p>
-                </div>
-                <a href="#" class="footer-menu-item-top">
-                    <p>お知らせ</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>企画</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>象と花プロジェクト</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>お問い合わせ</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>サイトのご利用について</p>
-                    <p>></p>
-                </a>
-            </div>
-
-            <!-- SNSブロック -->
-            <div class="footer-sns">
-                <div class="sns-box">
-                    <div class="footer-sns-title">SNS</div>
-                    <div class="sns-box-icons">
-                        <div class="sns-icons">
-                            <img src="../img/instagram.png" class="sns-icon" alt="">
-                            <img src="../img/facebook.png" class="sns-icon-facebook" alt="">
-                            <img src="../img/x.png" class="sns-icon-x" alt="">
-                        </div>
-
-                        <div class="sns-labels">
-                            <span>Instagram</span>
-                            <span>Facebook</span>
-                            <span>X（旧Twitter）</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-line"></div>
-
-                <div class="footer-copy">©Copylight</div>
-            </div>
-        </footer>
     </div>
-    <script src="../js/main.js"></script>
-    <script src="../js/book-detail.js"></script>
+    <script src="../../static/js/main.js"></script>
+    <script src="../../static/js/book-detail.js"></script>
 
-    <script src="../js/mypage.js"></script>
+    <script src="../../static/js/mypage.js"></script>
 </body>
 
 </html>

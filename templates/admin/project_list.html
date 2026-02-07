@@ -55,7 +55,11 @@
                     <input type="hidden" name="endAt" th:value="${form.endAt}">
 
                     <input type="search" name="keyword" class="input-text" placeholder="検索" th:value="${form.keyword}">
-                    <button type="submit" class="btn"><span class="material-symbols-outlined scale-bigger mt-2">search</span></button>
+                    <button type="submit" class="btn"><span class="material-symbols-outlined scale-bigger ">search</span></button>
+                    <a href="project_create.html" th:href="@{/post/new}" class="btn">
+                        <span class="material-symbols-outlined scale-bigger pr-1">library_add</span>
+                        新しいお知らせを登録
+                    </a>
                 </form>
             </div>
         </div>
@@ -193,12 +197,25 @@
                     </li>
                     <li>
                         <label>
-                            <input type="checkbox" id="periodCheck" class="modal-checkbox-parent" th:checked="${form.startAt != null and form.endAt != null}">企画開催期間
+                            <input type="checkbox"
+                                class="modal-checkbox-parent period-check"
+                                data-start="startAt"
+                                data-end="endAt"
+                                th:checked="${form.startAt != null and form.endAt != null}">
+                            企画開催期間
                         </label>
                         <div class="w-full ml-6">
-                            <input type="datetime-local" name="startAt" th:value="${form.startAt}" id="startAt" class="input-datetime" disabled>
+                            <input type="datetime-local"
+                                name="startAt"
+                                th:value="${form.startAt}"
+                                id="startAt"
+                                class="input-datetime">
                             ~
-                            <input type="datetime-local" name="endAt" th:value="${form.endAt}" id="endAt" class="input-datetime" disabled>
+                            <input type="datetime-local"
+                                name="endAt"
+                                th:value="${form.endAt}"
+                                id="endAt"
+                                class="input-datetime">
                         </div>
                     </li>
                 </ul>

@@ -81,22 +81,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // ========== 期間選択 ==========
-document.addEventListener('DOMContentLoaded', function () {
-    const periodCheck = document.getElementById('periodCheck');
-    const startAt = document.getElementById('startAt');
-    const endAt = document.getElementById('endAt');
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.period-check').forEach(check => {
+    const start = document.getElementById(check.dataset.start);
+    const end = document.getElementById(check.dataset.end);
 
-    const toggleDatetime = () => {
-        const enabled = periodCheck.checked;
-        startAt.disabled = !enabled;
-        endAt.disabled = !enabled;
+    const toggle = () => {
+      const enabled = check.checked;
+      start.disabled = !enabled;
+      end.disabled = !enabled;
     };
 
-    periodCheck.addEventListener('change', toggleDatetime);
-
-    toggleDatetime();
+    check.addEventListener('change', toggle);
+    toggle();
+  });
 });
-
 
 
 // ========== 一覧表示で空のパラメータを送らない ==========

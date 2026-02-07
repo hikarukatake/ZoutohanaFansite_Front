@@ -19,7 +19,6 @@
             AND (
             p.name LIKE CONCAT('%', #{keyword}, '%')
             OR p.url_key LIKE CONCAT('%', #{keyword}, '%')
-            OR p.introduction LIKE CONCAT('%', #{keyword}, '%')
             )
         </if>
 

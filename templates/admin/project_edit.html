@@ -271,7 +271,7 @@
           <div class="pb-8"> <!-- 「書評閲覧」部分 -->
             <h2 class="page-title-sub">書評閲覧</h2>
             <div class="flex gap-1 mt-2">
-              <a href="#" th:href="@{/}" class="btn icon-center">
+              <a href="review_list.html" th:href="@{/admin/review/list(urlKey=${project.urlKey})}" class="btn icon-center">
                 <span class="material-symbols-outlined scale-bigger pr-1">library_books</span>すべての書評を確認
               </a>
               <button type="button" class="btn icon-center">

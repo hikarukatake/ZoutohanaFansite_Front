@@ -75,7 +75,11 @@
                   <h3 class="review-card-title" th:text="${review.reviewTitle}">データが取得できませんでした:書評タイトル</h3>
                   <p class="review-card-sub-info pl-4" th:text="'企画名 : ' + ${review.projectName}">データが取得できませんでした:企画名</p>
                 </div>
-                <div class="review-card-status" th:text="${review.firstStagePassed}">-----</div>  <!-- TODO:後で直す -->
+                <div class="review-card-status" th:if="${review.status != 'INITIAL'}">
+                  <span th:if="${review.status == 'FIRST_STAGE_PASSED'}">一次審査通過</span>
+                  <span th:if="${review.status == 'SECOND_STAGE_PASSED'}">ノミネート</span>
+                  <span th:if="${review.status == 'AWARDED'}">大賞</span>
+                </div>
               </div>
               <div class="flex justify-between pt-4"> <!-- 下半分 -->
                 <div>

@@ -23,35 +23,35 @@
         <span th:text="${project.name}">データが取得できませんでした:企画名</span>
       </h1>
       <div class="flex justify-between mt-2"> <!-- テーブルの上のメニュー部分 -->
-            <div class="flex gap-1"> <!-- メニュー左部分(並び替え) -->
-                <form method="GET" th:action="@{/admin/review/list(urlKey=${project.urlKey})}">
-                    <input type="hidden" name="urlKey" th:value="${project.urlKey}">
-                    <input type="hidden" name="keyword" th:value="${form.keyword}">
-                    <th:block th:each="s : ${form.status}">
-                        <input type="hidden" name="status" th:value="${s}">
-                    </th:block>
-                    <th:block th:each="g : ${form.userGender}">
-                        <input type="hidden" name="userGender" th:value="${g}">
-                    </th:block>
-                    <th:block th:each="a : ${form.userAgeGroup}">
-                        <input type="hidden" name="userAgeGroup" th:value="${a}">
-                    </th:block>
-                    <th:block th:each="addr : ${form.userAddress}">
-                        <input type="hidden" name="userAddress" th:value="${addr}">
-                    </th:block>
-                    <input type="hidden" name="createdStartAt" th:value="${form.createdStartAt}">
-                    <input type="hidden" name="createdEndAt" th:value="${form.createdEndAt}">
-                    <select name="sort" class="select">
-                        <option value="status_desc" th:selected="${form.sort == 'status_desc'}">ステータス(大賞→一次審査未通過)</option>
-                        <option value="status_asc" th:selected="${form.sort == 'status_asc'}">ステータス(一次審査未通過→大賞)</option>
-                        <option value="voteCount_desc" th:selected="${form.sort == 'voteCount_desc'}">得票数(多→少)</option>
-                        <option value="voteCount_asc" th:selected="${form.sort == 'voteCount_asc'}">得票数(少→多)</option>
-                        <option value="created_desc" th:selected="${form.sort == 'created_desc'}">作成日時(新→旧)</option>
-                        <option value="created_asc"  th:selected="${form.sort == 'created_asc'}">作成日時(旧→新)</option>
-                    </select>
-                </form>
-                順
-            </div>
+        <div class="flex gap-1"> <!-- メニュー左部分(並び替え) -->
+          <form method="GET" th:action="@{/admin/review/list(urlKey=${project.urlKey})}">
+            <input type="hidden" name="urlKey" th:value="${project.urlKey}">
+            <input type="hidden" name="keyword" th:value="${form.keyword}">
+            <th:block th:each="s : ${form.status}">
+                <input type="hidden" name="status" th:value="${s}">
+            </th:block>
+            <th:block th:each="g : ${form.userGender}">
+                <input type="hidden" name="userGender" th:value="${g}">
+            </th:block>
+            <th:block th:each="a : ${form.userAgeGroup}">
+                <input type="hidden" name="userAgeGroup" th:value="${a}">
+            </th:block>
+            <th:block th:each="addr : ${form.userAddress}">
+                <input type="hidden" name="userAddress" th:value="${addr}">
+            </th:block>
+            <input type="hidden" name="createdStartAt" th:value="${form.createdStartAt}">
+            <input type="hidden" name="createdEndAt" th:value="${form.createdEndAt}">
+            <select name="sort" class="select">
+                <option value="status_desc" th:selected="${form.sort == 'status_desc'}">ステータス(大賞→一次審査未通過)</option>
+                <option value="status_asc" th:selected="${form.sort == 'status_asc'}">ステータス(一次審査未通過→大賞)</option>
+                <option value="voteCount_desc" th:selected="${form.sort == 'voteCount_desc'}">得票数(多→少)</option>
+                <option value="voteCount_asc" th:selected="${form.sort == 'voteCount_asc'}">得票数(少→多)</option>
+                <option value="created_desc" th:selected="${form.sort == 'created_desc'}">作成日時(新→旧)</option>
+                <option value="created_asc"  th:selected="${form.sort == 'created_asc'}">作成日時(旧→新)</option>
+            </select>
+          </form>
+          順
+        </div>
         <div class="flex gap-1"> <!-- メニュー右部分(絞り込み・検索) -->
           <button type="button" class="btn" data-modal-target="filter-option-modal">絞り込みオプション</button>
             <form method="GET" th:action="@{/admin/review/list(urlKey=${project.urlKey})}" class="flex gap-1">
@@ -74,54 +74,87 @@
             </form>
         </div>
       </div>
-      <div class="flex gap-1 mt-2"> <!-- TODO:チェックしたもの一括実行 -->
-        <span>チェックしたもの</span>
-        <div class="flex-1">
-          <select class="select w-full">
-            <option>のステータスを一次審査通過にする</option>
-          </select>
-        </div>
-        <button type="submit" class="btn" data-modal-target="change-confirm-modal">実行</button>
-      </div>
 
-      <table class="list-table mt-4">
-        <tr>
-          <th><input type="checkbox" class="scale-bigger"></th>
-          <th class="table-border-r">ID</th>
-          <th>ステータス</th>
-          <th class="table-border-r">得票数</th>
-          <th>書評タイトル</th>
-          <th>書籍タイトル</th>
-          <th>投稿者</th>
-          <th>投稿日時</th>
-          <th></th>
-        </tr>
-        <tr th:if="${#lists.isEmpty(reviews)}">
-          <td colspan="9" class="text-center">
-            該当する書評はありませんでした
-          </td>
-        </tr>
-        <tr class="table-content-tr" th:each="review : ${reviews}">
-          <td class="text-center"><input type="checkbox" class="scale-bigger"></td>
-          <td th:text="${review.id}" class="table-border-r text-right">-----</td>
-          <td class="text-center">
-            <span th:if="${review.status == 'INITIAL'}">一次審査未通過</span>
-            <span th:if="${review.status == 'FIRST_STAGE_PASSED'}">一次審査通過</span>
-            <span th:if="${review.status == 'SECOND_STAGE_PASSED'}">ノミネート</span>
-            <span th:if="${review.status == 'AWARDED'}">大賞</span>
-          </td>
-          <td th:text="${review.voteCount}" class="table-border-r text-right">0</td>
-          <td th:text="${review.reviewTitle}">書評タイトルが読み込めませんでした</td>
-          <td th:text="${review.bookTitle}">書籍タイトルが読み込めませんでした</td>
-          <td th:text="${review.userNickname}">投稿者名が読み込めませんでした</td>
-          <td th:text="${#temporals.format(review.createdAt, 'yyyy/MM/dd HH:mm')}" class="text-center">0000/00/00 00:00</td>
-          <td class="text-center center-middle">
-            <a href="review_view.html" th:href="@{/admin/review/view(id=${review.id})}" class="table-row-link">
-                <span class="material-symbols-outlined">keyboard_double_arrow_right</span>
-            </a>
-          </td>
-        </tr>
-      </table>
+      <form method="POST" th:action="@{/admin/review/bulk-update}" id="bulkForm" class="no-auto-submit">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <input type="hidden" name="urlKey" th:value="${project.urlKey}">
+        <input type="hidden" name="keyword" th:value="${form.keyword}">
+        <input type="hidden" name="sort" th:value="${form.sort}">
+        <th:block th:each="s : ${form.status}">
+          <input type="hidden" name="status" th:value="${s}">
+        </th:block>
+        <th:block th:each="g : ${form.userGender}">
+          <input type="hidden" name="userGender" th:value="${g}">
+        </th:block>
+        <th:block th:each="a : ${form.userAgeGroup}">
+          <input type="hidden" name="userAgeGroup" th:value="${a}">
+        </th:block>
+        <th:block th:each="addr : ${form.userAddress}">
+          <input type="hidden" name="userAddress" th:value="${addr}">
+        </th:block>
+        <input type="hidden" name="createdStartAt" th:value="${form.createdStartAt}">
+        <input type="hidden" name="createdEndAt" th:value="${form.createdEndAt}">
+
+        <div class="flex gap-1 mt-2">
+          <span>チェックしたもの</span>
+          <div class="flex-1">
+            <select name="targetStatus" id="bulkStatusSelect" class="select w-full">
+              <option value="INITIAL">のステータスを「一次審査未通過」にする</option>
+              <option value="FIRST_STAGE_PASSED">のステータスを「一次審査通過」にする</option>
+              <option value="SECOND_STAGE_PASSED">のステータスを「ノミネート」にする</option>
+              <option value="AWARDED">のステータスを「大賞」にする</option>
+            </select>
+          </div>
+          <button type="button" class="btn" data-modal-target="change-confirm-modal">確認</button>
+        </div>
+
+        <table class="list-table mt-4">
+          <tr>
+            <th><input type="checkbox" id="checkAllReviews" class="scale-bigger"></th>
+            <th class="table-border-r">ID</th>
+            <th>ステータス</th>
+            <th class="table-border-r">得票数</th>
+            <th>書評タイトル</th>
+            <th>書籍タイトル</th>
+            <th>投稿者</th>
+            <th>投稿日時</th>
+            <th></th>
+          </tr>
+          <tr th:if="${#lists.isEmpty(reviews)}">
+            <td colspan="9" class="text-center">
+              該当する書評はありませんでした
+            </td>
+          </tr>
+          <tr class="table-content-tr" th:each="review : ${reviews}">
+            <td class="text-center">
+              <input type="checkbox"
+                    name="reviewIds"
+                    th:value="${review.id}"
+                    th:data-title="${review.reviewTitle}"
+                    th:data-book="${review.bookTitle}"
+                    class="review-checkbox scale-bigger">
+            </td>
+            <td th:text="${review.id}" class="table-border-r text-right">-----</td>
+            <td class="text-center">
+              <span th:if="${review.status == 'INITIAL'}">一次審査未通過</span>
+              <span th:if="${review.status == 'FIRST_STAGE_PASSED'}">一次審査通過</span>
+              <span th:if="${review.status == 'SECOND_STAGE_PASSED'}">ノミネート</span>
+              <span th:if="${review.status == 'AWARDED'}">大賞</span>
+            </td>
+            <td th:text="${review.voteCount}" class="table-border-r text-right">0</td>
+            <td th:text="${review.reviewTitle}">書評タイトルが読み込めませんでした</td>
+            <td th:text="${review.bookTitle}">書籍タイトルが読み込めませんでした</td>
+            <td th:text="${review.userNickname}">投稿者名が読み込めませんでした</td>
+            <td th:text="${#temporals.format(review.createdAt, 'yyyy/MM/dd HH:mm')}" class="text-center">0000/00/00 00:00</td>
+            <td class="text-center center-middle">
+              <a href="review_view.html" th:href="@{/admin/review/view(id=${review.id})}" class="table-row-link">
+                  <span class="material-symbols-outlined">keyboard_double_arrow_right</span>
+              </a>
+            </td>
+          </tr>
+        </table>
+      </form>
+
     </div>
   </main>
 
@@ -156,7 +189,6 @@
                 <li><label><input type="checkbox" name="userGender" value="選択しない" th:checked="${form.userGender != null and form.userGender.contains('選択しない')}">選択しない</label></li>
               </ul>
             </li>
-            <li>
             <li>
                 <label><input type="checkbox" class="modal-checkbox-parent">投稿者の年代</label>
                 <ul class="modal-checkbox-child grid-5">
@@ -232,18 +264,18 @@
         </div>
 
         <div class="mt-8">
-          <p>チェックを入れた書評(<span>1</span>件)のステータスを「<span>二次審査通過</span>」に変更してよろしいですか？</p>
+          <p>チェックを入れた書評(<span id="selectedCount">0</span>件)のステータスを「<span id="selectedStatusText"></span>」に変更してよろしいですか？</p>
         </div>
 
         <div class="mt-8">
-          <ol class="change-confirm-preview">
+          <ol class="change-confirm-preview" id="selectedReviewList">
             <li>[No.<span>93</span>] <span>冬の魔法をほんの少し信じたくなる</span>(書籍 : <span>雪明かりの魔法使い</span>)</li>
           </ol>
         </div>
 
         <div class="btn-wrap mt-8">
           <button type="button" class="btn" data-modal-close>キャンセル</button>
-          <button type="submit" class="btn">変更する</button>
+          <button type="button" class="btn" id="confirmBulkBtn">変更する</button>
         </div>
       </div>
     </div>

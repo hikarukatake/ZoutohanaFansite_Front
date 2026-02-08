@@ -35,6 +35,31 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// ==========企画URLのプレビュー==========
+function initUrlKeyPreview() {
+  const urlKeyInput = document.getElementById('urlKey-input');
+  const urlKeyPreview = document.getElementById('urlKey-preview');
+
+  if (!urlKeyInput || !urlKeyPreview) return;
+
+  function updateUrlKeyPreview() {
+    if(urlKeyInput.value === ''){
+      urlKeyPreview.textContent = '_____'
+    } else {
+      urlKeyPreview.textContent = urlKeyInput.value
+    }
+  }
+
+  urlKeyInput.addEventListener('input', updateUrlKeyPreview);
+  updateUrlKeyPreview();
+  console.log('urlKeyPreview listener setup complete');
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initUrlKeyPreview);
+} else {
+  initUrlKeyPreview();
+}
 
 // ========== 企画カードのURLコピー ==========
 document.addEventListener('DOMContentLoaded', () => {
@@ -56,22 +81,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // ========== 期間選択 ==========
-document.addEventListener('DOMContentLoaded', function () {
-    const periodCheck = document.getElementById('periodCheck');
-    const startAt = document.getElementById('startAt');
-    const endAt = document.getElementById('endAt');
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.period-check').forEach(check => {
+    const start = document.getElementById(check.dataset.start);
+    const end = document.getElementById(check.dataset.end);
 
-    const toggleDatetime = () => {
-        const enabled = periodCheck.checked;
-        startAt.disabled = !enabled;
-        endAt.disabled = !enabled;
+    const toggle = () => {
+      const enabled = check.checked;
+      start.disabled = !enabled;
+      end.disabled = !enabled;
     };
 
-    periodCheck.addEventListener('change', toggleDatetime);
-
-    toggleDatetime();
+    check.addEventListener('change', toggle);
+    toggle();
+  });
 });
-
 
 
 // ========== 一覧表示で空のパラメータを送らない ==========
@@ -87,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('select').forEach(select => {
         select.addEventListener('change', () => {
             const form = select.closest('form');
-            if (form) {
+            if (form && !form.classList.contains('no-auto-submit')) {
                 removeEmptyInputs(form);
                 form.submit();
             }
@@ -217,6 +241,90 @@ if (clearAllCheckbox) {
       });
   });
 }
+
+// ========== 書評一覧の一括操作 ==========
+const statusTextMap = {
+  INITIAL: "一次審査未通過",
+  FIRST_STAGE_PASSED: "一次審査通過",
+  SECOND_STAGE_PASSED: "ノミネート",
+  AWARDED: "大賞"
+};
+
+document.querySelector('[data-modal-target="change-confirm-modal"]')
+  .addEventListener("click", () => {
+
+    const checked = document.querySelectorAll(".review-checkbox:checked");
+    const listEl = document.getElementById("selectedReviewList");
+    const countEl = document.getElementById("selectedCount");
+    const statusSelect = document.getElementById("bulkStatusSelect");
+    const statusTextEl = document.getElementById("selectedStatusText");
+
+    countEl.textContent = checked.length;
+    statusTextEl.textContent = statusTextMap[statusSelect.value];
+    listEl.innerHTML = "";
+
+    checked.forEach(cb => {
+      const id = cb.value;
+      const title = cb.dataset.title;
+      const book = cb.dataset.book;
+
+      const li = document.createElement("li");
+      li.textContent = `[No.${id}] ${title}（書籍: ${book}）`;
+      listEl.appendChild(li);
+    });
+
+    if (checked.length === 0) {
+      listEl.innerHTML = "<li>※ 書評が選択されていません</li>";
+    }
+});
+
+document.getElementById("bulkStatusSelect").addEventListener("change", e => {
+  document.getElementById("selectedStatusText").textContent =
+    statusTextMap[e.target.value];
+});
+
+const executeBtn = document.getElementById("confirmBulkBtn");
+
+function toggleExecuteButton() {
+  const checked = document.querySelectorAll(".review-checkbox:checked");
+  executeBtn.disabled = checked.length === 0;
+}
+
+document.querySelectorAll(".review-checkbox")
+  .forEach(cb => cb.addEventListener("change", toggleExecuteButton));
+
+executeBtn.addEventListener("click", () => {
+  document.getElementById("bulkForm").submit();
+});
+
+// ========== 書評一覧の選択 ==========
+document.addEventListener("DOMContentLoaded", () => {
+  const checkAll = document.getElementById("checkAllReviews");
+  const checkboxes = document.querySelectorAll(".review-checkbox");
+
+  if (!checkAll) return;
+
+  checkAll.addEventListener("change", () => {
+    checkboxes.forEach(cb => {
+      cb.checked = checkAll.checked;
+    });
+
+    toggleExecuteButton();
+  });
+
+  checkboxes.forEach(cb => {
+    cb.addEventListener("change", () => {
+      const allChecked = [...checkboxes].every(c => c.checked);
+      const noneChecked = [...checkboxes].every(c => !c.checked);
+
+      checkAll.indeterminate = !allChecked && !noneChecked;
+      checkAll.checked = allChecked;
+
+      toggleExecuteButton();
+    });
+  });
+});
+
 
 
 // ========== 書籍ジャンル複数選択 ==========

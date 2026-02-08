@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>セキュリティ</title>
-    <link rel="stylesheet" th:href="@{/css/auth/security.css}" href="../../static/css/auth/security.css">
+
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/auth/security.css}" href="../../static/css/auth/security.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
-
-
     <main>
         <div class="form-container">
             <div class="check-img-div">
@@ -31,7 +31,7 @@
             <div class="info-box">
                 <div class="container">
                     <div class="key-box">
-                        <img th:src="@{/img/key.png}" class="key-img" src="../img/key.png" alt="">
+                        <img th:src="@{/img/key.png}" class="key-img" src="../../static/img/key.png" alt="">
                         <h3>セキュリティキーについて</h3>
                     </div>
                     <div class="underline"></div>
@@ -44,24 +44,29 @@
                     <p th:text="${securityKey}" id="copy-text" class="security-code-text">AAAA-AAAA</p>
                     <p class="space">|</p>
                     <div class="copy-box">
-                        <img th:src="@{/img/draft2.png}" src="../img/darft2.png" class="security-img" alt="">
-                        <button id="copy-button">Copy</button>
+                        <img th:src="@{/static/img/draft2.png}" src="../../static/img/darft2.png" class="security-img"
+                            alt="">
+                        <!-- <button id="copy-button">Copy</button> -->
                     </div>
                 </div>
                 <div class="border-security"></div>
-                <div class="squea-box">
-                    <div class="maku-box">
-                        <img th:src="@{/img/exclamation.png}" src="../img/exclamation.png" class="maku-security" alt="">
-                        <img th:src="@{/img/exclamation.png}" src="../img/!.png" class="maku-security" alt="">
-                        <img th:src="@{/img/exclamation.png}" src="../img/!.png" class="maku-security" alt="">
+                <div class="alert-list">
+                    <div class="alert-item">
+                        <img th:src="@{/img/extension.png}" src="../../static/img/exclamation.png" class="alert-icon"
+                            alt="">
+                        <p>コピーや自身の端末でスクリーンショットを撮り、厳重に保管してください。</p>
                     </div>
-                    <div class="maku-text">
-                        <p>コピーや自身の端末でスクリーンショット
-                            を撮り、厳重に保管してください。</p>
-                        <p>安全な場所に保管し、他人に教えないで
-                            ください。</p>
-                        <p class="red-text">紛失するとパスワードの再設定ができなく
-                            なる可能性があります。</p>
+
+                    <div class="alert-item">
+                        <img th:src="@{/img/extension.png}" src="../../static/img/exclamation.png" class="alert-icon"
+                            alt="">
+                        <p>安全な場所に保管し、他人に教えないでください。</p>
+                    </div>
+
+                    <div class="alert-item">
+                        <img th:src="@{/img/extension.png}" src="../../static/img/exclamation.png" class="alert-icon"
+                            alt="">
+                        <p class="red-text">紛失するとパスワードの再設定ができなくなる可能性があります。</p>
                     </div>
                 </div>
             </div>
@@ -72,6 +77,7 @@
             </div>
         </div>
     </main>
+
     <script>
         document.getElementById('copy-button').addEventListener('click', () => {
             const text = document.getElementById('copy-text').value;
@@ -80,8 +86,8 @@
                 alert("テキストをコピーしました: " + text);
             });
         });
-
     </script>
+
 </body>
 
 </html>

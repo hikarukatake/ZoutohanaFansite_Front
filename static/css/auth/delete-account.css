@@ -1,211 +1,223 @@
-        /* --- 基本設定（前回と同じ） --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+/* --- 基本設定（前回と同じ） --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-        body {
-            background-color: var(--back-color);
-            line-height: 1.7;
-            margin: 0;
-        }
+body {
+  background-color: var(--back-color);
+  line-height: 1.7;
+  margin: 0;
+}
 
-        .container {
-            margin: 0 auto;
-            background-color: var(--back-color);
-            position: relative;
-        }
+.container {
+  margin: 0 auto;
+  margin-bottom: 5rem;
+  background-color: var(--back-color);
+  position: relative;
+  max-width: 768px; /* ← 読書系UIにちょうどいい */
+}
 
-        /* --- パンくずリスト --- */
-        .breadcrumb {
-            padding: 0.8rem 0;
-            margin-left: 1.2rem;
-            font-size: 0.7rem;
-            color: var(--font-normal);
-        }
+/* --- パンくずリスト --- */
+.breadcrumb {
+  padding: 0.8rem 0;
+  margin-left: 1.2rem;
+  font-size: 0.7rem;
+  color: var(--font-normal);
+}
 
-        .breadcrumb-middle {
-            margin-left: 1.2rem;
-            padding: 0.8rem 0;
-            font-size: 0.7rem;
-            color: var(--font-normal);
-        }
+.breadcrumb-middle {
+  margin-left: 1.2rem;
+  padding: 0.8rem 0;
+  font-size: 0.7rem;
+  color: var(--font-normal);
+}
 
+.breadcrumb-box {
+  display: flex;
+  margin-bottom: 1rem;
+}
 
-        .breadcrumb-box {
-            display: flex;
-            margin-bottom: 1rem;
-        }
+.delete-content {
+  margin: 40px auto;
+  padding: 0 16px 40px 16px;
+}
 
+/* タイトル */
+.page-title {
+  font-size: 1.5rem;
+  font-size: 28px;
+  color: var(--font-bold);
+  width: 50%;
+  font-weight: bold;
+  margin: 20px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--main-color);
+}
 
-        .delete-content {
-            margin: 40px auto;
-            padding: 0 16px 40px 16px;
-        }
+/* 注意事項ヘッダー */
+.notice-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  margin-left: 10px;
+}
 
-        /* タイトル */
-        .page-title {
-            font-size: 28px;
-            color: var(--font-bold);
-            width: 50%;
-            font-weight: bold;
-            margin: 20px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--main-color);
-        }
+.notice-bar {
+  width: 4px;
+  height: 20px;
+  background-color: var(--main-color);
+  border-radius: 2px;
+}
 
-        /* 注意事項ヘッダー */
-        .notice-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-            margin-left: 10px;
-        }
+.notice-header h2 {
+  font-size: 16px;
+}
 
-        .notice-bar {
-            width: 4px;
-            height: 20px;
-            background-color: var(--main-color);
-            border-radius: 2px;
-        }
+/* 説明文 */
+.notice-text {
+  font-size: 15px;
+  color: var(--font-normal);
+  margin-bottom: 12px;
+  margin-left: 5px;
+  text-align: left;
+}
 
-        .notice-header h2 {
-            font-size: 16px;
-        }
+/* 注意事項ボックス */
+.notice-text-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
 
-        /* 説明文 */
-        .notice-text {
-            font-size: 15px;
-            color: var(--font-normal);
-            margin-bottom: 12px;
-            margin-left: 5px;
-            text-align: left;
-        }
+.notice-box {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px #eee inset;
+  padding: 16px;
+}
 
-        /* 注意事項ボックス */
-        .notice-text-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-        }
+.notice-content {
+  background-color: var(--back-color);
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 0 0 1px #eee inset;
+  color: var(--font-normal);
+}
 
-        .notice-box {
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 0 1px #eee inset;
-        }
+.notice-content span {
+  font-weight: bold;
+  color: var(--font-bold);
+  font-size: 14px;
+}
 
-        .notice-content {
-            background-color: var(--back-color);
-            border-radius: 10px;
-            padding: 16px;
-            box-shadow: 0 0 0 1px #eee inset;
-            color: var(--font-normal);
-        }
+.notice-box ul {
+  margin: 0;
+  padding-left: 18px;
+}
 
-        .notice-content span {
-            font-weight: bold;
-            color: var(--font-bold);
-            font-size: 14px;
-        }
+.notice-box li {
+  font-size: 13px;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
 
-        .notice-box ul {
-            margin: 0;
-            padding-left: 18px;
-        }
+/* ボタン */
+.button-area {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
 
-        .notice-box li {
-            font-size: 13px;
-            line-height: 1.7;
-            margin-bottom: 10px;
-        }
+button {
+  flex: 1;
+  padding: 12px 0;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
-        /* ボタン */
-        .button-area {
-            display: flex;
-            gap: 12px;
-            margin-top: 32px;
-        }
+.btn-back {
+  background-color: #fff;
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
+}
 
-        button {
-            flex: 1;
-            padding: 12px 0;
-            font-size: 14px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+.btn-confirm {
+  background-color: var(--main-color);
+  color: #fff;
+  border: none;
+}
 
-        .btn-back {
-            background-color: #fff;
-            color: var(--main-color);
-            border: 1px solid var(--main-color);
-        }
+/* ===== モーダル背景 ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
 
-        .btn-confirm {
-            background-color: var(--main-color);
-            color: #fff;
-            border: none;
-        }
+/* 表示用 */
+.modal-overlay.active {
+  display: flex;
+}
 
-        /* ===== モーダル背景 ===== */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.4);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
+/* ===== モーダル本体 ===== */
+.modal-box {
+  background: #fff;
+  width: 90%;
+  max-width: 360px;
+  border-radius: 14px;
+  padding: 24px 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
 
-        /* 表示用 */
-        .modal-overlay.active {
-            display: flex;
-        }
+/* タイトル */
+.modal-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--main-color);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--font-bold);
+  margin-bottom: 16px;
+}
 
-        /* ===== モーダル本体 ===== */
-        .modal-box {
-            background: #fff;
-            width: 90%;
-            max-width: 360px;
-            border-radius: 14px;
-            padding: 24px 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
+/* 説明 */
+.modal-text {
+  font-size: 14px;
+  color: var(--font-normal);
+  line-height: 1.7;
+  margin-bottom: 12px;
+  padding: 20px 0;
+}
 
-        /* タイトル */
-        .modal-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--main-color);
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--font-bold);
-            margin-bottom: 16px;
-        }
+/* 注意文（赤） */
+.modal-warning {
+  font-size: 13px;
+  color: #e35252;
+  margin-bottom: 20px;
+}
 
-        /* 説明 */
-        .modal-text {
-            font-size: 14px;
-            color: var(--font-normal);
-            line-height: 1.7;
-            margin-bottom: 12px;
-            padding: 20px 0;
-        }
+/* ボタン */
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+}
 
-        /* 注意文（赤） */
-        .modal-warning {
-            font-size: 13px;
-            color: #E35252;
-            margin-bottom: 20px;
-        }
+/* タブレット以上 */
+@media (min-width: 768px) {
+  .notice-box {
+    padding: 32px;
+  }
 
-        /* ボタン */
-        .modal-buttons {
-            display: flex;
-            gap: 12px;
-        }
+  .page-title {
+    font-size: 1.8rem;
+  }
+}

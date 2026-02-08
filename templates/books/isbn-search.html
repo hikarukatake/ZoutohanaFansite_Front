@@ -10,11 +10,19 @@
     <title>書籍の登録</title>
     <link rel="stylesheet" th:href="@{/css/books/isbn-search.css}" href="../../static/css/books/isbn-search.css">
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/header.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/footer.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/form-container.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
     <header class="signup-header">
+        <!-- --------------------------------------------------- -->
+        <!-- もどる先のリンク付けてください -->
+        <!-- ---------------------------------------------------- -->
+        <a href="#" class="back-link">&lt;&nbsp;&nbsp;もどる</a>
         <div class="step-indicator">
             <div class="step active">
                 <div class="step-number">1</div>
@@ -73,50 +81,61 @@
                     </div>
                     <button type="button" class="btn btn-search" id="searchBtn">入力内容で検索</button>
                 </div>
+
+                <div class="book-result-area" id="search-result-section" style="display: none;">
+                    <h2 class="book-title" id="result-title">（タイトル）</h2>
+                    <div class="book-info-wrapper">
+                        <img src="" alt="書影" class="book-cover" id="result-cover">
+                        <div class="book-details">
+                            <div class="detail-item">
+                                <label>著者</label>
+                                <p id="result-author">（著者）</p>
+                            </div>
+                            <div class="detail-item">
+                                <label>出版社</label>
+                                <p id="result-publisher">（出版社）</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form th:action="@{/review}" method="post" th:object="${isbnForm}" id="review-form">
+                        <input type="hidden" th:field="*{projectId}" id="form-projectId" th:value="${param.id}">
+
+                        <input type="hidden" th:field="*{title}" id="form-title">
+                        <input type="hidden" th:field="*{author}" id="form-author">
+                        <input type="hidden" th:field="*{publisher}" id="form-publisher">
+                        <input type="hidden" th:field="*{isbn}" id="form-isbn">
+
+                        <button type="submit" class="btn btn-next-step" id="btn-next-step">
+                            この本の書評を書く
+                        </button>
+                    </form>
+
+                </div>
+
+                <div class="not-found-area" id="not-found-area" style="display: none;">
+                    <div class="not-found">
+                        <h2>本が見つかりませんでした</h2>
+                        <p>入力したISBNコードに該当する本の情報が見つかりません</p>
+                        <ul>
+                            <li>番号が正しいかもう一度ご確認ください。</li>
+                            <li>古い本や海外の本は登録されていない場合があります。</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
+
+            <footer class="footer-inside">
+                <p>&copy; 象と花プロジェクト</p>
+            </footer>
         </div>
+
+        <footer class="footer-outside">
+            <p>&copy; 象と花プロジェクト</p>
+        </footer>
+
     </main>
-    <div class="book-result-area" id="search-result-section" style="display: none;">
-        <h2 class="book-title" id="result-title">（タイトル）</h2>
-        <div class="book-info-wrapper">
-            <img src="" alt="書影" class="book-cover" id="result-cover">
-            <div class="book-details">
-                <div class="detail-item">
-                    <label>著者</label>
-                    <p id="result-author">（著者）</p>
-                </div>
-                <div class="detail-item">
-                    <label>出版社</label>
-                    <p id="result-publisher">（出版社）</p>
-                </div>
-            </div>
-        </div>
-        <form th:action="@{/review}" method="post" th:object="${isbnForm}" id="review-form">
-            <input type="hidden" th:field="*{projectId}" id="form-projectId" th:value="${param.id}">
 
-            <input type="hidden" th:field="*{title}" id="form-title">
-            <input type="hidden" th:field="*{author}" id="form-author">
-            <input type="hidden" th:field="*{publisher}" id="form-publisher">
-            <input type="hidden" th:field="*{isbn}" id="form-isbn">
 
-            <button type="submit" class="btn btn-next-step" id="btn-next-step">
-                この本の書評を書く
-            </button>
-        </form>
-
-        <footer style="background-color: #FFFCF9; text-align: center; margin-top: 2rem;">@copylite</footer>
-    </div>
-    <div class="not-found-area" id="not-found-area" style="display: none;">
-        <div class="not-found">
-            <h2>本が見つかりませんでした</h2>
-            <p>入力したISBNコードに該当する本の情報が見つかりません</p>
-            <ul>
-                <li>番号が正しいかもう一度ご確認ください。</li>
-                <li>古い本や海外の本は登録されていない場合があります。</li>
-            </ul>
-        </div>
-        <footer>@copylite</footer>
-    </div>
     <div class="scanner-modal" id="scanner-modal">
         <div class="scanner-content">
             <div id="scanner-viewport"></div>

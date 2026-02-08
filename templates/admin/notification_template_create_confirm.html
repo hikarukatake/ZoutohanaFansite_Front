@@ -1,6 +1,6 @@
 <!-- 【個別通知テンプレート作成確認】 -->
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,26 +15,24 @@
       <h1 class="page-title">個別通知テンプレート作成 - 確認</h1>
 
       <div class="main-content-card mt-4">
-        <form>
+        <form th:action="@{/admin/notification/template/create/confirm}" th:object="${form}" method="post">
           <div class="table-container">
             <table>
               <tr>
                 <th>テンプレート名 : </th>
-                <td>
+                <td  th:text="${form.templateName}">
                   一次審査通過連絡
-                  <input type="text" name="name" class="hidden" value="一次審査通過連絡">
                 </td>
               </tr>
               <tr>
                 <th>タイトル : </th>
-                <td>
+                <td th:text="${form.title}">
                   一次審査通過のお知らせ
-                  <input type="text" name="title" class="hidden" value="一次審査通過のお知らせ">
                 </td>
               </tr>
               <tr>
                 <th>本文 : </th>
-                <td>
+                  <td id="notification-content" th:text="${form.content}" style="white-space: pre-wrap;">
   <span class="merge-tag-preview">{user-nickname}</span>さん、こんにちは。
   この度は「<span class="merge-tag-preview">{project-name}</span>」へ書評を投稿いただき、誠にありがとうございました。
   あなたが投稿した「<span class="merge-tag-preview">{review-title}</span>」が一次審査を通過したことをお知らせします。おめでとうございます！
@@ -45,30 +43,22 @@
   <span class="merge-tag-preview">{project-voting_start_at}</span>～<span class="merge-tag-preview">{project-voting_end_at}</span>　二次審査(一般投票)
   【ここに日時を手動で入れる】　ノミネート作品を一部さわや書店店舗で販売開始
   【ここに日時を手動で入れる】　大賞発表
-
-                  <textarea rows="10" name="content" class="hidden">
-  {user-nickname}さん、こんにちは。
-  この度は「{project-name}」へ書評を投稿いただき、誠にありがとうございました。
-  あなたが投稿した「{review-title}」が一次審査を通過したことをお知らせします。おめでとうございます！
-
-  今後のスケジュールは以下の通りになります。
-  これからも象と花プロジェクトと象と花ファンサイトをよろしくお願いいたします。
-
-  {project-voting_start_at}～{project-voting_end_at}　二次審査(一般投票)
-  【ここに日時を手動で入れる】　ノミネート作品を一部さわや書店店舗で販売開始
-  【ここに日時を手動で入れる】　大賞発表
-                  </textarea>
                 </td>
               </tr>
             </table>
+              <input th:field="*{templateName}" type="text" name="name" class="hidden">
+              <input th:field="*{title}" type="text" name="title" class="hidden">
+              <textarea th:field="*{content}" rows="10" name="content" class="hidden"></textarea>
+
 
             <div class="btn-wrap mt-4">
-              <a href="#" th:href="@{/}" class="btn">前に戻る</a>
+              <a href="#" th:href="@{/admin/notification/template/create}" class="btn">前に戻る</a>
               <input type="submit" value="更新する" class="btn">
             </div>
           </div>
         </form>
       </div>
     </main>
+    <script th:src="@{/js/admin/notification-template-confirm.js}"></script>
 </body>
 </html>

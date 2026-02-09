@@ -38,26 +38,26 @@
 
                 <div class="py-4 table-border-b-strong"> <!-- 企画カードボディ -->
                     <ul class="progressbar"> <!-- 進捗部分 -->
-                        <li th:classappend="${project.status.getOrder() >= 1} ? 'complete'">投稿期間前</li>
-                        <li th:classappend="${project.status.getOrder() >= 2} ? 'complete'">投稿期間</li>
+                        <li th:classappend="${project.status.getOrder() >= 1} ? 'complete'">書評投稿期間前</li>
+                        <li th:classappend="${project.status.getOrder() >= 2} ? 'complete'">書評投稿期間</li>
                         <li th:classappend="${project.status.getOrder() >= 3} ? 'complete'">一次審査</li>
                         <li th:classappend="${project.status.getOrder() >= 4} ? 'complete'">二次審査(投票)</li>
                         <li th:classappend="${project.status.getOrder() >= 5} ? 'complete'">二次審査(確認)</li>
-                        <li th:classappend="${project.status.getOrder() >= 6} ? 'complete'">ノミネート決定</li>
-                        <li th:classappend="${project.status.getOrder() >= 7} ? 'complete'">大賞決定</li>
+                        <li th:classappend="${project.status.getOrder() >= 6} ? 'complete'">ノミネート発表</li>
+                        <li th:classappend="${project.status.getOrder() >= 7} ? 'complete'">大賞発表</li>
                     </ul>
                     <div class="flex"> <!-- 画像・日付等情報(flex) -->
                         <img src="../../static/img/NO-IMAGE.png" th:src="@{/api/images/project.main_img_url}" class="project-card-thumbnail">
                         <div class="mb-auto pl-4">
-                            <h3 class="page-title-sub"th:text="${#temporals.format(project.projectStartAt, 'yyyy/MM/dd HH:mm')} + ' ~ ' + ${#temporals.format(project.projectEndAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00 ~ 2025/01/01 12:00</h3>
+                            <h3 class="page-title-sub"th:text="${#temporals.format(project.projectStartAt, 'yyyy/MM/dd HH:mm')} + '～' + ${#temporals.format(project.projectEndAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00～2025/01/01 12:00</h3>
                             <table>
                                 <tr>
                                     <th>書評投稿期間 : </th>
-                                    <td th:text="${#temporals.format(project.submissionStartAt, 'yyyy/MM/dd HH:mm')} + ' ~ ' + ${#temporals.format(project.submissionEndAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00 ~ 2025/01/01 12:00</td>
+                                    <td th:text="${#temporals.format(project.submissionStartAt, 'yyyy/MM/dd HH:mm')} + '～' + ${#temporals.format(project.submissionEndAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00～2025/01/01 12:00</td>
                                 </tr>
                                 <tr>
                                     <th>書評投票期間 : </th>
-                                    <td th:text="${#temporals.format(project.votingStartAt, 'yyyy/MM/dd HH:mm')} + ' ~ ' + ${#temporals.format(project.votingEndAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00</td>
+                                    <td th:text="${#temporals.format(project.votingStartAt, 'yyyy/MM/dd HH:mm')} + '～' + ${#temporals.format(project.votingEndAt, 'yyyy/MM/dd HH:mm')}">2025/01/01 12:00</td>
                                 </tr>
                                 <tr>
                                     <th>投稿された書評 : </th>
@@ -73,7 +73,9 @@
                         <button type="button" class="btn">次のステータス(<span>投票期間中</span>)に進める</button>  <!-- TODO:後で考える -->
                         <button type="button" class="btn btn-danger" th:data-modal-target="'delete-confirm-modal-' + ${project.id}">削除する</button>
                     </div>
-                    <a href="project_edit.html" th:href="@{/project_edit/{urlKey}(urlKey=${project.urlKey})}" class="icon-center review-card-sub-info text-decoration-none hover-bold">詳細を確認する<span class="material-symbols-outlined">double_arrow</span></a>
+                    <a href="project_edit.html" th:href="@{/admin/project/view(urlKey=${project.urlKey})}" class="icon-center review-card-sub-info text-decoration-none hover-bold">
+                        詳細を確認する<span class="material-symbols-outlined">double_arrow</span>
+                    </a>
                 </div>
 
                 <div th:id="'delete-confirm-modal-' + ${project.id}" class="modal">

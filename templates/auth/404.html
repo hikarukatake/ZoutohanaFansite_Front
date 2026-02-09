@@ -1,38 +1,18 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>退会手続き</title>
-    <link rel="stylesheet" href="../../static/css/main.css">
-    <link rel="stylesheet" href="../../static/css/auth/404.css">
+    <title>エラー</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/auth/404.css}" href="../../static/css/auth/404.css">
 </head>
 
 <body>
     <div class="container">
-        <header class="project-header">
-            <div class="logo-placeholder"><img src="../../static/img/zoutohana-jitsubutsu.png" style="width: 3rem;" alt=""></div>
-            <div style="display: flex;">
-                <div class="mail-icon">
-                    <span class="mail-badge">2</span>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M2 6h20v12H2z" fill="none" stroke="white" stroke-width="2" />
-                        <path d="M2 6l10 7 10-7" fill="none" stroke="white" stroke-width="2" />
-                    </svg>
-                </div>
-
-
-                <div class="menu-icon" id="menuOpen">
-                    <div class="menu-icon-box">
-                        <span class="span-top"></span>
-                        <span class="span-middle"></span>
-                        <span class="span-bottom"></span>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <main>
+        <div th:replace="~{layout :: header}"></div>
+        <main th:if="${errorStatus}">
             <div class="form-container">
                 <div class="check-img-div">
                     <div class="check-outer">
@@ -45,59 +25,54 @@
                     </div>
                 </div>
                 <!-- テキスト -->
-                <h2 class="complete-title">404 NotFound</h2>
+                <h2 class="complete-title" th:text="${errorStatus.status}">404 NotFound</h2>
 
                 <div class="complete-line"></div>
 
-                <p class="complete-text">
+                <p class="complete-text" th:text="${errorStatus.message}">
                     お探しのページは<br />見つかりませんでした
                 </p>
 
                 <!-- ボタン -->
-                <a href="/" class="complete-btn">
-                    ファンサイトTOPへ
+                <a sec:authorize="isAuthenticated()" th:href="@{/mypage}" class="complete-btn">
+                    マイページへ
+                </a>
+                <!-- ボタン -->
+                <a sec:authorize="isAnonymous()" th:href="@{/}" class="complete-btn">
+                    トップページへ
                 </a>
             </div>
         </main>
 
+        <main th:unless="${errorStatus}">
+            <div class="form-container">
+                <div class="check-img-div">
+                    <div class="check-outer">
+                        <div class="check-inner">
+                            <svg width="40" height="30" viewBox="0 0 52 40" fill="none">
+                                <path d="M26 5V25M26 35V35.1" stroke="white" stroke-width="6" stroke-linecap="round"
+                                      stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <!-- テキスト -->
+                <h2 class="complete-title">NOT FOUND</h2>
 
-        <!-- ヘッダーモーダル -->
-        <div class="overlay-menu" id="overlayMenu">
-            <div class="close-btn" id="menuClose">×</div>
-            <img src="../img/zoutohana-white-color.png" class="" style="width: 5rem;" alt="">
-            <ul class="menu-list">
-                <li class="menu-item">お知らせ</li>
+                <div class="complete-line"></div>
 
-                <li class="menu-item">企画一覧</li>
+                <p class="complete-text">
+                    お探しのページは見つかりません
+                </p>
 
-                <li class="menu-item">象と花プロジェクト</li>
-
-                <li class="menu-item">お問い合わせ</li>
-
-                <li class="menu-item">ログイン</li>
-            </ul>
-            <div class="imgs">
-                <img src="../img/instagram-white.png" class="imgs-icon" alt="">
-                <img src="../img/facebook-white.png" class="imgs-width" alt="">
-                <img src="../img/x-white.png" class="imgs-width" alt="">
+                <a sec:authorize="isAnonymous()" th:href="@{/}" class="complete-btn">
+                    トップページへ
+                </a>
             </div>
-        </div>
-        <script>
-            // ▼▼▼ 要素を取得 ▼▼▼
-            const menuOpen = document.getElementById('menuOpen');   // ハンバーガーメニューのアイコン
-            const menuClose = document.getElementById('menuClose'); // ハンバーガーメニューの閉じるボタン
-            const overlayMenu = document.getElementById('overlayMenu'); // ハンバーガーメニュー本体
+        </main>
+    </div>
 
-            // ▼▼▼ ハンバーガーメニューの動作（既存のまま） ▼▼▼
-            menuOpen.addEventListener('click', () => {
-                overlayMenu.classList.add('active');
-            });
-
-            menuClose.addEventListener('click', () => {
-                overlayMenu.classList.remove('active');
-            });
-        </script>
-
+    <script th:src="@{/js/hamburger.js}"></script>
 </body>
 
 </html>

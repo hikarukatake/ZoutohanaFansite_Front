@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>企画編集・情報</title>
+    <title th:text="${project.name} + ' | 企画編集・情報'">データが取得できませんでした:企画名 | 企画編集・情報</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="../../static/css/admin/admin-style.css" th:href="@{/css/admin/admin-style.css}">
 </head>
@@ -12,6 +12,9 @@
     <div th:replace="~{layout-admin :: header}"></div>
 
     <main id="admin-main">
+      <a href="project_list.html" th:href="@{/admin/project/list}" class="icon-center review-card-sub-info text-decoration-none hover-bold">
+        <span class="material-symbols-outlined">keyboard_double_arrow_left</span>企画一覧に戻る
+      </a>
       <h1 class="page-title">企画編集・情報</h1>
 
       <div class="tab-menu w-full mt-2">
@@ -23,15 +26,23 @@
 
       <div class="tab-content">
         <div class="main-content-card tab-panel active"> <!-- 「企画について」タブの中身 -->
-          <form>
+          <form method="POST" th:action="@{/admin/project/view}" class="no-auto-submit">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input type="hidden" name="id" th:value="${project.id}">
             <div class="table-container">
               <table>
                 <tr>
                   <th>公開/非公開 : </th>
                   <td>
-                    <div class="radio-wrap">
-                      <label><input type="radio" name="published" value="TRUE" class="scale-bigger" checked>公開</label>
-                      <label><input type="radio" name="published" value="FALSE" class="scale-bigger">非公開</label>
+                    <div class="radio-wrap ml-2">
+                      <label>
+                        <input type="radio" name="published" value="TRUE" class="scale-bigger" th:checked="${project.published == true}">
+                        公開
+                      </label>
+                      <label>
+                        <input type="radio" name="published" value="FALSE" class="scale-bigger" th:checked="${project.published == false}">
+                        非公開
+                      </label>
                     </div>
                   </td>
                 </tr>
@@ -39,13 +50,13 @@
                   <th>ステータス : </th>
                   <td>
                     <select name="status" class="select w-half">
-                      <option value="BEFORE_SUBMISSION">書評投稿期間前</option>
-                      <option value="DURING_SUBMISSION">書評作成・投稿期間中</option>
-                      <option value="FIRST_PHASE">一次審査中</option>
-                      <option value="SECOND_PHASE_VOTING">二次審査(投票)中</option>
-                      <option value="SECOND_PHASE_VERIFY">二次審査(確認)中</option>
-                      <option value="SECOND_PHASE_RESULT">二次審査結果発表</option>
-                      <option value="AWARD_ANNOUNCEMENT">大賞発表</option>
+                      <option value="BEFORE_SUBMISSION" th:selected="${project.status.name() == 'BEFORE_SUBMISSION'}">書評投稿期間前</option>
+                      <option value="DURING_SUBMISSION" th:selected="${project.status.name() == 'DURING_SUBMISSION'}">書評投稿期間</option>
+                      <option value="FIRST_PHASE" th:selected="${project.status.name() == 'FIRST_PHASE'}">一次審査</option>
+                      <option value="SECOND_PHASE_VOTING" th:selected="${project.status.name() == 'SECOND_PHASE_VOTING'}">二次審査(投票)</option>
+                      <option value="SECOND_PHASE_VERIFY" th:selected="${project.status.name() == 'SECOND_PHASE_VERIFY'}">二次審査(確認)</option>
+                      <option value="SECOND_PHASE_RESULT" th:selected="${project.status.name() == 'SECOND_PHASE_RESULT'}">ノミネート発表</option>
+                      <option value="AWARD_ANNOUNCEMENT" th:selected="${project.status.name() == 'AWARD_ANNOUNCEMENT'}">大賞発表</option>
                     </select>
                   </td>
                 </tr>
@@ -53,22 +64,23 @@
                   <th>QRコード : </th>
                   <td>
                     <div class="flex gap-4">
-                      <button type="button" id="qrImg-showButton" class="btn">表示する</button>
-                      <button type="button" id="qrImg-downloadButton" class="btn">ダウンロードする</button>
+                      <button type="button" id="qrImg-showButton" class="btn">表示する</button> <!-- TODO:後で実装 -->
+                      <button type="button" id="qrImg-downloadButton" class="btn">ダウンロードする</button> <!-- TODO:後で実装 -->
                     </div>
                     <img id="qrImg-preview" src="../../static/img/flower-blue.png" th:src="@{/img/flower-blue.png}" class="hidden">
                   </td>
                 </tr>
                 <tr>
-                  <!-- 削除機能は後で実装 -->
                   <th class="table-border-b-strong">削除 : </th>
-                  <td class="table-border-b-strong"><button type="button" class="btn btn-danger" data-modal-target="delete-confirm-modal">このプロジェクトを削除する</button></td>
+                  <td class="table-border-b-strong">
+                    <button type="button" class="btn btn-danger" data-modal-target="delete-confirm-modal">この企画を削除する</button> <!-- TODO:後で実装 -->
+                  </td>
                 </tr>
 
                 <tr>
                   <th>企画名 : </th>
                   <td>
-                    <input type="text" name="name" class="input-text w-full">
+                    <input type="text" name="name" class="input-text w-full" th:value="${project.name}">
                     <p class="text-danger"></p>
                   </td>
                 </tr>
@@ -78,65 +90,83 @@
                       企画URL<span class="material-symbols-outlined text-gray cursor-help" title="企画ページのURLの末尾につく文字列です。">help</span> : </th>
                     </span>
                   <td>
-                    <input type="text" name="urlKey" id="urlKey-input" class="input-text w-full">
-                    <span class="text-gray">https://zoutohana-fansite.com/project/</span><span id="urlKey-preview" class="text-gray">_____</span>
+                    <input type="text" name="urlKey" id="urlKey-input" class="input-text w-full" th:value="${project.urlKey}">
+                    <span class="text-gray">https://zoutohana-fansite.com/project/</span><span id="urlKey-preview" class="text-gray" th:text="${project.urlKey}">_____</span>
                     <p class="text-danger"></p>
                   </td>
                 </tr>
                 <tr>
                   <th class="table-border-b-light">説明 : </th>
-                  <td class="table-border-b-light"><textarea rows="10" name="introduction" class="input-textarea w-full"></textarea></td>
+                  <td class="table-border-b-light"><textarea rows="10" name="introduction" class="input-textarea w-full" th:text="${project.introduction}"></textarea></td>
                 </tr>
 
                 <tr>
                   <th>企画期間 : </th>
                   <td>
-                    <input type="datetime-local" name="projectStartAt" class="input-datetime">
+                    <input type="datetime-local" name="projectStartAt" class="input-datetime" step="60" th:value="${#temporals.format(project.projectStartAt, 'yyyy-MM-dd''T''HH:mm')}">
                     <span class="wave-dash">～</span>
-                    <input type="datetime-local" name="projectEndAt" class="input-datetime">
+                    <input type="datetime-local" name="projectEndAt" class="input-datetime" step="60" th:value="${#temporals.format(project.projectEndAt, 'yyyy-MM-dd''T''HH:mm')}">
                   </td>
                 </tr>
                 <tr>
                   <th>書評作成・投稿期間 : </th>
                   <td>
-                    <input type="datetime-local" name="submissionStartAt" class="input-datetime">
+                    <input type="datetime-local" name="submissionStartAt" class="input-datetime" step="60" th:value="${#temporals.format(project.submissionStartAt, 'yyyy-MM-dd''T''HH:mm')}">
                     <span class="wave-dash">～</span>
-                    <input type="datetime-local" name="submissionEndAt" class="input-datetime">
+                    <input type="datetime-local" name="submissionEndAt" class="input-datetime" step="60" th:value="${#temporals.format(project.submissionEndAt, 'yyyy-MM-dd''T''HH:mm')}">
                   </td>
                 </tr>
                 <tr>
                   <th class="table-border-b-light">書評投票(二次審査)期間 : </th>
                   <td class="table-border-b-light">
-                    <input type="datetime-local" name="votingStartAt" class="input-datetime">
+                    <input type="datetime-local" name="votingStartAt" class="input-datetime" step="60" th:value="${#temporals.format(project.votingStartAt, 'yyyy-MM-dd''T''HH:mm')}">
                     <span class="wave-dash">～</span>
-                    <input type="datetime-local" name="votingEndAt" class="input-datetime">
+                    <input type="datetime-local" name="votingEndAt" class="input-datetime" step="60" th:value="${#temporals.format(project.votingEndAt, 'yyyy-MM-dd''T''HH:mm')}">
                   </td>
                 </tr>
 
                 <tr>
                   <th>書籍タイトル : </th>
                   <td>
-                    <div class="radio-wrap">
-                      <label><input type="radio" name="enableVisibleBookTitle" value="FALSE" class="scale-bigger" checked>表示しない</label>
-                      <label><input type="radio" name="enableVisibleBookTitle" value="TRUE" class="scale-bigger">表示する</label>
+                    <div class="radio-wrap ml-2">
+                      <label>
+                        <input type="radio" name="enableVisibleBookTitle" value="FALSE" class="scale-bigger mr-2" th:checked="${project.enableVisibleBookTitle == false}">
+                        表示しない
+                      </label>
+                      <label>
+                        <input type="radio" name="enableVisibleBookTitle" value="TRUE" class="scale-bigger" th:checked="${project.enableVisibleBookTitle == true}">
+                        表示する
+                      </label>
                     </div>
                   </td>
                 </tr>
                 <tr>
                   <th>書評タイトル : </th>
                   <td>
-                    <div class="radio-wrap">
-                      <label><input type="radio" name="enableVisibleReviewTitle" value="FALSE" class="scale-bigger" checked>表示しない</label>
-                      <label><input type="radio" name="enableVisibleReviewTitle" value="TRUE" class="scale-bigger">表示する</label>
+                    <div class="radio-wrap ml-2">
+                      <label>
+                        <input type="radio" name="enableVisibleReviewTitle" value="FALSE" class="scale-bigger" th:checked="${project.enableVisibleReviewTitle == false}">
+                        表示しない
+                      </label>
+                      <label>
+                        <input type="radio" name="enableVisibleReviewTitle" value="TRUE" class="scale-bigger" th:checked="${project.enableVisibleReviewTitle == true}">
+                        表示する
+                      </label>
                     </div>
                   </td>
                 </tr>
                 <tr>
                   <th class="table-border-b-light">投稿者情報 : </th>
                   <td class="table-border-b-light">
-                    <div class="radio-wrap">
-                      <label><input type="radio" name="enableVisibleUserInfo" value="FALSE" class="scale-bigger" checked>表示しない</label>
-                      <label><input type="radio" name="enableVisibleUserInfo" value="TRUE" class="scale-bigger"s>表示する</label>
+                    <div class="radio-wrap ml-2">
+                      <label>
+                        <input type="radio" name="enableVisibleUserInfo" value="FALSE" class="scale-bigger" th:checked="${project.enableVisibleUserInfo == false}">
+                        表示しない
+                      </label>
+                      <label>
+                        <input type="radio" name="enableVisibleUserInfo" value="TRUE" class="scale-bigger" th:checked="${project.enableVisibleUserInfo} == true">
+                        表示する
+                      </label>
                     </div>
                   </td>
                 </tr>
@@ -146,42 +176,42 @@
                   <td>
                     <div class="themeColor-wrap">
                       <label>
-                        <input type="radio" name="themeColor" value="GREEN" checked>
+                        <input type="radio" name="themeColor" value="GREEN" th:checked="${project.themeColor.name() == 'GREEN'}">
                         <span class="color-dot" style="background:var(--theme-green);" title="GREEN : みどり">
                           <span class="material-symbols-outlined">check</span>
                         </span>
                       </label>
 
                       <label>
-                        <input type="radio" name="themeColor" value="PINK">
+                        <input type="radio" name="themeColor" value="PINK" th:checked="${project.themeColor.name() == 'PINK'}">
                         <span class="color-dot" style="background:var(--theme-pink);" title="PINK : もも">
                           <span class="material-symbols-outlined">check</span>
                         </span>
                       </label>
 
                       <label>
-                        <input type="radio" name="themeColor" value="YELLOW">
+                        <input type="radio" name="themeColor" value="YELLOW" th:checked="${project.themeColor.name() == 'YELLOW'}">
                         <span class="color-dot" style="background:var(--theme-yellow);" title="YELLOW : き">
                           <span class="material-symbols-outlined">check</span>
                         </span>
                       </label>
 
                       <label>
-                        <input type="radio" name="themeColor" value="BLUE">
+                        <input type="radio" name="themeColor" value="BLUE" th:checked="${project.themeColor.name() == 'BLUE'}">
                         <span class="color-dot" style="background:var(--theme-blue);" title="BLUE : あお">
                           <span class="material-symbols-outlined">check</span>
                         </span>
                       </label>
 
                       <label>
-                        <input type="radio" name="themeColor" value="BLACK">
+                        <input type="radio" name="themeColor" value="BLACK" th:checked="${project.themeColor.name() == 'BLACK'}">
                         <span class="color-dot" style="background:var(--theme-black);" title="BLACK : くろ">
                           <span class="material-symbols-outlined">check</span>
                         </span>
                       </label>
 
                       <label>
-                        <input type="radio" name="themeColor" value="GRAY">
+                        <input type="radio" name="themeColor" value="GRAY" th:checked="${project.themeColor.name() == 'GRAY'}">
                         <span class="color-dot" style="background:var(--theme-gray);" title="GRAY : はい">
                           <span class="material-symbols-outlined">check</span>
                         </span>
@@ -192,7 +222,8 @@
                 <tr>
                   <th>ロゴ画像 : </th>
                   <td id="projectInput-td">
-                    <div>
+                    <div> <!-- TODO:後で実装 -->
+                      <p th:text="'現在のファイル : ' + ${project.mainImgUrl}"></p>
                       <input type="file" accept="image/*" name="mainImg" id="mainImg-input" class="btn-file">
                       <img id="mainImg-preview">
                     </div>
@@ -201,7 +232,7 @@
                 <tr>
                   <th>PDF : </th>
                   <td id="projectInput-td">
-                    <div>
+                    <div> <!-- TODO:後で実装 -->
                       <input type="file" accept="application/pdf" name="pdf" multiple id="pdf-input" class="btn-file">
                       <ul id="pdf-list-ul"></ul>
                     </div>
@@ -210,7 +241,7 @@
               </table>
 
               <div class="button-wrap mt-4">
-                <a href="#" th:href="@{/}" class="btn">キャンセル</a>
+                <a href="project_list.html" th:href="@{/admin/project/list}" class="btn">キャンセル</a>
                 <input type="submit" value="確認する" class="btn">
               </div>
             </form>
@@ -240,7 +271,7 @@
           <div class="pb-8"> <!-- 「書評閲覧」部分 -->
             <h2 class="page-title-sub">書評閲覧</h2>
             <div class="flex gap-1 mt-2">
-              <a href="#" th:href="@{/}" class="btn icon-center">
+              <a href="review_list.html" th:href="@{/admin/review/list(urlKey=${project.urlKey})}" class="btn icon-center">
                 <span class="material-symbols-outlined scale-bigger pr-1">library_books</span>すべての書評を確認
               </a>
               <button type="button" class="btn icon-center">
@@ -424,7 +455,7 @@
               今後のスケジュールは以下の通りになります。
               これからも象と花プロジェクトと象と花ファンサイトをよろしくお願いいたします。
 
-              <span class="merge-tag-preview">{project-voting_start_at}</span> ~ <span class="merge-tag-preview">{project-voting_end_at}</span>　二次審査(一般投票)
+              <span class="merge-tag-preview">{project-voting_start_at}</span>～<span class="merge-tag-preview">{project-voting_end_at}</span>　二次審査(一般投票)
               2025/08/01　ノミネート作品を一部さわや書店店舗で販売開始
               2025/08/31　大賞発表
             </p>

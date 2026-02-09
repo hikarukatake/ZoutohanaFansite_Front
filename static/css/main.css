@@ -26,7 +26,8 @@ body,
 button,
 input,
 select,
-textarea {
+textarea,
+a {
   font-family: "Zen Old Mincho", "游明朝", "Yu Mincho", serif;
 }
 

@@ -421,11 +421,13 @@
           </div>
 
           <div class="mt-8">
-            <p>企画URL : <span>winter-bunko</span></p>
-            <form>
-              <input type="text" class="input-text w-full" placeholder="winter-bunko">
+            <p>企画URL : <span th:text="${project.urlKey}">URL-key</span></p>
+            <form th:action="@{/admin/project/delete}" method="post">
+              <input type="hidden" name="projectId" th:value="${project.id}">
+              <input type="hidden" class="expected-url" th:value="${project.urlKey}">
+              <input type="text" name="inputUrlKey" class="input-text w-full" th:placeholder="${project.urlKey}" required>
               <div class="btn-wrap mt-8">
-                <button type="submit" class="btn btn-danger"><span class="px-8">削除する</span></button>
+                <button type="submit" class="btn btn-danger delete-btn">削除する</button>
               </div>
             </form>
           </div>

@@ -507,7 +507,6 @@ textarea {
   display: flex;
   align-items: center;
   padding: 2rem;
-  background-color: var(--back-color);
 }
 
 .section-title {

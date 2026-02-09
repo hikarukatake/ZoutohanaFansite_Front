@@ -5,8 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登録完了</title>
-    <link rel="stylesheet" th:href="@{/css/books/book-complete.css}" href="../../static/css/books/book-complete.css">
+
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/header.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/footer.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/form-container.css">
+
+    <link rel="stylesheet" th:href="@{/css/books/book-complete.css}" href="../../static/css/books/book-complete.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -93,15 +98,15 @@
                 <div class="timer-display">
                     <div class="time-group">
                         <span id="days" class="number" th:text="${duration.toDays()}">--</span>
-                        <span class="unit" >日</span>
+                        <span class="unit">日</span>
                     </div>
                     <div class="time-group">
                         <span id="hours" class="number" th:text="${duration.toHoursPart() % 24}">--</span>
-                        <span class="unit" >時間</span>
+                        <span class="unit">時間</span>
                     </div>
                     <div class="time-group">
                         <span id="minutes" class="number" th:text="${duration.toMillisPart() % 60}">--</span>
-                        <span class="unit" >分</span>
+                        <span class="unit">分</span>
                     </div>
                 </div>
             </div>
@@ -110,8 +115,14 @@
                     マイページへ
                 </a>
             </div>
-            <footer>@copylite</footer>
+            <footer class="footer-inside">
+                <p>&copy; 象と花プロジェクト</p>
+            </footer>
         </div>
+
+        <footer class="footer-outside">
+            <p>&copy; 象と花プロジェクト</p>
+        </footer>
     </main>
 </body>
 

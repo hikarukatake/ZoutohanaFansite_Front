@@ -1,19 +1,28 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>マイページ再現（メニュー付き）</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+
+    <link th:href="@{/css/main.css}" rel="stylesheet" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" href="../../static/css/header.css">
+    <link rel="stylesheet" th:href="@{/css/footer.css}" href="../../static/css/footer.css">
+    <link rel="stylesheet" th:href="@{/css/form-container.css}" href="../../static/css/form-container.css">
+
     <link rel="stylesheet" th:href="@{/css/books/mypage.css}" href="../../static/css/books/mypage.css">
+
 </head>
 
 <body>
     <div class="container">
         <div th:replace="~{layout :: header}"></div>
         <div class="breadcrumb-box">
-            <a th:href="@{/}"><div class="breadcrumb">ホーム</div></a>
+            <a th:href="@{/}">
+                <div class="breadcrumb">ホーム</div>
+            </a>
             <div class="breadcrumb-middle">></div>
             <div class="breadcrumb">マイページ</div>
         </div>
@@ -25,7 +34,8 @@
                         <h3 class="profile-name" th:text="${user.nickname}">象と花 太郎</h3>
                         <p class="profile-id" th:text="${'@' + user.loginId}">@hanako_elephant</p>
                     </div>
-                    <div class="settings-icon"><img th:src="@{/img/gear.png}" src="../img/gear.png" alt="" width="18px"></div>
+                    <div class="settings-icon"><img th:src="@{/img/gear.png}" src="../img/gear.png" alt="" width="18px">
+                    </div>
                 </div>
                 <hr class="divider-green">
                 <div class="profile-text" th:if="${user.selfIntroduction != null}" th:text="${user.selfIntroduction}">
@@ -53,13 +63,15 @@
                                 <div th:case="'BEFORE_SUBMISSION'">
                                     <span>投稿開始まで</span>
                                     <span>あと</span>
-                                    <span th:style="'color: ' + ${project.themeColor.getDbValue()}" th:text="${project.lastDate}" class="count-unit">12</span>
+                                    <span th:style="'color: ' + ${project.themeColor.getDbValue()}"
+                                        th:text="${project.lastDate}" class="count-unit">12</span>
                                     <span>日</span>
                                 </div>
                                 <div th:case="'DURING_SUBMISSION'">
                                     <span>投稿終了まで</span>
                                     <span>あと</span>
-                                    <span th:style="'color: ' + ${project.themeColor.getDbValue()}" th:text="${project.lastDate}" class="count-unit">12</span>
+                                    <span th:style="'color: ' + ${project.themeColor.getDbValue()}"
+                                        th:text="${project.lastDate}" class="count-unit">12</span>
                                     <span>日</span>
                                 </div>
                                 <div th:case="'FIRST_PHASE'">
@@ -68,7 +80,8 @@
                                 <div th:case="'SECOND_PHASE_VOTING'">
                                     <span>投票終了まで</span>
                                     <span>あと</span>
-                                    <span th:style="'color: ' + ${project.themeColor.getDbValue()}" th:text="${project.lastDate}" class="count-unit">12</span>
+                                    <span th:style="'color: ' + ${project.themeColor.getDbValue()}"
+                                        th:text="${project.lastDate}" class="count-unit">12</span>
                                     <span>日</span>
                                 </div>
                                 <div th:case="'SECOND_PHASE_VERIFY'">
@@ -79,31 +92,40 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="action-button" th:switch="${project.status.name()}" th:style="'background-color: ' + ${project.themeColor.getDbValue()}">
-                            <a class="a-text" th:case="'BEFORE_SUBMISSION'" th:href="@{/project/{urlKey}(urlKey=${project.urlKey})}">
+                        <div class="action-button" th:switch="${project.status.name()}"
+                            th:style="'background-color: ' + ${project.themeColor.getDbValue()}">
+                            <a class="a-text" th:case="'BEFORE_SUBMISSION'"
+                                th:href="@{/project/{urlKey}(urlKey=${project.urlKey})}">
                                 <span class="btn-main-text" th:text="${project.name + ' の詳細を見る'}">新春ミステリー祭 の書評を書く</span>
                                 <span class="btn-plus">＋</span>
                             </a>
                             <a class="a-text" th:case="'DURING_SUBMISSION'" th:href="@{/review(id=${project.id})}">
-                                <span class="btn-main-text" th:text="${project.draft ? '下書き保存した書評があります' : project.name + ' の書評を書く'}">新春ミステリー祭 の書評を書く</span>
+                                <span class="btn-main-text"
+                                    th:text="${project.draft ? '下書き保存した書評があります' : project.name + ' の書評を書く'}">新春ミステリー祭
+                                    の書評を書く</span>
                                 <span class="btn-sub-text">あなたのお気に入りの一冊を共有しよう</span>
                                 <span class="btn-plus">＋</span>
                             </a>
-                            <a class="a-text" th:case="'FIRST_PHASE'" th:href="@{/project/{urlKey}(urlKey=${project.urlKey})}">
+                            <a class="a-text" th:case="'FIRST_PHASE'"
+                                th:href="@{/project/{urlKey}(urlKey=${project.urlKey})}">
                                 <span class="btn-main-text" th:text="${project.name + ' の詳細を見る'}">新春ミステリー祭 の書評を書く</span>
                                 <span class="btn-plus">＋</span>
                             </a>
-                            <a class="a-text" th:case="'SECOND_PHASE_VOTING'" th:href="@{/project/{urlKey}(urlKey=${project.urlKey})}">
+                            <a class="a-text" th:case="'SECOND_PHASE_VOTING'"
+                                th:href="@{/project/{urlKey}(urlKey=${project.urlKey})}">
                                 <span class="btn-main-text" th:text="${project.name + ' の投票をする'}">新春ミステリー祭 の書評を書く</span>
                                 <span class="btn-sub-text">あなたのお気に入りの書評に投票しよう</span>
                                 <span class="btn-plus">＋</span>
                             </a>
-                            <a class="a-text" th:case="'SECOND_PHASE_VERIFY'" th:href="@{/project/{urlKey}(urlKey=${project.urlKey})}">
+                            <a class="a-text" th:case="'SECOND_PHASE_VERIFY'"
+                                th:href="@{/project/{urlKey}(urlKey=${project.urlKey})}">
                                 <span class="btn-main-text" th:text="${project.name + ' の詳細を見る'}">新春ミステリー祭 の書評を書く</span>
                                 <span class="btn-plus">＋</span>
                             </a>
-                            <a class="a-text" th:case="'SECOND_PHASE_RESULT'" th:href="@{/project/{urlKey}(urlKey=${project.urlKey})}">
-                                <span class="btn-main-text" th:text="${project.name + ' の投票結果を見る'}">新春ミステリー祭 の書評を書く</span>
+                            <a class="a-text" th:case="'SECOND_PHASE_RESULT'"
+                                th:href="@{/project/{urlKey}(urlKey=${project.urlKey})}">
+                                <span class="btn-main-text" th:text="${project.name + ' の投票結果を見る'}">新春ミステリー祭
+                                    の書評を書く</span>
                                 <span class="btn-plus">＋</span>
                             </a>
                         </div>
@@ -122,7 +144,7 @@
             <div class="book-card-block" th:if="${!reviews.isEmpty()}">
                 <div class="book-card" th:each="review : ${reviews}">
                     <div class="card-header">
-<!--                        <div class="title-row" style="display: flex; justify-content: space-between;">-->
+                        <!--                        <div class="title-row" style="display: flex; justify-content: space-between;">-->
                         <div class="title-row" style="display: flex; justify-content: space-between;">
                             <h2 class="book-title" th:text="${review.bookTitle}">虚ろな十字架</h2>
                             <span class="vote-count" th:text="${review.voteCount + '票'}">24 票</span>
@@ -135,19 +157,21 @@
                         </p>
                     </div>
                     <div class="card-footer">
-                        <span class="tag" th:text="${review.project.name}" th:style="'color: ' + ${review.project.themeColor.getDbValue()}">ミステリー特集</span>
-                        <a th:href="@{/mypage/review/detail/{id}(id=${review.id})}" href="#" class="details-link">詳細へ ></a>
+                        <span class="tag" th:text="${review.project.name}"
+                            th:style="'color: ' + ${review.project.themeColor.getDbValue()}">ミステリー特集</span>
+                        <a th:href="@{/mypage/review/detail/{id}(id=${review.id})}" href="#" class="details-link">詳細へ
+                            ></a>
                     </div>
                 </div>
             </div>
         </div>
-            <div class="book-card-box" th:unless="${!reviews.isEmpty()}">
-                <div class="book-card-block" id="book-card-block">
-                    <p>まだ書評を投稿していません</p>
-                </div>
-                <div class="pagination" id="pagination"></div>
+        <div class="book-card-box" th:unless="${!reviews.isEmpty()}">
+            <div class="book-card-block" id="book-card-block">
+                <p>まだ書評を投稿していません</p>
             </div>
+            <div class="pagination" id="pagination"></div>
         </div>
+    </div>
 
         <div class="settings-overlay" id="settingsModal">
             <div class="settings-content">
@@ -178,9 +202,25 @@
                 </a>
             </div>
 
+            <div class="settings-line"></div>
+
+            <a th:href="@{/auth/leave}" class="settings-row">
+                <span class="settings-icon-img">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="8.5" cy="7" r="4"></circle>
+                        <line x1="20" y1="8" x2="20" y2="14"></line>
+                        <line x1="23" y1="11" x2="17" y2="11"></line>
+                    </svg>
+                </span>
+                <span class="settings-text">アカウント退会手続き</span>
+                <span class="settings-arrow">&gt;</span>
+            </a>
         </div>
-        <!-- フッター -->
-        <div th:replace="~{layout :: footer}"></div>
+
+    </div>
+    <!-- フッター -->
+    <div th:replace="~{layout :: footer}"></div>
     </div>
 
 

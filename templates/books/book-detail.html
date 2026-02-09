@@ -5,28 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>書評の詳細</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
-    <link rel="stylesheet" th:href="@{/css/books/book-detail.css}" href="../css/books/book-detail.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" href="../../static/css/header.css">
+    <link rel="stylesheet" th:href="@{/css/footer.css}" href="../../static/css/footer.css">
+    <link rel="stylesheet" th:href="@{/css/form-container.css}" href="../../static/css/form-container.css">
+    <link rel="stylesheet" th:href="@{/css/book-detail.css}" href="../../static/css/books/book-detail.css">
 </head>
 
 <body>
     <div class="container">
         <div th:replace="~{layout :: header}"></div>
         <div class="breadcrumb-box">
-            <div class="breadcrumb">ホーム</div>
-            <div class="breadcrumb-middle">></div>
-            <div class="breadcrumb">マイページ</div>
-            <div class="breadcrumb-middle">></div>
-            <div class="breadcrumb">書評の詳細</div>
+
+            <div style="display: flex; width: 500px;">
+                <div class="breadcrumb">ホーム</div>
+                <div class="breadcrumb-middle">></div>
+                <div class="breadcrumb">マイページ</div>
+                <div class="breadcrumb-middle">></div>
+                <div class="breadcrumb">書評の詳細</div>
+            </div>
+
+            <div th:if="${project.status.name() == 'DURING_SUBMISSION'}" class="settings-icon">
+                <div class="gear-radius">
+                    <img th:src="@{/img/gear.png}" src="../../static/img/gear.png" alt="" width="18px">
+                </div>
+            </div>
+
         </div>
 
-        <div th:if="${project.status.name() == 'DURING_SUBMISSION'}" class="settings-icon">
-            <div class="gear-radius">
-                <img th:src="@{/img/gear.png}" src="../img/gear.png" alt="" width="18px">
-            </div>
-        </div>
 
         <section class="card">
+
+
             <div class="review-container">
                 <!-- タイトル -->
                 <div th:text="${review.reviewTitle}" class="review-title">

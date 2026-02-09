@@ -121,7 +121,7 @@
                 <div class="pt-4 flex justify-between"> <!-- 企画カードフッター -->
                     <div>
                         <button type="button" class="btn">次のステータス(<span>投票期間中</span>)に進める</button>  <!-- TODO:後で考える -->
-                        <button type="button" class="btn btn-danger" th:data-modal-target="'delete-confirm-modal-' + ${project.id}">削除する</button>   <!-- TODO:後で実装 -->
+                        <button type="button" class="btn btn-danger" th:data-modal-target="'delete-confirm-modal-' + ${project.id}">削除する</button>
                     </div>
                     <a href="project_edit.html" th:href="@{/admin/project/view(urlKey=${project.urlKey})}" class="icon-center review-card-sub-info text-decoration-none hover-bold">
                         詳細を確認する<span class="material-symbols-outlined">double_arrow</span>
@@ -144,11 +144,12 @@
 
                             <div class="mt-8">
                                 <p>企画URL : <span th:text="${project.urlKey}">URL-key</span></p>
-                                <form th:action="@{/project/delete}" method="post">
+                                <form th:action="@{/admin/project/delete}" method="post">
                                     <input type="hidden" name="projectId" th:value="${project.id}">
-                                    <input type="text" class="input-text w-full" th:placeholder="${project.urlKey}">
+                                    <input type="hidden" class="expected-url" th:value="${project.urlKey}">
+                                    <input type="text" name="inputUrlKey" class="input-text w-full" th:placeholder="${project.urlKey}" required>
                                     <div class="btn-wrap mt-8">
-                                        <button type="submit" class="btn btn-danger"><span class="px-8">削除する</span></button>
+                                        <button type="submit" class="btn btn-danger delete-btn">削除する</button>
                                     </div>
                                 </form>
                             </div>

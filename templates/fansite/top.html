@@ -97,6 +97,9 @@
         <div class="card-box" id="ongoing" th:if="${#lists.isEmpty(ongoingProjects)}">
             <div >現在開催中の企画はありません</div>
         </div>
+        <div th:if="${pastProjects == null}" class="card-body hidden" id="past">
+            <div>過去の企画はありません。</div>
+        </div>
 
         <div class="card-box" id="ongoing" th:unless="${#lists.isEmpty(ongoingProjects)}">
             <div class="card" th:each="project : ${ongoingProjects}">
@@ -104,7 +107,7 @@
                     <div class="card-image-wrapper">
                         <div th:text="${project.name}" th:style="'background-color: ' + ${project.themeColor.getDbValue()}" class="badge">開催中</div>
                         <img th:if="${project.mainImgUrl == null}" th:src="@{/img/img.png}" alt="商品画像">
-                        <img th:unless="${project.mainImgUrl == null}" th:src="@{|/api/image/${project.mainImgUrl}|}">
+                        <img th:unless="${project.mainImgUrl == null}" th:src="@{/api/image/{url}(url=${project.mainImgUrl})}">
                     </div>
                     <div class="card-content">
                         <div class="date-row">
@@ -120,9 +123,7 @@
             </div>
         </div>
 
-        <div th:if="${pastProjects == null}" class="card-body hidden" id="past">
-            <div>過去の企画はありません。</div>
-        </div>
+        
 
         <div th:unless="${pastProjects == null}" class="card-box hidden" id="past">
             <div class="card" th:each="project : ${pastProjects}">
@@ -170,50 +171,9 @@
     <div th:replace="~{layout :: contact}"></div>
 </div>
 
-
-    <!-- ヘッダーモーダル -->
-    <div class="overlay-menu" id="overlayMenu">
-        <div class="close-btn" id="menuClose">×</div>
-        <img src="../img/zoutohana-white-color.png" class="" style="width: 5rem;" alt="">
-        <ul class="menu-list">
-            <li class="menu-item">お知らせ</li>
-
-            <li class="menu-item">企画一覧</li>
-
-            <li class="menu-item">象と花プロジェクト</li>
-
-            <li class="menu-item">お問い合わせ</li>
-
-            <li class="menu-item">ログイン</li>
-        </ul>
-    </div>
-
-
-
 <!-- フッター -->
 <div th:replace="~{layout :: footer}"></div>
-</body>
-</html>
-
-<script>
-    // ▼▼▼ 要素を取得 ▼▼▼
-    const menuOpen = document.getElementById('menuOpen');   // ハンバーガーメニューのアイコン
-    const menuClose = document.getElementById('menuClose'); // ハンバーガーメニューの閉じるボタン
-    const overlayMenu = document.getElementById('overlayMenu'); // ハンバーガーメニュー本体
-
-    const gearButton = document.querySelector('.settings-icon'); // 歯車アイコン
-    const settingsModal = document.getElementById('settingsModal'); // 設定モーダル本体
-
-    // ▼▼▼ ハンバーガーメニューの動作（既存のまま） ▼▼▼
-    menuOpen.addEventListener('click', () => {
-        overlayMenu.classList.add('active');
-    });
-
-    menuClose.addEventListener('click', () => {
-        overlayMenu.classList.remove('active');
-    });
-</script>
-
+<script th:src="@{/js/hamburger.js}"></script>
 <script>
     // 企画一覧のタブメニュー
     const tabs = document.querySelectorAll('.tab');
@@ -248,3 +208,10 @@
         });
     });
 </script>
+</body>
+
+</html>
+
+
+
+

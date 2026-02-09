@@ -49,6 +49,18 @@
                 <span>01</span>
                 <h2>アカウント確認</h2>
             </div>
+            <div class="error-box" th:if="${error}">
+                <svg class="error-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M1 21h22L12 2 1 21z" fill="#e54848" />
+                    <rect x="11" y="9" width="2" height="5" fill="#fff" />
+                    <rect x="11" y="16" width="2" height="2" fill="#fff" />
+                </svg>
+
+                <p class="error-text">
+                    アカウントIDまたはセキュリティキーが<br>
+                    正しくありません。
+                </p>
+            </div>
 
             <form th:object="${passwordResetForm}" th:action="@{/password-reset(id=${id})}" method="post"
                 id="signup-form">
@@ -63,18 +75,7 @@
                     <label for="nickname">セキュリティキー</label>
                     <input th:field="*{securityKey}" type="text" id="nickname" name="nickname">
                 </div>
-                <div class="error-box" th:if="${error}">
-                    <svg class="error-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M1 21h22L12 2 1 21z" fill="#e54848" />
-                        <rect x="11" y="9" width="2" height="5" fill="#fff" />
-                        <rect x="11" y="16" width="2" height="2" fill="#fff" />
-                    </svg>
 
-                    <p class="error-text">
-                        アカウントIDまたはセキュリティキーが<br>
-                        正しくありません。
-                    </p>
-                </div>
 
                 <div>
                     <button type="submit" class="btn btn-next-step" id="btn-next-step">

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
 
 <head>
     <meta charset="UTF-8">
@@ -9,7 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/header.css}" href="../../static/css/header.css">
     <link rel="stylesheet" th:href="@{/css/footer.css}" href="../../static/css/footer.css">
     <link rel="stylesheet" th:href="@{/css/form-container.css}" href="../../static/css/form-container.css">
-    <link rel="stylesheet" href="../../static/css/auth/edit-account.css">
+    <link rel="stylesheet" th:href="@{/css/auth/edit-account.css}" href="../../static/css/auth/edit-account.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -21,18 +22,19 @@
     </header>
     <main>
         <div class="form-container">
-            <form id="signup-form">
+            <form id="signup-form" th:action="@{/auth/edit}" th:object="${accountEditForm}" method="post">
                 <div class="form-group">
                     <label for="account-id">アカウントID <span style="color: #FF4564">(*あとから変更できません)</span></label>
-                    <input type="text" id="account-id" name="account-id">
+                    <p th:text="${loginId}"></p>
                 </div>
                 <div class="form-group">
                     <label for="nickname">ニックネーム</label>
-                    <input type="text" id="nickname" name="nickname">
+                    <input th:field="*{nickname}" type="text" id="nickname" name="nickname">
                 </div>
                 <div class="form-group">
                     <label>アイコン</label>
                     <div class="icon-grid">
+                        <input type="hidden" th:field="*{icon}" name="">
 
                         <!-- 上段：花 -->
                         <div class="icon">
@@ -74,14 +76,15 @@
                     </div>
                     <p class="note">郵便番号を入力すると、住所の一部が自動的に表示されます。なお、郵便番号は登録されません。</p>
                     <div class="address-display">
-                        <span id="prefecture"></span>
-                        <span id="city"></span>
+                        <span id="prefecture" th:text="${#strings.substringBefore(accountEditForm.address, ' ')}"></span>
+                        <span id="city" th:text="${#strings.substringAfter(accountEditForm.address, ' ')}"></span>
+                        <input type="hidden" th:field="*{address}" id="address">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="birth-year">生年</label>
-                    <select id="birth-year" name="birth-year">
-                        <option value="" selected hidden>選択してください</option>
+                    <select th:field="*{birthYear}" id="birth-year" name="birth-year">
+                        <option th:value="${accountEditForm.birthYear}" selected>[[${accountEditForm.birthYear}]]</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -100,12 +103,13 @@
 
                 <div class="form-group bio-wrapper">
                     <label for="bio">自己紹介 <span class="optional-tag">任意</span></label>
-                    <textarea id="bio" name="bio" rows="6"></textarea>
+                    <textarea th:field="*{selfIntroduction}" id="bio" name="bio" rows="6"></textarea>
                     <div class="char-count"><span id="current-count">0</span>/300文字</div>
                 </div>
+                <hr class="form-divider">
+                <button class="btn-confirmation btn-submit" id="btn-to-confirm">編集を確定する</button>
             </form>
-            <hr class="form-divider">
-            <a href=".html" class="btn-confirmation btn-submit" id="btn-to-confirm" disabled>編集を確定する</a>
+
         </div>
     </main>
 
@@ -143,6 +147,7 @@
             const postalInput = document.getElementById('postal-code');
             const prefDisplay = document.getElementById('prefecture');
             const cityDisplay = document.getElementById('city');
+            const address = document.getElementById('address');
 
             if (postalInput) {
                 postalInput.addEventListener('input', function () {
@@ -156,6 +161,8 @@
                                     const result = data.results[0];
                                     prefDisplay.textContent = result.address1;
                                     cityDisplay.textContent = result.address2;
+                                    address.value = result.address1 + ' ' + result.address2;
+
                                 } else {
                                     prefDisplay.textContent = "";
                                     cityDisplay.textContent = "住所が見つかりません";

@@ -71,7 +71,26 @@
             </div>
             <div class="btn-review-box">
 
-                <form th:action="@{/review/confirm}" method="post" th:object="${reviewForm}">
+                <form th:if="${draft}" th:action="@{/review/draft/confirm(id=${id})}" method="post" th:object="${reviewForm}">
+
+                    <input type="hidden" th:field="*{projectId}">
+                    <input type="hidden" th:field="*{bookTitle}">
+                    <input type="hidden" th:field="*{author}">
+                    <input type="hidden" th:field="*{publisher}">
+                    <input type="hidden" th:field="*{isbn}">
+                    <input type="hidden" th:field="*{reviewTitle}">
+
+                    <input type="hidden" th:field="*{reviewContent}">
+
+                    <div class="btn-shadow">
+                        <button type="submit" th:formaction="@{/review/rewrite}" class="btn-review btn-register  btn-color-left">書評入力へ戻る</button>
+                    </div>
+
+                    <div class="btn-shadow">
+                        <button type="submit" class="btn-review btn-register btn-color-right">投稿する</button>
+                    </div>
+                </form>
+                <form th:unless="${draft}" th:action="@{/review/confirm(id=${id})}" method="post" th:object="${reviewForm}">
 
                     <input type="hidden" th:field="*{projectId}">
                     <input type="hidden" th:field="*{bookTitle}">

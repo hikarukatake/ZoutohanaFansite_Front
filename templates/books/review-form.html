@@ -97,12 +97,12 @@
                     </div>
                 </div>
             </div>
-            <form id="signup-form" th:action="@{/review/write}" method="post" th:object="${review}">
+            <form id="signup-form" th:action="@{/review/draft/new(reviewId=${param.reviewId})}" method="post" th:object="${review}">
                 <input type="hidden" th:field="*{projectId}">
                 <input type="hidden" th:field="*{bookTitle}">
-                <input type="hidden" th:field="*{bookAuthor}">
-                <input type="hidden" th:field="*{bookPublisher}">
-                <input type="hidden" th:field="*{bookIsbn}">
+                <input type="hidden" th:field="*{author}">
+                <input type="hidden" th:field="*{publisher}">
+                <input type="hidden" th:field="*{isbn}">
                 <div class="form-group bio-wrapper">
                     <label for="account-id">書評タイトル<span>（タイトルは20文字以内）</span></label>
                     <input type="text" id="account-id" name="account-id" th:field="*{reviewTitle}">
@@ -114,7 +114,7 @@
                     <div class="char-count"><span id="current-count">0</span>/500文字</div>
                 </div>
                 <div class="btn-shadow">
-                    <button th:formaction="@{/review/draft}" type="submit" class="btn btn-register">一時保存</button>
+                    <button th:formaction="@{/review/draft/update(reviewId=${param.reviewId})}" type="submit" class="btn btn-register">一時保存</button>
                 </div>
 
                 <div class="text-keep-box">

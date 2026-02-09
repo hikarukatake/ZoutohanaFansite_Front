@@ -121,7 +121,7 @@
                 <div class="pt-4 flex justify-between"> <!-- 企画カードフッター -->
                     <div>
                         <button type="button" class="btn">次のステータス(<span>投票期間中</span>)に進める</button>  <!-- TODO:後で考える -->
-                        <button type="button" class="btn btn-danger" th:data-modal-target="'delete-confirm-modal-' + ${project.id}">削除する</button>   <!-- TODO:後で実装 -->
+                        <button type="button" class="btn btn-danger" th:data-modal-target="'delete-confirm-modal-' + ${project.id}">削除する</button>
                     </div>
                     <a href="project_edit.html" th:href="@{/admin/project/view(urlKey=${project.urlKey})}" class="icon-center review-card-sub-info text-decoration-none hover-bold">
                         詳細を確認する<span class="material-symbols-outlined">double_arrow</span>

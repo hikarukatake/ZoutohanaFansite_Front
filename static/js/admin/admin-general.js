@@ -301,7 +301,7 @@ document.querySelector('[data-modal-target="change-confirm-modal"]')
     const checked = document.querySelectorAll(".review-checkbox:checked");
     const listEl = document.getElementById("selectedReviewList");
     const countEl = document.getElementById("selectedCount");
-    const statusSelect = document.getElementById("bulkStatusSelect");
+    const statusSelect = document.getElementById("statusSelect");
     const statusTextEl = document.getElementById("selectedStatusText");
 
     countEl.textContent = checked.length;
@@ -323,12 +323,12 @@ document.querySelector('[data-modal-target="change-confirm-modal"]')
     }
 });
 
-document.getElementById("bulkStatusSelect").addEventListener("change", e => {
+document.getElementById("statusSelect").addEventListener("change", e => {
   document.getElementById("selectedStatusText").textContent =
     statusTextMap[e.target.value];
 });
 
-const executeBtn = document.getElementById("confirmBulkBtn");
+const executeBtn = document.getElementById("confirmStatusUpdateBtn");
 
 function toggleExecuteButton() {
   const checked = document.querySelectorAll(".review-checkbox:checked");
@@ -339,7 +339,7 @@ document.querySelectorAll(".review-checkbox")
   .forEach(cb => cb.addEventListener("change", toggleExecuteButton));
 
 executeBtn.addEventListener("click", () => {
-  document.getElementById("bulkForm").submit();
+  document.getElementById("statusUpdateForm").submit();
 });
 
 // ========== 書評一覧の選択 ==========

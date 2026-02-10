@@ -12,14 +12,17 @@
     <div th:replace="~{layout-admin :: header}"></div>
 
     <main id="admin-main">
+      <a href="review_list.html" th:href="@{/admin/review/list(urlKey=${review.projectUrlKey})}" class="icon-center review-card-sub-info text-decoration-none hover-bold">
+        <span class="material-symbols-outlined">keyboard_double_arrow_left</span>書評一覧に戻る
+      </a>
       <h1 class="page-title">書評詳細</h1>
 
       <div class="main-content">
         <div class="main-content-card p-8 mt-2"> <!-- 書評カード -->
           <div class="table-border-b-strong flex justify-between pb-4"> <!-- 書評カードヘッダー -->
             <div> <!-- 左側 -->
-              <p class="review-card-sub-info">No.<span>100</span></p>
-              <h3 class="review-card-title">小学生の頃から大好きな一冊</h3>
+              <p class="review-card-sub-info">No.<span th:text="${review.id}">0</span></p>
+              <h3 class="review-card-title" th:text="${review.reviewTitle}"></h3>
             </div>
           </div>
 
@@ -27,20 +30,27 @@
             <table class="pr-8 mb-auto"> <!-- 左側 -->
               <tr>
                 <th>プロジェクト名 : </th>
-                <td>冬に読みたい！わたしのおすすめ文庫</td>
+                <td th:text="${review.projectName}"></td>
               </tr>
               <tr>
                 <th>書評ステータス : </th>
-                <td class="flex gap-1">
-                  <select class="select w-full flex-1">
-                    <option value="">大賞</option>
-                  </select>
-                  <button type="submit" class="btn">更新</button>
+                <td>
+                  <form method="POST" th:action="@{/admin/review/statusUpdateSingle}" class="no-auto-submit flex gap-1">
+                    <input type="hidden" name="reviewId" th:value="${review.id}">
+                    <select class="select w-full flex-1" name="targetStatus">
+                      <option value="INITIAL" th:selected="${review.status == 'INITIAL'}">一次審査未通過</option>
+                      <option value="FIRST_STAGE_PASSED" th:selected="${review.status == 'FIRST_STAGE_PASSED'}">一次審査通過</option>
+                      <option value="SECOND_STAGE_PASSED" th:selected="${review.status == 'SECOND_STAGE_PASSED'}">ノミネート</option>
+                      <option value="AWARDED" th:selected="${review.status == 'AWARDED'}">大賞</option>
+                    </select>
+
+                    <button type="submit" class="btn">更新</button>
+                  </form>
                 </td>
               </tr>
               <tr>
                 <th>得票数 : </th>
-                <td>123</td>
+                <td th:text="${review.voteCount}">0</td>
               </tr>
             </table>
 
@@ -49,26 +59,29 @@
                 <tr>
                   <th>名前 : </th>
                   <td>
-                    <a href="#" th:href="@{/}">
-                      <span>なまえなまえ</span>(ID:<span>loginID123</span>)
+                    <a href="account_view.html" th:href="@{/admin/account/view(loginId=${review.userLoginId})}">
+                      <span th:text="${review.userNickname} + '(ID:' + ${review.userId} + ')'">-----</span>
                     </a>
                   </td>
                 </tr>
                 <tr>
                   <th>居住地 : </th>
-                  <td>岩手県盛岡市</td>
+                  <td th:text="${review.userAddress}">-----</td>
                 </tr>
                 <tr>
                   <th>年代 : </th>
-                  <td><span>20</span>代</td>
+                  <td th:text="${review.userAgeGroup}">0</td>
                 </tr>
                 <tr>
                   <th>性別 : </th>
-                  <td>男</td>
+                  <td>
+                    <span th:if="${review.userGender} == 'MALE'">男性</span>
+                    <span th:if="${review.userGender} == 'FEMALE'">女性</span>
+                  </td>
                 </tr>
                 </table>
                 <p class="font-bold">自己紹介 : </p>
-                <p>この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。</p>
+                <pre th:text="${review.userSelfIntroduction}">-----</pre>
               </div>
           </div>
 
@@ -77,28 +90,25 @@
               <table class="pr-8 mb-auto w-quarter">
                 <tr>
                   <th>ISBN : </th>
-                  <td>9784XXXXXXXXXX</td>
+                  <td th:text="${review.bookIsbn}">-----</td>
                 </tr>
                 <tr>
                   <th>タイトル : </th>
-                  <td>風の図書館</td>
+                  <td th:text="${review.bookTitle}">-----</td>
                 </tr>
                 <tr>
                   <th>出版社 : </th>
-                  <td>ABC出版</td>
+                  <td th:text="${review.bookPublisher}">-----</td>
                 </tr>
                 <tr>
                   <th>著者 : </th>
-                  <td>田中太郎</td>
-                </tr>
-                <tr>
-                  <th>形式 : </th>
-                  <td>文庫</td>
+                  <td th:text="${review.bookAuthor}">-----</td>
                 </tr>
               </table>
               <div class="flex-1">
+                <p><span class="font-bold">書評タイトル : </span><span th:text="${review.reviewTitle}"></span></p>
                 <p class="font-bold">本文 : </p>
-                <p>この本を初めて読んだのは、小学四年生のときでした。表紙のイラストに惹かれて手に取ったのがきっかけでしたが、読み進めるうちに主人公の冒険や葛藤にどんどん引き込まれていったのを今でも覚えています。 あの頃は物語の世界に憧れるだけでしたが、大学生になった今読むと、人生の選択や成長の物語として心に響く部分が多く、まるで自分へのメッセージのように感じます。 文庫版の柔らかい紙の感触や少し黄ばんだページも、懐かしさをより一層引き立ててくれます。何度読み返しても色あせない、僕の原点のような一冊です。</p>
+                <pre th:text="${review.reviewContent}"></pre>
               </div>
             </div>
             <div class="flex gap-1 mt-4 items-start">
@@ -115,10 +125,9 @@
 
           <div class="flex justify-between pt-4"> <!-- 書評カードフッター -->
             <div> <!-- 左側 -->
-              <p class="review-card-sub-info">投稿日時 : <span>2025/10/01 12:34</span></p>
-              <p class="review-card-sub-info">更新日時 : <span>2025/10/02 23:45</span></p>
+              <p class="review-card-sub-info">投稿日時 : <span th:text="${review.createdAt}">0000/00/00 00:00</span></p>
+              <p class="review-card-sub-info">更新日時 : <span th:text="${review.updatedAt}">0000/00/00 00:00</span></p>
             </div>
-            <a href="#" th:href="@{/}" class="icon-center review-card-sub-info text-decoration-none hover-bold">詳細を確認する<span class="material-symbols-outlined">keyboard_double_arrow_right</span></a> <!-- 右側 -->
           </div>
         </div>
 

@@ -75,7 +75,7 @@
         </div>
       </div>
 
-      <form method="POST" th:action="@{/admin/review/bulk-update}" id="bulkForm" class="no-auto-submit">
+      <form method="POST" th:action="@{/admin/review/statusUpdate}" id="statusUpdateForm" class="no-auto-submit">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <input type="hidden" name="urlKey" th:value="${project.urlKey}">
         <input type="hidden" name="keyword" th:value="${form.keyword}">
@@ -98,7 +98,7 @@
         <div class="flex gap-1 mt-2">
           <span>チェックしたもの</span>
           <div class="flex-1">
-            <select name="targetStatus" id="bulkStatusSelect" class="select w-full">
+            <select name="targetStatus" id="statusSelect" class="select w-full">
               <option value="INITIAL">のステータスを「一次審査未通過」にする</option>
               <option value="FIRST_STAGE_PASSED">のステータスを「一次審査通過」にする</option>
               <option value="SECOND_STAGE_PASSED">のステータスを「ノミネート」にする</option>
@@ -265,13 +265,13 @@
 
         <div class="mt-8">
           <ol class="change-confirm-preview" id="selectedReviewList">
-            <li>[No.<span>93</span>] <span>冬の魔法をほんの少し信じたくなる</span>(書籍 : <span>雪明かりの魔法使い</span>)</li>
+            <li>[No.<span>0</span>] <span>-----</span>(書籍 : <span>-----</span>)</li>
           </ol>
         </div>
 
         <div class="btn-wrap mt-8">
           <button type="button" class="btn" data-modal-close>キャンセル</button>
-          <button type="button" class="btn" id="confirmBulkBtn">変更する</button>
+          <button type="button" class="btn" id="confirmStatusUpdateBtn">変更する</button>
         </div>
       </div>
     </div>

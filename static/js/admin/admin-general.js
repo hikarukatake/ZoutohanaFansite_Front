@@ -242,6 +242,51 @@ if (clearAllCheckbox) {
   });
 }
 
+// ========== お知らせ更新確認モーダル ==========
+document.addEventListener("DOMContentLoaded", () => {
+
+  const STATUS_LABELS = {
+    PUBLIC: "公開",
+    PRIVATE: "非公開",
+    DRAFT: "下書き"
+  };
+
+  const CATEGORY_LABELS = {
+    PROJECT: "企画情報",
+    DONATION: "寄贈情報",
+    ELSE: "その他情報"
+  };
+
+  function formatDateTime(datetimeLocal) {
+    if (!datetimeLocal) return "";
+    const d = new Date(datetimeLocal);
+    return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getDate()).padStart(2,"0")} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
+  }
+
+  const confirmBtn = document.getElementById("update-confirm-btn");
+  const form = document.getElementById("update-form");
+  const modal = document.getElementById("update-confirm-modal");
+
+  if (!confirmBtn || !form || !modal) return;
+
+  confirmBtn.onclick = () => {
+    const status = form.querySelector("input[name='status']:checked")?.value;
+    const category = form.querySelector("input[name='category']:checked")?.value;
+    const title = form.title.value;
+    const content = form.content.value;
+    const postedAt = form.postedAt.value;
+
+    document.getElementById("confirm-status").textContent = STATUS_LABELS[status] ?? status;
+    document.getElementById("confirm-category").textContent = CATEGORY_LABELS[category] ?? category;
+    document.getElementById("confirm-title").textContent = title;
+    document.getElementById("confirm-content").textContent = content;
+    document.getElementById("confirm-postedAt").textContent = formatDateTime(postedAt);
+
+    modal.style.display = "block";
+  };
+
+});
+
 // ========== 書評一覧の一括操作 ==========
 const statusTextMap = {
   INITIAL: "一次審査未通過",

@@ -242,49 +242,49 @@ if (clearAllCheckbox) {
   });
 }
 
-// ========== お知らせ更新確認モーダル ==========
+// ========== フォームの内容をモーダルにプレビュー表示 ==========
+// フォーム内の各パーツにdata-preview属性をつける(例 : data-preview="#confirm-title")
+// モーダルの中のプレビューを出したい部分に一致するIDをつける(例 : <span id="confirm-title"></span>)
+// モーダルを開くボタンのidを"confirm-btn"にする
 document.addEventListener("DOMContentLoaded", () => {
+  const confirmBtn = document.getElementById("confirm-btn");
+  if (!confirmBtn) return;
 
-  const STATUS_LABELS = {
-    PUBLIC: "公開",
-    PRIVATE: "非公開",
-    DRAFT: "下書き"
-  };
+  confirmBtn.addEventListener("click", () => {
+    const form = confirmBtn.closest("form");
+    if (!form) return;
 
-  const CATEGORY_LABELS = {
-    PROJECT: "企画情報",
-    DONATION: "寄贈情報",
-    ELSE: "その他情報"
-  };
+    const previewTargets = form.querySelectorAll("[data-preview]");
 
-  function formatDateTime(datetimeLocal) {
-    if (!datetimeLocal) return "";
-    const d = new Date(datetimeLocal);
-    return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getDate()).padStart(2,"0")} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
-  }
+    previewTargets.forEach(el => {
+      const previewSelector = el.dataset.preview;
+      const previewEl = document.querySelector(previewSelector);
+      if (!previewEl) return;
 
-  const confirmBtn = document.getElementById("update-confirm-btn");
-  const form = document.getElementById("update-form");
-  const modal = document.getElementById("update-confirm-modal");
+      let value = "";
 
-  if (!confirmBtn || !form || !modal) return;
+      if (el.type === "radio") {
+        if (!el.checked) return;
+        value = el.nextSibling.textContent?.trim() || el.value;
 
-  confirmBtn.onclick = () => {
-    const status = form.querySelector("input[name='status']:checked")?.value;
-    const category = form.querySelector("input[name='category']:checked")?.value;
-    const title = form.title.value;
-    const content = form.content.value;
-    const postedAt = form.postedAt.value;
+      } else if (el.type === "checkbox") {
+        value = el.checked ? "はい" : "いいえ";
 
-    document.getElementById("confirm-status").textContent = STATUS_LABELS[status] ?? status;
-    document.getElementById("confirm-category").textContent = CATEGORY_LABELS[category] ?? category;
-    document.getElementById("confirm-title").textContent = title;
-    document.getElementById("confirm-content").textContent = content;
-    document.getElementById("confirm-postedAt").textContent = formatDateTime(postedAt);
+      } else if (el.tagName === "SELECT") {
+        value = el.selectedOptions[0]?.textContent || "";
 
-    modal.style.display = "block";
-  };
+      } else {
+        value = el.value;
+      }
 
+      // datetime-local を見やすく
+      if (el.type === "datetime-local" && value) {
+        value = value.replace("T", " ");
+      }
+
+      previewEl.textContent = value || "—";
+    });
+  });
 });
 
 // ========== 書評一覧の一括操作 ==========

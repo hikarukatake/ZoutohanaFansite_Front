@@ -250,18 +250,20 @@ const statusTextMap = {
   AWARDED: "大賞"
 };
 
-document.querySelector('[data-modal-target="change-confirm-modal"]')
-  .addEventListener("click", () => {
+const changeBtn = document.querySelector('[data-modal-target="change-confirm-modal"]');
+const checked = document.querySelectorAll(".review-checkbox:checked");
+const listEl = document.getElementById("selectedReviewList");
+const countEl = document.getElementById("selectedCount");
+const statusSelect = document.getElementById("statusSelect");
+const statusTextEl = document.getElementById("selectedStatusText");
 
-    const checked = document.querySelectorAll(".review-checkbox:checked");
-    const listEl = document.getElementById("selectedReviewList");
-    const countEl = document.getElementById("selectedCount");
-    const statusSelect = document.getElementById("bulkStatusSelect");
-    const statusTextEl = document.getElementById("selectedStatusText");
-
+if (changeBtn) {
+  changeBtn.addEventListener("click", () => {
     countEl.textContent = checked.length;
     statusTextEl.textContent = statusTextMap[statusSelect.value];
     listEl.innerHTML = "";
+
+    if (!statusSelect || !statusTextEl) return;
 
     checked.forEach(cb => {
       const id = cb.value;
@@ -276,26 +278,31 @@ document.querySelector('[data-modal-target="change-confirm-modal"]')
     if (checked.length === 0) {
       listEl.innerHTML = "<li>※ 書評が選択されていません</li>";
     }
-});
+})};
 
-document.getElementById("bulkStatusSelect").addEventListener("change", e => {
-  document.getElementById("selectedStatusText").textContent =
-    statusTextMap[e.target.value];
-});
+if (statusSelect && statusTextEl) {
+  statusSelect.addEventListener("change", e => {
+    statusTextEl.textContent = statusTextMap[e.target.value];
+  });
+}
 
 const executeBtn = document.getElementById("confirmBulkBtn");
 
-function toggleExecuteButton() {
-  const checked = document.querySelectorAll(".review-checkbox:checked");
-  executeBtn.disabled = checked.length === 0;
+if (executeBtn) {
+  function toggleExecuteButton() {
+    const checked = document.querySelectorAll(".review-checkbox:checked");
+    executeBtn.disabled = checked.length === 0;
+  }
+
+  document.querySelectorAll(".review-checkbox")
+    .forEach(cb => cb.addEventListener("change", toggleExecuteButton));
+
+  executeBtn.addEventListener("click", () => {
+    const form = document.getElementById("statusUpdateForm");
+    if (form) form.submit();
+  });
 }
 
-document.querySelectorAll(".review-checkbox")
-  .forEach(cb => cb.addEventListener("change", toggleExecuteButton));
-
-executeBtn.addEventListener("click", () => {
-  document.getElementById("bulkForm").submit();
-});
 
 // ========== 書評一覧の選択 ==========
 document.addEventListener("DOMContentLoaded", () => {
@@ -329,22 +336,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ========== 書籍ジャンル複数選択 ==========
 document.addEventListener("DOMContentLoaded", () => {
-  const optionsList = [
-    {label: "みすてりー", value: "ミステリー"},
-    {label: "SF", value: "SF"},
-    {label: "ふぁんたじー", value: "ファンタジー"},
-    {label: "ろまんす", value: "ロマンス"},
-    {label: "れきし", value: "歴史"},
-    {label: "ほらー", value: "ホラー"},
-    {label: "のんふぃくしょん", value: "ノンフィクション"},
-    {label: "えっせい", value: "エッセイ"},
-    {label: "いわてにゆかりがあるさっか", value: "岩手に縁がある作家"}
-  ];
-
   const input = document.getElementById("genre-input");
   const tagsEl = document.getElementById("multi-select-tags");
   const optionsEl = document.getElementById("multi-select-options");
   const container = document.getElementById("multi-select-wrap");
+  const form = input.closest("form");
 
   if (!input || !tagsEl || !optionsEl || !container) return;
 
@@ -371,12 +367,14 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const filtered = optionsList.filter(
-      opt =>
-        (opt.label.toLowerCase().includes(keyword.toLowerCase()) ||
-        opt.value.toLowerCase().includes(keyword.toLowerCase())) &&
-        !selectedItems.includes(opt.value)
+    const filtered = optionsList.filter(opt =>
+      (opt.furigana.toLowerCase().includes(keyword.toLowerCase()) ||
+      opt.name.toLowerCase().includes(keyword.toLowerCase())) &&
+      !selectedItems.includes(opt.name)
     );
+
+    div.textContent = opt.name;
+    div.onclick = () => addItem(opt.name);
 
     if (!filtered.length) {
       optionsEl.hidden = true;
@@ -452,7 +450,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   form.addEventListener("submit", () => {
     // hiddenInput.value = selectedItems.join(",");
-    JSON.stringify(selectedItems);
+    hiddenInput.value = JSON.stringify(selectedItems);
   });
 });
 

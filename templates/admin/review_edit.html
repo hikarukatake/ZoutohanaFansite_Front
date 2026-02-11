@@ -158,5 +158,8 @@
     </div>
 
     <script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/admin-general.js}"></script>
-</body>
+    <script th:inline="javascript">
+      const optionsList = /*[[${genres}]]*/ [];
+    </script>
+  </body>
 </html>

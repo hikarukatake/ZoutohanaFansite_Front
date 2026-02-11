@@ -60,7 +60,7 @@
                   <th>名前 : </th>
                   <td>
                     <a href="account_view.html" th:href="@{/admin/account/view(loginId=${review.userLoginId})}">
-                      <span th:text="${review.userNickname} + '(ID:' + ${review.userId} + ')'">-----</span>
+                      <span th:text="|${review.userNickname}(ID:${review.userLoginId})|">-----</span>
                     </a>
                   </td>
                 </tr>
@@ -75,8 +75,8 @@
                 <tr>
                   <th>性別 : </th>
                   <td>
-                    <span th:if="${review.userGender} == 'MALE'">男性</span>
-                    <span th:if="${review.userGender} == 'FEMALE'">女性</span>
+                    <span th:if="${review.userGender == 'MALE'}">男性</span>
+                    <span th:if="${review.userGender == 'FEMALE'}">女性</span>
                   </td>
                 </tr>
                 </table>
@@ -125,8 +125,8 @@
 
           <div class="flex justify-between pt-4"> <!-- 書評カードフッター -->
             <div> <!-- 左側 -->
-              <p class="review-card-sub-info">投稿日時 : <span th:text="${review.createdAt}">0000/00/00 00:00</span></p>
-              <p class="review-card-sub-info">更新日時 : <span th:text="${review.updatedAt}">0000/00/00 00:00</span></p>
+              <p class="review-card-sub-info" th:text="'投稿日時 : ' + ${#temporals.format(review.createdAt, 'yyyy/MM/dd HH:mm')}">0000/00/00 00:00</p>
+              <p class="review-card-sub-info" th:text="'更新日時 : ' + ${#temporals.format(review.updatedAt, 'yyyy/MM/dd HH:mm')}">0000/00/00 00:00</p>
             </div>
           </div>
         </div>
@@ -152,11 +152,13 @@
           </div>
 
           <div class="mt-8">
-            <p>投稿者ID : <span>loginID123</span></p>
-            <form>
-              <input type="text" class="input-text w-full" placeholder="loginID123">
+            <p>投稿者ID : <span th:text="${review.userLoginId}"></span></p>
+            <form th:action="@{/admin/review/delete}" method="post">
+              <input type="hidden" name="urlKey" th:value="${review.projectUrlKey}">
+              <input type="hidden" name="reviewId" th:value="${review.id}">
+              <input type="text" name="inputUserLoginId" class="input-text w-full" th:placeholder="${review.userLoginId}">
               <div class="btn-wrap mt-8">
-                <button type="submit" class="btn btn-danger"><span class="px-8">削除する</span></button>
+                <button type="submit" class="btn btn-danger">削除する</button>
               </div>
             </form>
           </div>

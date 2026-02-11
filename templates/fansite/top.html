@@ -55,37 +55,6 @@
                         </div>
                     </a>
                 </div>
-                <div th:each="post : ${posts}">
-                    <a th:href="@{/news/{id}(id=${post.id})}" href="#" class="news-item">
-                        <div class="news-body">
-                            <div class="news-meta">
-                                <span th:text="${#temporals.format(post.postedAt, 'yyyy.MM.dd')}"
-                                    class="news-date">2025.01.01</span>
-                                <span th:text="${'#' + post.getCategory.label}" class="news-tag">#企画情報</span>
-                            </div>
-                            <div class="news-box">
-                                <p th:text="${post.title}" class="news-title">「文庫X 2.0」開始</p>
-                                <span class="news-arrow">&gt;</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div th:each="post : ${posts}">
-                    <a th:href="@{/news/{id}(id=${post.id})}" href="#" class="news-item">
-                        <div class="news-body">
-                            <div class="news-meta">
-                                <span th:text="${#temporals.format(post.postedAt, 'yyyy.MM.dd')}"
-                                    class="news-date">2025.01.01</span>
-                                <span th:text="${'#' + post.getCategory.label}" class="news-tag">#企画情報</span>
-                            </div>
-                            <div class="news-box">
-                                <p th:text="${post.title}" class="news-title">「文庫X 2.0」開始</p>
-                                <span class="news-arrow">&gt;</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
             </div>
             <div>
                 <a th:href="@{/news(category='new')}" href="../info/post-list.html?category=new"

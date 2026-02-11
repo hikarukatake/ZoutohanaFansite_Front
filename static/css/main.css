@@ -26,7 +26,8 @@ body,
 button,
 input,
 select,
-textarea {
+textarea,
+a {
   font-family: "Zen Old Mincho", "游明朝", "Yu Mincho", serif;
 }
 
@@ -507,7 +508,6 @@ textarea {
   display: flex;
   align-items: center;
   padding: 2rem;
-  background-color: var(--back-color);
 }
 
 .section-title {

@@ -49,6 +49,18 @@
                 <h2>パスワード設定</h2>
             </div>
 
+            <div class="error-box" th:if="${error}">
+                <svg class="error-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M1 21h22L12 2 1 21z" fill="#e54848" />
+                    <rect x="11" y="9" width="2" height="5" fill="#fff" />
+                    <rect x="11" y="16" width="2" height="2" fill="#fff" />
+                </svg>
+
+                <p class="error-text">
+                    パスワードが一致しません。
+                </p>
+            </div>
+
             <form id="signup-form" th:action="@{/password-reset/input-password(id=${id})}"
                 th:object="${newPasswordForm}" method="post">
                 <input type="hidden" th:field="*{loginId}">
@@ -69,17 +81,6 @@
                             name="password-confirm">
                         <i class="fas fa-eye-slash toggle-password"></i>
                     </div>
-                </div>
-                <div class="error-box" th:if="${error}">
-                    <svg class="error-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M1 21h22L12 2 1 21z" fill="#e54848" />
-                        <rect x="11" y="9" width="2" height="5" fill="#fff" />
-                        <rect x="11" y="16" width="2" height="2" fill="#fff" />
-                    </svg>
-
-                    <p class="error-text">
-                        パスワードが一致しません。
-                    </p>
                 </div>
                 <div>
                     <button type="submit" class="btn btn-next-step" id="btn-next-step">

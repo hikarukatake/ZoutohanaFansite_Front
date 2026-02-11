@@ -70,7 +70,7 @@
                         </div>
                         <div th:if="${status}" class="flow-situation">
                             <h2>現在</h2>
-                            <p th:text="${project.projectStatus.label}" id="status-text">投稿受付前</p>
+                            <p th:text="${project.projectStatus.label}" th:style="'color: ' + ${project.themeColor} + ';'" id="status-text">投稿受付前</p>
                             <h2>です</h2>
                         </div>
                     </a>

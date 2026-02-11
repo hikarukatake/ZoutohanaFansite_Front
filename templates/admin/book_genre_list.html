@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>書評ジャンル一覧</title>
+  <title>書籍ジャンル一覧</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <link rel="stylesheet" href="../../static/css/admin/admin-style.css" th:href="@{/css/admin/admin-style.css}">
 </head>
@@ -12,48 +12,79 @@
   <div th:replace="~{layout-admin :: header}"></div>
 
   <main id="admin-main">
-    <h1 class="page-title">書評ジャンル一覧</h1>
+    <h1 class="page-title">書籍ジャンル一覧</h1>
 
     <div class="main-content">
       <div class="flex justify-between gap-1 mt-2"> <!-- テーブルの上のメニュー部分 -->
-        <div> <!-- メニュー左部分(並び替え) -->
-          <select class="select">
-              <option>登録</option>
-          </select>
+        <div class="flex gap-1"> <!-- メニュー左部分(並び替え) -->
+          <form method="GET" th:action="@{/admin/genre/list}">
+            <input type="hidden" name="keyword" th:value="${form.keyword}">
+            <select name="sort" class="select" onchange="this.form.submit()">
+              <option value="createdAt_desc" th:selected="${form.sort == 'createdAt_desc'}">登録日時(新→旧)</option>
+              <option value="createdAt_asc" th:selected="${form.sort == 'createdAt_asc'}">登録日時(旧→新)</option>
+              <option value="updatedAt_desc" th:selected="${form.sort == 'updatedAt_desc'}">更新日時(新→旧)</option>
+              <option value="updatedAt_asc" th:selected="${form.sort == 'updatedAt_asc'}">更新日時(旧→新)</option>
+              <option value="name_asc" th:selected="${form.sort == 'name_asc'}">ジャンル名(昇順)</option>
+              <option value="name_desc" th:selected="${form.sort == 'name_desc'}">ジャンル名(降順)</option>
+              <option value="furigana_asc" th:selected="${form.sort == 'furigana_asc'}">ふりがな(昇順)</option>
+              <option value="furigana_desc" th:selected="${form.sort == 'furigana_desc'}">ふりがな(降順)</option>
+            </select>
+          </form>
           順
         </div>
         <div> <!-- メニュー右部分(検索) -->
-          <input type="text" class="input-text" placeholder="検索">
-          <button type="submit" class="btn"><span class="material-symbols-outlined scale-bigger">search</span></button>
+          <form method="GET" th:action="@{/admin/genre/list}" class="flex gap-1">
+            <input type="hidden" name="sort" th:value="${form.sort}">
+            <input type="text" name="keyword" class="input-text" th:value="${form.keyword}" placeholder="検索">
+            <button type="submit" class="btn"><span class="material-symbols-outlined scale-bigger">search</span></button>
+          </form>
         </div>
       </div>
-      <div class="flex gap-1 mt-2"> <!-- ジャンル登録 -->
-        <div class="flex-1">
-          <input type="text" class="input-text w-full" placeholder="新しく登録するジャンル名を入力">
+      <form method="POST" th:action="@{/admin/genre/create}" class="flex gap-1 mt-2"> <!-- ジャンル登録 -->
+        <div class="flex gap-4 flex-1">
+          <input type="text" name="name" class="input-text w-half" placeholder="登録するジャンル名を入力">
+          <input type="text" name="furigana" class="input-text w-half" placeholder="登録するジャンル名のふりがなを入力">
         </div>
         <button type="submit" class="btn">登録する</button>
-      </div>
+      </form>
 
       <table class="list-table mt-4">
         <tr>
-          <th class="table-border-r">ID</th>
-          <th class="table-border-r">ジャンル名</th>
-          <th class="w-quarter"></th>
+          <th class="w-half">ジャンル名</th>
+          <th class="w-half table-border-r">ふりがな</th>
+          <th></th>
         </tr>
-        <tr>
-          <td class="table-border-r text-right">1</td>
-          <td class="table-border-r">
-            <input type="text" class="w-full input-text" value="ファンタジー">
-          </td>
-          <td class="flex gap-4 center-middle">
-            <a href="#" th:href="@{/}" class="btn">更新する</a>
-            <a href="#" th:href="@{/}" class="btn btn-danger">削除する</a>
-          </td>
-        </tr>
-      </table>
 
-      <div class="pagination" id="pagination"></div>
+        <tr th:each="genre : ${genres}" class="table-content-tr">
+          <td>
+            <form th:action="@{/admin/genre/update}" method="post">
+              <input type="hidden" name="id" th:value="${genre.id}">
+              <input type="text" name="name" th:value="${genre.name}" class="w-full input-text">
+          </td>
+
+          <td class="table-border-r">
+              <input type="text" name="furigana" th:value="${genre.furigana}" class="w-full input-text">
+          </td>
+
+          <td class="flex gap-2 center-middle">
+              <button type="submit" class="btn">
+                <span class="material-symbols-outlined scale-bigger mt-1">check</span>
+              </button>
+            </form>
+
+            <form th:action="@{/admin/genre/delete}" method="post" onsubmit="return confirm('本当に削除しますか？');" class="ml-2">
+              <input type="hidden" name="id" th:value="${genre.id}">
+              <button type="submit" class="btn btn-danger">
+                <span class="material-symbols-outlined scale-bigger mt-1">delete</span>
+              </button>
+            </form>
+          </td>
+        </tr>
+
+      </table>
     </div>
   </main>
+
+  <script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/admin-general.js}"></script>
 </body>
 </html>

@@ -78,7 +78,7 @@
                         </div>
                     </div>
                 </div>
-                <form id="signup-form" th:action="@{/review/edit/{id}(id=${reviewId})}" method="post"
+                <form id="signup-form" th:action="@{/review/view/{id}(id=${reviewId})}" method="post"
                     th:object="${reviewForm}">
                     <div class="form-group bio-wrapper">
                         <label for="account-id">書評タイトル<span>（タイトルは20文字以内）</span></label>

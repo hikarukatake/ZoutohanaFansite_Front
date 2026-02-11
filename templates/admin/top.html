@@ -81,10 +81,8 @@
                 <div th:id="'delete-confirm-modal-' + ${project.id}" class="modal">
                     <div>
                         <div class="modal-content">
-                            <div class="flex justify-between items-start">
-                                <h2 class="page-title mx-auto">注意</h2>
-                                <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
-                            </div>
+                            <h2 class="page-title mx-auto">注意</h2>
+                            <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
 
                             <div class="mt-8">
                                 <p>この企画を削除すると、<span class="font-bold underline">関連するすべての書評データも同時に削除されます</span>。</p>
@@ -96,7 +94,6 @@
                                 <p>企画URL : <span th:text="${project.urlKey}">URL-key</span></p>
                                 <form th:action="@{/admin/project/delete}" method="post">
                                     <input type="hidden" name="projectId" th:value="${project.id}">
-                                    <input type="hidden" class="expected-url" th:value="${project.urlKey}">
                                     <input type="text" name="inputUrlKey" class="input-text w-full" th:placeholder="${project.urlKey}" required>
                                     <div class="btn-wrap mt-8">
                                         <button type="submit" class="btn btn-danger delete-btn">削除する</button>

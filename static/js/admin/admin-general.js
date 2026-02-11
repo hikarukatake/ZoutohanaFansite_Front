@@ -242,6 +242,51 @@ if (clearAllCheckbox) {
   });
 }
 
+// ========== フォームの内容をモーダルにプレビュー表示 ==========
+// フォーム内の各パーツにdata-preview属性をつける(例 : data-preview="#confirm-title")
+// モーダルの中のプレビューを出したい部分に一致するIDをつける(例 : <span id="confirm-title"></span>)
+// モーダルを開くボタンのidを"confirm-btn"にする
+document.addEventListener("DOMContentLoaded", () => {
+  const confirmBtn = document.getElementById("confirm-btn");
+  if (!confirmBtn) return;
+
+  confirmBtn.addEventListener("click", () => {
+    const form = confirmBtn.closest("form");
+    if (!form) return;
+
+    const previewTargets = form.querySelectorAll("[data-preview]");
+
+    previewTargets.forEach(el => {
+      const previewSelector = el.dataset.preview;
+      const previewEl = document.querySelector(previewSelector);
+      if (!previewEl) return;
+
+      let value = "";
+
+      if (el.type === "radio") {
+        if (!el.checked) return;
+        value = el.nextSibling.textContent?.trim() || el.value;
+
+      } else if (el.type === "checkbox") {
+        value = el.checked ? "はい" : "いいえ";
+
+      } else if (el.tagName === "SELECT") {
+        value = el.selectedOptions[0]?.textContent || "";
+
+      } else {
+        value = el.value;
+      }
+
+      // datetime-local を見やすく
+      if (el.type === "datetime-local" && value) {
+        value = value.replace("T", " ");
+      }
+
+      previewEl.textContent = value || "—";
+    });
+  });
+});
+
 // ========== 書評一覧の一括操作 ==========
 const statusTextMap = {
   INITIAL: "一次審査未通過",
@@ -256,7 +301,7 @@ document.querySelector('[data-modal-target="change-confirm-modal"]')
     const checked = document.querySelectorAll(".review-checkbox:checked");
     const listEl = document.getElementById("selectedReviewList");
     const countEl = document.getElementById("selectedCount");
-    const statusSelect = document.getElementById("bulkStatusSelect");
+    const statusSelect = document.getElementById("statusSelect");
     const statusTextEl = document.getElementById("selectedStatusText");
 
     countEl.textContent = checked.length;
@@ -278,12 +323,12 @@ document.querySelector('[data-modal-target="change-confirm-modal"]')
     }
 });
 
-document.getElementById("bulkStatusSelect").addEventListener("change", e => {
+document.getElementById("statusSelect").addEventListener("change", e => {
   document.getElementById("selectedStatusText").textContent =
     statusTextMap[e.target.value];
 });
 
-const executeBtn = document.getElementById("confirmBulkBtn");
+const executeBtn = document.getElementById("confirmStatusUpdateBtn");
 
 function toggleExecuteButton() {
   const checked = document.querySelectorAll(".review-checkbox:checked");
@@ -294,7 +339,7 @@ document.querySelectorAll(".review-checkbox")
   .forEach(cb => cb.addEventListener("change", toggleExecuteButton));
 
 executeBtn.addEventListener("click", () => {
-  document.getElementById("bulkForm").submit();
+  document.getElementById("statusUpdateForm").submit();
 });
 
 // ========== 書評一覧の選択 ==========

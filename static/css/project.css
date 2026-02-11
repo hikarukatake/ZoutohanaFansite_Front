@@ -1,6 +1,6 @@
             .container {
-                min-width: 400px;
-                max-width: 480px;
+                min-width: 450px;
+                max-width: 768px;
                 margin: 0 auto;
                 background-color: var(--back-color);
                 min-height: 100vh;

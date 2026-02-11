@@ -30,6 +30,9 @@
             <th:block th:each="s : ${form.status}">
                 <input type="hidden" name="status" th:value="${s}">
             </th:block>
+            <th:block th:each="gid : ${form.genreIds}">
+              <input type="hidden" name="genreIds" th:value="${gid}">
+            </th:block>
             <th:block th:each="g : ${form.userGender}">
                 <input type="hidden" name="userGender" th:value="${g}">
             </th:block>
@@ -60,6 +63,9 @@
               <th:block th:each="s : ${form.status}">
                   <input type="hidden" name="status" th:value="${s}">
               </th:block>
+              <th:block th:each="gid : ${form.genreIds}">
+                <input type="hidden" name="genreIds" th:value="${gid}">
+              </th:block>
               <th:block th:each="g : ${form.userGender}">
                   <input type="hidden" name="userGender" th:value="${g}">
               </th:block>
@@ -82,6 +88,9 @@
         <input type="hidden" name="sort" th:value="${form.sort}">
         <th:block th:each="s : ${form.status}">
           <input type="hidden" name="status" th:value="${s}">
+        </th:block>
+        <th:block th:each="gid : ${form.genreIds}">
+          <input type="hidden" name="genreIds" th:value="${gid}">
         </th:block>
         <th:block th:each="g : ${form.userGender}">
           <input type="hidden" name="userGender" th:value="${g}">
@@ -177,6 +186,20 @@
                 <li><label><input type="checkbox" name="status" value="ノミネート" th:checked="${form.status != null and form.status.contains('ノミネート')}">ノミネート</label></li>
                 <li><label><input type="checkbox" name="status" value="一次審査通過" th:checked="${form.status != null and form.status.contains('一次審査通過')}">一次審査通過</label></li>
                 <li><label><input type="checkbox" name="status" value="一次審査未通過" th:checked="${form.status != null and form.status.contains('一次審査未通過')}">一次審査未通過</label></li>
+              </ul>
+            </li>
+            <li>
+              <label><input type="checkbox" class="modal-checkbox-parent">書籍ジャンル</label>
+              <ul class="modal-checkbox-child grid-5">
+                <li th:each="g : ${genres}">
+                  <label>
+                    <input type="checkbox"
+                          name="genreIds"
+                          th:value="${g.id}"
+                          th:checked="${form.genreIds != null and form.genreIds.contains(g.id)}">
+                    <span th:text="${g.name}">ジャンル名</span>
+                  </label>
+                </li>
               </ul>
             </li>
             <li>

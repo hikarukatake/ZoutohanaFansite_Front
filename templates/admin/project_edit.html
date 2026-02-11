@@ -73,7 +73,7 @@
                 <tr>
                   <th class="table-border-b-strong">削除 : </th>
                   <td class="table-border-b-strong">
-                    <button type="button" class="btn btn-danger" data-modal-target="delete-confirm-modal">この企画を削除する</button> <!-- TODO:後で実装 -->
+                    <button type="button" class="btn btn-danger" data-modal-target="delete-confirm-modal">この企画を削除する</button>
                   </td>
                 </tr>
 
@@ -321,7 +321,7 @@
                 </table>
                 <div class="flex-1">
                   <p>本文 : </p>
-                  <p>この本を初めて読んだのは、小学四年生のときでした。表紙のイラストに惹かれて手に取ったのがきっかけでしたが、読み進めるうちに主人公の冒険や葛藤にどんどん引き込まれていったのを今でも覚えています。 あの頃は物語の世界に憧れるだけでしたが、大学生になった今読むと、人生の選択や成長の物語として心に響く部分が多く、まるで自分へのメッセージのように感じます。 文庫版の柔らかい紙の感触や少し黄ばんだページも、懐かしさをより一層引き立ててくれます。何度読み返しても色あせない、僕の原点のような一冊です。</p>
+                  <pre>この本を初めて読んだのは、小学四年生のときでした。表紙のイラストに惹かれて手に取ったのがきっかけでしたが、読み進めるうちに主人公の冒険や葛藤にどんどん引き込まれていったのを今でも覚えています。 あの頃は物語の世界に憧れるだけでしたが、大学生になった今読むと、人生の選択や成長の物語として心に響く部分が多く、まるで自分へのメッセージのように感じます。 文庫版の柔らかい紙の感触や少し黄ばんだページも、懐かしさをより一層引き立ててくれます。何度読み返しても色あせない、僕の原点のような一冊です。</p>
                 </div>
               </div>
               <div class="flex justify-between py-4"> <!-- 書評カードフッター -->
@@ -387,7 +387,7 @@
                   </table>
                   <div class="flex-1">
                     <p>本文 : </p>
-                    <p>この本を初めて読んだのは、小学四年生のときでした。表紙のイラストに惹かれて手に取ったのがきっかけでしたが、読み進めるうちに主人公の冒険や葛藤にどんどん引き込まれていったのを今でも覚えています。 あの頃は物語の世界に憧れるだけでしたが、大学生になった今読むと、人生の選択や成長の物語として心に響く部分が多く、まるで自分へのメッセージのように感じます。 文庫版の柔らかい紙の感触や少し黄ばんだページも、懐かしさをより一層引き立ててくれます。何度読み返しても色あせない、僕の原点のような一冊です。</p>
+                    <pre>この本を初めて読んだのは、小学四年生のときでした。表紙のイラストに惹かれて手に取ったのがきっかけでしたが、読み進めるうちに主人公の冒険や葛藤にどんどん引き込まれていったのを今でも覚えています。 あの頃は物語の世界に憧れるだけでしたが、大学生になった今読むと、人生の選択や成長の物語として心に響く部分が多く、まるで自分へのメッセージのように感じます。 文庫版の柔らかい紙の感触や少し黄ばんだページも、懐かしさをより一層引き立ててくれます。何度読み返しても色あせない、僕の原点のような一冊です。</pre>
                   </div>
                 </div>
                 <div class="flex justify-between py-4"> <!-- 書評カードフッター -->
@@ -409,10 +409,8 @@
     <div id="delete-confirm-modal" class="modal">
       <div>
         <div class="modal-content">
-          <div class="flex justify-between items-start">
-            <h2 class="page-title mx-auto">注意</h2>
-            <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
-          </div>
+          <h2 class="page-title mx-auto">注意</h2>
+          <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
 
           <div class="mt-8">
             <p>この企画を削除すると、<span class="font-bold underline">関連するすべての書評データも同時に削除されます。</span></p>
@@ -421,11 +419,12 @@
           </div>
 
           <div class="mt-8">
-            <p>企画URL : <span>winter-bunko</span></p>
-            <form>
-              <input type="text" class="input-text w-full" placeholder="winter-bunko">
+            <p>企画URL : <span th:text="${project.urlKey}">URL-key</span></p>
+            <form th:action="@{/admin/project/delete}" method="post">
+              <input type="hidden" name="projectId" th:value="${project.id}">
+              <input type="text" name="inputUrlKey" class="input-text w-full" th:placeholder="${project.urlKey}" required>
               <div class="btn-wrap mt-8">
-                <button type="submit" class="btn btn-danger"><span class="px-8">削除する</span></button>
+                <button type="submit" class="btn btn-danger delete-btn">削除する</button>
               </div>
             </form>
           </div>
@@ -436,10 +435,8 @@
     <div id="notification-confirm-modal" class="modal">
       <div>
         <div class="modal-content">
-          <div class="flex justify-between items-start">
-            <h2 class="page-title mx-auto">確認</h2>
-            <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
-          </div>
+          <h2 class="page-title mx-auto">確認</h2>
+          <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
 
           <div class="mt-8">
             <p>以下の内容・宛先で通知を送信してよろしいですか？</p>
@@ -447,7 +444,7 @@
 
           <div class="mt-8">
             <h3 class="page-title-sub">内容</h3>
-            <p class="notification-confirm-preview">
+            <pre class="notification-confirm-preview">
               <span class="merge-tag-preview">{user-nickname}</span>さん、こんにちは。
               この度は「<span class="merge-tag-preview">{project-name}</span>」へ書評を投稿いただき、誠にありがとうございました。
               あなたが投稿した「<span class="merge-tag-preview">{review-title}</span>」が一次審査を通過したことをお知らせします。おめでとうございます！

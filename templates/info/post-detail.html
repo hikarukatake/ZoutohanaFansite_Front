@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>お知らせ詳細</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
-    <link rel="stylesheet" th:href="@{/css/info/post-detail.css}" href="../css/info/post-detail.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" href="../../static/css/header.css">
+    <link rel="stylesheet" th:href="@{/css/footer.css}" href="../../static/css/footer.css">
+    <link rel="stylesheet" th:href="@{/css/info/post-detail.css}" href="../../static/css/info/post-detail.css">
 </head>
 
 <body>
@@ -16,10 +19,13 @@
         <div class="breadcrumb-box">
             <div class="breadcrumb"><a th:href="@{/}" href="../fansite/top.html">ホーム</a></div>
             <div class="breadcrumb-middle">></div>
-            <div class="breadcrumb" id="breadcrumb-category"><a th:href="@{/news(category='new')}" href="">お知らせ一覧</a></div>
+            <div class="breadcrumb" id="breadcrumb-category"><a th:href="@{/news(category='new')}"
+                    href="../info/post-list.html">お知らせ</a>
+            </div>
             <div class="breadcrumb-middle">></div>
             <div class="breadcrumb" id="breadcrumb-here" th:text="${post.title}">お知らせタイトル</div>
         </div>
+
         <div class="list-box">
             <div class="list-title">
                 <h2>News</h2>
@@ -34,16 +40,20 @@
                 </div>
                 <div class="deta-box">
                     <p id="post-data-date" th:text="${#temporals.format(post.postedAt, 'yyyy.MM.dd')}">2025.01.01</p>
-                    <p class="deta-box-plan" id="post-data-category" th:text="'#' + ${post.category.label}">#お知らせカテゴリ</p>
+                    <p class="deta-box-plan" id="post-data-category" th:text="'#' + ${post.category.label}">#お知らせカテゴリ
+                    </p>
                 </div>
             </div>
             <div class="news-plan">
-                <p th:text="${post.content}">本日、第1次選考の結果を公開しました。マイページ内の「選考結果」から、あなたの作品の結果をご確認いただけます。結果は応募作品ごとに表示され、第2次選考に進まれる方には次のステップに関する詳細な案内も併せてご覧いただけます。</p>
+                <p th:text="${post.content}">
+                    本日、第1次選考の結果を公開しました。マイページ内の「選考結果」から、あなたの作品の結果をご確認いただけます。結果は応募作品ごとに表示され、第2次選考に進まれる方には次のステップに関する詳細な案内も併せてご覧いただけます。
+                </p>
             </div>
         </section>
 
         <div class="navigation-container">
-            <a th:href="@{/news(category='new')}" href="post-list.html?category=new" class="nav-link rectangle-button" id="back-to-list">一覧に戻る</a>
+            <a th:href="@{/news(category='new')}" href="post-list.html?category=new" class="nav-link rectangle-button"
+                id="back-to-list">一覧に戻る</a>
         </div>
 
 
@@ -51,43 +61,22 @@
         <div th:replace="~{layout :: footer}"></div>
 
 
-    <!-- ヘッダーモーダル -->
-    <div class="overlay-menu" id="overlayMenu">
-        <div class="close-btn" id="menuClose">×</div>
-        <img src="../img/zoutohana-white-color.png" class="" style="width: 5rem;" alt="">
-        <ul class="menu-list">
-            <li class="menu-item">お知らせ</li>
+        <!-- ヘッダーモーダル -->
+        <div class="overlay-menu" id="overlayMenu">
+            <div class="close-btn" id="menuClose">×</div>
+            <img src="../img/zoutohana-white-color.png" class="" style="width: 5rem;" alt="">
+            <ul class="menu-list">
+                <li class="menu-item">お知らせ</li>
 
-            <li class="menu-item">企画一覧</li>
+                <li class="menu-item">企画一覧</li>
 
-            <li class="menu-item">象と花プロジェクト</li>
+                <li class="menu-item">象と花プロジェクト</li>
 
-            <li class="menu-item">お問い合わせ</li>
+                <li class="menu-item">お問い合わせ</li>
 
-            <li class="menu-item">ログイン</li>
-        </ul>
-    </div>
-
-
-
-        <script>
-            // ▼▼▼ 要素を取得 ▼▼▼
-            const menuOpen = document.getElementById('menuOpen');   // ハンバーガーメニューのアイコン
-            const menuClose = document.getElementById('menuClose'); // ハンバーガーメニューの閉じるボタン
-            const overlayMenu = document.getElementById('overlayMenu'); // ハンバーガーメニュー本体
-
-            const gearButton = document.querySelector('.settings-icon'); // 歯車アイコン
-            const settingsModal = document.getElementById('settingsModal'); // 設定モーダル本体
-
-            // ▼▼▼ ハンバーガーメニューの動作（既存のまま） ▼▼▼
-            menuOpen.addEventListener('click', () => {
-                overlayMenu.classList.add('active');
-            });
-
-            menuClose.addEventListener('click', () => {
-                overlayMenu.classList.remove('active');
-            });
-        </script>
+                <li class="menu-item">ログイン</li>
+            </ul>
+        </div>
 
         <script>
             // 企画一覧のタブメニュー

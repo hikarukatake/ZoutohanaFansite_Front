@@ -242,6 +242,51 @@ if (clearAllCheckbox) {
   });
 }
 
+// ========== フォームの内容をモーダルにプレビュー表示 ==========
+// フォーム内の各パーツにdata-preview属性をつける(例 : data-preview="#confirm-title")
+// モーダルの中のプレビューを出したい部分に一致するIDをつける(例 : <span id="confirm-title"></span>)
+// モーダルを開くボタンのidを"confirm-btn"にする
+document.addEventListener("DOMContentLoaded", () => {
+  const confirmBtn = document.getElementById("confirm-btn");
+  if (!confirmBtn) return;
+
+  confirmBtn.addEventListener("click", () => {
+    const form = confirmBtn.closest("form");
+    if (!form) return;
+
+    const previewTargets = form.querySelectorAll("[data-preview]");
+
+    previewTargets.forEach(el => {
+      const previewSelector = el.dataset.preview;
+      const previewEl = document.querySelector(previewSelector);
+      if (!previewEl) return;
+
+      let value = "";
+
+      if (el.type === "radio") {
+        if (!el.checked) return;
+        value = el.nextSibling.textContent?.trim() || el.value;
+
+      } else if (el.type === "checkbox") {
+        value = el.checked ? "はい" : "いいえ";
+
+      } else if (el.tagName === "SELECT") {
+        value = el.selectedOptions[0]?.textContent || "";
+
+      } else {
+        value = el.value;
+      }
+
+      // datetime-local を見やすく
+      if (el.type === "datetime-local" && value) {
+        value = value.replace("T", " ");
+      }
+
+      previewEl.textContent = value || "—";
+    });
+  });
+});
+
 // ========== 書評一覧の一括操作 ==========
 const statusTextMap = {
   INITIAL: "一次審査未通過",
@@ -286,7 +331,7 @@ if (statusSelect && statusTextEl) {
   });
 }
 
-const executeBtn = document.getElementById("confirmBulkBtn");
+const executeBtn = document.getElementById("confirmStatusUpdateBtn");
 
 if (executeBtn) {
   function toggleExecuteButton() {

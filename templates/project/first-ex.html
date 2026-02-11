@@ -6,14 +6,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>企画ページtop</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css">
-    <style th:inline="css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/project.css}" href="../../static/css/project.css">
+    <!-- <style th:inline="css">
         :root {
             --main-color: [(${project.themeColor.dbValue})];
             --sub-color: [(${project.themeColor.dbValue})];
         }
-    </style>
-    <link rel="stylesheet" th:href="@{/css/project/first-ex.css}" href="../css/project/first-ex.css">
+    </style> -->
+    <link rel="stylesheet" th:href="@{/css/project/first-ex.css}" href="../../static/css/project/first-ex.css">
 </head>
 
 <body>
@@ -22,7 +23,7 @@
         <div class="slider-box">
             <div class="slider">
                 <div class="slides">
-                    <div class="slide active"><img th:href="@{/img/book-img.png}" src="../img/book-img.png" alt=""></div>
+                    <div class="slide active"><img th:src="@{/api/image/{url}(url=${project.mainImgUrl})}" src="../../static/img/book-img.png" alt=""></div>
                 </div>
             </div>
         </div>
@@ -43,11 +44,25 @@
                 <p id="status-text" th:text="${project.status.getLabel()}">投稿受付前</p>
                 <h2>です</h2>
             </div>
-            <div class="flow-text">
+            <div class="flow-text" th:if="${project.status.dbValue.equals('BEFORE_SUBMISSION')}">
+                <p th:text="${#temporals.format(project.submissionStartAt, 'yyyy年MM月dd日') + 'より書評投稿受付が始まります。'}">書評投稿受付期間になると、書評を投稿することができます。</p>
+                <p>書評投稿はさわや書店各店舗で対象の本を購入すると投稿することができます。</p>
+                <p>皆様のご参加をお待ちしております。</p>
+            </div>
+            <div class="flow-text" th:if="${project.status.dbValue.equals('DURING_SUBMISSION')}">
+                <p>現在、書評投稿受付中です。</p>
+                <p>書評投稿はさわや書店各店舗で対象の本を購入すると投稿することができます。</p>
+                <p>皆様のご参加をお待ちしております。</p>
+            </div>
+            <div class="flow-text" th:if="${project.status.dbValue.equals('FIRST_PHASE')}">
                 <p>一次審査を通過した書評は、現在第二次審査の開始前となっております。</p>
                 <p>二次審査では、読者のみなさまからの“いいね”数により最終候補となる上位10作品が決定いたします。</p>
                 <p>皆さまの一票が、作品が店頭に並ぶ大きな力となります。</p>
                 <p>投稿受付開始まで、今しばらくお待ちください。</p>
+            </div>
+            <div class="flow-text" th:if="${project.status.dbValue.equals('SECOND_PHASE_VERIFY')}">
+                <p>現在、投票結果を集計しております。</p>
+                <p>結果が確定し次第発表しますので、しばらくおまちください。</p>
             </div>
             <div id="info-link" th:if="${project.status.dbValue.equals('DURING_SUBMISSION')}" sec:authorize="isAuthenticated()">
                 <a th:href="@{/review(id=${project.id})}" href="new-info.html" class="btn btn-next-step" id="btn-next-step">
@@ -68,7 +83,7 @@
                     <p class="circle-1">01</p>
                 </div>
                 <div class="book-section-img">
-                    <img src="../img/book-giri.png" class="book-section" alt="">
+                    <img src="../../static/img/book-giri.png" class="book-section" alt="">
                 </div>
             </div>
             <div class="step-text">
@@ -87,7 +102,7 @@
                     <p class="circle-1">02</p>
                 </div>
                 <div class="book-section-img">
-                    <img src="../img/book-giri.png" class="book-section" alt="">
+                    <img src="../../static/img/book-giri.png" class="book-section" alt="">
                 </div>
             </div>
             <div class="step-text">
@@ -108,7 +123,7 @@
                     <p class="circle-1">03</p>
                 </div>
                 <div class="book-section-img">
-                    <img src="../img/book-giri.png" class="book-section" alt="">
+                    <img src="../../static/img/book-giri.png" class="book-section" alt="">
                 </div>
             </div>
             <div class="step-text">
@@ -189,7 +204,7 @@
     <!-- ヘッダーモーダル -->
     <div class="overlay-menu" id="overlayMenu">
         <div class="close-btn" id="menuClose">×</div>
-        <img src="../img/zoutohana-white-color.png" class="" style="width: 5rem;" alt="">
+        <img src="../../static/img/zoutohana-white-color.png" class="" style="width: 5rem;" alt="">
         <ul class="menu-list">
             <li class="menu-item">お知らせ</li>
 
@@ -202,9 +217,9 @@
             <li class="menu-item">ログイン</li>
         </ul>
         <div class="imgs">
-            <img src="../img/instagram-white.png" class="imgs-icon" alt="">
-            <img src="../img/facebook-white.png" class="imgs-width" alt="">
-            <img src="../img/x-white.png" class="imgs-width" alt="">
+            <img src="../../static/img/instagram-white.png" class="imgs-icon" alt="">
+            <img src="../../static/img/facebook-white.png" class="imgs-width" alt="">
+            <img src="../../static/img/x-white.png" class="imgs-width" alt="">
         </div>
     </div>
 

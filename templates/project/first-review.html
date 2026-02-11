@@ -11,8 +11,13 @@
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
     <style th:inline="css">
         :root {
-            --main-color: [(${project.themeColor.dbValue})];
-            --sub-color: [(${project.themeColor.dbValue})];
+            --main-color: [(${
+                    project.themeColor.dbValue
+                })];
+
+            --sub-color: [(${
+                    project.themeColor.dbValue
+                })];
         }
     </style>
     <link rel="stylesheet" th:href="@{/css/project/first-review.css}" href="../../static/css/project/first-review.css">
@@ -22,282 +27,198 @@
 </head>
 
 <body class="no-scroll">
-    <div class="img-box" id="tapTarget">
-        <div class="book-text" id="bookText">
-            <div>
-                <h1>あなたの</h1>
-                <h1>"読みたい"が</h1>
-                <h1>次に並ぶ本を決めます</h1>
-            </div>
-            <div class="text-top">
-                <p>一次審査へのたくさんの書評投稿</p>
-                <p>ありがとうございました。</p>
-            </div>
-            <div class="text-box">
-                <p>投稿された作品は二次審査へと進み、</p>
-                <p>ここからは読者のみなさんの"いい</p>
-                <p>ね"が力になります</p>
-            </div>
-            <div class="text-box">
-                <p>"いいね"が多かった 上位10作品 が、</p>
-                <p>次のステップへ進むことができます</p>
-                <p> 気になった作品に、あなたの一票を</p>
-                <p>ぜひ届けてください。</p>
+    <div class="container">
+        <div class="img-box" id="tapTarget">
+            <div class="book-text" id="bookText">
+                <div>
+                    <h1>あなたの</h1>
+                    <h1>"読みたい"が</h1>
+                    <h1>次に並ぶ本を決めます</h1>
+                </div>
+                <div class="text-top">
+                    <p>一次審査へのたくさんの書評投稿</p>
+                    <p>ありがとうございました。</p>
+                </div>
+                <div class="text-box">
+                    <p>投稿された作品は二次審査へと進み、</p>
+                    <p>ここからは読者のみなさんの"いい</p>
+                    <p>ね"が力になります</p>
+                </div>
+                <div class="text-box">
+                    <p>"いいね"が多かった 上位10作品 が、</p>
+                    <p>次のステップへ進むことができます</p>
+                    <p> 気になった作品に、あなたの一票を</p>
+                    <p>ぜひ届けてください。</p>
+                </div>
             </div>
         </div>
+        <div class="next-section" id="nextStep">
+            <div class="totalling-box">
+                <p class="totalling-text">集まった書評を</p>
+            </div>
+            <div class="looking-box">
+                <p class="totalling-text">見てみましょう</p>
+            </div>
+            <div class="shelf-grid" id="shelf">
+            </div>
+            <div class="button-area">
+                <button id="nextBtn" class="next-btn" disabled>次の作品へ</button>
+            </div>
+        </div>
+        <div class="one-book-box" id="voteReview">
+            <h3 class="you-one-text">あなたが選んだ１冊</h3>
+            <div class="one-text-box">
+                <p class="one-text">現在、あなたが投票している作品です</p>
+                <p class="one-text">投票期間終了まで応援しましょう</p>
+            </div>
+            <div class="one-book-shinto-box">
+            </div>
+            <div class="share-box" id="shareBox">
+                <img src="../img/share.png" class="share">
+                <p class="share-text">投票を取り消す</p>
+            </div>
+        </div>
+        <div class="all-book-box" id="allBookBox">
+            <div class="tab-wrapper">
+                <div class="tab active">
+                    全ての書評
+                    <span class="marker"></span>
+                </div>
+                <div class="tab">
+                    ブックマーク済み
+                </div>
+            </div>
+            <div class="book-shinto-box">
+            </div>
+            <div id="pagination" class="pagination">
+                <button onclick="createPagination(0)" id="paginationPrev" class="prev"><<</button>
+                <button onclick="createPagination(1)" id="paginationNext" class="next">>></button>
+            </div>
+        </div>
+        <div class="section-title-area">
+            <div class="section-square"></div>
+            <h2 class="section-title">受賞の流れ</h2>
+        </div>
+        <section>
+            <div class="Award-box">
+                <div class="Award">
+                    <div class="Award-circle-box">
+                        <div class="Award-circle">
+                            <p class="Award-circle-step">STEP</p>
+                            <p class="Award-circle-1">01</p>
+                        </div>
+                    </div>
+                    <div class="Award-text">
+                        <h4>書店員による審査（一次審査）</h4>
+                        <p>投稿された書評は、書店員がチェックします。書店員の心を掴む書評であれば、一次審査通過となり、二次審査へ進むチャンスを得られます。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="dashe-box">
+            <div class="dashe"></div>
+        </div>
+        <section>
+            <div class="Award-box">
+                <div class="Award">
+                    <div class="Award-circle-box">
+                        <div class="inversion-circle">
+                            <p class="inversion-circle-step">STEP</p>
+                            <p class="inversion-circle-1">02</p>
+                        </div>
+                    </div>
+                    <div class="Award-text">
+                        <h4> 一般投票（二次審査）</h4>
+                        <p>一次審査を通過した作品は、読者（一般ユーザー）による投票に進みます。「最も読みたい」と思った作品に投票してもらい、投票数の多い上位10作品が二次審査を通過します。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="dashe-box">
+            <div class="dashe"></div>
+        </div>
+        <section class="Award-bottom">
+            <div class="Award-box">
+                <div class="Award">
+                    <div class="Award-circle-box">
+                        <div class="inversion-circle">
+                            <p class="inversion-circle-step">STEP</p>
+                            <p class="inversion-circle-1">03</p>
+                        </div>
+                    </div>
+                    <div class="Award-text">
+                        <h4>販売・大賞決定</h4>
+                        <p>上位10作品は、推薦書評POP付きでさわや書店の店頭に並びます。一定期間の販売数を競い、最も売れた作品が大賞に選ばれます。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div th:replace="~{layout :: contact}"></div>
+
+        <!-- オーバーレイ -->
+        <div id="tutorialOverlay" style="margin-top: -30px;"></div>
+
+        <!-- モーダル -->
+        <div id="bookDetailModal" class="modal-overlay">
+            <span id="closeModal" class="close-button">&times;</span>
+            <div style="width: 100%;">
+                <div class="modal-content">
+                    <div class="modal-box">
+                        <div class="modal-textFirst-box">
+                            <img th:src="@{/img/rose.png}" class="modal-rose" alt="">
+
+                            <h3 id="modalTitle">作品タイトル</h3>
+
+                            <p id="textFirst" class="modal-textFirst">
+                            </p>
+                        </div>
+
+                        <div class="modal-textSecond-box" style="display:none;"> <img th:src="@{/img/rose.png}"
+                                class="modal-rose" alt="">
+                            <p id="textSecond" class="modal-textSecond"></p>
+                        </div>
+                    </div>
+
+                    <div class="modal-buttons" id="modalButtonsArea">
+                        <button id="voteBtn" onclick="Sample(id)" class="modal-button"><span
+                                class="material-symbols-outlined">how_to_vote</span>投票</button>
+                        <button id="bookmarkBtn" onclick="Sample(id)" class="modal-button"><span
+                                class="material-symbols-outlined">bookmark</span>ブックマーク</button>
+                    </div>
+
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <img id="modalIcon" src="" class="profile-icon" alt="icon">
+
+                            <h3 id="modalName" class="profile-name">名前</h3>
+                        </div>
+
+                        <div class="profile-tags">
+                            <p id="modalInfo" style="font-size: 0.9rem; color: #555;"></p>
+                        </div>
+
+                        <hr class="profile-line">
+
+                        <div class="profile-bio">
+                            <p id="modalProfileText">
+                                ここに自己紹介が入ります。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modalScrollOverlay" class="modal-scroll-overlay" style="display:none;">
+                <div class="scroll-guide">
+                    <p>下にスクロールしてみよう</p>
+                    <span class="arrow">↓</span>
+                </div>
+            </div>
+        </div>
+
+        <div th:replace="~{layout :: footer}"></div>
     </div>
-    <div class="next-section" id="nextStep">
-        <div class="totalling-box">
-            <p class="totalling-text">集まった書評を</p>
-        </div>
-        <div class="looking-box">
-            <p class="totalling-text">見てみましょう</p>
-        </div>
-        <div class="shelf-grid" id="shelf">
-        </div>
-        <div class="button-area">
-            <button id="nextBtn" class="next-btn" disabled>次の作品へ</button>
-        </div>
-    </div>
-    <div class="one-book-box">
-        <h3 class="you-one-text">あなたが選んだ１冊</h3>
-        <div class="one-text-box">
-            <p class="one-text">現在、あなたが投票している作品です</p>
-            <p class="one-text">投票期間終了まで応援しましょう</p>
-        </div>
-        <div class="one-book-shinto-box">
-        </div>
-<!--        <div class="one-book-shinto-box">-->
-<!--            <div class="one-book-shinto-set">-->
-<!--                <div class="one-book">-->
-<!--                    <div class="one-book-text-overlay">-->
-<!--                        この作品のここが<br>すごいこのいこ-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-        <div class="pen-box">
-            <img src="../img/pen.png" class="pen" alt="">
-            <p class="pen-text">投稿者：象さん</p>
-        </div>
-        <div class="share-box">
-            <img src="../img/share.png" class="share">
-            <p class="share-text">この書評をシェアする</p>
-        </div>
-    </div>
-    <div class="all-book-box">
-        <div class="tab-wrapper">
-            <div class="tab active">
-                全ての書評
-                <span class="marker"></span>
-            </div>
-            <div class="tab">
-                ブックマーク済み
-            </div>
-        </div>
-        <div class="book-shinto-box">
-        </div>
-        <div class="pagination">
-            <button class="prev"><<</button>
-            <button class="next">>></button>
-        </div>
-    </div>
-    <div class="section-title-area">
-        <div class="section-square"></div>
-        <h2 class="section-title">受賞の流れ</h2>
-    </div>
-    <section>
-        <div class="Award-box">
-            <div class="Award">
-                <div class="Award-circle-box">
-                    <div class="Award-circle">
-                        <p class="Award-circle-step">STEP</p>
-                        <p class="Award-circle-1">01</p>
-                    </div>
-                </div>
-                <div class="Award-text">
-                    <h4>書店員による審査（一次審査）</h4>
-                    <p>投稿された書評は、書店員がチェックします。書店員の心を掴む書評であれば、一次審査通過となり、二次審査へ進むチャンスを得られます。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <div class="dashe-box">
-        <div class="dashe"></div>
-    </div>
-    <section>
-        <div class="Award-box">
-            <div class="Award">
-                <div class="Award-circle-box">
-                    <div class="inversion-circle">
-                        <p class="inversion-circle-step">STEP</p>
-                        <p class="inversion-circle-1">02</p>
-                    </div>
-                </div>
-                <div class="Award-text">
-                    <h4> 一般投票（二次審査）</h4>
-                    <p>一次審査を通過した作品は、読者（一般ユーザー）による投票に進みます。「最も読みたい」と思った作品に投票してもらい、投票数の多い上位10作品が二次審査を通過します。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <div class="dashe-box">
-        <div class="dashe"></div>
-    </div>
-    <section class="Award-bottom">
-        <div class="Award-box">
-            <div class="Award">
-                <div class="Award-circle-box">
-                    <div class="inversion-circle">
-                        <p class="inversion-circle-step">STEP</p>
-                        <p class="inversion-circle-1">03</p>
-                    </div>
-                </div>
-                <div class="Award-text">
-                    <h4>販売・大賞決定</h4>
-                    <p>上位10作品は、推薦書評POP付きでさわや書店の店頭に並びます。一定期間の販売数を競い、最も売れた作品が大賞に選ばれます。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- お問い合わせ -->
-    <div class="contact-box">
-        <div class="contact-card">
-            <h2 class="contact-title">お問い合わせ</h2>
-            <div class="contact-desc-box">
-                <p class="contact-desc">企画、寄贈に関するご質問など、</p>
-                <p class="contact-desc">お気軽にお問い合わせください。</p>
-            </div>
-            <a href="#" class="contact-btn">
-                <span class="btn-text">お問い合わせフォーム</span>
-                <span class="btn-arrow">&gt;</span>
-            </a>
-
-            <div class="tel-box">
-                <div class="tel-main">
-                    <span class="tel-label">TEL</span>
-                    <span class="tel-number">000-0000-0000</span>
-                </div>
-                <p class="tel-hours">受付時間 ｜ 平日 9:00 ~ 17:00</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- オーバーレイ -->
-    <div id="tutorialOverlay" style="margin-top: -30px;"></div>
-
-    <!-- モーダル -->
-    <div id="bookDetailModal" class="modal-overlay">
-        <span id="closeModal" class="close-button">&times;</span>
-        <div style="width: 100%;">
-            <div class="modal-content">
-                <div class="modal-box">
-                    <div class="modal-textFirst-box">
-                        <img src="../../static/img/rose.png" class="modal-rose" alt="">
-
-                        <h3 id="modalTitle">作品タイトル</h3>
-
-                        <p id="textFirst" class="modal-textFirst">
-                        </p>
-                    </div>
-
-                    <div class="modal-textSecond-box" style="display:none;"> <img src="../../static/img/rose.png"
-                            class="modal-rose" alt="">
-                        <p id="textSecond" class="modal-textSecond"></p>
-                    </div>
-                </div>
-
-                <div class="modal-buttons" id="modalButtonsArea">
-                    <button id="voteBtn" onclick="Sample(id)" class="modal-button"><span
-                            class="material-symbols-outlined">how_to_vote</span>投票</button>
-                    <button id="bookmarkBtn" onclick="Sample(id)" class="modal-button"><span
-                            class="material-symbols-outlined">bookmark</span>ブックマーク</button>
-                </div>
-
-                <div class="profile-card">
-                    <div class="profile-header">
-                        <img id="modalIcon" src="" class="profile-icon" alt="icon">
-
-                        <h3 id="modalName" class="profile-name">名前</h3>
-                    </div>
-
-                    <div class="profile-tags">
-                        <p id="modalInfo" style="font-size: 0.9rem; color: #555;"></p>
-                    </div>
-
-                    <hr class="profile-line">
-
-                    <div class="profile-bio">
-                        <p id="modalProfileText">
-                            ここに自己紹介が入ります。
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="modalScrollOverlay" class="modal-scroll-overlay" style="display:none;">
-            <div class="scroll-guide">
-                <p>下にスクロールしてみよう</p>
-                <span class="arrow">↓</span>
-            </div>
-        </div>
-    </div>
-
-
-
-    <!-- フッター -->
-    <footer class="footer-all">
-        <div class="footer-menu">
-            <div class="footer-top">
-                <img src="../img/zoutohana-white.png" style="width: 4.5rem;" alt="">
-                <p class="footer-white-text">A BOOK PROJECT</p>
-            </div>
-            <a href="#" class="footer-menu-item-top">
-                <p>お知らせ</p>
-                <p>></p>
-            </a>
-            <a href="#" class="footer-menu-item">
-                <p>企画</p>
-                <p>></p>
-            </a>
-            <a href="#" class="footer-menu-item">
-                <p>象と花プロジェクト</p>
-                <p>></p>
-            </a>
-            <a href="#" class="footer-menu-item">
-                <p>お問い合わせ</p>
-                <p>></p>
-            </a>
-            <a href="#" class="footer-menu-item">
-                <p>サイトのご利用について</p>
-                <p>></p>
-            </a>
-        </div>
-
-        <!-- SNSブロック -->
-        <div class="footer-sns">
-            <div class="sns-box">
-                <div class="footer-sns-title">SNS</div>
-                <div class="sns-box-icons">
-                    <div class="sns-icons">
-                        <img src="../img/instagram.png" class="sns-icon" alt="">
-                        <img src="../img/facebook.png" class="sns-icon-facebook" alt="">
-                        <img src="../img/x.png" class="sns-icon-x" alt="">
-                    </div>
-
-                    <div class="sns-labels">
-                        <span>Instagram</span>
-                        <span>Facebook</span>
-                        <span>X（旧Twitter）</span>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-line"></div>
-
-            <div class="footer-copy">©Copylight</div>
-        </div>
-    </footer>
 </body>
 
 <script th:src="@{/js/first-review.js}" src="../../static/js/first-review.js"></script>

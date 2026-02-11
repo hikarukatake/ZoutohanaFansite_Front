@@ -32,23 +32,29 @@
         </if>
 
         -- ステータス絞り込み
-        <if test="form.status != null and form.status.size() > 0">
-          <foreach collection="form.status" item="statusItem" open="AND (" separator=" OR " close=")">
-            <choose>
-              <when test="'一次審査未通過'.equals(statusItem)">
-                (r.first_stage_passed = FALSE)
-              </when>
-              <when test="'一次審査通過'.equals(statusItem)">
-                (r.first_stage_passed = TRUE AND nr.id IS NULL)
-              </when>
-              <when test="'ノミネート'.equals(statusItem)">
-                (nr.id IS NOT NULL AND nr.review_awarded = FALSE)
-              </when>
-              <when test="'大賞'.equals(statusItem)">
-                (nr.review_awarded = TRUE)
-              </when>
-            </choose>
-          </foreach>
+        <if test="form.genreIds != null and form.genreIds.size() > 0">
+          AND EXISTS (
+            SELECT 1
+            FROM review_genres rg
+            WHERE rg.review_id = r.id
+              AND rg.genre_id IN
+              <foreach collection="form.genreIds" item="gid" open="(" separator="," close=")">
+                #{gid}
+              </foreach>
+          )
+        </if>
+
+        -- 書籍ジャンル絞り込み
+        <if test="form.genreIds != null and form.genreIds.size() > 0">
+          AND EXISTS (
+            SELECT 1
+            FROM review_genres rg
+            WHERE rg.review_id = r.id
+              AND rg.genre_id IN
+              <foreach collection="form.genreIds" item="gid" open="(" separator="," close=")">
+                #{gid}
+              </foreach>
+          )
         </if>
 
         -- 投稿者の性別絞り込み

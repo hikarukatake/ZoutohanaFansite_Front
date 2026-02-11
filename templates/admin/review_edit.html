@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>書評詳細</title>
+    <title th:text="${review.reviewTitle} + ' | 書評詳細'">データが取得できませんでした:書評名 | 書評詳細</title>
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="../../static/css/admin/admin-style.css" th:href="@{/css/admin/admin-style.css}">
 </head>
@@ -111,16 +112,18 @@
                 <pre th:text="${review.reviewContent}"></pre>
               </div>
             </div>
-            <div class="flex gap-1 mt-4 items-start">
+            <form th:action="@{/admin/review/genreUpdate}" method="post" class="flex gap-1 mt-4 items-start">
+              <input type="hidden" name="reviewId" th:value="${review.id}">
+              <div id="genre-hidden-area"></div>
+
               <span class="font-bold mt-2">書評のジャンル : </span>
               <div id="multi-select-wrap" class="w-full flex-1">
                 <div id="multi-select-tags"></div>
                 <input type="text" id="genre-input" class="input-text w-full">
                 <div id="multi-select-options" hidden></div>
-                <input type="hidden" name="genres" id="genres-hidden"> <!-- 実際に送信されるもの -->
               </div>
               <button type="submit" class="btn">更新</button>
-            </div>
+            </form>
           </div>
 
           <div class="flex justify-between pt-4"> <!-- 書評カードフッター -->
@@ -134,7 +137,7 @@
         <div class="btn-wrap mt-8">
           <button type="button" class="btn btn-danger" data-modal-target="delete-confirm-modal">削除する</button>
           <a href="#" th:href="@{/}" class="btn">個別通知を送る</a>
-          <a href="#" th:href="@{/}" class="btn">印刷する</a>
+          <a href="review_print.html" th:href="@{/admin/review/print}" class="btn">印刷する</a>
         </div>
       </div>
     </main>
@@ -166,9 +169,11 @@
       </div>
     </div>
 
-    <script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/admin-general.js}"></script>
     <script th:inline="javascript">
-      const optionsList = /*[[${genres}]]*/ [];
+      window.optionsList = [[${genreOptions}]];
+      window.initialGenres = [[${thisReviewGenres}]];
     </script>
-  </body>
+    <script th:src="@{/js/admin/admin-general.js}"></script>
+    <script th:src="@{/js/admin/review-edit.js}"></script>
+</body>
 </html>

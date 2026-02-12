@@ -294,7 +294,7 @@ p {
 
     position: absolute;
     top: 40px;
-    left: 60px;
+    left: 40px;
 
     color: var(--font-normal);
     z-index: 2;

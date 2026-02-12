@@ -53,8 +53,6 @@
         });
     }
 
-    
-
 // ================共通関数本を押してからモーダルの表示======================
 function Allbook(data, book){
         // モーダルのブックマークボタンのidをDOMから取得
@@ -82,70 +80,45 @@ function Allbook(data, book){
 
         // 感想テキストエリアを「初期状態」に作り直す
         // これをやらないと、前回の改行処理でIDが消えているため、次のデータが流し込めません
-                
-const modal = document.getElementById('bookDetailModal');
-    modal.style.display = 'flex'; // ★ここで先に表示！
-    document.body.classList.add('no-scroll');
-
-
-    const textBox = document.querySelector('.modal-textFirst-box');
-
-    // ■ 箱の幅に合わせて文字数を計算して表示する関数
-    const renderText = () => {
-        if (!textBox) return;
-
-        // 1. 今の「テキストボックスの幅」を取得
-        const boxWidth = textBox.clientWidth; 
-
-        if (boxWidth === 0) return; // 幅が取れなかったら何もしない
-
-        // 2. 1文字あたりの幅（px）を設定して割り算する
-        // 例：文字サイズが16pxくらいなら、余白込みで「18」くらいで割ると丁度いいです
-        // ★この「19」という数字をいじると、文字の詰め具合が変わります
-        const charSize = 22; 
-
-        // 箱の幅 ÷ 1文字の幅 ＝ 入る文字数
-        let lineLength = Math.floor(boxWidth / charSize);
-
-        // ※少なすぎたり多すぎたりしないように制限
-        if (lineLength < 10) lineLength = 10; // 最低10文字
-        if (lineLength > 50) lineLength = 50; // 最高50文字
-
-        // ★確認用ログ
-        console.log(`箱の幅: ${boxWidth}px / 計算した文字数: ${lineLength}文字`);
-
-        // 3. テキスト分割処理
-        let textHtml = "";
-        const content = data.content; 
-
-        for (let i = 0; i < content.length; i += lineLength) {
-            const line = content.substr(i, lineLength);
-            textHtml += `<p class="modal-textFirst">${line}</p>`;
+        const textBox = document.querySelector('.modal-textFirst-box');
+        if (textBox) {
+            textBox.innerHTML = `
+                <img src="/img/rose.png" class="modal-rose" alt="">
+                <h3 id="modalTitle">${data.title}</h3>
+                <p id="textFirst" class="modal-textFirst">${data.content}</p>
+            `;
         }
 
-        // 4. HTML流し込み
-        textBox.innerHTML = `
-            <img src="../../static/img/rose.png" class="modal-rose" alt="">
-            <h3 id="modalTitle">${data.title}</h3>
-            <div class="text-container">
-                ${textHtml}
-            </div>
-        `;
-    };
+        // 4. 文字分割処理の実行（復活した textFirst に対して行う）
+        splitTextToParagraphs("textFirst", "modal-textFirst", 18);
 
-    // ■ 実行
-    // 先に display: flex にしたので、ここで正しく幅が取れます
-    renderText();
+        // 5. モーダル表示
+        const modal = document.getElementById('bookDetailModal');
+        modal.style.display = 'flex';
 
-    // ■ 画面サイズ変更時も再計算
-    window.removeEventListener('resize', renderText);
-    window.addEventListener('resize', renderText);
-
-    // ▲▲▲▲▲ 書き換え終了 ▲▲▲▲▲
-
-    // 6. モーダル内チュートリアル開始
-    startModalTutorial();
+        // 6. モーダル内チュートリアル開始（黒いオーバーレイ）
+        startModalTutorial();
 }
+    // モーダル関連変数
+    const modal = document.getElementById('bookDetailModal');
+    const closeBtn = document.getElementById('closeModal');
+    const modalScrollOverlay = document.getElementById('modalScrollOverlay');
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function () {
+            modal.style.display = 'none';
+        });
+    }
+
+// モーダル外クリックで閉じる
+window.addEventListener('click', function (event) {
+    if (event.target == modal) {
+        modal.style.display = 'none';
+        document.body.classList.remove('no-scroll');
+    }
+});
+
+
 
     /* =========================
         モーダル内のテキストを20文字ごとに改行して表示する

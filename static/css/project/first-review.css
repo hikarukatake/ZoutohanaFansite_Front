@@ -341,7 +341,6 @@ p {
 
 
 
-
 /* ボタンのスタイル */
 .button-area {
     text-align: center;
@@ -807,8 +806,7 @@ p {
 .modal-textSecond-box {
     width: 80%;
     margin: 0 auto;
-    padding: 16px;
-    padding: 10px 40px;
+    padding: 10px 50px 10px 40px;
     /* 内側の線 */
     border: 1px solid var(--font-bold);
     /* 外側の線 */
@@ -832,6 +830,20 @@ p {
 
 .modal-textSecond-box {
     border-bottom: none;
+}
+
+/* 「#」ではなく「.」から始まるのが重要です */
+.modal-textFirst {
+    /* 1行ごとに線を引く */
+    border-bottom: 1px solid #555; 
+    
+    /* 余白の調整 */
+    padding-bottom: 5px;   /* 文字と線の間 */
+    margin-bottom: 15px;   /* 次の行との間 */
+    
+    /* 念のためブロック要素にする */
+    display: block;
+    width: 100%;
 }
 
 

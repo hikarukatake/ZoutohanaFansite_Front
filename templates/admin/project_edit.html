@@ -249,14 +249,23 @@
         </div>
 
         <div class="main-content-card p-8 tab-panel"> <!-- 「投稿された書評について」タブの中身 -->
-          <div class="table-border-b-strong pb-8"> <!-- 「通知一括送信」部分 -->
-            <h2 class="page-title-sub">通知一括送信</h2>
+          <div class="table-border-b-strong pb-8"> <h2 class="page-title-sub">通知一括送信</h2>
+
+            <div class="flex gap-4 mt-2 mb-2">
+              <label class="cursor-pointer">
+                <input type="radio" name="targetPhase" value="FIRST_PHASE" class="scale-bigger" checked> 一次審査通過書評
+              </label>
+              <label class="cursor-pointer">
+                <input type="radio" name="targetPhase" value="SECOND_PHASE" class="scale-bigger"> 二次審査通過書評
+              </label>
+            </div>
+
             <div class="flex gap-1 mt-2">
               <span>テンプレート名 : </span>
-              <select class="select flex-1 w-full">
-                <option>一次審査通過連絡</option>
+              <select id="template-select" class="select flex-1 w-full">
+                <option value="">選択してください</option>
               </select>
-              <button type="submit" class="btn">呼び出す</button>
+              <button type="button" id="load-template-button" class="btn">呼び出す</button>
             </div>
             <div class="flex gap-1 mt-2">
               <span style="flex-shrink: 0;">タイトル : </span>
@@ -266,6 +275,7 @@
             <div class="button-wrap mt-4">
               <button type="button" id="open-notification-confirm" class="btn">内容を確認する</button>
             </div>
+          </div>
           </div>
 
           <div class="pb-8"> <!-- 「書評閲覧」部分 -->
@@ -435,7 +445,7 @@
               <span class="merge-tag-preview">{project-voting_start_at}</span>～<span class="merge-tag-preview">{project-voting_end_at}</span>　二次審査(一般投票)
               2025/08/01　ノミネート作品を一部さわや書店店舗で販売開始
               2025/08/31　大賞発表
-            </p>
+            </pre>
           </div>
 
           <div class="mt-8">
@@ -455,5 +465,157 @@
 
     <script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/admin-general.js}"></script>
     <script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/project-edit.js}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // --- 要素の取得 ---
+    const phaseRadios = document.querySelectorAll('input[name="targetPhase"]');
+    const templateSelect = document.getElementById('template-select');
+    const loadButton = document.getElementById('load-template-button');
+    const templateTitle = document.getElementById('template-title');
+    const templateBody = document.getElementById('template-body');
+
+    // 確認モーダル関連
+    const openConfirmBtn = document.getElementById('open-notification-confirm');
+    const confirmModal = document.getElementById('notification-confirm-modal');
+    const sendButton = confirmModal.querySelector('button[type="submit"]');
+
+    const previewPre = confirmModal.querySelector('.notification-confirm-preview');
+    const targetListOl = confirmModal.querySelector('ol.notification-confirm-preview');
+
+    /**
+     * 1. テンプレートリストの取得
+     */
+    const updateTemplateList = async (phase) => {
+      try {
+        const response = await fetch(`/api/admin/notification/template/list?phase=${phase}`);
+        if (!response.ok) throw new Error('リストの取得に失敗しました');
+        const templates = await response.json();
+        templateSelect.innerHTML = '<option value="">選択してください</option>';
+        templates.forEach(template => {
+          const option = document.createElement('option');
+          option.value = template.id;
+          option.textContent = template.title;
+          templateSelect.appendChild(option);
+        });
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    /**
+     * 2. 個別テンプレートの呼び出し
+     */
+    loadButton.addEventListener('click', async () => {
+      const selectedId = templateSelect.value;
+      if (!selectedId) {
+        alert('テンプレートを選択してください');
+        return;
+      }
+      try {
+        const response = await fetch(`/api/admin/notification/template/${selectedId}`);
+        if (!response.ok) throw new Error('取得失敗');
+        const data = await response.json();
+
+        templateTitle.value = data.title;
+        templateBody.value = data.content;
+      } catch (error) {
+        console.error('Error:', error);
+        alert('テンプレートの読み込み中にエラーが発生しました');
+      }
+    });
+
+    /**
+     * 3. 確認モーダルの表示
+     */
+    if (openConfirmBtn) {
+      openConfirmBtn.addEventListener('click', () => {
+        if (!templateTitle.value.trim() || !templateBody.value.trim()) {
+          alert('タイトルと本文を入力してください。');
+          return;
+        }
+        const selectedPhaseRadio = document.querySelector('input[name="targetPhase"]:checked');
+        const phaseLabel = selectedPhaseRadio ? selectedPhaseRadio.parentElement.textContent.trim() : "";
+
+        if (previewPre) previewPre.textContent = templateBody.value;
+        if (targetListOl) {
+          targetListOl.innerHTML = '';
+          const li = document.createElement('li');
+          li.textContent = phaseLabel;
+          targetListOl.appendChild(li);
+        }
+        confirmModal.style.display = 'block';
+      });
+    }
+
+    /**
+     * 4. 送信処理 (APIリクエスト & リダイレクト)
+     */
+    sendButton.addEventListener('click', async (e) => {
+      e.preventDefault();
+
+      // 二重送信防止のためにボタンを無効化
+      sendButton.disabled = true;
+
+      const params = new URLSearchParams(window.location.search);
+      const urlKey = params.get('urlKey');
+      const selectedPhase = document.querySelector('input[name="targetPhase"]:checked').value;
+      const recipient = (selectedPhase === 'FIRST_PHASE') ? 1 : 2;
+
+      const requestData = {
+        recipient: recipient,
+        urlKey: urlKey,
+        title: templateTitle.value,
+        message: templateBody.value
+      };
+
+      try {
+        const response = await fetch('/api/admin/notification/send', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('input[name="_csrf"]')?.value
+          },
+          body: JSON.stringify(requestData)
+        });
+
+        if (response.ok) {
+          // 成功時の処理
+          alert('通知を送信しました。');
+          // alertの「OK」が押された後に実行される
+          window.location.reload();
+        } else {
+          const errorData = await response.json();
+          alert('送信に失敗しました: ' + (errorData.message || 'サーバーエラー'));
+          sendButton.disabled = false; // 失敗時はボタンを元に戻す
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('通信エラーが発生しました。');
+        sendButton.disabled = false;
+      }
+    });
+
+    /**
+     * 5. モーダルを閉じる
+     */
+    const closeButtons = confirmModal.querySelectorAll('[data-modal-close], .modal-close');
+    closeButtons.forEach(btn => {
+      btn.addEventListener('click', () => confirmModal.style.display = 'none');
+    });
+
+    window.addEventListener('click', (event) => {
+      if (event.target === confirmModal) {
+        confirmModal.style.display = 'none';
+      }
+    });
+
+    phaseRadios.forEach(radio => {
+      radio.addEventListener('change', (e) => updateTemplateList(e.target.value));
+    });
+
+    const initialPhase = document.querySelector('input[name="targetPhase"]:checked')?.value || 'FIRST_PHASE';
+    updateTemplateList(initialPhase);
+  });
+</script>
 </body>
 </html>

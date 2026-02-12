@@ -300,3 +300,18 @@ footer {
     margin: 0 auto;
   }
 }
+
+/* 最初は透明にしておく */
+.copy-check-mark.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* コピー成功時にこのクラスをJSでつける */
+.copy-check-mark {
+    color: #28a745; /* 緑色 */
+    font-weight: bold;
+    transition: opacity 0.3s ease; /* ふわっと出す設定 */
+    position: absolute; /* アイコンの上に重ねる場合 */
+    right: -20px;       /* 位置はデザインに合わせて調整してください */
+}

@@ -41,12 +41,12 @@
                     <p class="intro-text">パスワードを変更する際に必要になります。</p>
                 </div>
                 <div class="security-code">
-                    <p th:text="${securityKey}" id="copy-text" class="security-code-text">AAAA-AAAA</p>
+                    <p th:text="${securityKey}" id="copy-text">AAAA-AAAA</p>
                     <p class="space">|</p>
                     <div class="copy-box">
-                        <img th:src="@{/static/img/draft2.png}" src="../../static/img/darft2.png" class="security-img"
+                        <img th:src="@{/img/darft2.png}" src="../../static/img/darft2.png" class="security-img"
                             alt="">
-                        <!-- <button id="copy-button">Copy</button> -->
+                        <p id="copy-check"  style="display: none;">✓</p>
                     </div>
                 </div>
                 <div class="border-security"></div>
@@ -79,14 +79,19 @@
     </main>
 
     <script>
-        document.getElementById('copy-button').addEventListener('click', () => {
-            const text = document.getElementById('copy-text').value;
+    document.querySelector('.copy-box').addEventListener('click', () => {
+        const text = document.getElementById('copy-text').innerText;
+        const checkMark = document.getElementById('copy-check');
 
-            navigator.clipboard.writeText(text).then(() => {
-                alert("テキストをコピーしました: " + text);
-            });
+        navigator.clipboard.writeText(text).then(() => {
+            // チェックマークを表示（hiddenクラスを取り除く）
+            checkMark.style.display = '';
+
+        }).catch(err => {
+            console.error('コピーに失敗しました: ', err);
         });
-    </script>
+    });
+</script>
 
 </body>
 

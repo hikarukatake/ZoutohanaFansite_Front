@@ -32,15 +32,24 @@
         </if>
 
         -- ステータス絞り込み
-        <if test="form.genreIds != null and form.genreIds.size() > 0">
-          AND EXISTS (
-            SELECT 1
-            FROM review_genres rg
-            WHERE rg.review_id = r.id
-              AND rg.genre_id IN
-              <foreach collection="form.genreIds" item="gid" open="(" separator="," close=")">
-                #{gid}
-              </foreach>
+        <if test="form.status != null and form.status.size() > 0">
+          AND (
+            <foreach collection="form.status" item="st" separator=" OR ">
+              <choose>
+                <when test="st == '大賞'">
+                  <![CDATA[ nr.review_awarded = TRUE ]]>
+                </when>
+                <when test="st == 'ノミネート'">
+                  <![CDATA[ nr.id IS NOT NULL AND nr.review_awarded = FALSE ]]>
+                </when>
+                <when test="st == '一次審査通過'">
+                  <![CDATA[ r.first_stage_passed = TRUE AND nr.id IS NULL ]]>
+                </when>
+                <when test="st == '一次審査未通過'">
+                  <![CDATA[ r.first_stage_passed = FALSE ]]>
+                </when>
+              </choose>
+            </foreach>
           )
         </if>
 

@@ -124,7 +124,6 @@ const modal = document.getElementById('bookDetailModal');
 
         // 4. HTML流し込み
         textBox.innerHTML = `
-            <img src="../../static/img/rose.png" class="modal-rose" alt="">
             <h3 id="modalTitle">${data.title}</h3>
             <div class="text-container">
                 ${textHtml}

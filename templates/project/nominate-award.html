@@ -7,11 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/project/first-review.css}" href="../../static/css/project.css">
     <link rel="stylesheet" th:href="@{/css/project/nominate-award.css}"
         href="../../static/css/project/nominate-award.css">
-    <style>
+    <!-- <style th:inline="css">
+        :root {
+            --main-color: [($ {
+                    project.themeColor.dbValue
+                })];
 
-    </style>
+            --sub-color: [($ {
+                    project.themeColor.dbValue
+                })];
+        }
+    </style> -->
 </head>
 
 <body class="no-scroll">
@@ -134,9 +143,6 @@
                 </div>
             </div>
         </div>
-
-
-
         <div class="one-book-box" id="voteReview">
             <h3 class="you-one-text">あなたが選んだ１冊</h3>
             <div class="one-text-box">
@@ -145,8 +151,6 @@
             <div class="one-book-shinto-box">
             </div>
         </div>
-
-
         <div class="section-title-area">
             <div class="section-square"></div>
             <h2 class="section-title">受賞の流れ</h2>

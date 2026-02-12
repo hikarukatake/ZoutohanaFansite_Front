@@ -997,6 +997,34 @@ input[type="radio"]:checked + .color-dot span {
 }
 
 
+/* ---------- メイン画像 ---------- */
+#mainImg-preview {
+  margin-top: 1rem;
+  max-width: 100%;
+}
+
+#pdf-list-ul {
+  list-style: none;
+}
+
+#pdf-list-ul li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.pdf-list-removeButton {
+  color: var(--admin-text-gray);
+  cursor: pointer;
+  padding: 0;
+  background-color: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* ---------- ボタン ---------- */
 .btn {
   padding: 0.4rem 0.6rem;

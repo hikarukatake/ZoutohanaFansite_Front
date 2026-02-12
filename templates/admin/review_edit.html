@@ -137,7 +137,7 @@
         <div class="btn-wrap mt-8">
           <button type="button" class="btn btn-danger" data-modal-target="delete-confirm-modal">削除する</button>
           <a href="#" th:href="@{/}" class="btn">個別通知を送る</a>
-          <a href="review_print.html" th:href="@{/admin/review/print}" class="btn">印刷する</a>
+          <a href="review_print.html" th:href="@{/admin/review/print(id=${review.id})}" class="btn">情報をコピーする</a>
         </div>
       </div>
     </main>

@@ -287,7 +287,7 @@
             <div class="review-card mt-4" th:each="awardedReview : ${awardedReviews}"> <!-- 書評カード -->
               <div class="table-border-b-strong flex justify-between py-4"> <!-- 書評カードヘッダー -->
                 <div> <!-- 左側 -->
-                  <p class="review-card-sub-info">No.<span th:text="${awardedReview.id}">0</span></p>
+                  <p class="review-card-sub-info">No.<span th:text="${awardedReview.reviewId}">0</span></p>
                   <h3 class="review-card-title" th:text="${awardedReview.reviewTitle}">データが取得できませんでした:書評名</h3>
                   <p class="review-card-sub-info ml-4">
                     <a href="account_view.html" th:href="@{/admin/account/view(loginId=${awardedReview.userLoginId})}">
@@ -326,7 +326,7 @@
                   <p class="review-card-sub-info" th:text="'投稿日時 : ' + ${#temporals.format(awardedReview.createdAt, 'yyyy/MM/dd HH:mm')}">0000/00/00 00:00</p>
                   <p class="review-card-sub-info" th:text="'更新日時 : ' + ${#temporals.format(awardedReview.updatedAt, 'yyyy/MM/dd HH:mm')}">0000/00/00 00:00</p>
                 </div>
-                <a href="review_edit.html" th:href="@{/admin/review/view(id=${awardedReview.id})}" class="icon-center review-card-sub-info text-decoration-none hover-bold">詳細を確認する<span class="material-symbols-outlined ml-2">keyboard_double_arrow_right</span></a> <!-- 右側 -->
+                <a href="review_edit.html" th:href="@{/admin/review/view(id=${awardedReview.reviewId})}" class="icon-center review-card-sub-info text-decoration-none hover-bold">詳細を確認する<span class="material-symbols-outlined ml-2">keyboard_double_arrow_right</span></a> <!-- 右側 -->
               </div>
             </div>
           </div>
@@ -337,7 +337,7 @@
               <div class="review-card mt-4" th:each="nominatedReview : ${nominatedReviews}"> <!-- 書評カード -->
                 <div class="table-border-b-strong flex justify-between py-4"> <!-- 書評カードヘッダー -->
                   <div> <!-- 左側 -->
-                    <p class="review-card-sub-info">No.<span th:text="${nominatedReview.id}">0</span></p>
+                    <p class="review-card-sub-info">No.<span th:text="${nominatedReview.reviewId}">0</span></p>
                     <h3 class="review-card-title" th:text="${nominatedReview.reviewTitle}">データが取得できませんでした:書評名</h3>
                     <p class="review-card-sub-info ml-4">
                       <a href="account_view.html" th:href="@{/admin/account/view(loginId=${nominatedReview.userLoginId})}">
@@ -376,7 +376,7 @@
                     <p class="review-card-sub-info" th:text="'投稿日時 : ' + ${#temporals.format(nominatedReview.createdAt, 'yyyy/MM/dd HH:mm')}">0000/00/00 00:00</p>
                     <p class="review-card-sub-info" th:text="'更新日時 : ' + ${#temporals.format(nominatedReview.updatedAt, 'yyyy/MM/dd HH:mm')}">0000/00/00 00:00</p>
                   </div>
-                  <a href="review_edit.html" th:href="@{/admin/review/view(id=${nominatedReview.id})}" class="icon-center review-card-sub-info text-decoration-none hover-bold">詳細を確認する<span class="material-symbols-outlined ml-2">keyboard_double_arrow_right</span></a> <!-- 右側 -->
+                  <a href="review_edit.html" th:href="@{/admin/review/view(id=${nominatedReview.reviewId})}" class="icon-center review-card-sub-info text-decoration-none hover-bold">詳細を確認する<span class="material-symbols-outlined ml-2">keyboard_double_arrow_right</span></a> <!-- 右側 -->
                 </div>
               </div>
             </div>

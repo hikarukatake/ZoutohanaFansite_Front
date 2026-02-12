@@ -12,9 +12,12 @@
     <div th:replace="~{layout-admin :: header}"></div>
 
     <main id="admin-main">
-      <h1 class="page-title">書評印刷</h1>
+      <a href="review_view.html" th:href="@{/admin/review/view(id=${review.id})}" class="icon-center review-card-sub-info text-decoration-none hover-bold">
+        <span class="material-symbols-outlined">keyboard_double_arrow_left</span>書評詳細に戻る
+      </a>
+      <h1 class="page-title">書評コピー</h1>
 
-      <div class="main-content-card mt-4 p-8">
+      <!-- <div class="main-content-card mt-4 mb-8 p-8">
         <h2 class="page-title-sub icon-center toggle-title"><span class="material-symbols-outlined text-gray scale-bigger mr-2">help</span>印刷機能の使い方<span class="font-sm text-gray ml-2 toggle-text">(クリックして開く)</span></h2>
         <div class="toggle-body">
           <ol class="ml-8">
@@ -26,62 +29,77 @@
             <li>印刷データには4枚分の書評カードが配置されています。A4サイズで印刷することで、1枚が文庫本と同じサイズになります。</li>
           </ul>
         </div>
-      </div>
-      <div class="main-content-card p-8 mt-8">
-        <h2 class="page-title-sub">印刷する情報</h2>
+      </div> -->
+
+      <div class="main-content-card p-8 mt-4">
+        <h2 class="page-title-sub">コピーする情報</h2>
+        <div class="px-8 mt-4 pb-4 table-border-b-light">
+          <label>
+            <input type="checkbox" id="checkAll" class="scale-bigger mr-2">
+            すべて選択
+          </label>
+        </div>
         <form>
-          <table class="w-full pr-">
+          <table class="w-full mt-4">
             <tr>
-              <td class="pl-8"><label><input type="checkbox" class="scale-bigger mr-2">企画名</label></td>
-              <td>冬に読みたい！わたしのおすすめ文庫</td>
+              <td class="pl-8"><label><input type="checkbox" class="scale-bigger mr-2 print-check" data-label="企画名">企画名</label></td>
+              <td class="print-value" th:text="${review.projectName}"></td>
             </tr>
             <tr>
-              <td class="pl-8"><label><input type="checkbox" class="scale-bigger mr-2">書評ID</label></td>
-              <td>100</td>
+              <td class="pl-8"><label><input type="checkbox" class="scale-bigger mr-2 print-check" data-label="書評ID">書評ID</label></td>
+              <td class="print-value" th:text="${review.id}"></td>
             </tr>
             <tr>
-              <td class="pl-8"><label><input type="checkbox" class="scale-bigger mr-2">書評タイトル</label></td>
-              <td>小学生の頃から大好きな一冊</td>
+              <td class="pl-8"><label><input type="checkbox" class="scale-bigger mr-2 print-check" data-label="書評タイトル">書評タイトル</label></td>
+              <td class="print-value" th:text="${review.reviewTitle}"></td>
             </tr>
             <tr>
-              <td class="pl-8"><label><input type="checkbox" class="scale-bigger mr-2">投稿したユーザー</label></td>
-              <td>なまえなまえ</td>
+              <td class="pl-8"><label><input type="checkbox" class="scale-bigger mr-2 print-check" data-label="投稿したユーザー">投稿したユーザー</label></td>
+              <td class="print-value" th:text="${review.userNickname}"></td>
             </tr>
             <tr>
-              <td class="pl-8 pb-4 table-border-b-light"><label><input type="checkbox" class="scale-bigger mr-2">投稿したユーザーのID</label></td>
-              <td class="pb-4 table-border-b-light">loginID123</td>
+              <td class="pl-8 pb-4 table-border-b-light"><label><input type="checkbox" class="scale-bigger mr-2 print-check" data-label="投稿したユーザーのID">投稿したユーザーのID</label></td>
+              <td class="print-value pb-4 table-border-b-light" th:text="${review.userLoginId}"></td>
             </tr>
 
             <tr>
-              <td class="pl-8 pt-4"><label><input type="checkbox" class="scale-bigger mr-2">書籍タイトル</label></td>
-              <td class="pt-4">風の図書館</td>
+              <td class="pl-8 pt-4"><label><input type="checkbox" class="scale-bigger mr-2 print-check" data-label="書籍タイトル">書籍タイトル</label></td>
+              <td class="print-value pt-4" th:text="${review.bookTitle}"></td>
             </tr>
             <tr>
-              <td class="pl-8"><label><input type="checkbox" class="scale-bigger mr-2">出版社</label></td>
-              <td>ABC出版</td>
+              <td class="pl-8"><label><input type="checkbox" class="scale-bigger mr-2 print-check" data-label="出版社">出版社</label></td>
+              <td class="print-value" th:text="${review.bookPublisher}"></td>
             </tr>
             <tr>
-              <td class="table-border-b-light pb-4 pl-8"><label><input type="checkbox" class="scale-bigger mr-2">著者</label></td>
-              <td class="table-border-b-light pb-4">田中太郎</td>
+              <td class="pl-8"><label><input type="checkbox" class="scale-bigger mr-2 print-check" data-label="著者">著者</label></td>
+              <td class="print-value" th:text="${review.bookAuthor}"></td>
+            </tr>
+            <tr th:if="${thisReviewGenres != null and !#lists.isEmpty(thisReviewGenres)}">
+              <td class="table-border-b-light pb-4 pl-8"><label><input type="checkbox" class="scale-bigger mr-2 print-check" data-label="ジャンル">ジャンル</label></td>
+              <td class="print-value table-border-b-light pb-4">
+                <span th:each="g, stat : ${thisReviewGenres}">
+                  <span th:text="${g.name}"></span><span th:if="${!stat.last}">, </span>
+                </span>
+              </td>
             </tr>
           </table>
 
-          <div class="pt-4">
-            <div class="flex justify-between icon">
-              <label>書評本文</label>
-              <button type="button" class="btn">編集をリセット</button>
-            </div>
-            <textarea rows="10" class="input-textarea w-full mt-2">この本を初めて読んだのは、小学四年生のときでした。表紙のイラストに惹かれて手に取ったのがきっかけでしたが、読み進めるうちに主人公の冒険や葛藤にどんどん引き込まれていったのを今でも覚えています。 あの頃は物語の世界に憧れるだけでしたが、大学生になった今読むと、人生の選択や成長の物語として心に響く部分が多く、まるで自分へのメッセージのように感じます。 文庫版の柔らかい紙の感触や少し黄ばんだページも、懐かしさをより一層引き立ててくれます。何度読み返しても色あせない、僕の原点のような一冊です。</textarea>
+          <div class="pt-4 px-8">
+            <label>書評本文</label>
+            <p class="font-sm text-gray">必要に応じて編集することができます。編集は「リセットする」ボタンで取り消すことができます。</p>
+            <textarea rows="10" class="input-textarea w-full mt-2" th:text="${review.reviewContent}"></textarea>
           </div>
 
           <div class="btn-wrap mt-8">
-            <a href="#" th:href="@{/}" class="btn">キャンセル</a>
-            <input type="submit" value="印刷データを作成する" class="btn">
+            <button type="reset" class="btn btn-danger">リセットする</button>
+            <button type="button" id="copyBtn" class="btn">コピー</button>
+            <!-- <input type="submit" value="印刷データを作成する" class="btn"> -->
           </div>
         </form>
       </div>
     </main>
 
     <script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/admin-general.js}"></script>
+    <script src="../../static/js/admin/review-print.js" th:src="@{/js/admin/review-print.js}"></script>
 </body>
 </html>

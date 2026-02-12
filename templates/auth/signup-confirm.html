@@ -28,7 +28,7 @@
 
 
         <header class="signup-header">
-            <a th:formaction="@{/signup/rewrite(id=${id})}" class="back-link"
+            <a th:href="@{/signup(id=${id})}" class="back-link"
                 id="back-link-with-data">&lt;&nbsp;&nbsp;もどる</a>
             <h1><i class="fas fa-user-check"></i> 内容確認</h1>
         </header>
@@ -53,36 +53,9 @@
                     <div class="detail-item">
                         <label>アイコン</label>
                         <div class="icon-grid">
-
-                            <!-- 上段：花 -->
                             <div class="icon">
-                                <img src="../../static/img/flower-pink.png" class="flower" alt="">
+                                <img th:src="@{/api/image/icon{id}.png(id=${signupForm.icon})}" src="../../static/img/flower-pink.png" class="flower" alt="">
                             </div>
-                            <div class="icon">
-                                <img src="../../static/img/flower-blue.png" class="flower" alt="">
-                            </div>
-                            <div class="icon">
-                                <img src="../../static/img/flower-purple.png" class="flower" alt="">
-                            </div>
-                            <div class="icon">
-                                <img src="../../static/img/flower-green.png" class="flower" alt="">
-                            </div>
-
-                            <!-- 下段：象 -->
-                            <div class="icon">
-                                <img src="../../static/img/elephant-pink.png" class="elephant" alt="">
-                                <span class="badge"></span>
-                            </div>
-                            <div class="icon">
-                                <img src="../../static/img/elephant-blue.png" class="elephant" alt="">
-                            </div>
-                            <div class="icon">
-                                <img src="../../static/img/elephant-purple.png" class="elephant" alt="">
-                            </div>
-                            <div class="icon">
-                                <img src="../../static/img/elephant-green.png" class="elephant" alt="">
-                            </div>
-
                         </div>
 
                     </div>

@@ -24,19 +24,19 @@
                     <h1>次に並ぶ本を決めます</h1>
                 </div>
                 <div class="text-top">
-                    <p>一次審査へのたくさんの書評投稿</p>
+                    <p>たくさんの書評の投稿や、</p>
+                    <p>たくさんの投票</p>
                     <p>ありがとうございました。</p>
                 </div>
                 <div class="text-box">
-                    <p>投稿された作品は二次審査へと進み、</p>
-                    <p>ここからは読者のみなさんの“いい</p>
-                    <p>ね”が力になります</p>
+                    <p>投票の多かった書評のなかで</p>
+                    <p>さらに多く読まれた本が</p>
+                    <p>今回の大賞となります。</p>
                 </div>
                 <div class="text-box">
-                    <p>“いいね”が多かった 上位10作品 が、</p>
-                    <p>次のステップへ進むことができます</p>
-                    <p> 気になった作品に、あなたの一票を</p>
-                    <p>ぜひ届けてください。</p>
+                    <p>たくさんの書評の中から</p>
+                    <p>大賞として選ばれた書評を</p>
+                    <p>ぜひ見てみましょう。</p>
                 </div>
             </div>
         </div>
@@ -137,17 +137,12 @@
 
 
 
-        <div class="one-book-box">
+        <div class="one-book-box" id="voteReview">
             <h3 class="you-one-text">あなたが選んだ１冊</h3>
             <div class="one-text-box">
-                <p class="one-text">現在、あなたが投票している作品です</p>
-                <p class="one-text">投票期間終了まで応援しましょう</p>
+                <p class="one-text">あなたが投票した作品です</p>
             </div>
             <div class="one-book-shinto-box">
-            </div>
-            <div class="share-box">
-                <img src="../img/share.png" class="share">
-                <p class="share-text">この書評をシェアする</p>
             </div>
         </div>
 
@@ -327,7 +322,7 @@
                 <div class="modal-content">
                     <div class="modal-box">
                         <div class="modal-textFirst-box">
-                            <img src="../../static/img/rose.png" class="modal-rose" alt="">
+                            <img th:src="@{/img/rose.png}" src="../../static/img/rose.png" class="modal-rose" alt="">
 
                             <h3 id="modalTitle">作品タイトル</h3>
 
@@ -335,7 +330,7 @@
                             </p>
                         </div>
 
-                        <div class="modal-textSecond-box" style="display:none;"> <img src="../../static/img/rose.png"
+                        <div class="modal-textSecond-box" style="display:none;"> <img th:src="@{/img/rose.png}" src="../../static/img/rose.png"
                                 class="modal-rose" alt="">
                             <p id="textSecond" class="modal-textSecond"></p>
                         </div>
@@ -373,62 +368,8 @@
                 </div>
             </div>
         </div>
-
-
-
-        <!-- フッター -->
-        <footer class="footer-all">
-            <div class="footer-menu">
-                <div class="footer-top">
-                    <img src="../img/zoutohana-white.png" style="width: 4.5rem;" alt="">
-                    <p class="footer-white-text">A BOOK PROJECT</p>
-                </div>
-                <a href="#" class="footer-menu-item-top">
-                    <p>お知らせ</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>企画</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>象と花プロジェクト</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>お問い合わせ</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>サイトのご利用について</p>
-                    <p>></p>
-                </a>
-            </div>
-
-            <!-- SNSブロック -->
-            <div class="footer-sns">
-                <div class="sns-box">
-                    <div class="footer-sns-title">SNS</div>
-                    <div class="sns-box-icons">
-                        <div class="sns-icons">
-                            <img src="../img/instagram.png" class="sns-icon" alt="">
-                            <img src="../img/facebook.png" class="sns-icon-facebook" alt="">
-                            <img src="../img/x.png" class="sns-icon-x" alt="">
-                        </div>
-
-                        <div class="sns-labels">
-                            <span>Instagram</span>
-                            <span>Facebook</span>
-                            <span>X（旧Twitter）</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-line"></div>
-
-                <div class="footer-copy">©Copylight</div>
-            </div>
-        </footer>
     </div>
+    <div th:replace="~{layout :: footer}"></div>
     <script th:src="@{/js/nominate-award.js}" src="../../static/js/nominate-award.js" defer></script>
 </body>
 

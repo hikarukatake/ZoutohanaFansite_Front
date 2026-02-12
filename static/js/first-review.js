@@ -12,13 +12,18 @@ window.onload = async function () {
     // 10個データをとってきてる
     // --------------------------------------------------------------------------------------
     // ページネーションapi取得
-    await createPagination(2);
+    await createPagination(1);
 
     if (await isVote()) {
         const voteData = await getVoteReviewData();
-        console.log(voteData);
         await oneShintobook(voteData);
+    }else{
+        const voteReview = document.getElementById('voteReview');
+        voteReview.style.display = 'none';
     }
+    createShintoShelf(allBooksData.slice(0, 10));
+
+    oneShintobook(allBooksData[0]);
 };
 
 /* =========================
@@ -35,7 +40,8 @@ let hasFinishedModalTutorial = false;
 let currentOpenedBook = null;
 
 //ページネーションのページ数
-let listPage = 1;
+let listPage = 0;
+let isFirst = true;
 
 
 // 初めに画面をタップして下に移動するフェイドアウト処理
@@ -62,7 +68,6 @@ if (tapTarget) {
 document.addEventListener('click', function () {
     if (hasStartedInitial) return;
     hasStartedInitial = true;
-    // console.log("クリック検知：4秒後に本が降り始めます");
 
     setTimeout(function () {
         startFallingBooks();
@@ -76,8 +81,7 @@ const shelf = document.getElementById('shelf');
 const nextBtn = document.getElementById('nextBtn');
 const btnArea = document.querySelector('.button-area');
 
-// 30件分のデータ
-let allBooksData;
+
 
 let currentStartIndex = 0;
 const BATCH_SIZE = 9;
@@ -118,7 +122,6 @@ async function fetchReviewData() {
         allBooksData = await response.json();
 
         // --- ここから下で 'data' を自由に使う ---
-        // console.log("取得したデータ:", allBooksData);
 
     } catch (error) {
         // ネットワークエラーやJSON解析エラーの処理
@@ -172,7 +175,6 @@ function createBook(data, index) {
         const voteBtn = document.getElementById('voteBtn');
         const bookmarkBtn = document.getElementById('bookmarkBtn');
         // sample関数に本のIDを入れて呼び出すように設定
-        console.log("ボタン生成");
         if(voteBtn){
             voteBtn.setAttribute('onclick',`vote(${data.id})`);
         }
@@ -205,67 +207,122 @@ function createBook(data, index) {
 }
 
 // ================共通関数本を押してからモーダルの表示======================
-function Allbook(data, book){
-        // モーダルのブックマークボタンのidをDOMから取得
-        const voteBtn = document.getElementById('voteBtn');
-        const bookmarkBtn = document.getElementById('bookmarkBtn');
-        // sample関数に本のIDを入れて呼び出すように設定
-        if(voteBtn){
-            voteBtn.setAttribute('onclick',`vote(${data.id})`);
-        }
+async function Allbook(data, book) {
+    // モーダルのブックマークボタンのidをDOMから取得
+    const voteBtn = document.getElementById('voteBtn');
+    const bookmarkBtn = document.getElementById('bookmarkBtn');
+    // sample関数に本のIDを入れて呼び出すように設定
+    if (voteBtn && !await isVote()) {
+        voteBtn.setAttribute('onclick', `vote(${data.id})`);
+        voteBtn.style.display = '';
+    }else{
+        const currentData = localStorage.getItem(VOTE_KEY);
+        const voteList = JSON.parse(currentData || "[]");
 
-        if(bookmarkBtn){
-            bookmarkBtn.setAttribute('onclick', `favorite(${data.id})`);
-        }
-        // 今開いた本を記録
-        currentOpenedBook = book;
-
-        // 1. チュートリアル中の場合、オーバーレイを消す
-        const overlay = document.getElementById('tutorialOverlay');
-        if (overlay && overlay.style.display === 'block') {
-            overlay.style.display = 'none';
-            if (book.classList.contains('first-book-target')) {
-                book.classList.remove('highlight');
-                const msg = book.querySelector('.tutorial-msg');
-                if (msg) msg.remove();
+        if (currentData) {
+            if (!(voteList.includes(data.id) || voteList.includes(Number(data.id)))) {
+                voteBtn.style.display = 'none';
+            }else{
+                voteBtn.style.display = '';
+                voteBtn.setAttribute('onclick', `vote(${data.id})`);
             }
         }
+    }
+    
 
-        // 2. モーダル内の各パーツにデータをセット
-        // アイコン・名前・属性・プロフィール文
-        const iconElem = document.getElementById('modalIcon');
-        if (iconElem) iconElem.src = data.icon;
+        if (bookmarkBtn) {
+            bookmarkBtn.setAttribute('onclick', `favorite(${data.id})`);
+        }
+    // 今開いた本を記録
+    currentOpenedBook = book;
 
-        const nameElem = document.getElementById('modalName');
-        if (nameElem) nameElem.innerText = data.name;
+    // 1. チュートリアル中の場合、オーバーレイを消す
+    const overlay = document.getElementById('tutorialOverlay');
+    if (overlay && overlay.style.display === 'block') {
+        overlay.style.display = 'none';
+        if (book.classList.contains('first-book-target')) {
+            book.classList.remove('highlight');
+            const msg = book.querySelector('.tutorial-msg');
+            if (msg) msg.remove();
+        }
+    }
 
-        const infoElem = document.getElementById('modalInfo');
-        if (infoElem) infoElem.innerText = `${data.age} / ${data.gender} / ${data.address}`;
+    // 2. モーダル内の各パーツにデータをセット
+    // アイコン・名前・属性・プロフィール文
+    const iconElem = document.getElementById('modalIcon');
+    if (iconElem) iconElem.src = data.icon;
 
-        const profileTextElem = document.getElementById('modalProfileText');
-        if (profileTextElem) profileTextElem.innerText = data.text;
+    const nameElem = document.getElementById('modalName');
+    if (nameElem) nameElem.innerText = data.name;
 
-        // 感想テキストエリアを「初期状態」に作り直す
-        // これをやらないと、前回の改行処理でIDが消えているため、次のデータが流し込めません
-        const textBox = document.querySelector('.modal-textFirst-box');
-        if (textBox) {
-            textBox.innerHTML = `
-                <img src="../../static/img/rose.png" class="modal-rose" alt="">
-                <h3 id="modalTitle">${data.title}</h3>
-                <p id="textFirst" class="modal-textFirst">${data.content}</p>
-            `;
+    const infoElem = document.getElementById('modalInfo');
+    if (infoElem) infoElem.innerText = `${data.age} / ${data.gender} / ${data.address}`;
+
+    const profileTextElem = document.getElementById('modalProfileText');
+    if (profileTextElem) profileTextElem.innerText = data.text;
+
+const modal = document.getElementById('bookDetailModal');
+    modal.style.display = 'flex'; // ★ここで先に表示！
+    document.body.classList.add('no-scroll');
+
+
+    const textBox = document.querySelector('.modal-textFirst-box');
+
+    // ■ 箱の幅に合わせて文字数を計算して表示する関数
+    const renderText = () => {
+        if (!textBox) return;
+
+        // 1. 今の「テキストボックスの幅」を取得
+        const boxWidth = textBox.clientWidth; 
+
+        if (boxWidth === 0) return; // 幅が取れなかったら何もしない
+
+        // 2. 1文字あたりの幅（px）を設定して割り算する
+        // 例：文字サイズが16pxくらいなら、余白込みで「18」くらいで割ると丁度いいです
+        // ★この「19」という数字をいじると、文字の詰め具合が変わります
+        const charSize = 22; 
+
+        // 箱の幅 ÷ 1文字の幅 ＝ 入る文字数
+        let lineLength = Math.floor(boxWidth / charSize);
+
+        // ※少なすぎたり多すぎたりしないように制限
+        if (lineLength < 10) lineLength = 10; // 最低10文字
+        if (lineLength > 50) lineLength = 50; // 最高50文字
+
+        // ★確認用ログ
+        console.log(`箱の幅: ${boxWidth}px / 計算した文字数: ${lineLength}文字`);
+
+        // 3. テキスト分割処理
+        let textHtml = "";
+        const content = data.content; 
+
+        for (let i = 0; i < content.length; i += lineLength) {
+            const line = content.substr(i, lineLength);
+            textHtml += `<p class="modal-textFirst">${line}</p>`;
         }
 
-        // 4. 文字分割処理の実行（復活した textFirst に対して行う）
-        splitTextToParagraphs("textFirst", "modal-textFirst", 18);
+        // 4. HTML流し込み
+        textBox.innerHTML = `
+            <img src="/img/rose.png" class="modal-rose" alt="">
+            <h3 id="modalTitle">${data.title}</h3>
+            <div class="text-container">
+                ${textHtml}
+            </div>
+        `;
+    };
 
-        // 5. モーダル表示
-        const modal = document.getElementById('bookDetailModal');
-        modal.style.display = 'flex';
-        document.body.classList.add('no-scroll');
+    // ■ 実行
+    // 先に display: flex にしたので、ここで正しく幅が取れます
+    renderText();
 
-        // 6. モーダル内チュートリアル開始（黒いオーバーレイ）
-        startModalTutorial();
+    // ■ 画面サイズ変更時も再計算
+    window.removeEventListener('resize', renderText);
+    window.addEventListener('resize', renderText);
+
+    // ▲▲▲▲▲ 書き換え終了 ▲▲▲▲▲
+
+    // 6. モーダル内チュートリアル開始
+    startModalTutorial();
 }
 
 // ■ 落下ループ開始
@@ -482,9 +539,14 @@ tabs.forEach(tab => {
         this.appendChild(marker);
         const name = this.innerText;
         if(name === '全ての書評'){
-            await createPagination(2);
+            await createPagination(1);
+            const pagination = document.getElementById('pagination');
+            pagination.style.display = '';
         }else{
             await createFavorite();
+            const pagination = document.getElementById('pagination');
+            pagination.style.display = 'none';
+            listPage = 0;
         }
     });
 });
@@ -507,13 +569,6 @@ function isVisited(id) {
     if (!currentData) return false;
 
     const visitedIds = JSON.parse(currentData);
-    // console.log(currentData);
-    // 配列の中に引数のIDが存在するか判定
-    // if(visitedIds.includes(String(id))){
-    //     console.log(`isVisited : true ${id}`);
-    // }else{
-    //     console.log(`isVisited : false ${id}`);
-    // }
     return visitedIds.includes(String(id));
 }
 /* ==============================================
@@ -755,7 +810,6 @@ function isFavorite(id) {
 async function vote(id){
     const currentData = localStorage.getItem(VOTE_KEY);
     let voteIds = currentData ? JSON.parse(currentData) : [];
-    console.log(`vote(${id})`);
 
     if(await isVote()){
         // 投票減算処理
@@ -765,15 +819,18 @@ async function vote(id){
             voteIds = voteIds.filter(vId => vId !== id);
 
             localStorage.setItem(VOTE_KEY, JSON.stringify(voteIds));
-
-            console.log(`${id} を削除しました。現在のデータ:`, voteIds);
+            const voteReview = document.getElementById('voteReview');
+            voteReview.style.display = 'none';
         }
     }else{
-        console.log("加算処理");
         // 投票加算処理
         await fetch(`/api/reviews/vote/${id}`, {method: 'POST'});
         voteIds.push(id);
         localStorage.setItem(VOTE_KEY, JSON.stringify(voteIds));
+        const voteReview = document.getElementById('voteReview');
+        voteReview.style.display = '';
+        const voteData = await getVoteReviewData();
+        oneShintobook(voteData);
     }
 }
 
@@ -814,7 +871,6 @@ async function getVoteReviewData(){
     });
 
     const data = await response.json().catch(() => null);
-    console.log(data);
     return data;
 }
 // 自分が投票している作品の表示
@@ -822,9 +878,9 @@ function oneShintobook(data) {
     if (Array.isArray(data)) {
         data = data[0];
     }
-    console.log(data);
 
     const oneShintoContainer = document.querySelector('.one-book-shinto-box');
+    oneShintoContainer.replaceChildren();
 
     // 大枠 (class="one-book-shinto-set")
     const setDiv = document.createElement('div');
@@ -850,7 +906,7 @@ function oneShintobook(data) {
 
     // ペン画像
     const penImg = document.createElement('img');
-    penImg.src = '../img/pen.png'; // 画像のパス
+    penImg.src = '/img/pen.png'; // 画像のパス
     penImg.classList.add('pen');
     penImg.alt = '';
 
@@ -864,6 +920,11 @@ function oneShintobook(data) {
     penBox.appendChild(penText);
     setDiv.appendChild(oneBook);
     setDiv.appendChild(penBox);
+
+    const shareBox = document.getElementById('shareBox');
+    shareBox.onclick = () => {
+        vote(data.id);
+    };
 
     // 画面の箱に追加して表示完了
     oneShintoContainer.appendChild(setDiv);
@@ -961,11 +1022,34 @@ async function createPagination(num){
     }else{
         page = listPage;
     }
+
     const response = await fetch(`/api/reviews/list/${urlKey}?page=${page}`);
     const data = await response.json();
 
     listPage = data.info.current;
+
+    const paginationPrev = document.getElementById('paginationPrev');
+    const paginationNext = document.getElementById('paginationNext');
+
+    if(listPage === 1){
+        paginationPrev.style.display = 'none';
+    }else{
+        paginationPrev.style.display = '';
+    }
+
+    if(listPage === data.info.total){
+        paginationNext.style.display = 'none';
+    }else{
+        paginationNext.style.display = '';
+    }
     await createShintoShelf(data.reviews);
+
+    if(isFirst){
+        isFirst = false;
+    }else{
+        const target = document.getElementById('allBookBox');
+        target.scrollIntoView();
+    }
 }
 
 async function createFavorite(){
@@ -988,6 +1072,5 @@ async function createFavorite(){
     });
 
     const data = await response.json().catch(() => null);
-    console.log(data);
     await createShintoShelf(data);
 }

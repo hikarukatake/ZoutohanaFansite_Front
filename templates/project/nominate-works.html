@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/project/first-review.css}" href="../../static/css/project.css">
     <style th:inline="css">
         :root {
             --main-color: [($ {
@@ -35,19 +36,17 @@
                     <h1>次に並ぶ本を決めます</h1>
                 </div>
                 <div class="text-top">
-                    <p>一次審査へのたくさんの書評投稿</p>
+                    <p>みなさまのたくさんの投票</p>
                     <p>ありがとうございました。</p>
                 </div>
                 <div class="text-box">
-                    <p>投稿された作品は二次審査へと進み、</p>
-                    <p>ここからは読者のみなさんの“いい</p>
-                    <p>ね”が力になります</p>
+                    <p>投票された作品は大賞ノミネートとなり、</p>
+                    <p>書店で販売されます。</p>
                 </div>
                 <div class="text-box">
-                    <p>“いいね”が多かった 上位10作品 が、</p>
-                    <p>次のステップへ進むことができます</p>
-                    <p> 気になった作品に、あなたの一票を</p>
-                    <p>ぜひ届けてください。</p>
+                    <p>実際に書店で販売される</p>
+                    <p>みなさまから選ばれた書評を</p>
+                    <p>ぜひ見てみましょう</p>
                 </div>
             </div>
         </div>
@@ -78,17 +77,12 @@
                 <div class="book-shinto-box"></div>
             </div>
         </div>
-        <div class="one-book-box">
+        <div class="one-book-box" id="voteReview">
             <h3 class="you-one-text">あなたが選んだ１冊</h3>
             <div class="one-text-box">
-                <p class="one-text">現在、あなたが投票している作品です</p>
-                <p class="one-text">投票期間終了まで応援しましょう</p>
+                <p class="one-text">あなたが投票した作品です</p>
             </div>
             <div class="one-book-shinto-box">
-            </div>
-            <div class="share-box">
-                <img src="../img/share.png" class="share">
-                <p class="share-text">この書評をシェアする</p>
             </div>
         </div>
 
@@ -239,32 +233,12 @@
 
 
         <!-- お問い合わせ -->
-        <div class="contact-box">
-            <div class="contact-card">
-                <h2 class="contact-title">お問い合わせ</h2>
-                <div class="contact-desc-box">
-                    <p class="contact-desc">企画、寄贈に関するご質問など、</p>
-                    <p class="contact-desc">お気軽にお問い合わせください。</p>
-                </div>
-                <a href="#" class="contact-btn">
-                    <span class="btn-text">お問い合わせフォーム</span>
-                    <span class="btn-arrow">&gt;</span>
-                </a>
-
-                <div class="tel-box">
-                    <div class="tel-main">
-                        <span class="tel-label">TEL</span>
-                        <span class="tel-number">000-0000-0000</span>
-                    </div>
-                    <p class="tel-hours">受付時間 ｜ 平日 9:00 ~ 17:00</p>
-                </div>
-            </div>
-        </div>
+        <div th:replace="~{layout :: contact}"></div>
 
         <!-- モーダル -->
         <div id="bookDetailModal" class="modal-overlay">
             <span id="closeModal" class="close-button">&times;</span>
-            <div style="width: 100%;">
+            <div>
                 <div class="modal-content">
                     <div class="modal-box">
                         <div class="modal-textFirst-box">
@@ -288,90 +262,32 @@
                 <!--            </div>-->
                 <div class="profile-card">
                     <div class="profile-header">
-                        <div class="profile-icon">
-                        </div>
-                        <h3 class="profile-name">もたーて</h3>
+                        <img id="modalIcon" src="" class="profile-icon" alt="icon">
+
+                        <h3 id="modalName" class="profile-name">名前</h3>
                     </div>
 
                     <div class="profile-tags">
-                        <span class="tag">40代</span>
-                        <div class="divider"></div>
-                        <span class="tag">男性</span>
+                        <p id="modalInfo" style="font-size: 0.9rem; color: #555;"></p>
                     </div>
 
-                    <div class="profile-location">
-                        <img src="../img/address.png" alt="address icon" class="location-icon">
-                        <p class="location-text">岩手県 盛岡市 在住</p>
-                    </div>
+                    <!--                    <div class="profile-location">-->
+                    <!--                        <img id="modalIcon" src="../img/address.png" alt="address icon" class="location-icon">-->
+                    <!--                    </div>-->
 
                     <hr class="profile-line">
 
                     <div class="profile-bio">
-                        <p>
-                            読んだ本の感想を気ままに投稿しています。<br>
-                            印象に残った言葉や心に響いたシーンなど、そのとき感じたことを綴っています。<br>
-                            同じ作品が好きな方と感想を語り合えたらうれしいです。
+                        <p id="modalProfileText">
+                            ここに自己紹介が入ります。
                         </p>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-        <!-- フッター -->
-        <footer class="footer-all">
-            <div class="footer-menu">
-                <div class="footer-top">
-                    <img src="../img/zoutohana-white.png" style="width: 4.5rem;" alt="">
-                    <p class="footer-white-text">A BOOK PROJECT</p>
-                </div>
-                <a href="#" class="footer-menu-item-top">
-                    <p>お知らせ</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>企画</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>象と花プロジェクト</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>お問い合わせ</p>
-                    <p>></p>
-                </a>
-                <a href="#" class="footer-menu-item">
-                    <p>サイトのご利用について</p>
-                    <p>></p>
-                </a>
-            </div>
-
-            <!-- SNSブロック -->
-            <div class="footer-sns">
-                <div class="sns-box">
-                    <div class="footer-sns-title">SNS</div>
-                    <div class="sns-box-icons">
-                        <div class="sns-icons">
-                            <img src="../img/instagram.png" class="sns-icon" alt="">
-                            <img src="../img/facebook.png" class="sns-icon-facebook" alt="">
-                            <img src="../img/x.png" class="sns-icon-x" alt="">
-                        </div>
-
-                        <div class="sns-labels">
-                            <span>Instagram</span>
-                            <span>Facebook</span>
-                            <span>X（旧Twitter）</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-line"></div>
-
-                <div class="footer-copy">©Copylight</div>
-            </div>
-        </footer>
     </div>
+    <!-- フッター -->
+    <div th:replace="~{layout :: footer}"></div>
     <script th:src="@{/js/nominate-works.js}" src="../../static/js/nominate-works.js" defer></script>
 </body>
 

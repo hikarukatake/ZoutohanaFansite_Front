@@ -79,8 +79,83 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// ==========ロゴ画像のプレビュー==========
+const mainImgInput = document.getElementById('mainImg-input');
+const mainImgPreview = document.getElementById('mainImg-preview');
 
-// ========== 期間選択 ==========
+if(mainImgInput) {
+  mainImgInput.addEventListener('change', (event) => {
+    const file = event.target.files[0]
+
+    if (!file) {
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      mainImgPreview.src = event.target.result
+      mainImgPreview.style.display = 'block';
+    }
+    reader.readAsDataURL(file)
+  })
+}
+
+
+// ==========PDF==========
+const pdfInput = document.getElementById("pdf-input");
+const pdfList  = document.getElementById("pdf-list-ul");
+const dt = new DataTransfer();
+
+if(pdfInput) {
+  // 複数選択
+  pdfInput.addEventListener("change", function (e) {
+    const newFiles = Array.from(e.target.files);
+
+    newFiles.forEach(file => dt.items.add(file));
+    pdfInput.files = dt.files;
+
+    renderPDFList();
+  });
+}
+
+// ファイル名リスト
+function renderPDFList() {
+  pdfList.innerHTML = "";
+  Array.from(pdfInput.files).forEach((file, index) => {
+    const li = document.createElement("li");
+
+    const btn = document.createElement("button");
+    btn.classList.add("pdf-list-removeButton")
+    btn.innerHTML = "<span class='material-symbols-outlined'>close</span>";
+    btn.addEventListener("click", () => removeFile(index));
+
+    const name = document.createElement("span");
+    name.textContent = file.name;
+
+    li.appendChild(btn);
+    li.appendChild(name);
+    pdfList.appendChild(li);
+  });
+}
+
+// 「削除」ボタンでファイル選択解除
+function removeFile(index) {
+  const newDT = new DataTransfer();
+
+  Array.from(pdfInput.files).forEach((file, i) => {
+    if (i !== index) newDT.items.add(file);
+  });
+
+  pdfInput.files = newDT.files;
+
+  dt.items.clear();
+  Array.from(newDT.files).forEach(f => dt.items.add(f));
+
+  renderPDFList();
+}
+
+
+// ========== モーダル内の期間選択チェックボックス ==========
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.period-check').forEach(check => {
     const start = document.getElementById(check.dataset.start);
@@ -136,30 +211,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-});
-
-
-// ========== タブ切り替え ==========
-document.addEventListener("DOMContentLoaded", () => {
-const tabItems = document.querySelectorAll(".tab-item");
-
-tabItems.forEach((tabItem) => {
-  tabItem.addEventListener("click", () => {
-    tabItems.forEach((t) => {
-      t.classList.remove("active");
-    });
-
-    const tabPanels = document.querySelectorAll(".tab-panel");
-    tabPanels.forEach((tabPanel) => {
-      tabPanel.classList.remove("active");
-    });
-
-    tabItem.classList.add("active");
-
-    const tabIndex = Array.from(tabItems).indexOf(tabItem);
-    tabPanels[tabIndex].classList.add("active");
-  });
-});
 });
 
 
@@ -242,238 +293,82 @@ if (clearAllCheckbox) {
   });
 }
 
-// ========== 書評一覧の一括操作 ==========
-const statusTextMap = {
-  INITIAL: "一次審査未通過",
-  FIRST_STAGE_PASSED: "一次審査通過",
-  SECOND_STAGE_PASSED: "ノミネート",
-  AWARDED: "大賞"
-};
-
-document.querySelector('[data-modal-target="change-confirm-modal"]')
-  .addEventListener("click", () => {
-
-    const checked = document.querySelectorAll(".review-checkbox:checked");
-    const listEl = document.getElementById("selectedReviewList");
-    const countEl = document.getElementById("selectedCount");
-    const statusSelect = document.getElementById("bulkStatusSelect");
-    const statusTextEl = document.getElementById("selectedStatusText");
-
-    countEl.textContent = checked.length;
-    statusTextEl.textContent = statusTextMap[statusSelect.value];
-    listEl.innerHTML = "";
-
-    checked.forEach(cb => {
-      const id = cb.value;
-      const title = cb.dataset.title;
-      const book = cb.dataset.book;
-
-      const li = document.createElement("li");
-      li.textContent = `[No.${id}] ${title}（書籍: ${book}）`;
-      listEl.appendChild(li);
-    });
-
-    if (checked.length === 0) {
-      listEl.innerHTML = "<li>※ 書評が選択されていません</li>";
-    }
-});
-
-document.getElementById("bulkStatusSelect").addEventListener("change", e => {
-  document.getElementById("selectedStatusText").textContent =
-    statusTextMap[e.target.value];
-});
-
-const executeBtn = document.getElementById("confirmBulkBtn");
-
-function toggleExecuteButton() {
-  const checked = document.querySelectorAll(".review-checkbox:checked");
-  executeBtn.disabled = checked.length === 0;
-}
-
-document.querySelectorAll(".review-checkbox")
-  .forEach(cb => cb.addEventListener("change", toggleExecuteButton));
-
-executeBtn.addEventListener("click", () => {
-  document.getElementById("bulkForm").submit();
-});
-
-// ========== 書評一覧の選択 ==========
+// ========== フォームの内容をモーダルにプレビュー表示 ==========
+// フォーム内の各パーツにdata-preview属性をつける(例 : data-preview="#confirm-title")
+// モーダルの中のプレビューを出したい部分に一致するIDをつける(例 : <span id="confirm-title"></span>)
+// モーダルを開くボタンのidを"confirm-btn"にする
 document.addEventListener("DOMContentLoaded", () => {
-  const checkAll = document.getElementById("checkAllReviews");
-  const checkboxes = document.querySelectorAll(".review-checkbox");
+  const confirmBtn = document.querySelector("#confirm-btn");
+  if (!confirmBtn) return;
 
-  if (!checkAll) return;
+  confirmBtn.addEventListener("click", () => {
+    const form = confirmBtn.closest("form");
+    if (!form) return;
 
-  checkAll.addEventListener("change", () => {
-    checkboxes.forEach(cb => {
-      cb.checked = checkAll.checked;
+    // data-preview処理
+    form.querySelectorAll("[data-preview]").forEach(input => {
+      const target = document.querySelector(input.dataset.preview);
+      if (!target) return;
+
+      let value = "";
+
+      switch (input.type) {
+        case "radio":
+          if (!input.checked) return;
+          value = input.closest("label")?.innerText.trim() || input.value;
+          break;
+
+        case "checkbox":
+          value = input.checked ? "ON" : "OFF";
+          break;
+
+        case "datetime-local":
+          value = input.value ? new Date(input.value).toLocaleString("ja-JP") : "";
+          break;
+
+        case "file":
+          value = input.files.length ? [...input.files].map(f => f.name).join(", ") : "未選択";
+          break;
+
+        default:
+          value = input.value;
+      }
+
+      target.textContent = value;
     });
 
-    toggleExecuteButton();
-  });
+    // ===== テーマカラー専用処理 =====
+    const themeColorInput = form.querySelector('input[name="themeColor"]:checked');
+    if (themeColorInput) {
+      const colorMap = {
+        GREEN: "みどり",
+        PINK: "もも",
+        YELLOW: "き",
+        BLUE: "あお",
+        BLACK: "くろ",
+        GRAY: "はい"
+      };
 
-  checkboxes.forEach(cb => {
-    cb.addEventListener("change", () => {
-      const allChecked = [...checkboxes].every(c => c.checked);
-      const noneChecked = [...checkboxes].every(c => !c.checked);
+      const colorValue = themeColorInput.value;
+      const colorText = colorMap[colorValue] || colorValue;
 
-      checkAll.indeterminate = !allChecked && !noneChecked;
-      checkAll.checked = allChecked;
+      const colorTarget = document.querySelector("#confirm-themeColor");
+      if (colorTarget) {
+        colorTarget.textContent = `${colorValue}（${colorText}）`;
+      }
+    }
 
-      toggleExecuteButton();
-    });
+    if (logoInput.files.length) {
+      const imgPreview = document.querySelector("#confirm-logoImg-preview");
+      imgPreview.src = URL.createObjectURL(logoInput.files[0]);
+    }
+
+    // モーダル表示
+    const modal = document.getElementById(confirmBtn.dataset.modalTarget);
+    if (modal) modal.classList.add("show");
   });
 });
 
-
-
-// ========== 書籍ジャンル複数選択 ==========
-document.addEventListener("DOMContentLoaded", () => {
-  const optionsList = [
-    {label: "みすてりー", value: "ミステリー"},
-    {label: "SF", value: "SF"},
-    {label: "ふぁんたじー", value: "ファンタジー"},
-    {label: "ろまんす", value: "ロマンス"},
-    {label: "れきし", value: "歴史"},
-    {label: "ほらー", value: "ホラー"},
-    {label: "のんふぃくしょん", value: "ノンフィクション"},
-    {label: "えっせい", value: "エッセイ"},
-    {label: "いわてにゆかりがあるさっか", value: "岩手に縁がある作家"}
-  ];
-
-  const input = document.getElementById("genre-input");
-  const tagsEl = document.getElementById("multi-select-tags");
-  const optionsEl = document.getElementById("multi-select-options");
-  const container = document.getElementById("multi-select-wrap");
-
-  if (!input || !tagsEl || !optionsEl || !container) return;
-
-  let selectedItems = [];
-
-  function renderTags() {
-    tagsEl.innerHTML = "";
-    selectedItems.forEach((item, index) => {
-      const tag = document.createElement("div");
-      tag.className = "multi-select-tag icon-center";
-      tag.innerHTML = `
-        ${item}
-        <button data-index="${index}"><span class="material-symbols-outlined mt-1">cancel</span></button>
-      `;
-      tagsEl.appendChild(tag);
-    });
-  }
-
-  function renderOptions(keyword) {
-    optionsEl.innerHTML = "";
-
-    if (!keyword) {
-      optionsEl.hidden = true;
-      return;
-    }
-
-    const filtered = optionsList.filter(
-      opt =>
-        (opt.label.toLowerCase().includes(keyword.toLowerCase()) ||
-        opt.value.toLowerCase().includes(keyword.toLowerCase())) &&
-        !selectedItems.includes(opt.value)
-    );
-
-    if (!filtered.length) {
-      optionsEl.hidden = true;
-      return;
-    }
-
-    filtered.forEach(opt => {
-      const div = document.createElement("div");
-      div.className = "multi-select-option";
-      div.textContent = opt.value;
-      div.onclick = () => addItem(opt.value);
-      optionsEl.appendChild(div);
-    });
-
-    optionsEl.hidden = false;
-  }
-
-  function addItem(value) {
-    if (!selectedItems.includes(value)) {
-      selectedItems.push(value);
-      renderTags();
-    }
-    input.value = "";
-    optionsEl.hidden = true;
-  }
-
-  // 入力イベント
-  input.addEventListener("input", () => {
-    renderOptions(input.value.trim());
-  });
-
-  // Enter / Backspace
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && input.value.trim()) {
-      e.preventDefault();
-      addItem(input.value.trim());
-    }
-
-    if (e.key === "Backspace" && !input.value && selectedItems.length) {
-      selectedItems.pop();
-      renderTags();
-    }
-  });
-
-  // タグ削除
-  tagsEl.addEventListener("click", (e) => {
-    let btn = e.target;
-
-    if (btn.tagName === "SPAN") {
-      btn = btn.closest("button");
-    }
-
-    if (btn && btn.tagName === "BUTTON") {
-      const index = btn.dataset.index;
-      selectedItems.splice(index, 1);
-      renderTags();
-    }
-  });
-
-
-  // フォーカス
-  container.addEventListener("click", () => input.focus());
-
-  // 外クリックで候補を閉じる
-  document.addEventListener("click", (e) => {
-    if (!container.contains(e.target)) {
-      optionsEl.hidden = true;
-    }
-  });
-
-  // 送信
-  const hiddenInput = document.getElementById("genres-hidden");
-
-  form.addEventListener("submit", () => {
-    // hiddenInput.value = selectedItems.join(",");
-    JSON.stringify(selectedItems);
-  });
-});
-
-
-// ========== 書評印刷のやり方開閉 ==========
-document.addEventListener('DOMContentLoaded', () => {
-  const title = document.querySelector('.toggle-title');
-  const body = document.querySelector('.toggle-body');
-  const text = document.querySelector('.toggle-text');
-
-  if (!title || !body || !text) return;
-
-  title.addEventListener('click', () => {
-    body.classList.toggle('is-open');
-
-    const isOpen = body.classList.contains('is-open');
-    text.textContent = isOpen
-      ? '(クリックして閉じる)'
-      : '(クリックして開く)';
-  });
-});
 
 
 // ========== 置き換えタグ挿入ボタン ==========

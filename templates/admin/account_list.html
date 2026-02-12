@@ -115,10 +115,8 @@
 <div id="filter-option-modal" class="modal">
     <div>
         <div class="modal-content">
-            <div class="flex justify-between items-start">
-                <h2 class="page-title-sub">絞り込みオプション</h2>
-                <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
-            </div>
+            <h2 class="page-title-sub">絞り込みオプション</h2>
+            <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
 
             <form method="GET" th:action="@{/admin/account/list}">
                 <input type="hidden" name="keyword" th:value="${form.keyword}">

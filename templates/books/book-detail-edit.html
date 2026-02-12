@@ -20,9 +20,8 @@
 </head>
 
 <body>
+    <div th:replace="~{layout :: header}"></div>
     <div class="container">
-        <div th:replace="~{layout :: header}"></div>
-
         <main>
 
             <div class="form-container">
@@ -107,8 +106,6 @@
             </div>
 
         </main>
-
-
         <!-- ヘッダーモーダル -->
         <div class="overlay-menu" id="overlayMenu">
             <div class="close-btn" id="menuClose">×</div>
@@ -213,7 +210,7 @@
 
     </div>
 
-
+    <div th:replace="~{layout :: footer}"></div>
 
     <script>
         // ▼▼▼ 要素を取得 ▼▼▼

@@ -31,7 +31,23 @@
         <if test="address != null and address.size() > 0">
             AND (
                 <foreach collection="address" item="a" separator=" OR ">
-                    <![CDATA[ u.address LIKE CONCAT(#{a}, '%') ]]>
+                    <choose>
+                        <when test="a == '東北以外'">
+                            <![CDATA[
+                                (
+                                    u.address NOT LIKE '岩手県%' AND
+                                    u.address NOT LIKE '青森県%' AND
+                                    u.address NOT LIKE '宮城県%' AND
+                                    u.address NOT LIKE '秋田県%' AND
+                                    u.address NOT LIKE '山形県%' AND
+                                    u.address NOT LIKE '福島県%'
+                                )
+                            ]]>
+                        </when>
+                        <otherwise>
+                            <![CDATA[ u.address LIKE CONCAT(#{a}, '%') ]]>
+                        </otherwise>
+                    </choose>
                 </foreach>
             )
         </if>
@@ -85,6 +101,8 @@
         <choose>
             <when test="sort == 'created_desc'">ORDER BY u.created_at DESC</when>
             <when test="sort == 'created_asc'">ORDER BY u.created_at ASC</when>
+            <when test="sort == 'loginId_asc'">ORDER BY u.login_id ASC</when>
+            <when test="sort == 'loginId_desc'">ORDER BY u.login_id DESC</when>
             <when test="sort == 'birthYear_desc'">ORDER BY u.birth_year DESC</when>
             <when test="sort == 'birthYear_asc'">ORDER BY u.birth_year ASC</when>
             <when test="sort == 'reviewCount_desc'">ORDER BY review_count DESC</when>

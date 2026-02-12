@@ -100,11 +100,27 @@
 
         -- 投稿者の居住地絞り込み
         <if test="form.userAddress != null and form.userAddress.size() > 0">
-          AND (
-            <foreach collection="form.userAddress" item="a" separator=" OR ">
-              <![CDATA[ r.user_address LIKE CONCAT(#{a}, '%') ]]>
-            </foreach>
-          )
+            AND (
+                <foreach collection="form.userAddress" item="a" separator=" OR ">
+                    <choose>
+                        <when test="a == '東北以外'">
+                            <![CDATA[
+                                (
+                                    r.user_address NOT LIKE '岩手県%' AND
+                                    r.user_address NOT LIKE '青森県%' AND
+                                    r.user_address NOT LIKE '宮城県%' AND
+                                    r.user_address NOT LIKE '秋田県%' AND
+                                    r.user_address NOT LIKE '山形県%' AND
+                                    r.user_address NOT LIKE '福島県%'
+                                )
+                            ]]>
+                        </when>
+                        <otherwise>
+                            <![CDATA[ r.user_address LIKE CONCAT(#{a}, '%') ]]>
+                        </otherwise>
+                    </choose>
+                </foreach>
+            )
         </if>
 
         -- 書評投稿期間絞り込み

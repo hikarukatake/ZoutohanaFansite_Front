@@ -12,6 +12,9 @@
     <div th:replace="~{layout-admin :: header}"></div>
 
     <main id="admin-main">
+      <a href="notification_template_list.html" th:href="@{/admin/notification/template}" class="icon-center review-card-sub-info text-decoration-none hover-bold">
+        <span class="material-symbols-outlined">keyboard_double_arrow_left</span>個別通知テンプレート一覧に戻る
+      </a>
       <h1 class="page-title">個別通知テンプレート作成</h1>
 
       <div class="main-content-card mt-4">
@@ -51,7 +54,6 @@
             </table>
 
             <div class="btn-wrap mt-4">
-              <a href="#" th:href="@{/}" class="btn">キャンセル</a>
               <input type="submit" value="確認する" class="btn">
             </div>
           </div>

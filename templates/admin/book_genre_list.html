@@ -35,7 +35,7 @@
         <div> <!-- メニュー右部分(検索) -->
           <form method="GET" th:action="@{/admin/genre/list}" class="flex gap-1">
             <input type="hidden" name="sort" th:value="${form.sort}">
-            <input type="text" name="keyword" class="input-text" th:value="${form.keyword}" placeholder="検索">
+            <input type="search" name="keyword" class="input-text" th:value="${form.keyword}" placeholder="検索">
             <button type="submit" class="btn"><span class="material-symbols-outlined scale-bigger">search</span></button>
           </form>
         </div>

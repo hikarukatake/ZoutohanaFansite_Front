@@ -25,7 +25,7 @@
               <tr>
                 <th>ステータス : </th>
                 <td>
-                  <div class="radio-wrap">
+                  <div class="radio-wrap ml-2">
                     <label><input type="radio" name="status" value="PUBLIC" class="scale-bigger" th:checked="${post.status.label == '公開'}" data-preview="#confirm-status">公開</label>
                     <label><input type="radio" name="status" value="PRIVATE" class="scale-bigger" th:checked="${post.status.label == '非公開'}" data-preview="#confirm-status">非公開</label>
                     <label><input type="radio" name="status" value="DRAFT" class="scale-bigger" th:checked="${post.status.label == '下書き'}" data-preview="#confirm-status">下書き</label>
@@ -42,7 +42,7 @@
               <tr>
                 <th>カテゴリー : </th>
                 <td>
-                  <div class="radio-wrap">
+                  <div class="radio-wrap ml-2">
                     <label><input type="radio" name="category" value="PROJECT" class="scale-bigger" th:checked="${post.category.label == '企画情報'}" data-preview="#confirm-category">企画情報</label>
                     <label><input type="radio" name="category" value="DONATION" class="scale-bigger" th:checked="${post.category.label == '寄贈情報'}" data-preview="#confirm-category">寄贈情報</label>
                     <label><input type="radio" name="category" value="ELSE" class="scale-bigger" th:checked="${post.category.label == 'その他情報'}" data-preview="#confirm-category">その他情報</label>

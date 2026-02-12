@@ -20,43 +20,18 @@
 
       <div class="main-content">
         <div class="main-content-card p-8 mt-2"> <!-- 書評カード -->
-          <div class="table-border-b-strong flex justify-between pb-4"> <!-- 書評カードヘッダー -->
-            <div> <!-- 左側 -->
-              <p class="review-card-sub-info">No.<span th:text="${review.id}">0</span></p>
+          <div class="table-border-b-strong pb-4"> <!-- 書評カードヘッダー -->
+            <p class="review-card-sub-info">No.<span th:text="${review.id}">0</span></p>
+            <div class="flex justify-between">
               <h3 class="review-card-title" th:text="${review.reviewTitle}">データが取得できませんでした:書評名</h3>
+              <h3 class="review-card-title" th:text="|${review.voteCount}票|">0票</h3> <!-- 右側 -->
             </div>
+            <p class="review-card-sub-info ml-4" th:text="|企画名 : ${review.projectName}|"></p>
           </div>
 
-          <div class="table-border-b-strong flex py-4"> <!-- 書評カードボディ(上)) -->
-            <table class="pr-8 mb-auto"> <!-- 左側 -->
-              <tr>
-                <th>プロジェクト名 : </th>
-                <td th:text="${review.projectName}"></td>
-              </tr>
-              <tr>
-                <th>書評ステータス : </th>
-                <td>
-                  <form method="POST" th:action="@{/admin/review/statusUpdateSingle}" class="no-auto-submit flex gap-1">
-                    <input type="hidden" name="reviewId" th:value="${review.id}">
-                    <select class="select w-full flex-1" name="targetStatus">
-                      <option value="INITIAL" th:selected="${review.status == 'INITIAL'}">一次審査未通過</option>
-                      <option value="FIRST_STAGE_PASSED" th:selected="${review.status == 'FIRST_STAGE_PASSED'}">一次審査通過</option>
-                      <option value="SECOND_STAGE_PASSED" th:selected="${review.status == 'SECOND_STAGE_PASSED'}">ノミネート</option>
-                      <option value="AWARDED" th:selected="${review.status == 'AWARDED'}">大賞</option>
-                    </select>
-
-                    <button type="submit" class="btn">更新</button>
-                  </form>
-                </td>
-              </tr>
-              <tr>
-                <th>得票数 : </th>
-                <td th:text="${review.voteCount}">0</td>
-              </tr>
-            </table>
-
-            <div class="flex-1"> <!-- 右側 -->
-              <table>
+          <div class="table-border-b-strong py-4"> <!-- 書評カードボディ(上)) -->
+            <div> <!-- 右側 -->
+              <table class="w-half">
                 <tr>
                   <th>名前 : </th>
                   <td>
@@ -75,10 +50,7 @@
                 </tr>
                 <tr>
                   <th>性別 : </th>
-                  <td>
-                    <span th:if="${review.userGender == 'MALE'}">男性</span>
-                    <span th:if="${review.userGender == 'FEMALE'}">女性</span>
-                  </td>
+                  <td th:text="${review.userGender.label}"></td>
                 </tr>
                 </table>
                 <p class="font-bold">自己紹介 : </p>
@@ -107,7 +79,27 @@
                 </tr>
               </table>
               <div class="flex-1">
-                <p><span class="font-bold">書評タイトル : </span><span th:text="${review.reviewTitle}"></span></p>
+                <table>
+                  <tr>
+                    <th>書評ステータス : </th>
+                    <td>
+                      <form method="POST" th:action="@{/admin/review/statusUpdateSingle}" class="no-auto-submit flex gap-1">
+                        <input type="hidden" name="reviewId" th:value="${review.id}">
+                        <select class="select w-full flex-1" name="targetStatus">
+                          <option value="INITIAL" th:selected="${review.status == 'INITIAL'}">一次審査未通過</option>
+                          <option value="FIRST_STAGE_PASSED" th:selected="${review.status == 'FIRST_STAGE_PASSED'}">一次審査通過</option>
+                          <option value="SECOND_STAGE_PASSED" th:selected="${review.status == 'SECOND_STAGE_PASSED'}">ノミネート</option>
+                          <option value="AWARDED" th:selected="${review.status == 'AWARDED'}">大賞</option>
+                        </select>
+                        <button type="submit" class="btn">更新</button>
+                      </form>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>書評タイトル : </th>
+                    <td th:text="${review.reviewTitle}"></td>
+                  </tr>
+                </table>
                 <p class="font-bold">本文 : </p>
                 <pre th:text="${review.reviewContent}"></pre>
               </div>
@@ -136,7 +128,7 @@
 
         <div class="btn-wrap mt-8">
           <button type="button" class="btn btn-danger" data-modal-target="delete-confirm-modal">削除する</button>
-          <a href="#" th:href="@{/}" class="btn">個別通知を送る</a>
+          <a href="notification.html" th:href="@{/admin/notification/send/} + ${review.id}" class="btn">個別通知を送る</a>
           <a href="review_print.html" th:href="@{/admin/review/print(id=${review.id})}" class="btn">情報をコピーする</a>
         </div>
       </div>

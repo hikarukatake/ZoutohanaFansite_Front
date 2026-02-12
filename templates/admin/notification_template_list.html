@@ -12,24 +12,15 @@
   <div th:replace="~{layout-admin :: header}"></div>
 
   <main id="admin-main">
-    <h1 class="page-title">個別通知テンプレート一覧</h1>
+    <div class="flex justify-between">
+      <h1 class="page-title">個別通知テンプレート一覧</h1>
+      <a href="notification_template_create.html" th:href="@{/admin/notification/template/create}" class="btn">
+        <span class="material-symbols-outlined scale-bigger pr-1">library_add</span>
+        新しいテンプレートを登録
+      </a>
+    </div>
 
     <div class="main-content">
-      <div class="flex justify-end gap-1 mt-2"> <!-- テーブルの上のメニュー部分 -->
-        <div>
-          <form th:action="@{/admin/notification/template}"><!-- メニュー右部分(検索) -->
-            <input name="s" type="text" class="input-text" placeholder="検索">
-            <button type="submit" class="btn"><span class="material-symbols-outlined scale-bigger">search</span></button>
-          </form>
-        </div>
-        <div>
-          <a href="#" th:href="@{/admin/notification/template/create}" class="btn">
-            <span class="material-symbols-outlined scale-bigger pr-1">library_add</span>
-            新しいテンプレートを登録
-          </a>
-        </div>
-      </div>
-
       <table class="list-table mt-4">
         <tr>
           <th class="table-border-r">ID</th>
@@ -37,7 +28,7 @@
           <th class="table-border-r">タイトル</th>
           <th class="w-quarter"></th>
         </tr>
-        <tr th:each="nt : ${notificationTemplates}">
+        <tr th:each="nt : ${notificationTemplates}" class="table-content-tr">
           <td th:text="${nt.id}" class="table-border-r text-right">1</td>
           <td th:text="${nt.name}" class="table-border-r">一次審査通過連絡</td>
           <td th:text="${nt.title}" class="table-border-r">一次審通過のお知らせ</td>
@@ -53,5 +44,7 @@
       <div class="pagination" id="pagination"></div>
     </div>
   </main>
+
+<script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/admin-general.js}"></script>
 </body>
 </html>

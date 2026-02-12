@@ -15,9 +15,8 @@
 </head>
 
 <body>
+    <div th:replace="~{layout :: header}"></div>
     <div class="container">
-        <div th:replace="~{layout :: header}"></div>
-
         <div class="breadcrumb-box">
             <div class="breadcrumb"><a th:href="@{/}" href="../fansite/top.html">ホーム</a></div>
             <div class="breadcrumb-middle">></div>
@@ -84,12 +83,13 @@
                 投稿がありません
             </div>
         </section>
-
-        <!-- フッター -->
-        <div th:replace="~{layout :: footer}"></div>
-
     </div>
+
+    <!-- フッター -->
+    <div th:replace="~{layout :: footer}"></div>
+
     <script th:src="@{/js/hamburger.js}"></script>
+
 </body>
 
 </html>

@@ -1,216 +1,181 @@
-<!-- 【企画作成】 -->
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>企画作成</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="../../static/css/admin/admin-style.css" th:href="@{/css/admin/admin-style.css}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>企画作成</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet" href="../../static/css/admin/admin-style.css" th:href="@{/css/admin/admin-style.css}">
 </head>
 <body>
-    <div th:replace="~{layout-admin :: header}"></div>
 
-    <main id="admin-main">
-      <a href="project_list.html" th:href="@{/admin/project/list}" th:object="${project}" class="icon-center review-card-sub-info text-decoration-none hover-bold">
-        <span class="material-symbols-outlined">keyboard_double_arrow_left</span>企画一覧に戻る
-      </a>
-      <h1 class="page-title">企画作成</h1>
+<div th:replace="~{layout-admin :: header}"></div>
 
-      <div class="main-content-card mt-4">
-        <form method="POST" th:action="@{/admin/project/create}" id="confirm-form" class="no-auto-submit">
-          <div class="table-container">
-            <table>
-              <tr>
-                <th>企画名 : </th>
-                <td>
-                  <input type="text" name="name" class="input-text w-full" data-preview="#confirm-projectName">
-                  <p class="text-danger"></p>
-                </td>
-              </tr>
-              <tr>
-                <th>
+<main id="admin-main">
+  <a href="project_list.html" th:href="@{/admin/project/list}" th:object="${project}" class="icon-center review-card-sub-info text-decoration-none hover-bold">
+    <span class="material-symbols-outlined">keyboard_double_arrow_left</span>企画一覧に戻る
+  </a>
+  <h1 class="page-title">企画作成</h1>
+
+  <div class="main-content-card mt-4">
+    <form th:if="${projectValidator}" th:action="@{/admin/project/create}" th:object="${form}" method="post">
+      <div class="table-container">
+        <table>
+          <tr>
+            <th>企画名 : </th>
+            <td>
+              <input th:field="*{name}" type="text" class="input-text w-full">
+              <p th:if="${projectValidator.nullName}" style="color: red">企画名を入力してください</p>
+            </td>
+          </tr>
+          <tr>
+            <th>
                   <span class="icon-center gap-1">
-                    企画URL<span class="material-symbols-outlined text-gray cursor-help" title="企画ページのURLの末尾につく文字列です。">help</span> : </th>
+                    企画URL<span class="material-symbols-outlined text-gray cursor-help" title="企画ページのURLの末尾につく文字列です。">help</span> :
                   </span>
-                <td>
-                  <input type="text" name="urlKey" id="urlKey-input" class="input-text w-full" data-preview="#confirm-urlKey">
-                  <span class="text-gray">https://zoutohana-fansite.com/project/</span><span id="urlKey-preview" class="text-gray">_____</span>
-                  <p class="text-danger"></p>
-                </td>
-              </tr>
-              <tr>
-                <th class="table-border-b-light">説明 : </th>
-                <td class="table-border-b-light"><textarea rows="10" name="introduction" class="input-textarea w-full" data-preview="#confirm-introduction"></textarea></td>
-              </tr>
+            </th>
+            <td>
+              <input th:field="*{urlKey}" type="text" id="urlKey-input" class="input-text w-full">
+              <span class="text-gray">https://zoutohana-fansite.com/project/</span><span id="urlKey-preview" class="text-gray">_____</span>
+              <p th:if="${projectValidator.nullUrlKey}" style="color: red">企画URLを入力してください</p>
+              <p th:if="${projectValidator.existsUrlKey}" style="color: red">すでにこの企画URLは使用されています</p>
+            </td>
+          </tr>
+          <tr>
+            <th class="table-border-b-light">説明 : </th>
+            <td class="table-border-b-light">
+              <textarea th:field="*{introduction}" rows="10" class="input-textarea w-full"></textarea>
+              <p th:if="${projectValidator.nullIntroduction}" style="color: red">説明を入力してください</p>
+            </td>
+          </tr>
 
-              <tr>
-                <th>企画期間 : </th>
-                <td>
-                  <input type="datetime-local" name="projectStartAt" class="input-datetime" data-preview="#confirm-projectStartAt">
-                  <span class="wave-dash">～</span>
-                  <input type="datetime-local" name="projectEndAt" class="input-datetime" data-preview="#confirm-projectEndAt">
-                </td>
-              </tr>
-              <tr>
-                <th>書評作成・投稿期間 : </th>
-                <td>
-                  <input type="datetime-local" name="submissionStartAt" class="input-datetime" data-preview="#confirm-submissionStartAt">
-                  <span class="wave-dash">～</span>
-                  <input type="datetime-local" name="submissionEndAt" class="input-datetime" data-preview="#confirm-submissionEndAt">
-                </td>
-              </tr>
-              <tr>
-                <th class="table-border-b-light">書評投票(二次審査)期間 : </th>
-                <td class="table-border-b-light">
-                  <input type="datetime-local" name="votingStartAt" class="input-datetime" data-preview="#confirm-votingStartAt">
-                  <span class="wave-dash">～</span>
-                  <input type="datetime-local" name="votingEndAt" class="input-datetime" data-preview="#confirm-votingEndAt">
-                </td>
-              </tr>
-
-              <tr>
-                <th>書籍タイトル : </th>
-                <td>
-                  <div class="radio-wrap">
-                    <label><input type="radio" name="enableVisibleBookTitle" value="FALSE" class="scale-bigger" data-preview="#confirm-enableVisibleBookTitle" checked>表示しない</label>
-                    <label><input type="radio" name="enableVisibleBookTitle" value="TRUE" class="scale-bigger" data-preview="#confirm-enableVisibleBookTitle">表示する</label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th>書評タイトル : </th>
-                <td>
-                  <div class="radio-wrap">
-                    <label><input type="radio" name="enableVisibleReviewTitle" value="FALSE" class="scale-bigger" data-preview="#confirm-enableVisibleReviewTitle" checked>表示しない</label>
-                    <label><input type="radio" name="enableVisibleReviewTitle" value="TRUE" class="scale-bigger" data-preview="#confirm-enableVisibleReviewTitle">表示する</label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th class="table-border-b-light">投稿者情報 : </th>
-                <td class="table-border-b-light">
-                  <div class="radio-wrap">
-                    <label><input type="radio" name="enableVisibleUserInfo" value="FALSE" class="scale-bigger" data-preview="#confirm-enableVisibleUserInfo" checked>表示しない</label>
-                    <label><input type="radio" name="enableVisibleUserInfo" value="TRUE" class="scale-bigger" data-preview="#confirm-enableVisibleUserInfo">表示する</label>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <th>テーマカラー : </th>
-                <td>
-                  <div class="themeColor-wrap">
-                    <label>
-                      <input type="radio" name="themeColor" value="GREEN" checked>
-                      <span class="color-dot" style="background:var(--theme-green);" title="GREEN : みどり">
+          <tr>
+            <th>企画期間 : </th>
+            <td>
+              <input th:field="*{projectStartAt}" type="datetime-local" class="input-datetime">
+              <span class="wave-dash">～</span>
+              <input th:field="*{projectEndAt}" type="datetime-local" class="input-datetime">
+              <p th:if="${projectValidator.nullOngoingAt}" style="color: red">企画期間を入力してください</p>
+            </td>
+          </tr>
+          <tr>
+            <th>書評作成・投稿期間 : </th>
+            <td>
+              <input th:field="*{submissionStartAt}" type="datetime-local" class="input-datetime">
+              <span class="wave-dash">～</span>
+              <input th:field="*{submissionEndAt}" type="datetime-local" class="input-datetime">
+              <p th:if="${projectValidator.nullSubmissionAt}" style="color: red">書評投稿期間を入力してください</p>
+            </td>
+          </tr>
+          <tr>
+            <th class="table-border-b-light">書評投票(二次審査)期間 : </th>
+            <td class="table-border-b-light">
+              <input th:field="*{votingStartAt}" type="datetime-local" class="input-datetime">
+              <span class="wave-dash">～</span>
+              <input th:field="*{votingEndAt}" type="datetime-local" class="input-datetime">
+              <p th:if="${projectValidator.nullVotingAt}" style="color: red">投票期間を入力してください</p>
+            </td>
+          </tr>
+          <tr>
+            <th>テーマカラー : </th>
+            <td>
+              <div class="themeColor-wrap">
+                <label th:each="color : ${T(com.example.zoutohanafansite.entity.enums.ThemeColor).values()}">
+                  <input type="radio" th:field="*{themeColor}" th:value="${color}">
+                  <span class="color-dot" th:style="'background:var(--theme-' + ${#strings.toLowerCase(color)} + ');'" th:title="${color}">
                         <span class="material-symbols-outlined">check</span>
                       </span>
-                    </label>
+                </label>
+              </div>
+            </td>
+          </tr>
+        </table>
 
-                    <label>
-                      <input type="radio" name="themeColor" value="PINK">
-                      <span class="color-dot" style="background:var(--theme-pink);" title="PINK : もも">
-                        <span class="material-symbols-outlined">check</span>
-                      </span>
-                    </label>
-
-                    <label>
-                      <input type="radio" name="themeColor" value="YELLOW"data-preview="#confirm-themeColor">
-                      <span class="color-dot" style="background:var(--theme-yellow);" title="YELLOW : き">
-                        <span class="material-symbols-outlined">check</span>
-                      </span>
-                    </label>
-
-                    <label>
-                      <input type="radio" name="themeColor" value="BLUE">
-                      <span class="color-dot" style="background:var(--theme-blue);" title="BLUE : あお">
-                        <span class="material-symbols-outlined">check</span>
-                      </span>
-                    </label>
-
-                    <label>
-                      <input type="radio" name="themeColor" value="BLACK">
-                      <span class="color-dot" style="background:var(--theme-black);" title="BLACK : くろ">
-                        <span class="material-symbols-outlined">check</span>
-                      </span>
-                    </label>
-
-                    <label>
-                      <input type="radio" name="themeColor" value="GRAY">
-                      <span class="color-dot" style="background:var(--theme-gray);" title="GRAY : はい">
-                        <span class="material-symbols-outlined">check</span>
-                      </span>
-                    </label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th>ロゴ画像 : </th>
-                <td id="projectInput-td">
-                  <div>
-                    <input type="file" accept="image/*" name="mainImg" id="mainImg-input" class="btn-file" data-preview="#confirm-logoImg">
-                    <img id="mainImg-preview">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th>PDF : </th>
-                <td id="projectInput-td">
-                  <div>
-                    <input type="file" accept="application/pdf" name="pdf" multiple id="pdf-input" class="btn-file" data-preview="#confirm-pdf">
-                    <ul id="pdf-list-ul"></ul>
-                  </div>
-                </td>
-              </tr>
-            </table>
-
-            <div class="btn-wrap mt-4">
-              <button type="reset" class="btn btn-danger">入力をリセットする</button>
-              <input type="button" value="確認する" class="btn" id="confirm-btn" data-modal-target="create-confirm-modal">
-            </div>
-          </div>
-        </form>
-      </div>
-    </main>
-
-    <div id="create-confirm-modal" class="modal">
-      <div>
-        <div class="modal-content-big">
-          <h2 class="page-title text-center">確認</h2>
-          <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
-
-          <div class="mt-8">
-            <p>以下の内容で企画を作成してよろしいですか？</p>
-          </div>
-
-          <div class="mt-8">
-            <p class="confirm-modal-preview"><span class="font-bold">企画名 : </span><span id="confirm-projectName"></span></p>
-            <p class="confirm-modal-preview"><span class="font-bold">企画URL : </span><span id="confirm-urlKey"></span></p>
-            <div class="confirm-modal-preview">
-              <p><span class="font-bold">説明 : </span></p>
-              <pre id="confirm-introduction"></pre>
-            </div>
-            <p class="confirm-modal-preview"><span class="font-bold">企画期間 : </span><span id="confirm-projectStartAt"></span>～<span id="confirm-projectEndAt"></span></p>
-            <p class="confirm-modal-preview"><span class="font-bold">書評作成・投稿期間 : </span><span id="confirm-submissionStartAt"></span>～<span id="confirm-submissionEndAt"></span></p>
-            <p class="confirm-modal-preview"><span class="font-bold">書評投票(二次審査)期間 : </span><span id="confirm-votingStartAt"></span>～<span id="confirm-votingEndAt"></span></p>
-            <p class="confirm-modal-preview"><span class="font-bold">書籍タイトル : </span><span id="confirm-enableVisibleBookTitle"></span></p>
-            <p class="confirm-modal-preview"><span class="font-bold">書評タイトル : </span><span id="confirm-enableVisibleReviewTitle"></span></p>
-            <p class="confirm-modal-preview"><span class="font-bold">投稿者情報 : </span><span id="confirm-enableVisibleUserInfo"></span></p>
-            <p class="confirm-modal-preview"><span class="font-bold">テーマカラー : </span><span id="confirm-themeColor"></span></p>
-            <p class="confirm-modal-preview"><span class="font-bold">ロゴ画像 : </span><span id="confirm-logoImg"></span></p>
-            <img id="confirm-logoImg-preview" style="max-width:200px;">
-            <p class="confirm-modal-preview"><span class="font-bold">PDF : </span><span id="confirm-pdf"></span></p>
-          </div>
-
-          <div class="btn-wrap mt-8">
-            <button type="submit" form="confirm-form" id="final-submit-btn" class="btn">作成する</button>
-          </div>
+        <div class="btn-wrap mt-4">
+          <a th:href="@{/admin/project}" class="btn">キャンセル</a>
+          <input type="submit" value="画像アップロードへ" class="btn">
         </div>
       </div>
-    </div>
+    </form>
 
-    <script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/admin-general.js}"></script>
+    <form th:unless="${projectValidator}" th:action="@{/admin/project/create}" th:object="${form}" method="post">
+      <div class="table-container">
+        <table>
+          <tr>
+            <th>企画名 : </th>
+            <td>
+              <input th:field="*{name}" type="text" class="input-text w-full">
+              <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></p>
+            </td>
+          </tr>
+          <tr>
+            <th>
+                  <span class="icon-center gap-1">
+                    企画URL<span class="material-symbols-outlined text-gray cursor-help" title="企画ページのURLの末尾につく文字列です。">help</span> :
+                  </span>
+            </th>
+            <td>
+              <input th:field="*{urlKey}" type="text" id="urlKey-input" class="input-text w-full">
+              <span class="text-gray">https://zoutohana-fansite.com/project/</span><span id="urlKey-preview" class="text-gray">_____</span>
+              <p th:if="${#fields.hasErrors('urlKey')}" th:errors="*{urlKey}" class="text-danger"></p>
+            </td>
+          </tr>
+          <tr>
+            <th class="table-border-b-light">説明 : </th>
+            <td class="table-border-b-light">
+              <textarea th:field="*{introduction}" rows="10" class="input-textarea w-full"></textarea>
+            </td>
+          </tr>
+
+          <tr>
+            <th>企画期間 : </th>
+            <td>
+              <input th:field="*{projectStartAt}" type="datetime-local" class="input-datetime">
+              <span class="wave-dash">～</span>
+              <input th:field="*{projectEndAt}" type="datetime-local" class="input-datetime">
+            </td>
+          </tr>
+          <tr>
+            <th>書評作成・投稿期間 : </th>
+            <td>
+              <input th:field="*{submissionStartAt}" type="datetime-local" class="input-datetime">
+              <span class="wave-dash">～</span>
+              <input th:field="*{submissionEndAt}" type="datetime-local" class="input-datetime">
+            </td>
+          </tr>
+          <tr>
+            <th class="table-border-b-light">書評投票(二次審査)期間 : </th>
+            <td class="table-border-b-light">
+              <input th:field="*{votingStartAt}" type="datetime-local" class="input-datetime">
+              <span class="wave-dash">～</span>
+              <input th:field="*{votingEndAt}" type="datetime-local" class="input-datetime">
+            </td>
+          </tr>
+          <tr>
+            <th>テーマカラー : </th>
+            <td>
+              <div class="themeColor-wrap">
+                <label th:each="color : ${T(com.example.zoutohanafansite.entity.enums.ThemeColor).values()}">
+                  <input type="radio" th:field="*{themeColor}" th:value="${color}">
+                  <span class="color-dot" th:style="'background:var(--theme-' + ${#strings.toLowerCase(color)} + ');'" th:title="${color}">
+                        <span class="material-symbols-outlined">check</span>
+                      </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <div class="btn-wrap mt-4">
+          <a th:href="@{/admin/project}" class="btn">キャンセル</a>
+          <input type="submit" value="画像アップロードへ" class="btn">
+        </div>
+      </div>
+    </form>
+  </div>
+</main>
+
+<script th:src="@{/js/admin/project-create.js}"></script>
 </body>
 </html>
 

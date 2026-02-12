@@ -19,10 +19,7 @@
 
 <body>
     <header class="signup-header">
-        <!-- --------------------------------------------------- -->
-        <!-- もどる先のリンク付けてください -->
-        <!-- ---------------------------------------------------- -->
-        <a href="#" class="back-link">&lt;&nbsp;&nbsp;もどる</a>
+        <a th:href="@{/review(id=${reviewForm.projectId})}" href="" class="back-link">&lt;&nbsp;&nbsp;もどる</a>
         <div class="step-indicator">
             <div class="step">
                 <div class="step-number">1</div>
@@ -254,14 +251,7 @@
                     </div>
                 </form>
             </div>
-            <footer class="footer-inside">
-                <p>&copy; 象と花プロジェクト</p>
-            </footer>
-
         </div>
-        <footer class="footer-outside">
-            <p>&copy; 象と花プロジェクト</p>
-        </footer>
     </main>
 
     <script>

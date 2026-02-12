@@ -1,6 +1,6 @@
 <!-- 【企画編集・情報】 -->
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,7 @@
     <div th:replace="~{layout-admin :: header}"></div>
 
     <main id="admin-main">
-      <a href="project_list.html" th:href="@{/admin/project/list}" class="icon-center review-card-sub-info text-decoration-none hover-bold">
+      <a href="project_list.html" th:href="@{/admin/project/list}" th:object="${project}" class="icon-center review-card-sub-info text-decoration-none hover-bold">
         <span class="material-symbols-outlined">keyboard_double_arrow_left</span>企画一覧に戻る
       </a>
       <h1 class="page-title">企画編集・情報</h1>
@@ -26,9 +26,8 @@
 
       <div class="tab-content">
         <div class="main-content-card tab-panel active"> <!-- 「企画について」タブの中身 -->
-          <form method="POST" th:action="@{/admin/project/view}" class="no-auto-submit">
+          <form method="POST" th:action="@{/admin/project/view/{urlKey}(urlKey=${project.urlKey})}" class="no-auto-submit">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <input type="hidden" name="id" th:value="${project.id}">
             <div class="table-container">
               <table>
                 <tr>
@@ -60,16 +59,16 @@
                     </select>
                   </td>
                 </tr>
-                <tr>
-                  <th>QRコード : </th>
-                  <td>
-                    <div class="flex gap-4">
-                      <button type="button" id="qrImg-showButton" class="btn">表示する</button> <!-- TODO:後で実装 -->
-                      <button type="button" id="qrImg-downloadButton" class="btn">ダウンロードする</button> <!-- TODO:後で実装 -->
-                    </div>
-                    <img id="qrImg-preview" src="../../static/img/flower-blue.png" th:src="@{/img/flower-blue.png}" class="hidden">
-                  </td>
-                </tr>
+<!--                <tr>-->
+<!--                  <th>QRコード : </th>-->
+<!--                  <td>-->
+<!--                    <div class="flex gap-4">-->
+<!--                      <button type="button" id="qrImg-showButton" class="btn">表示する</button> &lt;!&ndash; TODO:後で実装 &ndash;&gt;-->
+<!--                      <button type="button" id="qrImg-downloadButton" class="btn">ダウンロードする</button> &lt;!&ndash; TODO:後で実装 &ndash;&gt;-->
+<!--                    </div>-->
+<!--                    <img id="qrImg-preview" src="../../static/img/flower-blue.png" th:src="@{/img/flower-blue.png}" class="hidden">-->
+<!--                  </td>-->
+<!--                </tr>-->
                 <tr>
                   <th class="table-border-b-strong">削除 : </th>
                   <td class="table-border-b-strong">
@@ -92,7 +91,7 @@
                   <td>
                     <input type="text" name="urlKey" id="urlKey-input" class="input-text w-full" th:value="${project.urlKey}">
                     <span class="text-gray">https://zoutohana-fansite.com/project/</span><span id="urlKey-preview" class="text-gray" th:text="${project.urlKey}">_____</span>
-                    <p class="text-danger"></p>
+                    <p th:if="${param.error}" style="color: red">すでに使用されている企画URLは利用できません</p>
                   </td>
                 </tr>
                 <tr>
@@ -124,53 +123,6 @@
                     <input type="datetime-local" name="votingEndAt" class="input-datetime" step="60" th:value="${#temporals.format(project.votingEndAt, 'yyyy-MM-dd''T''HH:mm')}">
                   </td>
                 </tr>
-
-                <tr>
-                  <th>書籍タイトル : </th>
-                  <td>
-                    <div class="radio-wrap ml-2">
-                      <label>
-                        <input type="radio" name="enableVisibleBookTitle" value="FALSE" class="scale-bigger mr-2" th:checked="${project.enableVisibleBookTitle == false}">
-                        表示しない
-                      </label>
-                      <label>
-                        <input type="radio" name="enableVisibleBookTitle" value="TRUE" class="scale-bigger" th:checked="${project.enableVisibleBookTitle == true}">
-                        表示する
-                      </label>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <th>書評タイトル : </th>
-                  <td>
-                    <div class="radio-wrap ml-2">
-                      <label>
-                        <input type="radio" name="enableVisibleReviewTitle" value="FALSE" class="scale-bigger" th:checked="${project.enableVisibleReviewTitle == false}">
-                        表示しない
-                      </label>
-                      <label>
-                        <input type="radio" name="enableVisibleReviewTitle" value="TRUE" class="scale-bigger" th:checked="${project.enableVisibleReviewTitle == true}">
-                        表示する
-                      </label>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <th class="table-border-b-light">投稿者情報 : </th>
-                  <td class="table-border-b-light">
-                    <div class="radio-wrap ml-2">
-                      <label>
-                        <input type="radio" name="enableVisibleUserInfo" value="FALSE" class="scale-bigger" th:checked="${project.enableVisibleUserInfo == false}">
-                        表示しない
-                      </label>
-                      <label>
-                        <input type="radio" name="enableVisibleUserInfo" value="TRUE" class="scale-bigger" th:checked="${project.enableVisibleUserInfo} == true">
-                        表示する
-                      </label>
-                    </div>
-                  </td>
-                </tr>
-
                 <tr>
                   <th>テーマカラー : </th>
                   <td>
@@ -222,19 +174,8 @@
                 <tr>
                   <th>ロゴ画像 : </th>
                   <td id="projectInput-td">
-                    <div> <!-- TODO:後で実装 -->
-                      <p th:text="'現在のファイル : ' + ${project.mainImgUrl}"></p>
-                      <input type="file" accept="image/*" name="mainImg" id="mainImg-input" class="btn-file">
-                      <img id="mainImg-preview">
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <th>PDF : </th>
-                  <td id="projectInput-td">
-                    <div> <!-- TODO:後で実装 -->
-                      <input type="file" accept="application/pdf" name="pdf" multiple id="pdf-input" class="btn-file">
-                      <ul id="pdf-list-ul"></ul>
+                    <div>
+                      <img id="mainImg-preview" th:src="@{/api/image/{fileName}(fileName=${fileName})}">
                     </div>
                   </td>
                 </tr>
@@ -242,8 +183,9 @@
 
               <div class="button-wrap mt-4">
                 <a href="project_list.html" th:href="@{/admin/project/list}" class="btn">キャンセル</a>
-                <input type="submit" value="確認する" class="btn">
+                <input type="submit" value="更新する" class="btn">
               </div>
+            </div>
             </form>
           </div>
         </div>

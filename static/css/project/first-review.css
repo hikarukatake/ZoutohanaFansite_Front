@@ -203,6 +203,124 @@ p {
         transform: translateY(120vh) rotate(180deg);
     }
 }
+
+@media screen and (min-width: 375px) {
+    
+    /* --- 1. 文字のサイズと位置 --- */
+    .book-text h1 {
+        font-size: 24px;
+    }
+    
+    .book-text p {
+        font-size: 14px;
+    }
+
+    .book-text {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 100px;
+    left: 20%;
+    color: #303030;
+    transition: opacity 3s ease;
+    opacity: 1;
+    }
+
+    .one-book-text-overlay {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 30px;
+    line-height: 2;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+
+    position: absolute;
+    top: 40px;
+    left: 40px;
+
+    color: var(--font-normal);
+    z-index: 2;
+}
+    
+.one-book {
+    background-image: url('../../img/book2.png');
+    position: relative;
+    /* ← 疑似要素の基準 */
+    width: 100%;
+    height: 200px;
+    /* 本なので高さも必要 */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 2px solid rgb(160, 160, 160);
+    border-radius: 4px;
+    z-index: 1;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
+}
+
+
+
+}
+
+
+@media screen and (min-width: 400px) {
+    
+    /* --- 1. 文字のサイズと位置 --- */
+    .book-text h1 {
+        font-size: 25px;
+    }
+    
+    .book-text p {
+        font-size: 15px;
+    }
+
+    .book-text {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 100px;
+    left: 20%;
+    color: #303030;
+    transition: opacity 3s ease;
+    opacity: 1;
+    }
+
+    .one-book-text-overlay {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 30px;
+    line-height: 2;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+
+    position: absolute;
+    top: 40px;
+    left: 40px;
+
+    color: var(--font-normal);
+    z-index: 2;
+}
+    
+.one-book {
+    background-image: url('../../img/book2.png');
+    position: relative;
+    /* ← 疑似要素の基準 */
+    width: 100%;
+    height: 200px;
+    /* 本なので高さも必要 */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 2px solid rgb(160, 160, 160);
+    border-radius: 4px;
+    z-index: 1;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
+}
+
+
+
+}
+
 @media screen and (min-width: 450px) {
     
     /* --- 1. 文字のサイズと位置 --- */
@@ -234,7 +352,7 @@ p {
 
     position: absolute;
     top: 40px;
-    left: 60px;
+    left: 40px;
 
     color: var(--font-normal);
     z-index: 2;
@@ -243,6 +361,7 @@ p {
 
 
 }
+
 
 @media screen and (min-width: 530px) {
     

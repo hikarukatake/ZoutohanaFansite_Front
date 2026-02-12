@@ -7,12 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>top</title>
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/footer.css}" href="../../static/css/footer.css">
     <link rel="stylesheet" th:href="@{/css/fansite/top.css}" href="../../static/css/fansite/top.css">
 </head>
 
 <body>
+<div th:replace="~{layout :: header}"></div>
     <div class="container">
-        <div th:replace="~{layout :: header}"></div>
         <section class="about-section">
             <div class="about-wrapper">
                 <h2 class="about-title">象と花ファンサイトについて</h2>

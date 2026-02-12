@@ -12,9 +12,9 @@
 </head>
 
 <body>
-    <div class="container">
-        <div th:replace="~{layout :: header}"></div>
+    <div th:replace="~{layout :: header}"></div>
 
+    <div class="container">
         <div class="breadcrumb-box">
             <div class="breadcrumb"><a th:href="@{/}">ホーム</a></div>
             <div class="breadcrumb-middle">></div>
@@ -77,9 +77,9 @@
                 </div>
             </div>
         </section>
-        <div th:replace="~{layout :: footer}"></div>
-        <script th:src="@{/js/hamburger.js}"></script>
     </div>
+    <div th:replace="~{layout :: footer}"></div>
+    <script th:src="@{/js/hamburger.js}"></script>
 </body>
 </html>
 

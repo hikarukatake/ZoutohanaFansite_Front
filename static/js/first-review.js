@@ -280,7 +280,7 @@ const modal = document.getElementById('bookDetailModal');
         // 2. 1文字あたりの幅（px）を設定して割り算する
         // 例：文字サイズが16pxくらいなら、余白込みで「18」くらいで割ると丁度いいです
         // ★この「19」という数字をいじると、文字の詰め具合が変わります
-        const charSize = 22; 
+        const charSize = 23; 
 
         // 箱の幅 ÷ 1文字の幅 ＝ 入る文字数
         let lineLength = Math.floor(boxWidth / charSize);
@@ -288,9 +288,6 @@ const modal = document.getElementById('bookDetailModal');
         // ※少なすぎたり多すぎたりしないように制限
         if (lineLength < 10) lineLength = 10; // 最低10文字
         if (lineLength > 50) lineLength = 50; // 最高50文字
-
-        // ★確認用ログ
-        console.log(`箱の幅: ${boxWidth}px / 計算した文字数: ${lineLength}文字`);
 
         // 3. テキスト分割処理
         let textHtml = "";
@@ -303,7 +300,7 @@ const modal = document.getElementById('bookDetailModal');
 
         // 4. HTML流し込み
         textBox.innerHTML = `
-            <img src="../../static/img/rose.png" class="modal-rose" alt="">
+            <img src="/img/rose.png" class="modal-rose" alt="">
             <h3 id="modalTitle">${data.title}</h3>
             <div class="text-container">
                 ${textHtml}
@@ -906,7 +903,7 @@ function oneShintobook(data) {
 
     // ペン画像
     const penImg = document.createElement('img');
-    penImg.src = '../../static/img/pen.png'; // 画像のパス
+    penImg.src = '/img/pen.png'; // 画像のパス
     penImg.classList.add('pen');
     penImg.alt = '';
 

@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>top</title>
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/fansite/top.css">
+  <link rel="stylesheet" href="../../static/css/main.css">
+  <link rel="stylesheet" href="../../static/css/fansite/top.css">
 </head>
+
 <body>
   <div th:fragment="header">
     <header class="project-header">
-      <div class="logo-placeholder"><img th:src="@{/img/zoutohana-jitsubutsu.png}" src="../img/zoutohana-jitsubutsu.png" style="width: 3rem;" alt=""></div>
+      <div class="logo-placeholder"><img th:src="@{/img/zoutohana-jitsubutsu.png}"
+          src="../../static/img/zoutohana-jitsubutsu.png" style="width: 3rem;" alt=""></div>
       <div style="display: flex;">
         <a th:href="@{/mypage/notification}" sec:authorize="isAuthenticated()">
           <div class="mail-icon">
@@ -36,17 +39,24 @@
     <!-- ヘッダーモーダル-->
     <div class="overlay-menu" id="overlayMenu">
       <div class="close-btn" id="menuClose">×</div>
-      <img th:src="@{/img/zoutohana-white-color.png}" src="../img/zoutohana-white-color.png" class="" style="width: 5rem;" alt="">
+      <img th:src="@{/img/zoutohana-white-color.png}" src="../img/zoutohana-white-color.png" class=""
+        style="width: 5rem;" alt="">
       <ul class="menu-list">
-        <li class="menu-item"><a th:href="@{/news(category='new')}" href="" style="text-decoration: none; color:white;">お知らせ</a></li>
+        <li class="menu-item"><a th:href="@{/news(category='new')}" href=""
+            style="text-decoration: none; color:white;">お知らせ</a></li>
 
-        <li class="menu-item"><a th:href="@{/projects(s=ongoing)}" href="" style="text-decoration: none; color:white;">企画一覧</a></li>
+        <li class="menu-item"><a th:href="@{/projects(s=ongoing)}" href=""
+            style="text-decoration: none; color:white;">企画一覧</a></li>
 
         <li class="menu-item"><a th:href="@{/}" href="" style="text-decoration: none; color:white;">象と花プロジェクト</a></li>
 
-        <li class="menu-item"><a th:href="@{/#contact}" id="contact-link" style="text-decoration: none; color:white;">お問い合わせ</a></li>
+        <li class="menu-item"><a th:href="@{/#contact}" id="contact-link"
+            style="text-decoration: none; color:white;">お問い合わせ</a></li>
 
-        <li class="menu-item"><a th:href="@{/login}" href="" style="text-decoration: none; color:white;">ログイン</a></li>
+        <li class="menu-item">
+          <a sec:authorize="isAnonymous()" th:href="@{/login}" href="" style="text-decoration: none; color:white;">ログイン</a>
+          <a sec:authorize="isAuthenticated()" th:href="@{/mypage}" href="" style="text-decoration: none; color:white;">マイページ</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -75,61 +85,45 @@
     </div>
   </div>
 
-<!-- フッター -->
+  <!-- フッター -->
   <div th:fragment="footer">
-<footer class="footer-all">
-  <div class="footer-menu">
-    <div class="footer-top">
-      <img th:src="@{/img/zoutohana-white.png}" src="../img/zoutohana-white.png" style="width: 4.5rem;" alt="">
-      <p class="footer-white-text">A BOOK PROJECT</p>
-    </div>
-    <a th:href="@{/news(category='new')}" class="footer-menu-item-top">
-      <p>お知らせ</p>
-      <p>></p>
-    </a>
-    <a th:href="@{/projects(s=ongoing)}" href="#" class="footer-menu-item">
-      <p>企画</p>
-      <p>></p>
-    </a>
-    <a th:href="@{/}" class="footer-menu-item">
-      <p>象と花プロジェクト</p>
-      <p>></p>
-    </a>
-    <a th:href="@{/#contact}" class="footer-menu-item">
-      <p>お問い合わせ</p>
-      <p>></p>
-    </a>
-  </div>
+    <footer class="footer-all">
+      <div class="footer-menu">
+        <div class="footer-top">
+          <img th:src="@{/img/zoutohana-white.png}" src="../../static/img/zoutohana-white.png" style="width: 4.5rem;" alt="">
+          <p class="footer-white-text">A BOOK PROJECT</p>
+        </div>
+        <a th:href="@{/news(category='new')}" class="footer-menu-item-top">
+          <p>お知らせ</p>
+          <p>></p>
+        </a>
+        <a th:href="@{/projects(s=ongoing)}" href="#" class="footer-menu-item">
+          <p>企画</p>
+          <p>></p>
+        </a>
+        <a th:href="@{/}" class="footer-menu-item">
+          <p>象と花プロジェクト</p>
+          <p>></p>
+        </a>
+        <a th:href="@{/#contact}" class="footer-menu-item">
+          <p>お問い合わせ</p>
+          <p>></p>
+        </a>
 
-  <!-- SNSブロック -->
-  <div class="footer-sns">
-    <div class="sns-box">
-      <div class="footer-sns-title">SNS</div>
-      <div class="sns-box-icons">
-        <div class="sns-icons">
-          <img src="../img/instagram.png" class="sns-icon" alt="">
-          <img src="../img/facebook.png" class="sns-icon-facebook" alt="">
-          <img src="../img/x.png" class="sns-icon-x" alt="">
+        <div style="text-align: center; padding: 50px; color: white; font-size:18px">
+          <p>@象と花プロジェクト</p>
         </div>
 
-        <div class="sns-labels">
-          <span>Instagram</span>
-          <span>Facebook</span>
-          <span>X（旧Twitter）</span>
-        </div>
+
       </div>
-    </div>
-    <div class="footer-line"></div>
 
-    <div class="footer-copy">©Copylight</div>
-  </div>
-</footer>
-  </div>
 
-  <!-- ヘッダーモーダル -->
 
+    </footer>
   </div>
+</div>
 </body>
+
 </html>
 
 <script>

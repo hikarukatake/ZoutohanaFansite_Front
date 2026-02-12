@@ -1151,8 +1151,6 @@ section {
     flex: 0 0 auto;
     position: relative;
     width: 150px;
-    /* 本の幅 */
-    margin-right: 30px;
     /* 本と本の間隔 (gapの代わり) */
     display: flex;
     flex-direction: column;

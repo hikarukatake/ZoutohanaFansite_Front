@@ -32,41 +32,39 @@
                     <input th:field="*{nickname}" type="text" id="nickname" name="nickname">
                 </div>
                 <div class="form-group">
+                    <input type="hidden" th:field="*{icon}" name="icon" id="iconValue" value="1">
                     <label>アイコン</label>
+
                     <div class="icon-grid">
-                        <input type="hidden" th:field="*{icon}" name="">
-
-                        <!-- 上段：花 -->
-                        <div class="icon">
-                            <img src="../../static/img/flower-pink.png" class="flower" alt="">
-                        </div>
-                        <div class="icon">
-                            <img src="../../static/img/flower-blue.png" class="flower" alt="">
-                        </div>
-                        <div class="icon">
-                            <img src="../../static/img/flower-purple.png" class="flower" alt="">
-                        </div>
-                        <div class="icon">
-                            <img src="../../static/img/flower-green.png" class="flower" alt="">
-                        </div>
-
-                        <!-- 下段：象 -->
-                        <div class="icon active">
-                            <img src="../../static/img/elephant-pink.png" class="elephant" alt="">
+                        <!-- 花 -->
+                        <div class="icon" th:classappend="${accountEditForm.icon == 1} ? 'active badge' : ''" data-value="1">
+                            <img th:src="@{/api/image/icon1.png}" src="../../static/img/flower-pink.png" class="flower" alt="花１">
                             <span class="badge"></span>
                         </div>
-                        <div class="icon">
-                            <img src="../../static/img/elephant-blue.png" class="elephant" alt="">
+                        <div class="icon" th:classappend="${accountEditForm.icon == 2} ? 'active badge' : ''" data-value="2">
+                            <img th:src="@{/api/image/icon2.png}" src="../../static/img/flower-blue.png" class="flower" alt="花２">
                         </div>
-                        <div class="icon">
-                            <img src="../../static/img/elephant-purple.png" class="elephant" alt="">
+                        <div class="icon" th:classappend="${accountEditForm.icon == 3} ? 'active badge' : ''" data-value="3">
+                            <img th:src="@{/api/image/icon3.png}" src="../../static/img/flower-purple.png" class="flower" alt="花３">
                         </div>
-                        <div class="icon">
-                            <img src="../../static/img/elephant-green.png" class="elephant" alt="">
+                        <div class="icon" th:classappend="${accountEditForm.icon == 4} ? 'active badge' : ''" data-value="4">
+                            <img th:src="@{/api/image/icon4.png}" src="../../static/img/flower-green.png" class="flower" alt="花４">
                         </div>
 
+                        <!-- 象 -->
+                        <div class="icon" th:classappend="${accountEditForm.icon == 5} ? 'active badge' : ''" data-value="5">
+                            <img th:src="@{/api/image/icon5.png}" src="../../static/img/elephant-pink.png" class="elephant" alt="象１">
+                        </div>
+                        <div class="icon" th:classappend="${accountEditForm.icon == 6} ? 'active badge' : ''" data-value="6">
+                            <img th:src="@{/api/image/icon6.png}" src="../../static/img/elephant-blue.png" class="elephant" alt="象２">
+                        </div>
+                        <div class="icon" th:classappend="${accountEditForm.icon == 7} ? 'active badge' : ''" data-value="7">
+                            <img th:src="@{/api/image/icon7.png}" src="../../static/img/elephant-purple.png" class="elephant" alt="象３">
+                        </div>
+                        <div class="icon" th:classappend="${accountEditForm.icon == 8} ? 'active badge' : ''" data-value="8">
+                            <img th:src="@{/api/image/icon8.png}" src="../../static/img/elephant-green.png" class="elephant" alt="象４">
+                        </div>
                     </div>
-
                 </div>
                 <div class="form-group">
                     <label for="postal-code">居住地</label>
@@ -196,6 +194,31 @@
                     }
                 });
             }
+        });
+
+        document.querySelectorAll('.icon').forEach(icon => {
+            icon.addEventListener('click', () => {
+
+                // active 全解除
+                document.querySelectorAll('.icon').forEach(i => {
+                    i.classList.remove('active');
+
+                    // badge も消す
+                    const badge = i.querySelector('.badge');
+                    if (badge) badge.remove();
+                });
+
+                // active 付与
+                icon.classList.add('active');
+
+                // badge 追加
+                const badge = document.createElement('span');
+                badge.classList.add('badge');
+                icon.appendChild(badge);
+
+                // hidden に値セット
+                document.getElementById('iconValue').value = icon.dataset.value;
+            });
         });
     </script>
     <script src="../js/theme.js"></script>

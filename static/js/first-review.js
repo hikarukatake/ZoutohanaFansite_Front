@@ -303,7 +303,7 @@ const modal = document.getElementById('bookDetailModal');
 
         // 4. HTML流し込み
         textBox.innerHTML = `
-            <img src="../../static/img/rose.png" class="modal-rose" alt="">
+            <img src="/img/rose.png" class="modal-rose" alt="">
             <h3 id="modalTitle">${data.title}</h3>
             <div class="text-container">
                 ${textHtml}
@@ -906,7 +906,7 @@ function oneShintobook(data) {
 
     // ペン画像
     const penImg = document.createElement('img');
-    penImg.src = '../../static/img/pen.png'; // 画像のパス
+    penImg.src = '/img/pen.png'; // 画像のパス
     penImg.classList.add('pen');
     penImg.alt = '';
 

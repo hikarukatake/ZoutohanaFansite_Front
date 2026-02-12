@@ -83,7 +83,7 @@ function Allbook(data, book){
         const textBox = document.querySelector('.modal-textFirst-box');
         if (textBox) {
             textBox.innerHTML = `
-                <img src="../../static/img/rose.png" class="modal-rose" alt="">
+                <img src="/img/rose.png" class="modal-rose" alt="">
                 <h3 id="modalTitle">${data.title}</h3>
                 <p id="textFirst" class="modal-textFirst">${data.content}</p>
             `;
@@ -320,24 +320,6 @@ function createInfiniteRow(originalData, containerId, isOffset) {
     大賞表示用関数(文字)
    ========================================================= */
 function renderLeftSection(data) {
-    //     <div id="award-left-target">
-
-    //     <div class="modal-box">
-
-    //         <div class="modal-textFirst-award-box">
-    //             <img src="../../static/img/rose.png" class="modal-rose" alt="">
-    //             <h3 id="award-modalTitle">title</h3>
-    //             <p id="award-textFirst" class="modal-textFirst">content</p>
-    //         </div>
-
-    //         <div class="modal-textSecond-award-box" style="display: none;">
-    //             <img src="../../static/img/rose.png" class="modal-rose">
-    //             <p id="award-textSecond" class="modal-textSecond"></p>
-    //         </div>
-
-    //     </div>
-
-    // </div>
     const target = document.getElementById('award-left-target');
     const modalBox = document.createElement('div');
     modalBox.classList.add('modal-box');
@@ -347,7 +329,7 @@ function renderLeftSection(data) {
     textBox.classList.add('modal-textFirst-award-box');
 
         const roseImg = document.createElement('img');
-        roseImg.src = "../../static/img/rose.png"; 
+        roseImg.src = "/img/rose.png";
         roseImg.classList.add('modal-rose');
         roseImg.alt = "";
 
@@ -370,7 +352,7 @@ function renderLeftSection(data) {
     secondBox.style.display = 'none';
 
         const roseImg2 = document.createElement('img');
-        roseImg2.src = "../../static/img/rose.png"; 
+        roseImg2.src = "/img/rose.png";
         roseImg2.classList.add('modal-rose');
 
         const pSecond = document.createElement('p');
@@ -393,26 +375,6 @@ function renderLeftSection(data) {
    大賞表示用関数（プロフィール）
    ========================================================= */
 function renderRightSection(data) {
-
-    // <div id="award-right-target">
-
-    // <div class="profile-awrad-header">
-    //     <img id="award-modalIcon" class="profile-awrad-icon" src="（data.iconのURL）" alt="icon">
-    //     <h3 id="award-modalName" class="profile-name">（data.nameの中身）</h3>
-    // </div>
-
-    // <div class="profile-tags">
-    //     <p id="award-modalInfo" style="font-size: 0.9rem; color: #555;">
-    //         （20代） / （女性） / （東京都） </p>
-    // </div>
-
-    // <hr class="profile-line">
-
-    // <div class="profile-award-bio">
-    //     <p id="award-modalProfileText">（data.textの中身：自己紹介文など）</p>
-    // </div>
-
-    // </div>
     const target = document.getElementById('award-right-target');
     const profileHeader = document.createElement('div');
     profileHeader.classList.add('profile-awrad-header');
@@ -497,6 +459,7 @@ function renderRightSection(data) {
     // その他の初期化
         const currentData = localStorage.getItem(VOTE_KEY);
 
+
         const voteIds = currentData ? JSON.parse(currentData) : [];
 
         if (voteIds.length !== 0){
@@ -511,10 +474,15 @@ function renderRightSection(data) {
 
             if(voteReviewResponse.status === 200){
                 const voteReview = await voteReviewResponse.json();
-                console.log(voteReview);
                 oneShintobook(voteReview);
+            }else{
+                const voteReview = document.getElementById('voteReview');
+                voteReview.style.display = 'none';
             }
 
+        }else{
+            const voteReview = document.getElementById('voteReview');
+            voteReview.style.display = 'none';
         }
 
 
@@ -569,3 +537,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+
+    async function isVote(){
+        const currentData = localStorage.getItem(VOTE_KEY);
+
+        const voteIds = currentData ? JSON.parse(currentData) : [];
+
+        // もし空配列なら通信せずにfalseを返しても良い（最適化）
+        if (voteIds.length === 0) return false;
+        const response = await fetch(`/api/reviews/voted/${urlKey}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            // 配列をそのままJSON化してBodyに詰める
+            body: JSON.stringify(voteIds)
+        });
+
+        const data = await response.json().catch(() => null);
+
+
+        return data && Object.keys(data).length > 0;
+    }

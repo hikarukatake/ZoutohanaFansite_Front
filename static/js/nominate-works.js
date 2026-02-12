@@ -124,6 +124,7 @@ const modal = document.getElementById('bookDetailModal');
 
         // 4. HTML流し込み
         textBox.innerHTML = `
+            <img src="/img/rose.png" class="modal-rose" alt="">
             <h3 id="modalTitle">${data.title}</h3>
             <div class="text-container">
                 ${textHtml}
@@ -139,10 +140,6 @@ const modal = document.getElementById('bookDetailModal');
     window.removeEventListener('resize', renderText);
     window.addEventListener('resize', renderText);
 
-    // ▲▲▲▲▲ 書き換え終了 ▲▲▲▲▲
-
-    // 6. モーダル内チュートリアル開始
-    startModalTutorial();
 }
 
     // モーダル関連変数
@@ -153,6 +150,7 @@ const modal = document.getElementById('bookDetailModal');
     if (closeBtn) {
         closeBtn.addEventListener('click', function () {
             modal.style.display = 'none';
+            document.body.classList.remove('no-scroll');
         });
     }
 

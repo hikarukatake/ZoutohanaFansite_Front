@@ -12,16 +12,19 @@
     <div th:replace="~{layout-admin :: header}"></div>
 
     <main id="admin-main">
+      <a href="project_list.html" th:href="@{/admin/project/list}" class="icon-center review-card-sub-info text-decoration-none hover-bold">
+        <span class="material-symbols-outlined">keyboard_double_arrow_left</span>企画一覧に戻る
+      </a>
       <h1 class="page-title">企画作成</h1>
 
       <div class="main-content-card mt-4">
-        <form>
+        <form method="POST" th:action="@{/admin/project/create}" id="confirm-form" class="no-auto-submit">
           <div class="table-container">
             <table>
               <tr>
                 <th>企画名 : </th>
                 <td>
-                  <input type="text" name="name" class="input-text w-full">
+                  <input type="text" name="name" class="input-text w-full" data-preview="#confirm-projectName">
                   <p class="text-danger"></p>
                 </td>
               </tr>
@@ -31,38 +34,38 @@
                     企画URL<span class="material-symbols-outlined text-gray cursor-help" title="企画ページのURLの末尾につく文字列です。">help</span> : </th>
                   </span>
                 <td>
-                  <input type="text" name="urlKey" id="urlKey-input" class="input-text w-full">
+                  <input type="text" name="urlKey" id="urlKey-input" class="input-text w-full" data-preview="#confirm-urlKey">
                   <span class="text-gray">https://zoutohana-fansite.com/project/</span><span id="urlKey-preview" class="text-gray">_____</span>
                   <p class="text-danger"></p>
                 </td>
               </tr>
               <tr>
                 <th class="table-border-b-light">説明 : </th>
-                <td class="table-border-b-light"><textarea rows="10" name="introduction" class="input-textarea w-full"></textarea></td>
+                <td class="table-border-b-light"><textarea rows="10" name="introduction" class="input-textarea w-full" data-preview="#confirm-introduction"></textarea></td>
               </tr>
 
               <tr>
                 <th>企画期間 : </th>
                 <td>
-                  <input type="datetime-local" name="projectStartAt" class="input-datetime">
+                  <input type="datetime-local" name="projectStartAt" class="input-datetime" data-preview="#confirm-projectStartAt">
                   <span class="wave-dash">～</span>
-                  <input type="datetime-local" name="projectEndAt" class="input-datetime">
+                  <input type="datetime-local" name="projectEndAt" class="input-datetime" data-preview="#confirm-projectEndAt">
                 </td>
               </tr>
               <tr>
                 <th>書評作成・投稿期間 : </th>
                 <td>
-                  <input type="datetime-local" name="submissionStartAt" class="input-datetime">
+                  <input type="datetime-local" name="submissionStartAt" class="input-datetime" data-preview="#confirm-submissionStartAt">
                   <span class="wave-dash">～</span>
-                  <input type="datetime-local" name="submissionEndAt" class="input-datetime">
+                  <input type="datetime-local" name="submissionEndAt" class="input-datetime" data-preview="#confirm-submissionEndAt">
                 </td>
               </tr>
               <tr>
                 <th class="table-border-b-light">書評投票(二次審査)期間 : </th>
                 <td class="table-border-b-light">
-                  <input type="datetime-local" name="votingStartAt" class="input-datetime">
+                  <input type="datetime-local" name="votingStartAt" class="input-datetime" data-preview="#confirm-votingStartAt">
                   <span class="wave-dash">～</span>
-                  <input type="datetime-local" name="votingEndAt" class="input-datetime">
+                  <input type="datetime-local" name="votingEndAt" class="input-datetime" data-preview="#confirm-votingEndAt">
                 </td>
               </tr>
 
@@ -70,8 +73,8 @@
                 <th>書籍タイトル : </th>
                 <td>
                   <div class="radio-wrap">
-                    <label><input type="radio" name="enableVisibleBookTitle" value="FALSE" class="scale-bigger" checked>表示しない</label>
-                    <label><input type="radio" name="enableVisibleBookTitle" value="TRUE" class="scale-bigger">表示する</label>
+                    <label><input type="radio" name="enableVisibleBookTitle" value="FALSE" class="scale-bigger" data-preview="#confirm-enableVisibleBookTitle" checked>表示しない</label>
+                    <label><input type="radio" name="enableVisibleBookTitle" value="TRUE" class="scale-bigger" data-preview="#confirm-enableVisibleBookTitle">表示する</label>
                   </div>
                 </td>
               </tr>
@@ -79,8 +82,8 @@
                 <th>書評タイトル : </th>
                 <td>
                   <div class="radio-wrap">
-                    <label><input type="radio" name="enableVisibleReviewTitle" value="FALSE" class="scale-bigger" checked>表示しない</label>
-                    <label><input type="radio" name="enableVisibleReviewTitle" value="TRUE" class="scale-bigger">表示する</label>
+                    <label><input type="radio" name="enableVisibleReviewTitle" value="FALSE" class="scale-bigger" data-preview="#confirm-enableVisibleReviewTitle" checked>表示しない</label>
+                    <label><input type="radio" name="enableVisibleReviewTitle" value="TRUE" class="scale-bigger" data-preview="#confirm-enableVisibleReviewTitle">表示する</label>
                   </div>
                 </td>
               </tr>
@@ -88,8 +91,8 @@
                 <th class="table-border-b-light">投稿者情報 : </th>
                 <td class="table-border-b-light">
                   <div class="radio-wrap">
-                    <label><input type="radio" name="enableVisibleUserInfo" value="FALSE" class="scale-bigger" checked>表示しない</label>
-                    <label><input type="radio" name="enableVisibleUserInfo" value="TRUE" class="scale-bigger">表示する</label>
+                    <label><input type="radio" name="enableVisibleUserInfo" value="FALSE" class="scale-bigger" data-preview="#confirm-enableVisibleUserInfo" checked>表示しない</label>
+                    <label><input type="radio" name="enableVisibleUserInfo" value="TRUE" class="scale-bigger" data-preview="#confirm-enableVisibleUserInfo">表示する</label>
                   </div>
                 </td>
               </tr>
@@ -113,7 +116,7 @@
                     </label>
 
                     <label>
-                      <input type="radio" name="themeColor" value="YELLOW">
+                      <input type="radio" name="themeColor" value="YELLOW"data-preview="#confirm-themeColor">
                       <span class="color-dot" style="background:var(--theme-yellow);" title="YELLOW : き">
                         <span class="material-symbols-outlined">check</span>
                       </span>
@@ -146,7 +149,7 @@
                 <th>ロゴ画像 : </th>
                 <td id="projectInput-td">
                   <div>
-                    <input type="file" accept="image/*" name="mainImg" id="mainImg-input" class="btn-file">
+                    <input type="file" accept="image/*" name="mainImg" id="mainImg-input" class="btn-file" data-preview="#confirm-logoImg">
                     <img id="mainImg-preview">
                   </div>
                 </td>
@@ -155,7 +158,7 @@
                 <th>PDF : </th>
                 <td id="projectInput-td">
                   <div>
-                    <input type="file" accept="application/pdf" name="pdf" multiple id="pdf-input" class="btn-file">
+                    <input type="file" accept="application/pdf" name="pdf" multiple id="pdf-input" class="btn-file" data-preview="#confirm-pdf">
                     <ul id="pdf-list-ul"></ul>
                   </div>
                 </td>
@@ -163,14 +166,50 @@
             </table>
 
             <div class="btn-wrap mt-4">
-              <a href="#" th:href="@{/}" class="btn">キャンセル</a>
-              <input type="submit" value="確認する" class="btn">
+              <button type="reset" class="btn btn-danger">入力をリセットする</button>
+              <input type="button" value="確認する" class="btn" id="confirm-btn" data-modal-target="create-confirm-modal">
             </div>
           </div>
         </form>
       </div>
     </main>
 
-    <script src="../../static/js/admin/project-create.js" th:src="@{/js/admin/project-create.js}"></script>
+    <div id="create-confirm-modal" class="modal">
+      <div>
+        <div class="modal-content-big">
+          <h2 class="page-title text-center">確認</h2>
+          <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
+
+          <div class="mt-8">
+            <p>以下の内容で企画を作成してよろしいですか？</p>
+          </div>
+
+          <div class="mt-8">
+            <p class="confirm-modal-preview"><span class="font-bold">企画名 : </span><span id="confirm-projectName"></span></p>
+            <p class="confirm-modal-preview"><span class="font-bold">企画URL : </span><span id="confirm-urlKey"></span></p>
+            <div class="confirm-modal-preview">
+              <p><span class="font-bold">説明 : </span></p>
+              <pre id="confirm-introduction"></pre>
+            </div>
+            <p class="confirm-modal-preview"><span class="font-bold">企画期間 : </span><span id="confirm-projectStartAt"></span>～<span id="confirm-projectEndAt"></span></p>
+            <p class="confirm-modal-preview"><span class="font-bold">書評作成・投稿期間 : </span><span id="confirm-submissionStartAt"></span>～<span id="confirm-submissionEndAt"></span></p>
+            <p class="confirm-modal-preview"><span class="font-bold">書評投票(二次審査)期間 : </span><span id="confirm-votingStartAt"></span>～<span id="confirm-votingEndAt"></span></p>
+            <p class="confirm-modal-preview"><span class="font-bold">書籍タイトル : </span><span id="confirm-enableVisibleBookTitle"></span></p>
+            <p class="confirm-modal-preview"><span class="font-bold">書評タイトル : </span><span id="confirm-enableVisibleReviewTitle"></span></p>
+            <p class="confirm-modal-preview"><span class="font-bold">投稿者情報 : </span><span id="confirm-enableVisibleUserInfo"></span></p>
+            <p class="confirm-modal-preview"><span class="font-bold">テーマカラー : </span><span id="confirm-themeColor"></span></p>
+            <p class="confirm-modal-preview"><span class="font-bold">ロゴ画像 : </span><span id="confirm-logoImg"></span></p>
+            <img id="confirm-logoImg-preview" style="max-width:200px;">
+            <p class="confirm-modal-preview"><span class="font-bold">PDF : </span><span id="confirm-pdf"></span></p>
+          </div>
+
+          <div class="btn-wrap mt-8">
+            <button type="submit" form="confirm-form" id="final-submit-btn" class="btn">作成する</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/admin-general.js}"></script>
 </body>
 </html>

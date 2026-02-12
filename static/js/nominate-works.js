@@ -328,6 +328,9 @@ window.onload = async function () {
             voteReview.style.display = 'none';
         }
 
+    }else{
+        const voteReview = document.getElementById('voteReview');
+        voteReview.style.display = 'none';
     }
 
 };

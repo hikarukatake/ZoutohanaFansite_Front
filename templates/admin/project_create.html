@@ -14,7 +14,87 @@
   <h1 class="page-title">企画作成</h1>
 
   <div class="main-content-card mt-4">
-    <form th:action="@{/admin/project/create}" th:object="${form}" method="post">
+    <form th:if="${projectValidator}" th:action="@{/admin/project/create}" th:object="${form}" method="post">
+      <div class="table-container">
+        <table>
+          <tr>
+            <th>企画名 : </th>
+            <td>
+              <input th:field="*{name}" type="text" class="input-text w-full">
+              <p th:if="${projectValidator.nullName}" style="color: red">企画名を入力してください</p>
+            </td>
+          </tr>
+          <tr>
+            <th>
+                  <span class="icon-center gap-1">
+                    企画URL<span class="material-symbols-outlined text-gray cursor-help" title="企画ページのURLの末尾につく文字列です。">help</span> :
+                  </span>
+            </th>
+            <td>
+              <input th:field="*{urlKey}" type="text" id="urlKey-input" class="input-text w-full">
+              <span class="text-gray">https://zoutohana-fansite.com/project/</span><span id="urlKey-preview" class="text-gray">_____</span>
+              <p th:if="${projectValidator.nullUrlKey}" style="color: red">企画URLを入力してください</p>
+              <p th:if="${projectValidator.existsUrlKey}" style="color: red">すでにこの企画URLは使用されています</p>
+            </td>
+          </tr>
+          <tr>
+            <th class="table-border-b-light">説明 : </th>
+            <td class="table-border-b-light">
+              <textarea th:field="*{introduction}" rows="10" class="input-textarea w-full"></textarea>
+              <p th:if="${projectValidator.nullIntroduction}" style="color: red">説明を入力してください</p>
+            </td>
+          </tr>
+
+          <tr>
+            <th>企画期間 : </th>
+            <td>
+              <input th:field="*{projectStartAt}" type="datetime-local" class="input-datetime">
+              <span class="wave-dash">～</span>
+              <input th:field="*{projectEndAt}" type="datetime-local" class="input-datetime">
+              <p th:if="${projectValidator.nullOngoingAt}" style="color: red">企画期間を入力してください</p>
+            </td>
+          </tr>
+          <tr>
+            <th>書評作成・投稿期間 : </th>
+            <td>
+              <input th:field="*{submissionStartAt}" type="datetime-local" class="input-datetime">
+              <span class="wave-dash">～</span>
+              <input th:field="*{submissionEndAt}" type="datetime-local" class="input-datetime">
+              <p th:if="${projectValidator.nullSubmissionAt}" style="color: red">書評投稿期間を入力してください</p>
+            </td>
+          </tr>
+          <tr>
+            <th class="table-border-b-light">書評投票(二次審査)期間 : </th>
+            <td class="table-border-b-light">
+              <input th:field="*{votingStartAt}" type="datetime-local" class="input-datetime">
+              <span class="wave-dash">～</span>
+              <input th:field="*{votingEndAt}" type="datetime-local" class="input-datetime">
+              <p th:if="${projectValidator.nullVotingAt}" style="color: red">投票期間を入力してください</p>
+            </td>
+          </tr>
+          <tr>
+            <th>テーマカラー : </th>
+            <td>
+              <div class="themeColor-wrap">
+                <label th:each="color : ${T(com.example.zoutohanafansite.entity.enums.ThemeColor).values()}">
+                  <input type="radio" th:field="*{themeColor}" th:value="${color}">
+                  <span class="color-dot" th:style="'background:var(--theme-' + ${#strings.toLowerCase(color)} + ');'" th:title="${color}">
+                        <span class="material-symbols-outlined">check</span>
+                      </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <div class="btn-wrap mt-4">
+          <a th:href="@{/admin/project}" class="btn">キャンセル</a>
+          <input type="submit" value="画像アップロードへ" class="btn">
+        </div>
+      </div>
+    </form>
+
+    <form th:unless="${projectValidator}" th:action="@{/admin/project/create}" th:object="${form}" method="post">
       <div class="table-container">
         <table>
           <tr>
@@ -80,20 +160,11 @@
               </div>
             </td>
           </tr>
-<!--          <tr>-->
-<!--            <th>ロゴ画像 : </th>-->
-<!--            <td id="projectInput-td">-->
-<!--              <div>-->
-<!--                <input th:field="*{mainImage}" type="file" accept="image/*" id="mainImg-input" class="btn-file">-->
-<!--                <img id="mainImg-preview">-->
-<!--              </div>-->
-<!--            </td>-->
-<!--          </tr>-->
         </table>
 
         <div class="btn-wrap mt-4">
           <a th:href="@{/admin/project}" class="btn">キャンセル</a>
-          <input type="submit" value="確認する" class="btn">
+          <input type="submit" value="画像アップロードへ" class="btn">
         </div>
       </div>
     </form>

@@ -17,8 +17,10 @@
 </head>
 
 <body>
+    <div th:replace="~{layout :: header}"></div>
+
     <div class="container">
-        <div th:replace="~{layout :: header}"></div>
+
         <div class="breadcrumb-box">
             <a th:href="@{/}">
                 <div class="breadcrumb">ホーム</div>
@@ -26,7 +28,9 @@
             <div class="breadcrumb-middle">></div>
             <div class="breadcrumb">マイページ</div>
         </div>
+
         <div th:if="${toast != null}" th:text="${toast}"></div>
+
         <div class="all-box">
             <section class="card">
                 <div class="profile-header">
@@ -50,12 +54,14 @@
                 <h2 class="section-title">開催中の企画</h2>
                 <div class="seciton-green"></div>
             </div>
+        </div>
 
             <!-- 開催中の企画 -->
-            <div class="active-event" th:if="${!projects.isEmpty()}" th:each="project : ${projects}">
+        <div class="active-event" th:if="${!projects.isEmpty()}" th:each="project : ${projects}">
                 <div class="my-image-box" th:attr="style=${project.mainImgUrl != null}
               ? 'background-image: url(' + @{/api/image/{name}(name=${project.mainImgUrl})} + ');'
               : 'background-image: url(' + @{/img/img.png} + ');'">
+
                     <section class="card-event">
                         <div class="event-info">
                             <div class="event-title" th:text="${project.name}">2026年 新春ミステリー祭</div>
@@ -141,6 +147,7 @@
                 <h2 class="section-title">投稿した書評</h2>
                 <div class="seciton-green"></div>
             </div>
+        
             <div class="book-card-block" th:if="${!reviews.isEmpty()}">
                 <div class="book-card" th:each="review : ${reviews}">
                     <div class="card-header">
@@ -171,7 +178,6 @@
             </div>
             <div class="pagination" id="pagination"></div>
         </div>
-    </div>
 
         <div class="settings-overlay" id="settingsModal">
             <div class="settings-content">
@@ -203,13 +209,8 @@
             </div>
         </div>
 
-    </div>
     <!-- フッター -->
     <div th:replace="~{layout :: footer}"></div>
-    </div>
-
-
-
     <script>
         // ▼▼▼ 要素を取得 ▼▼▼
         const menuOpen = document.getElementById('menuOpen');   // ハンバーガーメニューのアイコン

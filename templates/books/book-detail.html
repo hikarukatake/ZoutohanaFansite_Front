@@ -13,8 +13,10 @@
 </head>
 
 <body>
+
+    <div th:replace="~{layout :: header}"></div>
     <div class="container">
-        <div th:replace="~{layout :: header}"></div>
+
         <div class="breadcrumb-box">
 
             <div style="display: flex; width: 500px;">
@@ -132,13 +134,11 @@
                 </div>
             </div>
         </div>
-
-        <div th:replace="~{layout :: footer}"></div>
     </div>
-    <script th:src="@{/js/hamburger.js}"></script>
-<!--    <script src="../js/main.js"></script>-->
-    <script th:src="@{/js/book-detail.js}" src="../js/book-detail.js"></script>
+    <div th:replace="~{layout :: footer}"></div>
 
+    <script th:src="@{/js/hamburger.js}"></script>
+    <script th:src="@{/js/book-detail.js}" src="../js/book-detail.js"></script>
     <script th:src="@{/js/mypage.js}" src="../js/mypage.js"></script>
 </body>
 

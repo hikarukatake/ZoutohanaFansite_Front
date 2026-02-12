@@ -272,13 +272,12 @@
               <input type="text" id="template-title" class="input-text flex-1" placeholder="通知のタイトルを入力してください">
             </div>
             <textarea id="template-body" rows="7" class="input-textarea w-full mt-2"></textarea>
-            <div class="button-wrap mt-4">
+            <div class="button-wrap mt-2 text-right">
               <button type="button" id="open-notification-confirm" class="btn">内容を確認する</button>
             </div>
           </div>
-          </div>
 
-          <div class="pb-8"> <!-- 「書評閲覧」部分 -->
+          <div class="pt-4 pb-4"> <!-- 「書評閲覧」部分 -->
             <h2 class="page-title-sub">書評閲覧</h2>
             <div class="flex gap-1 mt-2">
               <a href="review_list.html" th:href="@{/admin/review/list(urlKey=${project.urlKey})}" class="btn icon-center">
@@ -292,7 +291,7 @@
             </div>
           </div>
 
-          <div class="pb-8"> <!-- 「大賞の書評」部分 -->
+          <div class="pt-4 pb-4" th:if="${!#lists.isEmpty(awardedReviews)}"> <!-- 「大賞の書評」部分 -->
             <h2 class="page-title-sub">大賞の書評</h2>
             <div class="review-card mt-4" th:each="awardedReview : ${awardedReviews}"> <!-- 書評カード -->
               <div class="table-border-b-strong flex justify-between py-4"> <!-- 書評カードヘッダー -->
@@ -341,7 +340,7 @@
             </div>
           </div>
 
-          <div> <!-- 「ノミネートした書評」部分 -->
+          <div class="pt-4" th:if="${!#lists.isEmpty(nominatedReviews)}"> <!-- 「ノミネートした書評」部分 -->
             <h2 class="page-title-sub">ノミネートした書評</h2>
             <div> <!-- 書評カードを並べる部分 -->
               <div class="review-card mt-4" th:each="nominatedReview : ${nominatedReviews}"> <!-- 書評カード -->
@@ -425,11 +424,11 @@
     <div id="notification-confirm-modal" class="modal">
       <div>
         <div class="modal-content">
-          <h2 class="page-title mx-auto">確認</h2>
+          <h2 class="page-title text-center mx-auto">確認</h2>
           <span class="modal-close"><span class="material-symbols-outlined">close</span></span>
 
-          <div class="mt-8">
-            <p>以下の内容・宛先で通知を送信してよろしいですか？</p>
+          <div id="confirm-text" class="mt-8">
+            <p>以下の内容で【宛先】に通知を送信してよろしいですか？</p>
           </div>
 
           <div class="mt-8">
@@ -446,13 +445,6 @@
               2025/08/01　ノミネート作品を一部さわや書店店舗で販売開始
               2025/08/31　大賞発表
             </pre>
-          </div>
-
-          <div class="mt-8">
-            <h3 class="page-title-sub">宛先<span class="page-title-count">(<span>1</span>件)</span></h3>
-            <ol class="notification-confirm-preview">
-              <li>[No.<span>93</span>] <span>冬の魔法をほんの少し信じたくなる</span>(書籍 : <span>雪明かりの魔法使い</span>)</li>
-            </ol>
           </div>
 
           <div class="btn-wrap mt-8">
@@ -480,7 +472,7 @@
     const sendButton = confirmModal.querySelector('button[type="submit"]');
 
     const previewPre = confirmModal.querySelector('.notification-confirm-preview');
-    const targetListOl = confirmModal.querySelector('ol.notification-confirm-preview');
+    const confirmText = confirmModal.querySelector('#confirm-text');
 
     /**
      * 1. テンプレートリストの取得
@@ -537,11 +529,10 @@
         const phaseLabel = selectedPhaseRadio ? selectedPhaseRadio.parentElement.textContent.trim() : "";
 
         if (previewPre) previewPre.textContent = templateBody.value;
-        if (targetListOl) {
-          targetListOl.innerHTML = '';
-          const li = document.createElement('li');
-          li.textContent = phaseLabel;
-          targetListOl.appendChild(li);
+        if (confirmText) {
+          confirmText.innerHTML = `
+            <p>以下の内容で<span class="font-bold">${phaseLabel}</span>に通知を送信してよろしいですか？</p>
+          `;
         }
         confirmModal.style.display = 'block';
       });

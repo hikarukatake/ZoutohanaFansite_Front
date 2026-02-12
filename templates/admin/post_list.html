@@ -56,7 +56,7 @@
               <input type="hidden" name="postedStartAt" th:value="${form.postedStartAt}">
               <input type="hidden" name="postedEndAt" th:value="${form.postedEndAt}">
 
-              <input type="text" name="keyword" class="input-text" placeholder="タイトルで検索" th:value="${form.keyword}">
+              <input type="search" name="keyword" class="input-text" placeholder="タイトルで検索" th:value="${form.keyword}">
               <button type="submit" class="btn"><span class="material-symbols-outlined scale-bigger">search</span></button>
               <a href="post_create.html" th:href="@{/post/create}" class="btn">
                 <span class="material-symbols-outlined scale-bigger pr-1">library_add</span>

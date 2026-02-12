@@ -78,6 +78,10 @@ html {
   margin-top: 2rem;
 }
 
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
 .mb-8 {
   margin-bottom: 2rem;
 }
@@ -104,6 +108,10 @@ html {
 
 .mr-2 {
   margin-right: 0.5rem;
+}
+
+.mr-auto {
+  margin-right: auto;
 }
 
 .mx-auto {
@@ -186,7 +194,6 @@ html {
   flex: 1;
 }
 
-
 /* ---------- grid ---------- */
 .grid-3 {
   display: grid;
@@ -230,6 +237,10 @@ html {
 
 .text-right {
   text-align: right;
+}
+
+.text-left {
+  text-align: left;
 }
 
 .text-danger {

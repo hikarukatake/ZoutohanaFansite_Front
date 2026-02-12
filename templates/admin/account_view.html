@@ -19,11 +19,9 @@
 
       <div class="flex mt-4 gap-4">
         <div class="main-content-card p-8 mb-auto w-half"> <!-- 左のカード -->
-          <h2 class="user-card-title">
-            <span th:text="${user.nickname}">データが取得できませんでした:ニックネーム</span>
-            <span class="user-card-sub-info" th:text="'(ログインID : ' + ${user.loginId} + ')'">-----</span>
-          </h2>
-          <div class="table-border-b-strong pb-4"> <!-- ステータス部分 -->
+          <div class="table-border-b-strong pb-4">
+            <h2 class="user-card-title" th:text="${user.nickname}">データが取得できませんでした:ニックネーム</h2>
+            <p class="review-card-sub-info pl-4" th:text="'ログインID : ' + ${user.loginId}">データが取得できませんでした:企画名</p>
           </div>
           <div class="table-border-b-strong py-4"> <!-- ステータス部分 -->
             <label>ステータス</label>
@@ -31,16 +29,25 @@
               <form method="POST" th:action="@{/admin/account/view}" class="flex flex-wrap gap-4">
                 <input type="hidden" name="id" th:value="${user.id}">
                 <label class="icon-center">
-                  <input type="radio" name="status" value="ACTIVE" class="scale-bigger ml-4" th:checked="${user.status.label == '有効'}">有効
-                  <span th:if="${user.status.label == '有効'}">(現在のステータス)</span>
+                  <input type="radio" name="status" value="ACTIVE" class="scale-bigger ml-4" th:checked="${user.status.label == '有効'}">
+                  <p class="flex flex-col">
+                    <span class="mr-auto">有効</span>
+                    <span th:if="${user.status.label == '有効'}" class="font-sm text-gray">(現在のステータス)</span>
+                  </p>
                 </label>
                 <label class="icon-center">
-                  <input type="radio" name="status" value="SUSPENDED" class="scale-bigger ml-4" th:checked="${user.status.label == '停止'}">停止
-                  <span th:if="${user.status.label == '停止'}">(現在のステータス)</span>
+                  <input type="radio" name="status" value="SUSPENDED" class="scale-bigger ml-4" th:checked="${user.status.label == '停止'}">
+                  <p class="flex flex-col">
+                    <span class="mr-auto">停止</span>
+                    <span th:if="${user.status.label == '停止'}" class="font-sm text-gray">(現在のステータス)</span>
+                  </p>
                 </label>
                 <label class="icon-center">
-                  <input type="radio" name="status" value="BAN" class="scale-bigger ml-4" th:checked="${user.status.label == '無効'}">無効
-                  <span th:if="${user.status.label == '無効'}">(現在のステータス)</span>
+                  <input type="radio" name="status" value="BAN" class="scale-bigger ml-4" th:checked="${user.status.label == '無効'}">
+                  <p class="flex flex-col">
+                    <span class="mr-auto">無効</span>
+                    <span th:if="${user.status.label == '無効'}" class="font-sm text-gray">(現在のステータス)</span>
+                  </p>
                 </label>
                 <button type="submit" class="btn">更新</button>
               </form>
@@ -69,7 +76,7 @@
         <div class="mb-auto w-half"> <!-- 右の方 -->
           <h2 class="page-title-sub">投稿した書評</h2>
           <div class="flex flex-col gap-8 mt-2"> <!-- 書評カードを並べる部分 -->
-            <div class="main-content-card p-8 w-full" th:each="review : ${reviews}"> <!-- 書評カード -->
+            <div class="main-content-card p-8 mb-4 w-full" th:each="review : ${reviews}"> <!-- 書評カード -->
               <div class="flex gap-4 justify-between table-border-b-strong pb-4">
                 <div>
                   <h3 class="review-card-title" th:text="${review.reviewTitle}">データが取得できませんでした:書評タイトル</h3>
@@ -93,5 +100,7 @@
         </div>
       </div>
     </main>
+
+    <script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/admin-general.js}"></script>
 </body>
 </html>

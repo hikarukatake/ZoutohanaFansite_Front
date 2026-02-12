@@ -34,6 +34,8 @@
                     <select name="sort" class="select">
                         <option value="created_desc" th:selected="${form.sort == 'created_desc'}">登録日時(新→旧)</option>
                         <option value="created_asc"  th:selected="${form.sort == 'created_asc'}">登録日時(旧→新)</option>
+                        <option value="loginId_asc" th:selected="${form.sort == 'loginId_asc'}">ログインID(A→Z)</option>
+                        <option value="loginId_desc" th:selected="${form.sort == 'loginId_desc'}">ログインID(Z→A)</option>
                         <option value="birthYear_desc" th:selected="${form.sort == 'birthYear_desc'}">年齢(若→老)</option>
                         <option value="birthYear_asc" th:selected="${form.sort == 'birthYear_asc'}">年齢(老→若)</option>
                         <option value="reviewCount_desc" th:selected="${form.sort == 'reviewCount_desc'}">書評数(多→少)</option>

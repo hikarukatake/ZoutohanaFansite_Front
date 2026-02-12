@@ -280,7 +280,7 @@ const modal = document.getElementById('bookDetailModal');
         // 2. 1文字あたりの幅（px）を設定して割り算する
         // 例：文字サイズが16pxくらいなら、余白込みで「18」くらいで割ると丁度いいです
         // ★この「19」という数字をいじると、文字の詰め具合が変わります
-        const charSize = 21; 
+        const charSize = 23; 
 
         // 箱の幅 ÷ 1文字の幅 ＝ 入る文字数
         let lineLength = Math.floor(boxWidth / charSize);

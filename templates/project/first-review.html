@@ -9,6 +9,17 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
     <link rel="stylesheet" th:href="@{/css/project/first-review.css}" href="../../static/css/project.css">
+    <style th:inline="css">
+        :root {
+            --main-color: [(${
+                    project.themeColor.dbValue
+                })];
+
+            --sub-color: [(${
+                    project.themeColor.dbValue
+                })];
+        }
+    </style>
     <link rel="stylesheet" th:href="@{/css/project/first-review.css}" href="../../static/css/project/first-review.css">
 </head>
 

@@ -7,13 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/project/first-review.css}" href="../../static/css/project.css">
     <style th:inline="css">
         :root {
-            --main-color: [(${
+            --main-color: [($ {
                     project.themeColor.dbValue
                 })];
 
-            --sub-color: [(${
+            --sub-color: [($ {
                     project.themeColor.dbValue
                 })];
         }
@@ -237,7 +238,7 @@
         <!-- モーダル -->
         <div id="bookDetailModal" class="modal-overlay">
             <span id="closeModal" class="close-button">&times;</span>
-            <div style="width: 100%;">
+            <div>
                 <div class="modal-content">
                     <div class="modal-box">
                         <div class="modal-textFirst-box">
@@ -270,9 +271,9 @@
                         <p id="modalInfo" style="font-size: 0.9rem; color: #555;"></p>
                     </div>
 
-<!--                    <div class="profile-location">-->
-<!--                        <img id="modalIcon" src="../img/address.png" alt="address icon" class="location-icon">-->
-<!--                    </div>-->
+                    <!--                    <div class="profile-location">-->
+                    <!--                        <img id="modalIcon" src="../img/address.png" alt="address icon" class="location-icon">-->
+                    <!--                    </div>-->
 
                     <hr class="profile-line">
 
@@ -284,12 +285,9 @@
                 </div>
             </div>
         </div>
-
-
-
-        <!-- フッター -->
-        <div th:replace="~{layout :: footer}"></div>
     </div>
+    <!-- フッター -->
+    <div th:replace="~{layout :: footer}"></div>
     <script th:src="@{/js/nominate-works.js}" src="../../static/js/nominate-works.js" defer></script>
 </body>
 

@@ -12,15 +12,15 @@ window.onload = async function () {
     // 10個データをとってきてる
     // --------------------------------------------------------------------------------------
     // ページネーションapi取得
-    // await createPagination(1);
+    await createPagination(1);
 
-    // if (await isVote()) {
-    //     const voteData = await getVoteReviewData();
-    //     await oneShintobook(voteData);
-    // }else{
-    //     const voteReview = document.getElementById('voteReview');
-    //     voteReview.style.display = 'none';
-    // }
+    if (await isVote()) {
+        const voteData = await getVoteReviewData();
+        await oneShintobook(voteData);
+    }else{
+        const voteReview = document.getElementById('voteReview');
+        voteReview.style.display = 'none';
+    }
     createShintoShelf(allBooksData.slice(0, 10));
 
     oneShintobook(allBooksData[0]);
@@ -81,102 +81,7 @@ const shelf = document.getElementById('shelf');
 const nextBtn = document.getElementById('nextBtn');
 const btnArea = document.querySelector('.button-area');
 
-// 30件分のデータ
-let allBooksData =
-    [{
-        id:1,
-        title: "君と僕あんたと私とちみがアンタッチャブル",
-        image: "../../static/img/book1.png",
-        content: "静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。ああああああああああああああああああああああああああ",
-        icon: "../../static/img/flower-blue.png",
-        name: "もたーて",
-        vote: 124,
-        age: "40代",
-        gender: "男性",
-        address: "岩手県 盛岡市",
-        text: "静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が自然と感情移入できます。何気ない一言や仕草に意味が込められており、読み進めるほどに深みを感じました。忙しい日々の中で、ゆっくりと本を味わいたい人に向いている作品だと思います。静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。大きな事件は起きませんが、その分感情の変化が分かりやすく、読み手が静かな語り口で物語が進み、登場人物の日常や心の揺れが丁寧に描かれていました。あああああああああああああああああああああああああああああああああ"
-    },
-    {
-        id:2,
-        title: "アンタッチャブル",
-        image: "../../static/img/book2.png",
-        content: "物語の展開がテンポよく、序盤から引き込まれました。登場人物同士の会話が自然で、関係性がすぐに理解できます。後半に向かって伏線が少しずつ回収され、読み終えたときには納得感がありました。難しい表現が少ないため、普段あまり本を読まない人でも楽しめる一冊だと感じました。",
-        icon: "../../static/img/flower-blue.png",
-        name: "ひかる",
-        vote: 124,
-        age: "20代",
-        gender: "男性",
-        address: "岩手県 盛岡市",
-        text: "ITと本が好き。"
-    },
-    {
-        id:3,
-        title: "作品3",
-        image: "../../static/img/book3.png",
-        content: "主人公の成長が物語を通してしっかり描かれており、読後に前向きな気持ちになれる作品でした。失敗や迷いを経験しながらも一歩ずつ進んでいく姿が印象的です。派手さはありませんが、現実に近い描写が多く共感しやすい内容でした。",
-        icon: "../../static/img/flower-blue.png",
-        name: "佐藤",
-        vote: 124,
-        age: "30代",
-        gender: "男性",
-        address: "岩手県 花巻市",
-        text: "小説好きです。"
-    },
-    {
-        id:4,
-        title: "作品4",
-        image: "../../static/img/book4.png",
-        content: "世界観の作り込みが丁寧で、読み始めてすぐに物語の中へ入り込めました。情景描写が細かく、風景が頭に浮かびやすいのが魅力です。物語後半では意外な展開もあり、最後まで飽きずに楽しめました。",
-        icon: "../../static/img/flower-blue.png",
-        name: "高橋",
-        vote: 124,
-        age: "50代",
-        gender: "女性",
-        address: "岩手県 北上市",
-        text: "ゆっくり読書派。"
-    },
-    {
-        id:5,
-        title: "作品5",
-        image: "../../static/img/book1.png",
-        content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。特別な出来事がなくても、人の心は大きく動くのだと改めて感じさせられます。落ち着いた雰囲気で、夜に読むのがおすすめです。",
-        icon: "../../static/img/flower-blue.png",
-        name: "鈴木",
-        vote: 124,
-        age: "20代",
-        gender: "女性",
-        address: "岩手県 盛岡市",
-        text: "本と映画が好き。"
-    },
-    { id:6, title: "作品6", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:7, title: "作品7", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:8, title: "作品8", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:9, title: "作品9", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:10, title: "作品10", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:11, title: "作品11", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:12, title: "作品12", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:13, title: "作品13", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:14, title: "作品14", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:15, title: "作品15", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:16, title: "作品16", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:17, title: "作品17", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:18, title: "作品18", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:19, title: "作品19", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:20, title: "作品20", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:21, title: "作品21", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:22, title: "作品22", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:23, title: "作品23", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:24, title: "作品24", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:25, title: "作品25", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:26, title: "作品26", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:27, title: "作品27", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:28, title: "作品28", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:29, title: "作品29", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:30, title: "作品30", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:31, title: "作品30", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:32, title: "作品31", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-    { id:33, title: "作品32", image: "../../static/img/book1.png", content: "日常を切り取ったような物語で、登場人物の感情がとても身近に感じられました。", icon: "../../static/img/flower-blue.png", name: "鈴木", vote: 124, age: "20代", gender: "女性", address: "岩手県 盛岡市", text: "本と映画が好き。" },
-];
+
 
 let currentStartIndex = 0;
 const BATCH_SIZE = 9;
@@ -323,6 +228,7 @@ async function Allbook(data, book) {
             }
         }
     }
+    
 
         if (bookmarkBtn) {
             bookmarkBtn.setAttribute('onclick', `favorite(${data.id})`);
@@ -355,26 +261,67 @@ async function Allbook(data, book) {
     const profileTextElem = document.getElementById('modalProfileText');
     if (profileTextElem) profileTextElem.innerText = data.text;
 
-    // 感想テキストエリアを「初期状態」に作り直す
-    // これをやらないと、前回の改行処理でIDが消えているため、次のデータが流し込めません
-    const textBox = document.querySelector('.modal-textFirst-box');
-    if (textBox) {
-        textBox.innerHTML = `
-                <img src="/img/rose.png" class="modal-rose" alt="">
-                <h3 id="modalTitle">${data.title}</h3>
-                <p id="textFirst" class="modal-textFirst">${data.content}</p>
-            `;
-    }
-
-    // 4. 文字分割処理の実行（復活した textFirst に対して行う）
-    splitTextToParagraphs("textFirst", "modal-textFirst", 18);
-
-    // 5. モーダル表示
-    const modal = document.getElementById('bookDetailModal');
-    modal.style.display = 'flex';
+const modal = document.getElementById('bookDetailModal');
+    modal.style.display = 'flex'; // ★ここで先に表示！
     document.body.classList.add('no-scroll');
 
-    // 6. モーダル内チュートリアル開始（黒いオーバーレイ）
+
+    const textBox = document.querySelector('.modal-textFirst-box');
+
+    // ■ 箱の幅に合わせて文字数を計算して表示する関数
+    const renderText = () => {
+        if (!textBox) return;
+
+        // 1. 今の「テキストボックスの幅」を取得
+        const boxWidth = textBox.clientWidth; 
+
+        if (boxWidth === 0) return; // 幅が取れなかったら何もしない
+
+        // 2. 1文字あたりの幅（px）を設定して割り算する
+        // 例：文字サイズが16pxくらいなら、余白込みで「18」くらいで割ると丁度いいです
+        // ★この「19」という数字をいじると、文字の詰め具合が変わります
+        const charSize = 22; 
+
+        // 箱の幅 ÷ 1文字の幅 ＝ 入る文字数
+        let lineLength = Math.floor(boxWidth / charSize);
+
+        // ※少なすぎたり多すぎたりしないように制限
+        if (lineLength < 10) lineLength = 10; // 最低10文字
+        if (lineLength > 50) lineLength = 50; // 最高50文字
+
+        // ★確認用ログ
+        console.log(`箱の幅: ${boxWidth}px / 計算した文字数: ${lineLength}文字`);
+
+        // 3. テキスト分割処理
+        let textHtml = "";
+        const content = data.content; 
+
+        for (let i = 0; i < content.length; i += lineLength) {
+            const line = content.substr(i, lineLength);
+            textHtml += `<p class="modal-textFirst">${line}</p>`;
+        }
+
+        // 4. HTML流し込み
+        textBox.innerHTML = `
+            <img src="../../static/img/rose.png" class="modal-rose" alt="">
+            <h3 id="modalTitle">${data.title}</h3>
+            <div class="text-container">
+                ${textHtml}
+            </div>
+        `;
+    };
+
+    // ■ 実行
+    // 先に display: flex にしたので、ここで正しく幅が取れます
+    renderText();
+
+    // ■ 画面サイズ変更時も再計算
+    window.removeEventListener('resize', renderText);
+    window.addEventListener('resize', renderText);
+
+    // ▲▲▲▲▲ 書き換え終了 ▲▲▲▲▲
+
+    // 6. モーダル内チュートリアル開始
     startModalTutorial();
 }
 
@@ -928,14 +875,12 @@ async function getVoteReviewData(){
 }
 // 自分が投票している作品の表示
 function oneShintobook(data) {
-    // これ
-    // if (Array.isArray(data)) {
-    //     data = data[0];
-    // }
+    if (Array.isArray(data)) {
+        data = data[0];
+    }
 
     const oneShintoContainer = document.querySelector('.one-book-shinto-box');
-    // これ
-    // oneShintoContainer.replaceChildren();
+    oneShintoContainer.replaceChildren();
 
     // 大枠 (class="one-book-shinto-set")
     const setDiv = document.createElement('div');
@@ -976,11 +921,10 @@ function oneShintobook(data) {
     setDiv.appendChild(oneBook);
     setDiv.appendChild(penBox);
 
-    // これ
-    // const shareBox = document.getElementById('shareBox');
-    // shareBox.onclick = () => {
-    //     vote(data.id);
-    // };
+    const shareBox = document.getElementById('shareBox');
+    shareBox.onclick = () => {
+        vote(data.id);
+    };
 
     // 画面の箱に追加して表示完了
     oneShintoContainer.appendChild(setDiv);

@@ -79,6 +79,81 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// ==========ロゴ画像のプレビュー==========
+const mainImgInput = document.getElementById('mainImg-input');
+const mainImgPreview = document.getElementById('mainImg-preview');
+
+if(mainImgInput) {
+  mainImgInput.addEventListener('change', (event) => {
+    const file = event.target.files[0]
+
+    if (!file) {
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      mainImgPreview.src = event.target.result
+      mainImgPreview.style.display = 'block';
+    }
+    reader.readAsDataURL(file)
+  })
+}
+
+
+// ==========PDF==========
+const pdfInput = document.getElementById("pdf-input");
+const pdfList  = document.getElementById("pdf-list-ul");
+const dt = new DataTransfer();
+
+if(pdfInput) {
+  // 複数選択
+  pdfInput.addEventListener("change", function (e) {
+    const newFiles = Array.from(e.target.files);
+
+    newFiles.forEach(file => dt.items.add(file));
+    pdfInput.files = dt.files;
+
+    renderPDFList();
+  });
+}
+
+// ファイル名リスト
+function renderPDFList() {
+  pdfList.innerHTML = "";
+  Array.from(pdfInput.files).forEach((file, index) => {
+    const li = document.createElement("li");
+
+    const btn = document.createElement("button");
+    btn.classList.add("pdf-list-removeButton")
+    btn.innerHTML = "<span class='material-symbols-outlined'>close</span>";
+    btn.addEventListener("click", () => removeFile(index));
+
+    const name = document.createElement("span");
+    name.textContent = file.name;
+
+    li.appendChild(btn);
+    li.appendChild(name);
+    pdfList.appendChild(li);
+  });
+}
+
+// 「削除」ボタンでファイル選択解除
+function removeFile(index) {
+  const newDT = new DataTransfer();
+
+  Array.from(pdfInput.files).forEach((file, i) => {
+    if (i !== index) newDT.items.add(file);
+  });
+
+  pdfInput.files = newDT.files;
+
+  dt.items.clear();
+  Array.from(newDT.files).forEach(f => dt.items.add(f));
+
+  renderPDFList();
+}
+
 
 // ========== モーダル内の期間選択チェックボックス ==========
 document.addEventListener('DOMContentLoaded', () => {
@@ -223,45 +298,77 @@ if (clearAllCheckbox) {
 // モーダルの中のプレビューを出したい部分に一致するIDをつける(例 : <span id="confirm-title"></span>)
 // モーダルを開くボタンのidを"confirm-btn"にする
 document.addEventListener("DOMContentLoaded", () => {
-  const confirmBtn = document.getElementById("confirm-btn");
+  const confirmBtn = document.querySelector("#confirm-btn");
   if (!confirmBtn) return;
 
   confirmBtn.addEventListener("click", () => {
     const form = confirmBtn.closest("form");
     if (!form) return;
 
-    const previewTargets = form.querySelectorAll("[data-preview]");
-
-    previewTargets.forEach(el => {
-      const previewSelector = el.dataset.preview;
-      const previewEl = document.querySelector(previewSelector);
-      if (!previewEl) return;
+    // data-preview処理
+    form.querySelectorAll("[data-preview]").forEach(input => {
+      const target = document.querySelector(input.dataset.preview);
+      if (!target) return;
 
       let value = "";
 
-      if (el.type === "radio") {
-        if (!el.checked) return;
-        value = el.nextSibling.textContent?.trim() || el.value;
+      switch (input.type) {
+        case "radio":
+          if (!input.checked) return;
+          value = input.closest("label")?.innerText.trim() || input.value;
+          break;
 
-      } else if (el.type === "checkbox") {
-        value = el.checked ? "はい" : "いいえ";
+        case "checkbox":
+          value = input.checked ? "ON" : "OFF";
+          break;
 
-      } else if (el.tagName === "SELECT") {
-        value = el.selectedOptions[0]?.textContent || "";
+        case "datetime-local":
+          value = input.value ? new Date(input.value).toLocaleString("ja-JP") : "";
+          break;
 
-      } else {
-        value = el.value;
+        case "file":
+          value = input.files.length ? [...input.files].map(f => f.name).join(", ") : "未選択";
+          break;
+
+        default:
+          value = input.value;
       }
 
-      // datetime-local を見やすく
-      if (el.type === "datetime-local" && value) {
-        value = value.replace("T", " ");
-      }
-
-      previewEl.textContent = value || "—";
+      target.textContent = value;
     });
+
+    // ===== テーマカラー専用処理 =====
+    const themeColorInput = form.querySelector('input[name="themeColor"]:checked');
+    if (themeColorInput) {
+      const colorMap = {
+        GREEN: "みどり",
+        PINK: "もも",
+        YELLOW: "き",
+        BLUE: "あお",
+        BLACK: "くろ",
+        GRAY: "はい"
+      };
+
+      const colorValue = themeColorInput.value;
+      const colorText = colorMap[colorValue] || colorValue;
+
+      const colorTarget = document.querySelector("#confirm-themeColor");
+      if (colorTarget) {
+        colorTarget.textContent = `${colorValue}（${colorText}）`;
+      }
+    }
+
+    if (logoInput.files.length) {
+      const imgPreview = document.querySelector("#confirm-logoImg-preview");
+      imgPreview.src = URL.createObjectURL(logoInput.files[0]);
+    }
+
+    // モーダル表示
+    const modal = document.getElementById(confirmBtn.dataset.modalTarget);
+    if (modal) modal.classList.add("show");
   });
 });
+
 
 
 // ========== 置き換えタグ挿入ボタン ==========

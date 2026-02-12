@@ -46,7 +46,10 @@
 
         <li class="menu-item"><a th:href="@{/#contact}" id="contact-link" style="text-decoration: none; color:white;">お問い合わせ</a></li>
 
-        <li class="menu-item"><a th:href="@{/login}" href="" style="text-decoration: none; color:white;">ログイン</a></li>
+        <li class="menu-item">
+          <a sec:authorize="isAnonymous()" th:href="@{/login}" href="" style="text-decoration: none; color:white;">ログイン</a>
+          <a sec:authorize="isAuthenticated()" th:href="@{/mypage}" href="" style="text-decoration: none; color:white;">マイページ</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -101,30 +104,12 @@
     </a>
   </div>
 
-  <!-- SNSブロック -->
-  <div class="footer-sns">
-    <div class="sns-box">
-      <div class="footer-sns-title">SNS</div>
-      <div class="sns-box-icons">
-        <div class="sns-icons">
-          <img src="../img/instagram.png" class="sns-icon" alt="">
-          <img src="../img/facebook.png" class="sns-icon-facebook" alt="">
-          <img src="../img/x.png" class="sns-icon-x" alt="">
-        </div>
 
-        <div class="sns-labels">
-          <span>Instagram</span>
-          <span>Facebook</span>
-          <span>X（旧Twitter）</span>
-        </div>
-      </div>
-    </div>
     <div class="footer-line"></div>
 
-    <div class="footer-copy">©Copylight</div>
-  </div>
+    <div class="footer-copy" style="text-align: center">©Copylight</div>
 </footer>
-  </div>
+</div>
 
   <!-- ヘッダーモーダル -->
 

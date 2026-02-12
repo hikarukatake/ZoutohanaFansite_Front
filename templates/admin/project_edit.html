@@ -274,11 +274,11 @@
               <a href="review_list.html" th:href="@{/admin/review/list(urlKey=${project.urlKey})}" class="btn icon-center">
                 <span class="material-symbols-outlined scale-bigger pr-1">library_books</span>すべての書評を確認
               </a>
-              <button type="button" class="btn icon-center">
+              <a th:href="@{/admin/review/export(urlKey=${project.urlKey})}" class="btn icon-center">
                 <span class="material-symbols-outlined scale-bigger pr-1">csv</span>
                 <span class="material-symbols-outlined scale-bigger pr-1">download_2</span>
                 すべての書評をCSV形式で出力
-              </button>
+              </a>
             </div>
           </div>
 

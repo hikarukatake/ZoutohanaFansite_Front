@@ -6,6 +6,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style th:inline="css">
+        :root {
+            --main-color: [(${
+                    project.themeColor.dbValue
+                })];
+
+            --sub-color: [(${
+                    project.themeColor.dbValue
+                })];
+        }
+    </style>
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
     <link rel="stylesheet" th:href="@{/css/project/nominate-award.css}"
         href="../../static/css/project/nominate-award.css">

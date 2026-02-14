@@ -1062,6 +1062,35 @@ input[type="radio"]:checked + .color-dot span {
   font-size: 0.8rem;
 }
 
+.btn-active {
+  background-color: var(--zoutohana-green);
+  color: white;
+  font-weight: bold;
+}
+
+.filter-btn-container {
+  position: relative;
+  display: inline-block;
+}
+
+#filter-btn.btn-active {
+  padding-right: 2rem;
+}
+
+.clear-filter-icon {
+  display: none;
+  position: absolute;
+  right: 0.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  text-decoration: none;
+  color: white;
+}
+
+#filter-btn.btn-active + .clear-filter-icon {
+  display: inline-block;
+}
+
 .btn-danger {
   color: var(--admin-text-red);
 }

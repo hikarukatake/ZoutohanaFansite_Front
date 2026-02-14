@@ -91,6 +91,9 @@
                   <td>
                     <input type="text" name="urlKey" id="urlKey-input" class="input-text w-full" th:value="${project.urlKey}">
                     <span class="text-gray">https://zoutohana-fansite.com/project/</span><span id="urlKey-preview" class="text-gray" th:text="${project.urlKey}">_____</span>
+                    <button type="button" class="btn-sm urlKey-copyBtn-fromInput">
+                      <span class="material-symbols-outlined font-sm">content_copy</span>
+                    </button>
                     <p th:if="${param.error}" style="color: red">すでに使用されている企画URLは利用できません</p>
                   </td>
                 </tr>

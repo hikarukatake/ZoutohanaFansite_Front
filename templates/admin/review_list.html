@@ -56,8 +56,17 @@
           順
         </div>
         <div class="flex gap-1"> <!-- メニュー右部分(絞り込み・検索) -->
-          <button type="button" class="btn" data-modal-target="filter-option-modal">絞り込みオプション</button>
-            <form method="GET" th:action="@{/admin/review/list(urlKey=${project.urlKey})}" class="flex gap-1">
+          <div class="filter-btn-container">
+              <button type="button" class="btn filter-btn-wrap" id="filter-btn" data-modal-target="filter-option-modal">
+                  絞り込みオプション
+              </button>
+              <a th:href="@{/admin/review/list(urlKey=${project.urlKey}, keyword=${form.keyword}, sort=${form.sort})}"
+                  class="clear-filter-icon material-symbols-outlined"
+                  onclick="event.stopPropagation();">
+                  <span class="material-symbols-outlined">close</span>
+              </a>
+          </div>
+          <form method="GET" th:action="@{/admin/review/list(urlKey=${project.urlKey})}" class="flex gap-1">
               <input type="hidden" name="urlKey" th:value="${project.urlKey}">
               <input type="hidden" name="sort" th:value="${form.sort}">
               <th:block th:each="s : ${form.status}">

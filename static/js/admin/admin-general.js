@@ -63,7 +63,7 @@ if (document.readyState === 'loading') {
 
 // ========== 企画カードのURLコピー ==========
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.copy-btn').forEach(btn => {
+  document.querySelectorAll('.urlKey-copyBtn').forEach(btn => {
     btn.addEventListener('click', async () => {
       const url = btn.dataset.url;
       const icon = btn.querySelector('.material-symbols-outlined');
@@ -72,6 +72,24 @@ document.addEventListener('DOMContentLoaded', () => {
         await navigator.clipboard.writeText(url);
         icon.textContent = 'check';
 
+      } catch (e) {
+        console.error('コピー失敗', e);
+      }
+    });
+  });
+
+  document.querySelectorAll('.urlKey-copyBtn-fromInput').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const input = document.getElementById('urlKey-input');
+      const urlKey = input.value;
+
+      const fullUrl = 'https://zutohana-fansite.com/project/' + urlKey;
+
+      const icon = btn.querySelector('.material-symbols-outlined');
+
+      try {
+        await navigator.clipboard.writeText(fullUrl);
+        icon.textContent = 'check';
       } catch (e) {
         console.error('コピー失敗', e);
       }
@@ -292,6 +310,18 @@ if (clearAllCheckbox) {
       });
   });
 }
+
+// ========== 絞り込みオプションがあったときに絞り込みボタンに印をつける ==========
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(location.search);
+  const ignoreKeys = ["sort", "keyword", "urlKey", "continue"];
+  const filteredParams = [...params.keys()].filter(k => !ignoreKeys.includes(k));
+
+  if (filteredParams.length > 0) {
+    document.getElementById("filter-btn").classList.add("btn-active");
+  }
+});
+
 
 // ========== フォームの内容をモーダルにプレビュー表示 ==========
 // フォーム内の各パーツにdata-preview属性をつける(例 : data-preview="#confirm-title")

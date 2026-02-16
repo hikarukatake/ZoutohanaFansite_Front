@@ -333,124 +333,54 @@ function createInfiniteRow(originalData, containerId, isOffset) {
 /* =========================================================
     大賞表示用関数(文字)
    ========================================================= */
-async function Allbook(data, book) {
-    // モーダルのブックマークボタンのidをDOMから取得
-    const voteBtn = document.getElementById('voteBtn');
-    const bookmarkBtn = document.getElementById('bookmarkBtn');
-    // sample関数に本のIDを入れて呼び出すように設定
-    if (voteBtn && !await isVote()) {
-        voteBtn.setAttribute('onclick', `vote(${data.id})`);
-        voteBtn.style.display = '';
-        voteBtn.classList.add('modal-button');
-    }else{
-        const currentData = localStorage.getItem(VOTE_KEY);
-        const voteList = JSON.parse(currentData || "[]");
+function renderLeftSection(data) {
+    const target = document.getElementById('award-left-target');
+    const modalBox = document.createElement('div');
+    modalBox.classList.add('modal-box');
 
-        if (currentData) {
-            if (!(voteList.includes(data.id) || voteList.includes(Number(data.id)))) {
-                voteBtn.style.display = 'none';
-            }else{
-                voteBtn.style.display = '';
-                voteBtn.setAttribute('onclick', `vote(${data.id})`);
-                voteBtn.classList.add('modal-button-clicked');
-            }
-        }
-    }
-    
+    // 1つ目のテキストボックス
+    const textBox = document.createElement('div');
+    textBox.classList.add('modal-textFirst-award-box');
 
-        if (bookmarkBtn) {
-            bookmarkBtn.setAttribute('onclick', `favorite(${data.id})`);
-            if(isFavorite(data.id)){
-                bookmarkBtn.classList.add('modal-button-clicked');
-            }else{
-                bookmarkBtn.classList.add('modal-button');
-            }
-        }
-    // 今開いた本を記録
-    currentOpenedBook = book;
+        const roseImg = document.createElement('img');
+        roseImg.src = "/img/rose.png";
+        roseImg.classList.add('modal-rose');
+        roseImg.alt = "";
 
-    // 1. チュートリアル中の場合、オーバーレイを消す
-    const overlay = document.getElementById('tutorialOverlay');
-    if (overlay && overlay.style.display === 'block') {
-        overlay.style.display = 'none';
-        if (book.classList.contains('first-book-target')) {
-            book.classList.remove('highlight');
-            const msg = book.querySelector('.tutorial-msg');
-            if (msg) msg.remove();
-        }
-    }
+        const h3Title = document.createElement('h3');
+        h3Title.id = "award-modalTitle";
+        h3Title.innerText = data.title;
 
-    // 2. モーダル内の各パーツにデータをセット
-    // アイコン・名前・属性・プロフィール文
-    const iconElem = document.getElementById('modalIcon');
-    if (iconElem) iconElem.src = data.icon;
+        const pFirst = document.createElement('p');
+        pFirst.id = "award-textFirst"; 
+        pFirst.classList.add('textFirst');
+        pFirst.innerText = data.content; 
 
-    const nameElem = document.getElementById('modalName');
-    if (nameElem) nameElem.innerText = data.name;
+    textBox.appendChild(roseImg);
+    textBox.appendChild(h3Title);
+    textBox.appendChild(pFirst);
 
-    const infoElem = document.getElementById('modalInfo');
-    if (infoElem) infoElem.innerText = `${data.age} / ${data.gender} / ${data.address}`;
+    // 2つ目のテキストボックス（非表示）
+    const secondBox = document.createElement('div');
+    secondBox.classList.add('modal-textSecond-award-box');
+    secondBox.style.display = 'none';
 
-    const profileTextElem = document.getElementById('modalProfileText');
-    if (profileTextElem) profileTextElem.innerText = data.text;
-// --- 中略（アイコンや名前のセットまではそのまま） ---
+        const roseImg2 = document.createElement('img');
+        roseImg2.src = "/img/rose.png";
+        roseImg2.classList.add('modal-rose');
 
-    const modal = document.getElementById('bookDetailModal');
-    modal.style.display = 'flex'; 
-    document.body.classList.add('no-scroll');
+        const pSecond = document.createElement('p');
+        pSecond.id = "award-textSecond"; 
+        pSecond.classList.add('modal-textSecond');
 
-    // ★ここから修正：HTML構造を壊さず、テキストだけを流し込む
-    const renderText = () => {
-        const firstBox = document.querySelector('.modal-textFirst-box');
-        const firstP = document.getElementById('textFirst');
-        const secondBox = document.querySelector('.modal-textSecond-box');
-        const secondP = document.getElementById('textSecond');
+    secondBox.appendChild(roseImg2);
+    secondBox.appendChild(pSecond);
 
-        if (!firstBox || !firstP) return;
+    modalBox.appendChild(textBox);
+    modalBox.appendChild(secondBox);
 
-        // 1. 幅の取得と計算
-        const boxWidth = firstBox.clientWidth;
-        if (boxWidth === 0) return;
-
-        const charSize = 23; 
-        let lineLength = Math.floor(boxWidth / charSize);
-        if (lineLength < 10) lineLength = 10;
-        if (lineLength > 50) lineLength = 50;
-
-        // 2. テキスト分割（1ページ最大何行まで入れるか：例 10行）
-        const maxLines = 10;
-        const maxChars = lineLength * maxLines;
-        const content = data.content || "";
-
-        // 1ページ目の表示
-        const firstPart = content.substring(0, maxChars);
-        firstP.innerHTML = formatToLines(firstPart, lineLength);
-
-        // 3. 2ページ目の処理（文字が溢れていたら表示）
-        if (content.length > maxChars) {
-            const secondPart = content.substring(maxChars);
-            if (secondP && secondBox) {
-                secondP.innerHTML = formatToLines(secondPart, lineLength);
-                secondBox.style.display = 'block'; // 2枚目があれば表示
-            }
-        } else if (secondBox) {
-            secondBox.style.display = 'none'; // なければ隠す
-        }
-    };
-
-    // 改行用ヘルパー関数
-    const formatToLines = (text, len) => {
-        let html = "";
-        for (let i = 0; i < text.length; i += len) {
-            html += `<span>${text.substr(i, len)}</span><br>`;
-        }
-        return html;
-    };
-
-    // 実行とリサイズ設定
-    renderText();
-    window.removeEventListener('resize', renderText); // 重複防止
-    window.addEventListener('resize', renderText);
+    target.innerHTML = ''; 
+    target.appendChild(modalBox);
 }
 
 /* =========================================================

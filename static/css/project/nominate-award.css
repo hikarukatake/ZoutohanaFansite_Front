@@ -82,8 +82,8 @@ section {
 .next-section {
     width: 100%;
     min-height: 100vh;
-    background-image: url(../../img/book-flow.png);
     display: block;
+    background-color: var(--back-color);
     justify-content: center;
     align-items: center;
     font-size: 24px;

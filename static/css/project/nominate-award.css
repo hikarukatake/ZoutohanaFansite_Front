@@ -53,6 +53,10 @@ section {
     width: 100%; /* 親要素に合わせて伸縮 */
 }
 
+.modal-box{
+    width: 90%;
+    margin: 0 auto;
+}
 
 /* --- 右側：プロフィールエリア --- */
 #award-display-area .profile-card {

@@ -29,74 +29,21 @@ section {
    大賞表示エリア (award-display-area) の修正
    ========================================= */
 
-/* コンテナ全体 */
-#award-display-area {
+.modal-box {
     width: 100%;
-    overflow: hidden; /* 横はみ出し防止の保険 */
-    padding: 20px 0;
-    box-sizing: border-box;
+    border-radius: 6px;
 }
 
-/* 内部のFlexコンテナ */
-#award-display-area .modal-content {
-    display: flex;
-    flex-direction: column; /* スマホ: 縦並び */
-    align-items: center;    /* 中央揃え */
-    width: 90%;             /* 画面幅の90%に収める */
-    max-width: 1000px;      /* PCでの最大幅 */
-    margin: 0 auto;
-    gap: 30px;              /* 要素間の隙間 */
+.modal-box::-webkit-scrollbar {
+    width: 6px;
 }
 
-/* --- 左側：文章エリア (JSで生成される .modal-box) --- */
-#award-left-target {
-    width: 100%; /* 親要素に合わせて伸縮 */
+.modal-box::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
 }
 
-.modal-box{
-    display: flex;
-    justify-content: center;
-}
 
-/* --- 右側：プロフィールエリア --- */
-#award-display-area .profile-card {
-    width: 100%; /* スマホ: 横幅いっぱい */
-    max-width: 400px; /* プロフィールが広がりすぎないように制限 */
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-sizing: border-box;
-    /* 既存のprofile-cardのスタイルがあればそれを優先しつつ、配置を調整 */
-}
-
-/* 画像のはみ出し防止 (非常に重要) */
-#award-display-area img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* =========================================
-   PC向けレイアウト (画面幅768px以上)
-   ========================================= */
-@media (min-width: 768px) {
-    #award-display-area .modal-content {
-        flex-direction: row;       /* PC: 横並び */
-        align-items: stretch;      /* 高さを合わせる（お好みで flex-start） */
-        justify-content: center;
-        gap: 50px;                 /* 横の間隔を広げる */
-    }
-
-    /* PCでの左側エリア幅 */
-    #award-left-target {
-        width: 60%; /* 左側を少し広く */
-    }
-
-    /* PCでの右側エリア幅 */
-    #award-display-area .profile-card {
-        width: 35%; /* 右側を狭く */
-        margin-top: 0;
-    }
-}
 .book-text {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
     position: absolute;
@@ -814,9 +761,6 @@ section {
     animation: modalOpen 0.3s ease-out;
 }
 
-.modal-box::-webkit-scrollbar {
-    width: 6px;
-}
 
 .modal-textFirst-award-box,
 .modal-textSecond-box {
@@ -831,12 +775,12 @@ section {
     text-align: center;
     box-shadow: 6px 6px 10px -4px rgba(0, 0, 0, 0.25);
 }
+
 .modal-textFirst-box,
 .modal-textSecond-box {
     width: 80%;
     margin: 0 auto;
-    padding: 16px;
-    padding: 10px 40px;
+    padding: 10px 40px 10px 40px;
     border: 1px solid var(--font-bold);
     outline: 1px solid var(--font-bold);
     outline-offset: 2px;
@@ -852,7 +796,6 @@ section {
     color: var(--font-bold);
     margin: 0 0 10px 0;
 }
-
 
 
 .modal-textSecond-box {
@@ -875,13 +818,6 @@ section {
     border-bottom: 1px dashed var(--font-normal);
     color: var(--font-normal);
 }
-
-
-.modal-box::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
-}
-
 
 
 @keyframes modalOpen {

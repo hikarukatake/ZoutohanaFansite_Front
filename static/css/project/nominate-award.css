@@ -1728,14 +1728,12 @@ section {
    ※ポップアップ用とは別の、表示専用クラス
    ======================================================= */
 
-/* 大枠：最初から表示(block)、位置は固定せずそのまま(relative) */
 .modal-overlay-award {
     display: block;
     position: relative;
     width: 100%;
     height: auto;
     background: transparent;
-    /* 背景のグレーはなし */
     z-index: 1;
     padding: 0;
     margin-top: 20px;
@@ -1756,27 +1754,19 @@ section {
     width: 100%;
     transform: none;
     opacity: 1;
-
-    /* 感想とプロフィールを横並びにする設定 */
     display: flex;
     flex-wrap: wrap;
-    /* スマホなど画面が狭いときは縦並び */
     justify-content: center;
     align-items: flex-start;
-    /* 上揃え */
     gap: 30px;
-    /* 左右の間隔 */
 }
 
 
 /* 右側のプロフィールカードの幅 */
 .modal-overlay-award .profile-card {
     flex: 1;
-    /* 幅を自動で広げる */
-    min-width: 300px;
-    /* 狭くなりすぎないように */
+    min-width: 400px;
     margin: 0;
-    /* 余計なマージン削除 */
     box-sizing: border-box;
     background-color: var(--back-color);
     margin: 10px;

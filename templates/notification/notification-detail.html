@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人通知詳細</title>
+    <title>個人お知らせ詳細</title>
+    <link rel="icon" th:href="@{/img/zoutohana-jitsubutsu.png}">
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
     <link rel="stylesheet" th:href="@{/css/info/post-detail.css}" href="../../static/css/info/post-detail.css">
 </head>
@@ -18,7 +19,7 @@
         <div class="breadcrumb-box">
             <div class="breadcrumb"><a th:href="@{/}" href="../fansite/top.html">ホーム</a></div>
             <div class="breadcrumb-middle">></div>
-            <div class="breadcrumb" id="breadcrumb-category"><a th:href="@{/mypage/notification}" href="">お知らせ一覧</a>
+            <div class="breadcrumb" id="breadcrumb-category"><a th:href="@{/mypage/notification}" href="">個人お知らせ</a>
             </div>
             <div class="breadcrumb-middle">></div>
             <div class="breadcrumb" id="breadcrumb-here" th:text="${notification.title}">お知らせタイトル</div>
@@ -78,23 +79,5 @@
 
     <!-- フッター -->
     <div th:replace="~{layout :: footer}"></div>
-
-
-    <!-- ヘッダーモーダル -->
-    <div class="overlay-menu" id="overlayMenu">
-        <div class="close-btn" id="menuClose">×</div>
-        <img src="../img/zoutohana-white-color.png" class="" style="width: 5rem;" alt="">
-        <ul class="menu-list">
-            <li class="menu-item">お知らせ</li>
-
-            <li class="menu-item">企画一覧</li>
-
-            <li class="menu-item">象と花プロジェクト</li>
-
-            <li class="menu-item">お問い合わせ</li>
-
-            <li class="menu-item">ログイン</li>
-        </ul>
-    </div>
-
+    <script th:src="@{/js/hamburger.js}"></script>
 </body>

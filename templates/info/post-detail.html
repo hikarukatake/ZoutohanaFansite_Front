@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>お知らせ詳細</title>
+    <title>お知らせ</title>
+    <link rel="icon" th:href="@{/img/zoutohana-jitsubutsu.png}">
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
     <link rel="stylesheet" th:href="@{/css/header.css}" href="../../static/css/header.css">
     <link rel="stylesheet" th:href="@{/css/footer.css}" href="../../static/css/footer.css">
@@ -54,51 +55,33 @@
             <a th:href="@{/news(category='new')}" href="post-list.html?category=new" class="nav-link rectangle-button"
                 id="back-to-list">一覧に戻る</a>
         </div>
-
-        <script>
-            // 企画一覧のタブメニュー
-            const tabs = document.querySelectorAll('.tab');
-
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function () {
-                    // 全てのタブからactiveクラスとmarkerを削除
-                    tabs.forEach(t => {
-                        t.classList.remove('active');
-                        const marker = t.querySelector('.marker');
-                        if (marker) marker.remove();
-                    });
-
-                    // クリックされたタブにactiveクラスを追加
-                    this.classList.add('active');
-
-                    // マーカーを追加
-                    const marker = document.createElement('span');
-                    marker.classList.add('marker');
-                    this.appendChild(marker);
-                });
-            });
-        </script>
     </div>
 
         <!-- フッター -->
-        <div th:replace="~{layout :: footer}"></div>
+    <div th:replace="~{layout :: footer}"></div>
+    <script>
+        // 企画一覧のタブメニュー
+        const tabs = document.querySelectorAll('.tab');
 
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                // 全てのタブからactiveクラスとmarkerを削除
+                tabs.forEach(t => {
+                    t.classList.remove('active');
+                    const marker = t.querySelector('.marker');
+                    if (marker) marker.remove();
+                });
 
-        <!-- ヘッダーモーダル -->
-        <div class="overlay-menu" id="overlayMenu">
-            <div class="close-btn" id="menuClose">×</div>
-            <img src="../img/zoutohana-white-color.png" class="" style="width: 5rem;" alt="">
-            <ul class="menu-list">
-                <li class="menu-item">お知らせ</li>
+                // クリックされたタブにactiveクラスを追加
+                this.classList.add('active');
 
-                <li class="menu-item">企画一覧</li>
-
-                <li class="menu-item">象と花プロジェクト</li>
-
-                <li class="menu-item">お問い合わせ</li>
-
-                <li class="menu-item">ログイン</li>
-            </ul>
-        </div>
-
+                // マーカーを追加
+                const marker = document.createElement('span');
+                marker.classList.add('marker');
+                this.appendChild(marker);
+            });
+        });
+    </script>
+<script th:src="@{/js/hamburger.js}"></script>
 </body>
+</html>

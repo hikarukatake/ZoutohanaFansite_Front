@@ -1600,12 +1600,6 @@ section {
     gap: 30px;             /* 左右の間隔 */
 }
 
-/* 左側の感想ボックスの幅 */
-.modal-overlay-award .modal-box {
-    flex: 1;               /* 幅を自動で広げる */
-    min-width: 300px;      /* 狭くなりすぎないように */
-    box-sizing: border-box;
-}
 
 /* 右側のプロフィールカードの幅 */
 .modal-overlay-award .profile-card {

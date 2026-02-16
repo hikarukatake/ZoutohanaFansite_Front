@@ -74,7 +74,6 @@ p {
     position: relative;
 }
 
-/* 動作確認用に下にコンテンツがないとスクロールできないのでダミーを追加 */
 .next-section {
     width: 100%;
     min-height: 100vh;
@@ -84,11 +83,8 @@ p {
     align-items: center;
     font-size: 24px;
     background-size: cover;
-    /* ←全体にフィット（必要なら拡大縮小） */
     background-repeat: no-repeat;
-    /* ←繰り返しを止める */
     background-position: center;
-    /* ←中央に置く */
     margin-bottom: 20px;
     padding-bottom: 20px;
 }

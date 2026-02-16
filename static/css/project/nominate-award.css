@@ -79,10 +79,10 @@ section {
     position: relative;
 }
 
-/* 動作確認用に下にコンテンツがないとスクロールできないのでダミーを追加 */
 .next-section {
     width: 100%;
-    background-color: var(--back-color);
+    min-height: 100vh;
+    background-image: url(../../img/book-flow.png);
     display: block;
     justify-content: center;
     align-items: center;
@@ -90,6 +90,8 @@ section {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
 }
 
 

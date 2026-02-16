@@ -753,7 +753,7 @@ section {
 
 .modal-textFirst-award-box,
 .modal-textSecond-box {
-    width: 95%;
+    width: 100%;
     margin: 0 auto;
     padding: 10px 0px 10px 0px;
     border: 1px solid var(--font-bold);
@@ -808,7 +808,6 @@ section {
 
 .modal-textFirst,
 .modal-textSecond {
-    width: 70%;
     font-size: 16px;
     line-height: 2.2;
     padding: 10px;
@@ -1028,8 +1027,7 @@ section {
     color: var(--font-normal);
 }
 
-.modal-textFirst-award{
-    width: 70%;
+.modal-award-textFirst{
     font-size: 16px;
     line-height: 2.2;
     padding: 5px;
@@ -1121,9 +1119,7 @@ section {
     width: 60px;
     height: 60px;
     background-color: #fff9c4;
-    /* 薄い黄色 */
     border: 4px solid #fce4ec;
-    /* 薄いピンクの枠線 */
     border-radius: 50%;
 }
 
@@ -1131,9 +1127,7 @@ section {
     width: 60px;
     height: 60px;
     background-color: #fff9c4;
-    /* 薄い黄色 */
     border: 4px solid #fce4ec;
-    /* 薄いピンクの枠線 */
     border-radius: 50%;
 }
 
@@ -1226,9 +1220,6 @@ section {
 }
 
 /* 大賞ノミネート作品一覧 */
-
-.award-display-area{
-}
 
 .award-header {
     text-align: center;
@@ -1546,7 +1537,7 @@ section {
     width: 100%;
     overflow: hidden;
     padding-bottom: 50px;
-    background-color: var(--back-color); /* 背景色が必要なら */
+    background-color: var(--back-color); 
 }
 
 /* --- 横スクロール行の修正 --- */
@@ -1555,12 +1546,7 @@ section {
     gap: 0;
     overflow-x: auto;
     width: 100%;
-    
-    /* ▼▼ 修正箇所：上下の余白を広げる ▼▼ */
-    /* 元々 20px だったのを 50px くらいに増やすと影やズレが収まります */
     padding: 10px 0; 
-    
-    /* スクロールバー隠し */
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
@@ -1676,4 +1662,18 @@ section {
 .award-modalText{
     font-size: 0.9rem;
     color: var(--font-normal);
+}
+
+.textFirst {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    line-height: 2.2;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px dashed var(--font-normal);
+    color: var(--font-normal);
+    border-bottom: 1px solid #555;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
 }

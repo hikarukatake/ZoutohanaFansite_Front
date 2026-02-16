@@ -41,13 +41,16 @@
           </form>
         </div>
       </div>
-      <form method="POST" th:action="@{/admin/genre/create}" class="flex gap-1 mt-2"> <!-- ジャンル登録 -->
-        <div class="flex gap-4 flex-1">
-          <input type="text" name="name" class="input-text w-half" placeholder="登録するジャンル名を入力">
-          <input type="text" name="furigana" class="input-text w-half" placeholder="登録するジャンル名のふりがなを入力">
-        </div>
-        <button type="submit" class="btn">登録する</button>
-      </form>
+
+      <div class="p-2 mt-2">
+        <form method="POST" th:action="@{/admin/genre/create}" class="flex gap-1 mt-2"> <!-- ジャンル登録 -->
+          <div class="flex gap-4 flex-1">
+            <input type="text" name="name" class="input-text w-half" placeholder="登録するジャンル名を入力">
+            <input type="text" name="furigana" class="input-text w-half" placeholder="登録するジャンル名のふりがなを入力">
+          </div>
+          <button type="submit" class="btn ml-2">登録する</button>
+        </form>
+      </div>
 
       <table class="list-table mt-4">
         <tr>

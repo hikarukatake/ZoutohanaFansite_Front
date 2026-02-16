@@ -120,6 +120,10 @@ html {
 
 
 /* ---------- padding ---------- */
+.p-2 {
+  padding: 0.5rem;
+}
+
 .p-8 {
   padding: 2rem;
 }
@@ -195,6 +199,11 @@ html {
 }
 
 /* ---------- grid ---------- */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -875,6 +884,7 @@ pre {
   white-space: pre-wrap;
   word-break: break-word;
   overflow-wrap: break-word;
+  line-height: 1.2rem;
 }
 
 .confirm-modal-preview + .confirm-modal-preview {

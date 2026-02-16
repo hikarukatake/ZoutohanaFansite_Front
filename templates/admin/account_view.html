@@ -18,8 +18,8 @@
       </a>
       <h1 class="page-title">利用者詳細</h1>
 
-      <div class="flex mt-4 gap-4">
-        <div class="main-content-card p-8 mb-auto w-half"> <!-- 左のカード -->
+      <div class="main-content">
+        <div class="main-content-card w-full p-8 mb-8">
           <div class="table-border-b-strong pb-4">
             <h2 class="user-card-title" th:text="${user.nickname}">データが取得できませんでした:ニックネーム</h2>
             <p class="review-card-sub-info pl-4" th:text="'ログインID : ' + ${user.loginId}">データが取得できませんでした:企画名</p>
@@ -74,10 +74,10 @@
           </div>
         </div>
 
-        <div class="mb-auto w-half"> <!-- 右の方 -->
+        <div class="mb-auto w-full">
           <h2 class="page-title-sub">投稿した書評</h2>
-          <div class="flex flex-col gap-8 mt-2"> <!-- 書評カードを並べる部分 -->
-            <div class="main-content-card p-8 mb-4 w-full" th:each="review : ${reviews}"> <!-- 書評カード -->
+          <div class="grid-2 gap-4 mt-2"> <!-- 書評カードを並べる部分 -->
+            <div class="main-content-card p-8" th:each="review : ${reviews}"> <!-- 書評カード -->
               <div class="flex gap-4 justify-between table-border-b-strong pb-4">
                 <div>
                   <h3 class="review-card-title" th:text="${review.reviewTitle}">データが取得できませんでした:書評タイトル</h3>

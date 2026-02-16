@@ -25,78 +25,89 @@ p {
 section {
     background-color: var(--back-color);
 }
-/* =========================================
-   大賞表示エリア (award-display-area) の修正
-   ========================================= */
 
-/* コンテナ全体 */
-#award-display-area {
+.award-text-container {
+    /* double で二重線を指定、太さは4px～6pxくらいが綺麗です */
+    border: 5px double #666; 
+    padding: 30px;       /* 枠線と文字の間の余白 */
+    background-color: #fff; /* 背景色（必要であれば） */
+    margin-bottom: 20px;
+    position: relative; /* バッジなどを配置する場合のため */
+}
+
+/* --- 作品タイトル --- */
+.award-book-title {
+    font-size: 1.4rem;
+    margin: 10px 0 20px 0;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+/* --- 装飾用の画像（バラなど） --- */
+.award-decoration-img {
+    display: block;
+    margin: 0 auto 10px;
+    width: 40px; /* サイズは調整してください */
+}
+
+.award-lined-text {
+    display: block;
     width: 100%;
-    overflow: hidden; /* 横はみ出し防止の保険 */
-    padding: 20px 0;
-    box-sizing: border-box;
+    /* solid(実線) から dashed(破線) に変更 */
+    border-bottom: 1px dashed #999; 
+    
+    /* 行間の調整（お好みで調整してください） */
+    padding-bottom: 4px; 
+    margin-bottom: 12px; 
+    
+    /* フォント設定 */
+    line-height: 1.8;
+    text-align: justify; /* 両端揃え（お好みで） */
 }
 
-/* 内部のFlexコンテナ */
-#award-display-area .modal-content {
-    display: flex;
-    flex-direction: column; /* スマホ: 縦並び */
-    align-items: center;    /* 中央揃え */
-    width: 90%;             /* 画面幅の90%に収める */
-    max-width: 1000px;      /* PCでの最大幅 */
-    margin: 0 auto;
-    gap: 30px;              /* 要素間の隙間 */
+/* （参考）もしタイトル周りも調整が必要なら */
+.award-book-title {
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+   /* モーダル内のテキスト全体の設定 */
+.modal-textFirst {
+    width: 100%;
+    /* 余計なマージンを消しておく */
+    margin: 0;
+    padding: 0;
 }
 
-/* --- 左側：文章エリア (JSで生成される .modal-box) --- */
-#award-left-target {
-    width: 100%; /* 親要素に合わせて伸縮 */
+/* ★JSで生成される「1行ごとの線と文字」のクラス */
+.lined-text {
+    display: block;          /* 1行をブロックとして扱う */
+    width: 100%;             /* 横幅いっぱい */
+    border-bottom: 1px solid #aaa; /* ここで「線」を引く（色は調整してください） */
+    padding-bottom: 5px;     /* 文字と線の隙間 */
+    margin-bottom: 15px;     /* 行と行の間隔 */
+    
+    /* フォント設定（読みやすく調整） */
+    line-height: 1.6;
+    text-align: left;        /* 左寄せ */
 }
 
-.modal-box{
-    display: flex;
-    justify-content: center;
+.modal-box {
+    width: 100%;
+    border-radius: 6px;
 }
 
-/* --- 右側：プロフィールエリア --- */
-#award-display-area .profile-card {
-    width: 100%; /* スマホ: 横幅いっぱい */
-    max-width: 400px; /* プロフィールが広がりすぎないように制限 */
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-sizing: border-box;
-    /* 既存のprofile-cardのスタイルがあればそれを優先しつつ、配置を調整 */
+.modal-box::-webkit-scrollbar {
+    width: 6px;
 }
 
-/* 画像のはみ出し防止 (非常に重要) */
-#award-display-area img {
-    max-width: 100%;
-    height: auto;
+.modal-box::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
 }
 
-/* =========================================
-   PC向けレイアウト (画面幅768px以上)
-   ========================================= */
-@media (min-width: 768px) {
-    #award-display-area .modal-content {
-        flex-direction: row;       /* PC: 横並び */
-        align-items: stretch;      /* 高さを合わせる（お好みで flex-start） */
-        justify-content: center;
-        gap: 50px;                 /* 横の間隔を広げる */
-    }
 
-    /* PCでの左側エリア幅 */
-    #award-left-target {
-        width: 60%; /* 左側を少し広く */
-    }
-
-    /* PCでの右側エリア幅 */
-    #award-display-area .profile-card {
-        width: 35%; /* 右側を狭く */
-        margin-top: 0;
-    }
-}
 .book-text {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
     position: absolute;
@@ -814,29 +825,39 @@ section {
     animation: modalOpen 0.3s ease-out;
 }
 
-.modal-box::-webkit-scrollbar {
-    width: 6px;
+
+.modal-textFirst-award-box {
+    width: 75%;
+    padding: 30px; /* 余白を広めに */
+    
+    /* 二重線の設定 */
+    border: 5px double #666; 
+    
+    background-color: #fff;
+    position: relative;
+    margin-bottom: 32px;
+    box-shadow: 6px 6px 10px -4px rgba(0, 0, 0, 0.25);
+    margin: 0 auto 32px auto; /* 中央寄せ */
 }
 
-.modal-textFirst-award-box,
+/* 注: .modal-textSecond-box は大賞以外で使うなら分離して残す必要があります */
 .modal-textSecond-box {
-    width: 75%;
-    padding: 10px 0px 10px 0px;
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px 40px;
     border: 1px solid var(--font-bold);
     outline: 1px solid var(--font-bold);
     outline-offset: 2px;
     position: relative;
     margin-bottom: 32px;
     background-color: var(--back-color);
-    text-align: center;
     box-shadow: 6px 6px 10px -4px rgba(0, 0, 0, 0.25);
 }
 .modal-textFirst-box,
 .modal-textSecond-box {
     width: 80%;
     margin: 0 auto;
-    padding: 16px;
-    padding: 10px 40px;
+    padding: 10px 40px 10px 40px;
     border: 1px solid var(--font-bold);
     outline: 1px solid var(--font-bold);
     outline-offset: 2px;
@@ -852,7 +873,6 @@ section {
     color: var(--font-bold);
     margin: 0 0 10px 0;
 }
-
 
 
 .modal-textSecond-box {
@@ -875,13 +895,6 @@ section {
     border-bottom: 1px dashed var(--font-normal);
     color: var(--font-normal);
 }
-
-
-.modal-box::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
-}
-
 
 
 @keyframes modalOpen {
@@ -1722,12 +1735,10 @@ section {
     display: block;
     width: 100%;
     font-size: 16px;
-    line-height: 2.2;
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px dashed var(--font-normal);
+    line-height: 2.2; /* 行間 */
+    padding: 10px 10px 4px 10px; /* 下の余白を調整 */
+    text-align: justify; /* 両端揃え（お好みで left でもOK） */
     color: var(--font-normal);
-    border-bottom: 1px solid #555;
-    padding-bottom: 5px;
+    border-bottom: 1px dashed #999; 
     margin-bottom: 15px;
 }

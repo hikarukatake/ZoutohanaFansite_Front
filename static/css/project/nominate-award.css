@@ -756,7 +756,7 @@ section {
 .modal-textFirst-award-box,
 .modal-textSecond-box {
     width: 75%;
-    margin: 0 auto;
+    margin: 0 auto 0px;
     padding: 10px 0px 10px 0px;
     border: 1px solid var(--font-bold);
     outline: 1px solid var(--font-bold);
@@ -765,7 +765,6 @@ section {
     margin-bottom: 32px;
     background-color: var(--back-color);
     text-align: center;
-
     box-shadow: 6px 6px 10px -4px rgba(0, 0, 0, 0.25);
 }
 .modal-textFirst-box,
@@ -774,17 +773,12 @@ section {
     margin: 0 auto;
     padding: 16px;
     padding: 10px 40px;
-    /* 内側の線 */
     border: 1px solid var(--font-bold);
-    /* 外側の線 */
     outline: 1px solid var(--font-bold);
     outline-offset: 2px;
-    /* ← ★ここが「二重線の間隔」 */
     position: relative;
     margin-bottom: 32px;
     background-color: var(--back-color);
-
-
     box-shadow: 6px 6px 10px -4px rgba(0, 0, 0, 0.25);
 }
 

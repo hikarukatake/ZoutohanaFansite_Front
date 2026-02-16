@@ -8,11 +8,11 @@
     <title>Document</title>
     <style th:inline="css">
         :root {
-            --main-color: [(${
+            --main-color: [($ {
                     project.themeColor.dbValue
                 })];
 
-            --sub-color: [(${
+            --sub-color: [($ {
                     project.themeColor.dbValue
                 })];
         }
@@ -76,29 +76,19 @@
                     </p>
                 </section>
             </div>
-            <div id="award-display-area">
-                <div class="modal-overlay-award">
-                    <div class="modal-content">
-                        <div id="award-left-target"></div>
-                        <div id="shelf">
-                            <section class="award-header">
-                                <div class="award-frame">
-                                    <span class="frame top"></span>
-                                    <span class="frame bottom"></span>
-                                    <span class="frame left"></span>
-                                    <span class="frame right"></span>
-                                    <div class="award-box">
-                                        <p class="award-label">文庫X</p>
-                                        <h2 class="award-title">大賞受賞者</h2>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                        <div class="profile-card">
-                            <div id="award-right-target"></div>
-                        </div>
+            <div class="modal-box">
+                <div class="modal-textFirst-box">
+                    <img th:src="@{/img/rose.png}" class="modal-rose" alt="">
 
-                    </div>
+                    <h3 id="modalTitle">作品タイトル</h3>
+
+                    <p id="textFirst" class="modal-textFirst">
+                    </p>
+                </div>
+
+                <div class="modal-textSecond-box" style="display:none;"> <img th:src="@{/img/rose.png}"
+                        class="modal-rose" alt="">
+                    <p id="textSecond" class="modal-textSecond"></p>
                 </div>
             </div>
 

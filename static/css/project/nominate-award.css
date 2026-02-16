@@ -826,20 +826,33 @@ section {
 }
 
 
-.modal-textFirst-award-box,
-.modal-textSecond-box {
+.modal-textFirst-award-box {
     width: 75%;
-    padding: 10px 0px 10px 0px;
+    padding: 30px; /* 余白を広めに */
+    
+    /* 二重線の設定 */
+    border: 5px double #666; 
+    
+    background-color: #fff;
+    position: relative;
+    margin-bottom: 32px;
+    box-shadow: 6px 6px 10px -4px rgba(0, 0, 0, 0.25);
+    margin: 0 auto 32px auto; /* 中央寄せ */
+}
+
+/* 注: .modal-textSecond-box は大賞以外で使うなら分離して残す必要があります */
+.modal-textSecond-box {
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px 40px;
     border: 1px solid var(--font-bold);
     outline: 1px solid var(--font-bold);
     outline-offset: 2px;
     position: relative;
     margin-bottom: 32px;
     background-color: var(--back-color);
-    text-align: center;
     box-shadow: 6px 6px 10px -4px rgba(0, 0, 0, 0.25);
 }
-
 .modal-textFirst-box,
 .modal-textSecond-box {
     width: 80%;
@@ -1722,12 +1735,10 @@ section {
     display: block;
     width: 100%;
     font-size: 16px;
-    line-height: 2.2;
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px dashed var(--font-normal);
+    line-height: 2.2; /* 行間 */
+    padding: 10px 10px 4px 10px; /* 下の余白を調整 */
+    text-align: justify; /* 両端揃え（お好みで left でもOK） */
     color: var(--font-normal);
-    border-bottom: 1px solid #555;
-    padding-bottom: 5px;
+    border-bottom: 1px dashed #999; 
     margin-bottom: 15px;
 }

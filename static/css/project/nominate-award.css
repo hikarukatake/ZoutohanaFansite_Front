@@ -26,33 +26,41 @@ section {
     background-color: var(--back-color);
 }
 /* =========================================
-   大賞表示エリア (award-display-area) の修正
-   ========================================= */
+   大賞作品エリアのデザイン修正
+========================================= */
 
-   /* --- 大賞表示エリアのテキストボックス全体 --- */
+/* 1. 外枠を二重線にする */
 .award-text-container {
+    /* double で二重線を指定、太さは4px～6pxくらいが綺麗です */
+    border: 5px double #666; 
+    padding: 30px;       /* 枠線と文字の間の余白 */
+    background-color: #fff; /* 背景色（必要であれば） */
+    margin-bottom: 20px;
+    position: relative; /* バッジなどを配置する場合のため */
+}
+
+/* 2. テキストの下線を破線にする */
+.award-lined-text {
+    display: block;      /* 横幅いっぱいに線を引くためにblock要素にする */
     width: 100%;
-    padding: 20px;
-    background-color: #fff; /* 必要なら背景色を指定 */
-    box-sizing: border-box;
+    /* solid(実線) から dashed(破線) に変更 */
+    border-bottom: 1px dashed #999; 
+    
+    /* 行間の調整（お好みで調整してください） */
+    padding-bottom: 4px; 
+    margin-bottom: 12px; 
+    
+    /* フォント設定 */
+    line-height: 1.8;
+    text-align: justify; /* 両端揃え（お好みで） */
 }
 
-/* --- 作品タイトル --- */
+/* （参考）もしタイトル周りも調整が必要なら */
 .award-book-title {
-    font-size: 1.4rem;
-    margin: 10px 0 20px 0;
-    text-align: center;
+    margin-bottom: 20px;
     font-weight: bold;
-    color: #333;
+    text-align: center;
 }
-
-/* --- 装飾用の画像（バラなど） --- */
-.award-decoration-img {
-    display: block;
-    margin: 0 auto 10px;
-    width: 40px; /* サイズは調整してください */
-}
-
 /* --- ★ここが「行ごとの線」のデザイン --- */
 .award-lined-text {
     display: block;          /* 1行をブロック要素にする */

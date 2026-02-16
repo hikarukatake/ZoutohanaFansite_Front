@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人通知</title>
+    <title>個人お知らせ</title>
+
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
     <link rel="stylesheet" th:href="@{/css/info/post-list.css}" href="../../static/css/info/post-list.css">
 </head>
@@ -18,14 +19,14 @@
         <div class="breadcrumb-box">
             <div class="breadcrumb"><a th:href="@{/}" href="../fansite/top.html">ホーム</a></div>
             <div class="breadcrumb-middle">></div>
-            <div class="breadcrumb" id="breadcrumb-here">通知</div>
+            <div class="breadcrumb" id="breadcrumb-here">個人お知らせ</div>
         </div>
         <div class="list-box">
             <div class="list-title">
                 <h2>News</h2>
                 <div class="list-border"></div>
             </div>
-            <p>個人通知</p>
+            <p>個人お知らせ</p>
         </div>
         <section class="news-box">
             <div th:if="${notifications != null}">
@@ -53,32 +54,7 @@
 
     <!-- フッター -->
     <div th:replace="~{layout :: footer}"></div>
-
-
-    <!-- ヘッダーモーダル -->
-    <div class="overlay-menu" id="overlayMenu">
-        <div class="close-btn" id="menuClose">×</div>
-        <img src="../img/zoutohana-white-color.png" class="" style="width: 5rem;" alt="">
-        <ul class="menu-list">
-            <li class="menu-item">お知らせ</li>
-
-            <li class="menu-item">企画一覧</li>
-
-            <li class="menu-item">象と花プロジェクト</li>
-
-            <li class="menu-item">お問い合わせ</li>
-
-            <li class="menu-item">ログイン</li>
-        </ul>
-        <div class="imgs">
-            <img src="../img/instagram-white.png" class="imgs-icon" alt="">
-            <img src="../img/facebook-white.png" class="imgs-width" alt="">
-            <img src="../img/x-white.png" class="imgs-width" alt="">
-        </div>
-    </div>
-
-    <script src="../../static/js/post-list.js"></script>
-
+    <script th:src="@{/js/hamburger.js}"></script>
 </body>
 
 </html>

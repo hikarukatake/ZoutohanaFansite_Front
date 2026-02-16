@@ -1049,7 +1049,7 @@ p {
 .modal-textSecond-box {
     width: 80%;
     margin: 0 auto;
-    padding: 10px 50px 10px 40px;
+    padding: 10px 40px 10px 40px;
     /* 内側の線 */
     border: 1px solid var(--font-bold);
     /* 外側の線 */

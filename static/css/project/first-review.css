@@ -1488,3 +1488,11 @@ p {
     text-decoration: none;
 }
 
+.no-data-message {
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+    margin-top: 50px;
+    font-weight: bold;
+}
+

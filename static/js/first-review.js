@@ -966,7 +966,7 @@ async function createShintoShelf(booksData) {
     if (!booksData || booksData.length === 0) {
         const noMessage = document.createElement('p');
         noMessage.innerText = "ブックマークを付けた書評が存在しません";
-        
+        noMessage.classList.add('no-data-message');
         shintoContainer.appendChild(noMessage);
         return;
     }

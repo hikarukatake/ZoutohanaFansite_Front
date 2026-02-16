@@ -6,10 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
-    <link rel="stylesheet" th:href="@{/css/project/first-review.css}" href="../../static/css/project.css">
     <style th:inline="css">
         :root {
             --main-color: [(${
@@ -21,7 +18,11 @@
                 })];
         }
     </style>
-    <link rel="stylesheet" th:href="@{/css/project/first-review.css}" href="../../static/css/project/first-review.css">
+    <link rel="stylesheet" th:href="@{/css/project/nominate-works.css}"
+        href="../../static/css/project/nominate-works.css">
+    <style>
+
+    </style>
 </head>
 
 <body class="no-scroll">
@@ -30,69 +31,60 @@
             <div class="book-text" id="bookText">
                 <div>
                     <h1>あなたの</h1>
-                    <h1>"読みたい"が</h1>
+                    <h1>“読みたい”が</h1>
                     <h1>次に並ぶ本を決めます</h1>
                 </div>
                 <div class="text-top">
-                    <p>一次審査へのたくさんの書評投稿</p>
+                    <p>みなさまのたくさんの投票</p>
                     <p>ありがとうございました。</p>
                 </div>
                 <div class="text-box">
-                    <p>投稿された作品は二次審査へと進み、</p>
-                    <p>ここからは読者のみなさんの"いい</p>
-                    <p>ね"が力になります</p>
+                    <p>投票された作品は大賞ノミネートとなり、</p>
+                    <p>書店で販売されます。</p>
                 </div>
                 <div class="text-box">
-                    <p>"いいね"が多かった 上位10作品 が、</p>
-                    <p>次のステップへ進むことができます</p>
-                    <p> 気になった作品に、あなたの一票を</p>
-                    <p>ぜひ届けてください。</p>
+                    <p>実際に書店で販売される</p>
+                    <p>みなさまから選ばれた書評を</p>
+                    <p>ぜひ見てみましょう</p>
                 </div>
             </div>
         </div>
         <div class="next-section" id="nextStep">
-            <div class="totalling-box">
-                <p class="totalling-text">集まった書評を</p>
-            </div>
-            <div class="looking-box">
-                <p class="totalling-text">見てみましょう</p>
-            </div>
-            <div class="shelf-grid" id="shelf">
-            </div>
-            <div class="button-area">
-                <button id="nextBtn" class="next-btn" disabled>次の作品へ</button>
+            <div id="shelf">
+                <section class="award-header">
+                    <div class="award-frame">
+                        <span class="frame top"></span>
+                        <span class="frame bottom"></span>
+                        <span class="frame left"></span>
+                        <span class="frame right"></span>
+                        <div class="award-box">
+                            <p class="award-label">文庫X</p>
+                            <h2 class="award-title">
+                                大賞ノミネート<br>
+                                作品一覧
+                            </h2>
+                        </div>
+                    </div>
+                    <p class="award-text">
+                        こちらは、二次審査を通過した作品たちです
+                    </p>
+                    <p class="award-text-ex">
+                        これらの本は実際に店頭に並び、<br>
+                        最も人気のあった本が「文庫X」の大賞に選ばれます。
+                    </p>
+                </section>
+                <div class="book-shinto-box"></div>
             </div>
         </div>
         <div class="one-book-box" id="voteReview">
             <h3 class="you-one-text">あなたが選んだ１冊</h3>
             <div class="one-text-box">
-                <p class="one-text">現在、あなたが投票している作品です</p>
-                <p class="one-text">投票期間終了まで応援しましょう</p>
+                <p class="one-text">あなたが投票した作品です</p>
             </div>
             <div class="one-book-shinto-box">
             </div>
-            <div class="share-box" id="shareBox">
-                <p class="share-text">投票を取り消す</p>
-            </div>
         </div>
-        <div class="all-book-box" id="allBookBox">
-            <div class="tab-wrapper">
-                <div class="tab active">
-                    全ての書評
-                    <span class="marker"></span>
-                </div>
-                <div class="tab">
-                    ブックマーク済み
-                </div>
-            </div>
-            <div class="book-shinto-box">
-            </div>
-            <div id="pagination" class="pagination">
-                <button onclick="createPagination(0)" id="paginationPrev" class="prev">
-                    << </button>
-                        <button onclick="createPagination(1)" id="paginationNext" class="next">>></button>
-            </div>
-        </div>
+
         <div class="section-title-area">
             <div class="section-square"></div>
             <h2 class="section-title">受賞の流れ</h2>
@@ -151,73 +143,149 @@
                 </div>
             </div>
         </section>
+        <div class="section-title-area">
+            <div class="section-square"></div>
+            <h2 class="section-title">販売店舗一覧</h2>
+        </div>
+        <div class="shop-area">
 
+            <div class="area-filter">
+                <button class="filter-btn active" data-filter="all">すべて</button>
+                <button class="filter-btn" data-filter="iwate">岩手</button>
+                <button class="filter-btn" data-filter="aomori">青森</button>
+            </div>
+
+            <div class="area-title" data-area="iwate">
+                <span>IWATE AREA</span>
+                <hr>
+            </div>
+
+            <div class="shop-card" data-area="iwate">
+                <div class="shop-info">
+                    <h3>さわや書店　本店</h3>
+                    <p class="shop-detail">盛岡市大通二丁目 2-15</p>
+                    <p class="shop-detail">019-653-4411</p>
+                </div>
+                <div class="shop-arrow"><a href="#">➤</a></div>
+            </div>
+
+            <div class="shop-card" data-area="iwate">
+                <div class="shop-info">
+                    <h3>さわや書店　フェザン店</h3>
+                    <p class="shop-detail">盛岡市盛岡駅前通１番４４号</p>
+                    <p class="shop-detail">019-625-6311</p>
+                </div>
+                <div class="shop-arrow"><a href="#">➤</a></div>
+            </div>
+
+            <div class="shop-card" data-area="iwate">
+                <div class="shop-info">
+                    <h3>さわや書店　松園店</h3>
+                    <p class="shop-detail">盛岡市北松園2-13-1</p>
+                    <p class="shop-detail">019-661-5383</p>
+                </div>
+                <div class="shop-arrow"><a href="#">➤</a></div>
+            </div>
+
+            <div class="shop-card" data-area="iwate">
+                <div class="shop-info">
+                    <h3>さわや書店　イオンタウン釜石店</h3>
+                    <p class="shop-detail">釜石市港町二丁目1-1</p>
+                    <p class="shop-detail">0193-55-6212</p>
+                </div>
+                <div class="shop-arrow"><a href="#">➤</a></div>
+            </div>
+
+            <div class="shop-card" data-area="iwate">
+                <div class="shop-info">
+                    <h3>さわや書店　宮古店（かんの書店）</h3>
+                    <p class="shop-detail">宮古市宮町一丁目3-7</p>
+                    <p class="shop-detail">0193-62-2548</p>
+                </div>
+                <div class="shop-arrow"><a href="#">➤</a></div>
+            </div>
+
+            <div class="area-title" data-area="aomori">
+                <span>AOMORI AREA</span>
+                <hr>
+            </div>
+
+            <div class="shop-card" data-area="aomori">
+                <div class="shop-info">
+                    <h3>さわや書店　野辺地店</h3>
+                    <p class="shop-detail">青森県上北郡野辺地町字</p>
+                    <p class="shop-detail">0175-64-1791</p>
+                </div>
+                <div class="shop-arrow"><a href="#">➤</a></div>
+            </div>
+
+            <div class="shop-card" data-area="aomori">
+                <div class="shop-info">
+                    <h3>さわや書店　ラビナ店</h3>
+                    <p class="shop-detail">青森県青森市柳川1-2-3</p>
+                    <p class="shop-detail">017-718-8272</p>
+                </div>
+                <div class="shop-arrow"><a href="#">➤</a></div>
+            </div>
+
+        </div>
+
+
+        <!-- お問い合わせ -->
         <div th:replace="~{layout :: contact}"></div>
-
-        <!-- オーバーレイ -->
-        <div id="tutorialOverlay" style="margin-top: -30px;"></div>
 
         <!-- モーダル -->
         <div id="bookDetailModal" class="modal-overlay">
             <span id="closeModal" class="close-button">&times;</span>
-            <div style="">
+            <div style="width: 100%;">
                 <div class="modal-content">
                     <div class="modal-box">
                         <div class="modal-textFirst-box">
-                            <img th:src="@{/img/rose.png}" class="modal-rose" alt="">
-
-                            <h3 id="modalTitle">作品タイトル</h3>
-
+                            <img src="../img/rose.png" class="modal-rose" alt="">
+                            <h3>心を奪われた作品</h3>
                             <p id="textFirst" class="modal-textFirst">
-                            </p>
-                        </div>
-
-                        <div class="modal-textSecond-box" style="display:none;"> <img th:src="@{/img/rose.png}"
-                                class="modal-rose" alt="">
-                            <p id="textSecond" class="modal-textSecond"></p>
-                        </div>
-                    </div>
-
-                    <div class="modal-buttons" id="modalButtonsArea">
-                        <button id="voteBtn" onclick="Sample(id)"><span
-                                class="material-symbols-outlined">how_to_vote</span>投票</button>
-                        <button id="bookmarkBtn" onclick="Sample(id)" class=""><span
-                                class="material-symbols-outlined">bookmark</span>ブックマーク</button>
-                    </div>
-
-                    <div class="profile-card">
-                        <div class="profile-header">
-                            <img id="modalIcon" src="" class="profile-icon" alt="icon">
-
-                            <h3 id="modalName" class="profile-name">名前</h3>
-                        </div>
-
-                        <div class="profile-tags">
-                            <p id="modalInfo" style="font-size: 0.9rem; color: #555;"></p>
-                        </div>
-
-                        <hr class="profile-line">
-
-                        <div class="profile-bio">
-                            <p id="modalProfileText">
-                                ここに自己紹介が入ります。
+                                最近の読書の中でも特に心に残った一冊でした。読み進めるほど登場人物の気持ちに寄り添えるようになり、自分の日常を見つめ直すきっかけにもなりました。読み終えたあとは温かい余韻が残り、しばらくその世界に浸っていたくなる作品でした。読み進めるほど共感する場面が増え、自分の経験と重ね合わせながら楽しめました。静かで優しい雰囲気の中に、少しずつ変わっていく気持ちが繊細に表されていて、読んでいて胸が温かくなる作品でした。
                             </p>
                         </div>
                     </div>
                 </div>
-            </div>
+                <!--            <div class="modal-buttons">-->
+                <!--                <div class="modal-button"><img src="../img/vote.png" alt="" class="modal-img">投票</div>-->
+                <!--                <div class="modal-button"><img src="../img/tagu.png" alt="" class="modal-img-book">ブックマーク</div>-->
+                <!--            </div>-->
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <img id="modalIcon" src="" class="profile-icon" alt="icon">
 
-            <div id="modalScrollOverlay" class="modal-scroll-overlay" style="display:none;">
-                <div class="scroll-guide">
-                    <p>下にスクロールしてみよう</p>
-                    <span class="arrow">↓</span>
+                        <h3 id="modalName" class="profile-name">名前</h3>
+                    </div>
+
+                    <div class="profile-tags">
+                        <p id="modalInfo" style="font-size: 0.9rem; color: #555;"></p>
+                    </div>
+
+<!--                    <div class="profile-location">-->
+<!--                        <img id="modalIcon" src="../img/address.png" alt="address icon" class="location-icon">-->
+<!--                    </div>-->
+
+                    <hr class="profile-line">
+
+                    <div class="profile-bio">
+                        <p id="modalProfileText">
+                            ここに自己紹介が入ります。
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
+
+
+
+        <!-- フッター -->
+        <div th:replace="~{layout :: footer}"></div>
     </div>
-    <div th:replace="~{layout :: footer}"></div>
+    <script th:src="@{/js/nominate-works.js}" src="../../static/js/nominate-works.js" defer></script>
 </body>
 
-<script th:src="@{/js/first-review.js}" src="../../static/js/first-review.js"></script>
 
 </html>

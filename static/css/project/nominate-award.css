@@ -31,12 +31,21 @@ section {
 
 /* コンテナ全体 */
 #award-display-area {
-    width: 200px;
+    width: 100%;
+    overflow: hidden; /* 横はみ出し防止の保険 */
+    padding: 20px 0;
+    box-sizing: border-box;
 }
 
 /* 内部のFlexコンテナ */
 #award-display-area .modal-content {
-    width: 200px;
+    display: flex;
+    flex-direction: column; /* スマホ: 縦並び */
+    align-items: center;    /* 中央揃え */
+    width: 90%;             /* 画面幅の90%に収める */
+    max-width: 1000px;      /* PCでの最大幅 */
+    margin: 0 auto;
+    gap: 30px;              /* 要素間の隙間 */
 }
 
 /* --- 左側：文章エリア (JSで生成される .modal-box) --- */

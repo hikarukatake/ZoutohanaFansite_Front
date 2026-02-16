@@ -934,7 +934,12 @@ async function createShintoShelf(booksData) {
     // この神棚レイアウト自体をDOMにいれる
     const shintoContainer = document.querySelector('.book-shinto-box');
     shintoContainer.innerHTML = "";
-    if(booksData === null){
+    
+    if (!booksData || booksData.length === 0) {
+        const noMessage = document.createElement('p');
+        noMessage.innerText = "ブックマークを付けた書評が存在しません";
+        
+        shintoContainer.appendChild(noMessage);
         return;
     }
     // 受け取ったデータの数文繰り返す

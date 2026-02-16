@@ -37,7 +37,7 @@ section {
 
 /* --- 作品タイトル --- */
 .award-book-title {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     margin: 10px 0 20px 0;
     text-align: center;
     font-weight: bold;
@@ -1189,7 +1189,7 @@ section {
     align-items: center;
 }
 
-.award-profile-icon {
+.profile-award-icon {
     width: 60px;
     height: 60px;
     background-color: #fff9c4;

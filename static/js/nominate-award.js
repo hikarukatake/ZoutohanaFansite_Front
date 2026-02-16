@@ -53,78 +53,132 @@
         });
     }
 
+
+    /* =========================================================
+    [共通] テキスト整形用ヘルパー関数
+   ========================================================= */
+function formatResponsiveText(text, containerWidth, charSize, maxLines = 0) {
+    if (!text) return { first: "", second: "" };
+    if (containerWidth <= 0) return { first: text, second: "" };
+
+    // 1行あたりの文字数を計算
+    let charsPerLine = Math.floor(containerWidth / charSize);
+    // ガード処理（極端に狭い・広い場合の制限）
+    if (charsPerLine < 10) charsPerLine = 10;
+    if (charsPerLine > 50) charsPerLine = 50;
+
+    let htmlFirst = "";
+    let htmlSecond = "";
+    let currentLine = 0;
+    
+    // 文字列を走査
+    for (let i = 0; i < text.length; i += charsPerLine) {
+        const lineStr = text.substr(i, charsPerLine);
+        const lineHTML = `<span>${lineStr}</span><br>`;
+
+        // maxLinesの設定があり、かつそれを超えたら2ページ目へ
+        if (maxLines > 0 && currentLine >= maxLines) {
+            htmlSecond += lineHTML;
+        } else {
+            htmlFirst += lineHTML;
+        }
+        currentLine++;
+    }
+
+    return { first: htmlFirst, second: htmlSecond };
+}
+
 /* =========================================================
-   大賞表示用関数 (文字幅計算ロジック追加版)
+   大賞表示用関数 (レスポンシブ改行版)
    ========================================================= */
 function renderLeftSection(data) {
     const target = document.getElementById('award-left-target');
     if (!target) return;
 
-    // 1. まず枠を作る
+    // --- DOM構造の生成（初回のみ） ---
+    // 毎回作り直すと重いので、中身を空にして再構築
+    target.innerHTML = '';
+
     const modalBox = document.createElement('div');
-    modalBox.classList.add('modal-box'); // CSSのスタイルを適用させるため
+    modalBox.classList.add('modal-box');
 
-    // 2. テキストボックスのコンテナ作成
-    const textBox = document.createElement('div');
-    textBox.classList.add('modal-textFirst-award-box');
-    // 幅計算のために、IDかクラスを一意に特定できるようにしておく
-    textBox.id = "award-text-container";
+    // 1ページ目
+    const boxFirst = document.createElement('div');
+    boxFirst.classList.add('modal-textFirst-award-box');
+    boxFirst.id = 'award-box-first'; // 幅取得用ID
 
-    // 3. 一旦DOMに追加する (これをしないと幅(clientWidth)が 0 になり計算できない)
-    modalBox.appendChild(textBox);
-    target.innerHTML = ''; 
+    const rose1 = document.createElement('img');
+    rose1.src = "/img/rose.png";
+    rose1.classList.add('modal-rose');
+
+    const title = document.createElement('h3');
+    title.id = "award-modalTitle";
+    title.innerText = data.title;
+
+    const pFirst = document.createElement('p');
+    pFirst.id = "award-textFirst";
+    pFirst.classList.add('textFirst');
+    // CSSで p { white-space: nowrap; } 等になっていないか注意。
+    // 自動改行させるため通常の挙動でOKですが、念のため <br> を有効にするCSSが必要です。
+
+    boxFirst.appendChild(rose1);
+    boxFirst.appendChild(title);
+    boxFirst.appendChild(pFirst);
+
+    // 2ページ目（溢れたとき用）
+    const boxSecond = document.createElement('div');
+    boxSecond.classList.add('modal-textSecond-award-box');
+    boxSecond.id = 'award-box-second';
+    boxSecond.style.display = 'none'; // 初期は非表示
+
+    const rose2 = document.createElement('img');
+    rose2.src = "/img/rose.png";
+    rose2.classList.add('modal-rose');
+
+    const pSecond = document.createElement('p');
+    pSecond.id = "award-textSecond";
+    pSecond.classList.add('modal-textSecond');
+
+    boxSecond.appendChild(rose2);
+    boxSecond.appendChild(pSecond);
+
+    modalBox.appendChild(boxFirst);
+    modalBox.appendChild(boxSecond);
     target.appendChild(modalBox);
 
-    // 4. 幅に合わせて文字を流し込む関数
-    const applyResponsiveText = () => {
-        const container = document.getElementById('award-text-container');
+    // --- レスポンシブ計算ロジック ---
+    const updateTextLayout = () => {
+        const container = document.getElementById('award-box-first');
         if (!container) return;
-
-        // コンテナの現在幅を取得
-        const boxWidth = container.clientWidth;
-        if (boxWidth === 0) return;
-
-        // ★文字サイズ調整 (CSSのfont-size + 行間や余白を考慮した数値)
-        // 1文字あたり何pxとみなすか。調整してください。
+        
+        const width = container.clientWidth;
+        // フォントサイズ+余白。デザインに合わせて調整してください(px)
         const charSize = 19; 
+        // 1ページ目に収める行数の上限（これを超えると2枚目へ）
+        const maxLinesFirstPage = 12; 
 
-        // 1行に入る文字数 = 幅 ÷ 1文字サイズ
-        let lineLength = Math.floor(boxWidth / charSize);
+        // 共通関数で整形済みHTMLを取得
+        const result = formatResponsiveText(data.content, width, charSize, maxLinesFirstPage);
 
-        // 最小・最大文字数のガード
-        if (lineLength < 10) lineLength = 10;
-        if (lineLength > 45) lineLength = 45;
+        // 流し込み
+        pFirst.innerHTML = result.first;
+        pSecond.innerHTML = result.second;
 
-        // 文字を分割してHTMLを作る
-        let textHtml = "";
-        const content = data.content; 
-        for (let i = 0; i < content.length; i += lineLength) {
-            const line = content.substr(i, lineLength);
-            // award用のクラスがあればそれを、なければ共通クラスを指定
-            textHtml += `<p class="award-textFirst">${line}</p>`;
+        // 2ページ目に文字がある場合のみ表示
+        if (result.second !== "") {
+            boxSecond.style.display = 'block';
+        } else {
+            boxSecond.style.display = 'none';
         }
-
-        // HTMLを流し込み
-        container.innerHTML = `
-            <img src="/img/rose.png" class="modal-rose" alt="">
-            <h3 id="award-modalTitle">${data.title}</h3>
-            <div class="award-text-wrapper">
-                ${textHtml}
-            </div>
-        `;
     };
 
-    // 5. 実行
-    // DOM追加直後だと幅が取れないことがあるため、わずかに遅らせるか、そのまま実行
-    requestAnimationFrame(() => {
-        applyResponsiveText();
-    });
+    // 描画タイミング調整（DOM追加直後は幅が0の可能性があるため）
+    requestAnimationFrame(updateTextLayout);
 
-    // 6. 画面サイズが変わったときも再計算して書き直す
-    // (以前のイベントが残らないように工夫が必要ですが、簡易的には以下)
-    window.addEventListener('resize', () => {
-        applyResponsiveText();
-    });
+    // リサイズ時に再計算
+    // ※注意: 以前のイベントリスナーが残らないよう、今回は簡易的にwindowへセットしますが、
+    // 厳密には removeEventListener するか、この関数外で管理するのがベストです。
+    window.addEventListener('resize', updateTextLayout);
 }
 // モーダル外クリックで閉じる
 window.addEventListener('click', function (event) {
@@ -435,6 +489,143 @@ function renderRightSection(data) {
     target.appendChild(hrLine);
     target.appendChild(profileBio);
 }
+
+/* =========================================================
+   [共通] レスポンシブ用テキスト分割・整形関数
+   ========================================================= */
+function splitTextResponsive(text, containerWidth, charSize, maxLines) {
+    if (!text) return { p1: "", p2: "" };
+    if (containerWidth <= 0) return { p1: text, p2: "" };
+
+    // 1行あたりの文字数 = 箱の幅 ÷ 1文字の幅
+    let charsPerLine = Math.floor(containerWidth / charSize);
+
+    // 文字数のガード（極端に崩れないように）
+    if (charsPerLine < 10) charsPerLine = 10;
+    if (charsPerLine > 50) charsPerLine = 50;
+
+    let p1Html = "";
+    let p2Html = "";
+    
+    // 文字列を1行ずつ処理
+    let currentLine = 0;
+    for (let i = 0; i < text.length; i += charsPerLine) {
+        const lineStr = text.substr(i, charsPerLine);
+        // spanで囲んでbrで改行
+        const lineHtml = `<span>${lineStr}</span><br>`;
+
+        if (currentLine < maxLines) {
+            // 指定行数までは1ページ目
+            p1Html += lineHtml;
+        } else {
+            // 指定行数を超えたら2ページ目
+            p2Html += lineHtml;
+        }
+        currentLine++;
+    }
+
+    return { p1: p1Html, p2: p2Html };
+}
+
+/* =========================================================
+   モーダル表示関数 (Allbook)
+   ========================================================= */
+// リサイズイベント削除用に、外部変数として関数を持っておく
+let currentResizeHandler = null;
+
+function Allbook(data, element) {
+    const modal = document.getElementById('bookDetailModal');
+    if (!modal) return;
+
+    // --- 1. 基本情報のセット ---
+    // 画像
+    const modalImg = modal.querySelector('.modal-book-img'); // クラス名はHTMLに合わせて調整
+    if (modalImg) modalImg.src = data.image;
+
+    // タイトル
+    const modalTitle = document.getElementById('modalTitle'); // IDはHTMLに合わせて調整
+    if (modalTitle) modalTitle.innerText = data.title;
+
+    // プロフィール情報など（必要に応じて）
+    const modalName = document.getElementById('modalName');
+    if (modalName) modalName.innerText = data.name;
+    
+    // --- 2. モーダルを表示 (これをしないと幅が取れない) ---
+    modal.style.display = 'flex'; // または 'block'
+    document.body.classList.add('no-scroll');
+
+    // --- 3. テキストのレスポンシブ計算処理 ---
+    const updateModalText = () => {
+        // テキストを入れる箱と要素を取得
+        const boxFirst = document.querySelector('.modal-textFirst-box');
+        const pFirst = document.getElementById('textFirst');
+        const boxSecond = document.querySelector('.modal-textSecond-box');
+        const pSecond = document.getElementById('textSecond');
+
+        if (!boxFirst || !pFirst) return;
+
+        // 箱の幅を取得
+        const width = boxFirst.clientWidth;
+        
+        // ★調整ポイント: 1文字のサイズ(px)と、1ページ目の行数
+        const charSize = 20; 
+        const maxLines = 10; 
+
+        // 計算実行
+        const result = splitTextResponsive(data.content, width, charSize, maxLines);
+
+        // 結果を反映
+        pFirst.innerHTML = result.p1;
+        
+        if (pSecond && boxSecond) {
+            pSecond.innerHTML = result.p2;
+            // 2ページ目に文字があれば表示、なければ非表示
+            if (result.p2 !== "") {
+                boxSecond.style.display = 'block';
+            } else {
+                boxSecond.style.display = 'none';
+            }
+        }
+    };
+
+    // --- 4. 実行とリサイズ対応 ---
+    
+    // アニメーション等の影響で即時だと幅が0になる場合があるため、わずかに遅らせる
+    requestAnimationFrame(updateModalText);
+
+    // 以前のリサイズイベントがあれば削除（重複防止）
+    if (currentResizeHandler) {
+        window.removeEventListener('resize', currentResizeHandler);
+    }
+    // 今回用のリサイズイベントを登録
+    currentResizeHandler = updateModalText;
+    window.addEventListener('resize', currentResizeHandler);
+
+    // --- 5. 閉じるボタンの処理 (簡易実装) ---
+    // HTML側に onclick="closeModal()" があるか、クラスで閉じるボタンがある場合
+    const closeBtn = modal.querySelector('.close-modal'); // クラス名は適宜
+    if (closeBtn) {
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+            document.body.classList.remove('no-scroll');
+            // イベントリスナーの掃除
+            window.removeEventListener('resize', currentResizeHandler);
+        };
+    }
+}
+
+// モーダルの外側をクリックして閉じる処理（既存コードに合わせて変数名など調整）
+const modal = document.getElementById('bookDetailModal');
+window.addEventListener('click', function (event) {
+    if (event.target == modal) {
+        modal.style.display = 'none';
+        document.body.classList.remove('no-scroll');
+        // リサイズ監視も解除
+        if (currentResizeHandler) {
+            window.removeEventListener('resize', currentResizeHandler);
+        }
+    }
+});
 
 
 /* =========================================================

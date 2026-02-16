@@ -384,9 +384,9 @@ section {
 
 .modal-textFirst-award-box,
 .modal-textSecond-box {
-    width: 87%;
+    width: 100%;
     margin: 0 auto;
-    padding: 10px 50px 10px 40px;
+    padding: 10px 0px 10px 0px;
     /* 内側の線 */
     border: 1px solid var(--font-bold);
     /* 外側の線 */
@@ -875,7 +875,7 @@ section {
 .award-header {
     text-align: center;
     padding: 30px;
-    width: 400px;
+    width: 350px;
 }
 
 .award-frame {

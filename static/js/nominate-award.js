@@ -334,7 +334,7 @@ function renderLeftSection(data) {
         roseImg.alt = "";
 
         const h3Title = document.createElement('h3');
-        h3Title.id = "award-modalTitle"; 
+        h3Title.id = "award-modalTitle";
         h3Title.innerText = data.title;
 
         const pFirst = document.createElement('p');

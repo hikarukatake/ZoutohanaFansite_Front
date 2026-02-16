@@ -18,8 +18,9 @@
 </head>
 
 <body>
+<div th:replace="~{layout :: header}"></div>
     <div class="container">
-        <div th:replace="~{layout :: header}"></div>
+
         <div class="slider-box">
             <div class="slider">
                 <div class="slides">
@@ -83,7 +84,7 @@
                     <p class="circle-1">01</p>
                 </div>
                 <div class="book-section-img">
-                    <img src="../../static/img/book-giri.png" class="book-section" alt="">
+                    <img th:src="@{/img/book-giri.png}" src="../../static/img/book-giri.png" class="book-section" alt="">
                 </div>
             </div>
             <div class="step-text">
@@ -102,7 +103,7 @@
                     <p class="circle-1">02</p>
                 </div>
                 <div class="book-section-img">
-                    <img src="../../static/img/book-giri.png" class="book-section" alt="">
+                    <img th:src="@{/img/book-giri.png}" src="../../static/img/book-giri.png" class="book-section" alt="">
                 </div>
             </div>
             <div class="step-text">
@@ -123,7 +124,7 @@
                     <p class="circle-1">03</p>
                 </div>
                 <div class="book-section-img">
-                    <img src="../../static/img/book-giri.png" class="book-section" alt="">
+                    <img th:src="@{/img/book-giri.png}" src="../../static/img/book-giri.png" class="book-section" alt="">
                 </div>
             </div>
             <div class="step-text">

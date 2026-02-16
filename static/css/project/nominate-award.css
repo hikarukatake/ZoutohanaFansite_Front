@@ -756,7 +756,6 @@ section {
 .modal-textFirst-award-box,
 .modal-textSecond-box {
     width: 75%;
-    margin: 0 auto 0px;
     padding: 10px 0px 10px 0px;
     border: 1px solid var(--font-bold);
     outline: 1px solid var(--font-bold);

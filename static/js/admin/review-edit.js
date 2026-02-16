@@ -36,12 +36,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderOptions(keyword) {
     optionsEl.innerHTML = "";
-    if (!keyword) return optionsEl.hidden = true;
 
-    const filtered = options.filter(g =>
-      (g.name || "").includes(keyword) ||
-      (g.furigana || "").includes(keyword)
-    ).filter(g => !selected.some(s => s.id === g.id));
+    const filtered = options
+      .filter(g =>
+        !keyword ||
+        (g.name || "").includes(keyword) ||
+        (g.furigana || "").includes(keyword)
+      )
+      .filter(g => !selected.some(s => s.id === g.id));
 
     filtered.forEach(g => {
       const div = document.createElement("div");
@@ -59,8 +61,13 @@ document.addEventListener("DOMContentLoaded", () => {
     optionsEl.hidden = filtered.length === 0;
   }
 
-  // 入力候補表示
-  input.addEventListener("input", () => renderOptions(input.value.trim()));
+  input.addEventListener("input", () => {
+    renderOptions(input.value.trim());
+  });
+
+  input.addEventListener("focus", () => {
+    renderOptions(input.value.trim());
+  });
 
   // タグ削除
   tagsEl.addEventListener("click", (e) => {
@@ -70,7 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
     renderTags();
   });
 
-  container.addEventListener("click", () => input.focus());
+  container.addEventListener("click", () => {
+    input.focus();
+    renderOptions("");
+  });
+
+  input.addEventListener("blur", () => {
+    setTimeout(() => optionsEl.hidden = true, 200);
+  });
 
   renderTags();
 });

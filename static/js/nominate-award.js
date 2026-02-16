@@ -453,6 +453,26 @@ const modal = document.getElementById('bookDetailModal');
 
 }
 
+    // モーダル関連変数
+    const modal = document.getElementById('bookDetailModal');
+    const closeBtn = document.getElementById('closeModal');
+    const modalScrollOverlay = document.getElementById('modalScrollOverlay');
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function () {
+            modal.style.display = 'none';
+            document.body.classList.remove('no-scroll');
+        });
+    }
+
+    // モーダル外クリックで閉じる
+window.addEventListener('click', function (event) {
+    if (event.target == modal) {
+        modal.style.display = 'none';
+        document.body.classList.remove('no-scroll');
+    }
+});
+
 // モーダルを閉じた時のリサイズ解除
 window.addEventListener('click', function (event) {
     const modal = document.getElementById('bookDetailModal');

@@ -22,8 +22,6 @@ window.onload = async function () {
         voteReview.style.display = 'none';
     }
     createShintoShelf(allBooksData.slice(0, 10));
-
-    oneShintobook(allBooksData[0]);
 };
 
 /* =========================
@@ -847,6 +845,7 @@ async function vote(id){
         voteReview.style.display = '';
         const voteData = await getVoteReviewData();
         oneShintobook(voteData);
+
         const voteBtn = document.getElementById('voteBtn');
         voteBtn.classList.remove('modal-button');
         voteBtn.classList.add('modal-button-clicked');
@@ -941,9 +940,16 @@ function oneShintobook(data) {
     setDiv.appendChild(penBox);
 
     const shareBox = document.getElementById('shareBox');
-    shareBox.onclick = () => {
-        vote(data.id);
-    };
+    console.log('shareBox:', shareBox); // ← これを追加
+    console.log('data.id:', data.id);   // ← これを追加
+
+    if(shareBox) {
+        shareBox.onclick = () => {
+            vote(data.id);
+        };
+    } else {
+        console.error('shareBoxが見つかりません');
+    }
 
     // 画面の箱に追加して表示完了
     oneShintoContainer.appendChild(setDiv);

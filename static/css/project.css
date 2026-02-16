@@ -13,6 +13,10 @@
                 position: relative;
             }
 
+            .book-section{
+                border-radius: 20px;
+            }
+
             @media screen and (max-width: 768px) {
                 .container {
                     margin: 0 auto;

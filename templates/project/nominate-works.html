@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title th:text="${project.name}">企画ノミネート発表</title>
+    <link rel="icon" th:href="@{/img/zoutohana-jitsubutsu.png}">
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
     <style th:inline="css">
         :root {
@@ -263,11 +264,6 @@
                     <div class="profile-tags">
                         <p id="modalInfo" style="font-size: 0.9rem; color: #555;"></p>
                     </div>
-
-<!--                    <div class="profile-location">-->
-<!--                        <img id="modalIcon" src="../img/address.png" alt="address icon" class="location-icon">-->
-<!--                    </div>-->
-
                     <hr class="profile-line">
 
                     <div class="profile-bio">
@@ -278,12 +274,9 @@
                 </div>
             </div>
         </div>
-
-
-
-        <!-- フッター -->
-        <div th:replace="~{layout :: footer}"></div>
     </div>
+    <!-- フッター -->
+    <div th:replace="~{layout :: footer}"></div>
     <script th:src="@{/js/nominate-works.js}" src="../../static/js/nominate-works.js" defer></script>
 </body>
 

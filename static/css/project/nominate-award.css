@@ -25,6 +25,177 @@ p {
 section {
     background-color: var(--back-color);
 }
+/* =========================================================
+   大賞表示エリアのレスポンシブ対応
+   ========================================================= */
+
+/* 1. 全体を包むコンテナ（HTML側でこのIDの親要素に適用、またはこれ自体をラップする想定） */
+/* ※もし #award-left-target と #award-right-target を囲む親divがない場合は作成推奨 */
+.award-display-area {
+    display: flex;
+    flex-direction: column; /* スマホは縦並び */
+    gap: 30px;
+    width: 90%;
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+
+/* =========================================================
+   左側：作品本文エリア (renderLeftSection)
+   ========================================================= */
+#award-left-target {
+    width: 100%;
+}
+
+.modal-box {
+    background-color: rgba(255, 255, 255, 0.9); /* 少し透過した白背景 */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-textFirst-award-box {
+    text-align: center;
+}
+
+/* バラの画像 */
+.modal-rose {
+    width: 40px;      /* 少し大きめに調整 */
+    height: auto;
+    margin: 0 auto 15px;
+    display: block;
+}
+
+/* タイトル */
+#award-modalTitle {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--font-bold);
+    margin-bottom: 20px;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+/* 本文テキスト */
+.textFirst {
+    font-size: 16px;
+    line-height: 2.2; /* 行間広め */
+    text-align: left; /* 本文は左寄せ */
+    color: var(--font-normal);
+    
+    /* 既存CSSのデザインを維持しつつ調整 */
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    white-space: pre-wrap; /* 改行を反映 */
+}
+
+/* =========================================================
+   右側：プロフィールエリア (renderRightSection)
+   ========================================================= */
+#award-right-target {
+    width: 100%;
+}
+
+/* プロフィールヘッダー（アイコンと名前） */
+.profile-awrad-header {
+    /* 既存のクラス設定を上書き・調整 */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* スマホでは中央寄せ */
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.profile-awrad-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--sub-color);
+}
+
+.profile-name {
+    font-size: 22px;
+    margin: 0;
+    text-align: left;
+}
+
+/* プロフィールタグ（年齢・性別・場所） */
+.profile-tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.award-modalText {
+    font-size: 15px;
+    color: #666;
+    background-color: #f0f0f0;
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+/* 自己紹介文 */
+.profile-award-bio {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    width: 100%;
+    box-sizing: border-box; /* パディングを含めた幅計算 */
+}
+
+#award-modalProfileText {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--font-normal);
+    text-align: left;
+}
+
+/* =========================================================
+   PC・タブレット用レイアウト (768px以上)
+   ========================================================= */
+@media screen and (min-width: 768px) {
+    
+    /* 左右並列にする */
+    .award-display-area {
+        flex-direction: row; /* 横並び */
+        align-items: flex-start; /* 上揃え */
+        justify-content: space-between;
+        gap: 40px;
+        max-width: 1000px; /* PCでの最大幅制限 */
+    }
+
+    /* 左側（本文）を少し広く取る */
+    #award-left-target {
+        flex: 1.5; /* 比率 1.5 */
+        width: auto;
+    }
+
+    /* 右側（プロフィール） */
+    #award-right-target {
+        flex: 1;   /* 比率 1 */
+        width: auto;
+        position: sticky; /* スクロールしても追従させる（任意） */
+        top: 20px;
+    }
+
+    /* PCでのフォントサイズ調整 */
+    #award-modalTitle {
+        font-size: 28px;
+    }
+
+    .textFirst {
+        font-size: 18px;
+    }
+
+    .profile-awrad-header {
+        justify-content: flex-start; /* PCでは左寄せの方が見やすい場合 */
+    }
+}
 
 .book-text {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);

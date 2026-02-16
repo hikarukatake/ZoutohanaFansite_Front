@@ -28,6 +28,26 @@ section {
 /* =========================================
    大賞表示エリア (award-display-area) の修正
    ========================================= */
+   /* モーダル内のテキスト全体の設定 */
+.modal-textFirst {
+    width: 100%;
+    /* 余計なマージンを消しておく */
+    margin: 0;
+    padding: 0;
+}
+
+/* ★JSで生成される「1行ごとの線と文字」のクラス */
+.lined-text {
+    display: block;          /* 1行をブロックとして扱う */
+    width: 100%;             /* 横幅いっぱい */
+    border-bottom: 1px solid #aaa; /* ここで「線」を引く（色は調整してください） */
+    padding-bottom: 5px;     /* 文字と線の隙間 */
+    margin-bottom: 15px;     /* 行と行の間隔 */
+    
+    /* フォント設定（読みやすく調整） */
+    line-height: 1.6;
+    text-align: left;        /* 左寄せ */
+}
 
 .modal-box {
     width: 100%;

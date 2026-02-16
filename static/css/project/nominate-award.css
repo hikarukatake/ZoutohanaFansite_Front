@@ -28,6 +28,44 @@ section {
 /* =========================================
    大賞表示エリア (award-display-area) の修正
    ========================================= */
+
+   /* --- 大賞表示エリアのテキストボックス全体 --- */
+.award-text-container {
+    width: 100%;
+    padding: 20px;
+    background-color: #fff; /* 必要なら背景色を指定 */
+    box-sizing: border-box;
+}
+
+/* --- 作品タイトル --- */
+.award-book-title {
+    font-size: 1.4rem;
+    margin: 10px 0 20px 0;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+/* --- 装飾用の画像（バラなど） --- */
+.award-decoration-img {
+    display: block;
+    margin: 0 auto 10px;
+    width: 40px; /* サイズは調整してください */
+}
+
+/* --- ★ここが「行ごとの線」のデザイン --- */
+.award-lined-text {
+    display: block;          /* 1行をブロック要素にする */
+    width: 100%;             /* 横幅いっぱい */
+    border-bottom: 1px solid #ccc; /* 下線（色はここで調整：#cccは薄いグレー） */
+    padding-bottom: 4px;     /* 文字と線の隙間 */
+    margin-bottom: 18px;     /* 次の行との間隔 */
+    
+    font-size: 1rem;         /* 文字サイズ */
+    line-height: 1.8;        /* 行の高さ */
+    text-align: justify;     /* 両端揃え（お好みで left にしてもOK） */
+    color: #333;
+}
    /* モーダル内のテキスト全体の設定 */
 .modal-textFirst {
     width: 100%;

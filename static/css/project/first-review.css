@@ -1490,9 +1490,9 @@ p {
 
 .no-data-message {
     text-align: center;
-    color: #666;
-    font-size: 16px;
-    margin-top: 50px;
+    color: var(--font-bold);
+    font-size: 18px;
+    margin-bottom: 50px;
     font-weight: bold;
 }
 

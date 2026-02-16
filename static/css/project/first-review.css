@@ -1199,15 +1199,25 @@ p {
     border: 2px solid var(--sub-color);
 }
 
-.modal-button:hover {
-    background-color: var(--sub-color);
-    color: white;
-}
+/*.modal-button:hover {*/
+/*    background-color: var(--sub-color);*/
+/*    color: white;*/
+/*}*/
 
 
 .modal-button-clicked { /* voteBtn, bookmarkBtnクリックしたときこのクラスを追加で */
+    display: flex;
+    justify-content: center;
     background-color: var(--sub-color);
+    width: 35%;
+    height: 45px;
+    padding: 10px;
+    border-radius: 5px;
+    align-items: center;
+    gap: 10px;
+    border: none;
     color: white;
+    border: 2px solid var(--sub-color);
 }
 
 .modal-img {

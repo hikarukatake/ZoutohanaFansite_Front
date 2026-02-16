@@ -215,6 +215,7 @@ async function Allbook(data, book) {
     if (voteBtn && !await isVote()) {
         voteBtn.setAttribute('onclick', `vote(${data.id})`);
         voteBtn.style.display = '';
+        voteBtn.classList.add('modal-button');
     }else{
         const currentData = localStorage.getItem(VOTE_KEY);
         const voteList = JSON.parse(currentData || "[]");
@@ -225,6 +226,7 @@ async function Allbook(data, book) {
             }else{
                 voteBtn.style.display = '';
                 voteBtn.setAttribute('onclick', `vote(${data.id})`);
+                voteBtn.classList.add('modal-button-clicked');
             }
         }
     }
@@ -232,6 +234,11 @@ async function Allbook(data, book) {
 
         if (bookmarkBtn) {
             bookmarkBtn.setAttribute('onclick', `favorite(${data.id})`);
+            if(isFavorite(data.id)){
+                bookmarkBtn.classList.add('modal-button-clicked');
+            }else{
+                bookmarkBtn.classList.add('modal-button');
+            }
         }
     // 今開いた本を記録
     currentOpenedBook = book;
@@ -737,16 +744,20 @@ function finishButtonTutorial() {
 function favorite(id) {
     // ボタンを押したらその推された本のidを受け取ってtargetBookに代入
     const targetBook = document.getElementById(id);
-
+    const bookmarkBtn = document.getElementById('bookmarkBtn');
     if (targetBook) {
         if(isFavorite(id)){
             targetBook.classList.remove('is-favorite');
             removeFavoriteId(id);
+            bookmarkBtn.classList.remove('modal-button-clicked');
+            bookmarkBtn.classList.add('modal-button');
         }else{
             // 2. CSSクラス「is-favorite」をつける
             targetBook.classList.add('is-favorite');
             // 3. ローカルストレージに保存
             addFavoriteId(id);
+            bookmarkBtn.classList.remove('modal-button');
+            bookmarkBtn.classList.add('modal-button-clicked');
         }
         
     } else {
@@ -755,8 +766,12 @@ function favorite(id) {
 
         if(favIds.includes(id)){
             removeFavoriteId(id);
+            bookmarkBtn.classList.remove('modal-button-clicked');
+            bookmarkBtn.classList.add('modal-button');
         }else{
             addFavoriteId(id);
+            bookmarkBtn.classList.remove('modal-button');
+            bookmarkBtn.classList.add('modal-button-clicked');
         }
     }
 }
@@ -818,6 +833,10 @@ async function vote(id){
             localStorage.setItem(VOTE_KEY, JSON.stringify(voteIds));
             const voteReview = document.getElementById('voteReview');
             voteReview.style.display = 'none';
+
+            const voteBtn = document.getElementById('voteBtn');
+            voteBtn.classList.remove('modal-button-clicked');
+            voteBtn.classList.add('modal-button');
         }
     }else{
         // 投票加算処理
@@ -828,6 +847,9 @@ async function vote(id){
         voteReview.style.display = '';
         const voteData = await getVoteReviewData();
         oneShintobook(voteData);
+        const voteBtn = document.getElementById('voteBtn');
+        voteBtn.classList.remove('modal-button');
+        voteBtn.classList.add('modal-button-clicked');
     }
 }
 

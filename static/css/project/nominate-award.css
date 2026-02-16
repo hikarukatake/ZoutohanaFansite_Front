@@ -369,7 +369,7 @@ section {
     }
 
     #bookDetailModal .modal-textFirst {
-        font-size: 17px;
+        font-size: 18px;
     }
 
     #bookDetailModal .one-book-text-overlay {
@@ -402,10 +402,18 @@ section {
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 }
+
 @media screen and (min-width: 440px) {
     .award-lined-text{
         font-size: 15px;
     }
+    
+}
+@media screen and (min-width: 445px) {
+        #bookDetailModal .modal-textFirst {
+        font-size: 17px;
+    }
+
     
 }
 

@@ -53,15 +53,6 @@ section {
     width: 100%; /* 親要素に合わせて伸縮 */
 }
 
-/* JSで生成されるクラスへのスタイル適用 */
-#award-display-area .modal-box {
-    background-color: #fff;     /* 本の紙のような白 */
-    padding: 30px;
-    border-radius: 4px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* 軽い影 */
-    box-sizing: border-box;     /* paddingを含めた幅計算にする */
-    width: 100%;
-}
 
 /* --- 右側：プロフィールエリア --- */
 #award-display-area .profile-card {

@@ -368,7 +368,7 @@ function renderLeftSection(data) {
     target.innerHTML = ''; 
     target.appendChild(modalBox);
 
-    splitTextToParagraphs("award-textFirst", "modal-award-textFirst", 17);
+    splitTextToParagraphs("award-textFirst", "textFirst", 17);
 }
 
 /* =========================================================

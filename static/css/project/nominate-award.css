@@ -274,6 +274,19 @@ section {
 }
 
 
+@keyframes modalOpen {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
 @media screen and (min-width: 300px) {
     
     /* --- 1. 文字のサイズと位置 --- */
@@ -310,6 +323,10 @@ section {
     color: var(--font-normal);
     z-index: 2;
 }
+
+.modal-textFirst{
+    font-size: 16px;
+}
     
 .one-book {
     background-image: url('../../img/book2.png');
@@ -332,6 +349,7 @@ section {
 
 }
 
+
 @media screen and (min-width: 400px) {
     
     /* --- 1. 文字のサイズと位置 --- */
@@ -351,6 +369,10 @@ section {
     color: #303030;
     transition: opacity 3s ease;
     opacity: 1;
+    }
+
+    .modal-textFirst{
+    font-size: 17px;
     }
 
     .one-book-text-overlay {
@@ -427,8 +449,51 @@ section {
     z-index: 2;
 }
 
+.modal-textFirst{
+    font-size: 18px;
+    }
+}
 
+@media screen and (min-width: 460px) {
+    
+    /* --- 1. 文字のサイズと位置 --- */
+    .book-text h1 {
+        font-size: 30px; /* スマホ(24px)より大きく、PC(32px)より小さく */
+    }
+    
+    .book-text p {
+        font-size: 19px;
+    }
 
+    .book-text {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 100px;
+    left: 20%;
+    color: #303030;
+    transition: opacity 3s ease;
+    opacity: 1;
+    }
+
+    .one-book-text-overlay {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 30px;
+    line-height: 2;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+
+    position: absolute;
+    top: 40px;
+    left: 40px;
+
+    color: var(--font-normal);
+    z-index: 2;
+}
+
+.modal-textFirst{
+    font-size: 17px;
+    }
 }
 
 @media screen and (min-width: 475px) {
@@ -450,6 +515,10 @@ section {
     color: #303030;
     transition: opacity 3s ease;
     opacity: 1;
+    }
+
+    .modal-textFirst{
+    font-size: 18px;
     }
 
     .one-book-text-overlay {
@@ -553,6 +622,7 @@ section {
 
 }
 
+
 @media screen and (min-width: 530px) {
     
     /* --- 1. 文字のサイズと位置 --- */
@@ -597,6 +667,7 @@ section {
     color: var(--font-normal);
     z-index: 2;
 }
+
 }
 @media screen and (min-width: 580px) {
     
@@ -641,6 +712,7 @@ section {
     transition: opacity 3s ease;
     opacity: 1;
 }
+
 }
 
 .book-shinto-box {

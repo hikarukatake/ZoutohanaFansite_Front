@@ -743,12 +743,6 @@ section {
     animation: modalOpen 0.3s ease-out;
 }
 
-.modal-box {
-    width: 100%;
-    border-radius: 6px;
-
-}
-
 .modal-box::-webkit-scrollbar {
     width: 6px;
 }

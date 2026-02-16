@@ -489,36 +489,37 @@ function renderRightSection(data) {
     target.appendChild(hrLine);
     target.appendChild(profileBio);
 }
-
 /* =========================================================
-   [共通] レスポンシブ用テキスト分割・整形関数
+   [共通] テキスト分割計算関数
    ========================================================= */
 function splitTextResponsive(text, containerWidth, charSize, maxLines) {
     if (!text) return { p1: "", p2: "" };
     if (containerWidth <= 0) return { p1: text, p2: "" };
 
-    // 1行あたりの文字数 = 箱の幅 ÷ 1文字の幅
+    // 1. 箱の幅 ÷ 1文字のサイズ で「1行の文字数」を決定
     let charsPerLine = Math.floor(containerWidth / charSize);
 
-    // 文字数のガード（極端に崩れないように）
+    // 文字数の暴走防止（最低10文字、最大50文字）
     if (charsPerLine < 10) charsPerLine = 10;
     if (charsPerLine > 50) charsPerLine = 50;
 
     let p1Html = "";
     let p2Html = "";
-    
-    // 文字列を1行ずつ処理
     let currentLine = 0;
+
+    // 2. 文字列を計算した長さで切り刻む
     for (let i = 0; i < text.length; i += charsPerLine) {
         const lineStr = text.substr(i, charsPerLine);
-        // spanで囲んでbrで改行
-        const lineHtml = `<span>${lineStr}</span><br>`;
+        
+        // ★ここがポイント：1行ずつ span で囲んで br で改行
+        // これにより、CSSで span に対して border-bottom を引けば「線」が表現できます
+        const lineHtml = `<span class="text-line">${lineStr}</span><br>`;
 
         if (currentLine < maxLines) {
             // 指定行数までは1ページ目
             p1Html += lineHtml;
         } else {
-            // 指定行数を超えたら2ページ目
+            // それ以降は2ページ目
             p2Html += lineHtml;
         }
         currentLine++;
@@ -528,105 +529,159 @@ function splitTextResponsive(text, containerWidth, charSize, maxLines) {
 }
 
 /* =========================================================
-   モーダル表示関数 (Allbook)
+   メイン: Allbook関数
    ========================================================= */
-// リサイズイベント削除用に、外部変数として関数を持っておく
+// リサイズイベントの重複登録を防ぐための変数
 let currentResizeHandler = null;
 
-function Allbook(data, element) {
-    const modal = document.getElementById('bookDetailModal');
-    if (!modal) return;
+async function Allbook(data, book) {
+    // --- 既存のボタン制御・チュートリアル制御処理 (そのまま) ---
+    const voteBtn = document.getElementById('voteBtn');
+    const bookmarkBtn = document.getElementById('bookmarkBtn');
 
-    // --- 1. 基本情報のセット ---
-    // 画像
-    const modalImg = modal.querySelector('.modal-book-img'); // クラス名はHTMLに合わせて調整
-    if (modalImg) modalImg.src = data.image;
+    if (voteBtn && !await isVote()) {
+        voteBtn.setAttribute('onclick', `vote(${data.id})`);
+        voteBtn.style.display = '';
+        voteBtn.classList.add('modal-button');
+    } else {
+        const currentData = localStorage.getItem(VOTE_KEY);
+        const voteList = JSON.parse(currentData || "[]");
+        if (currentData) {
+            if (!(voteList.includes(data.id) || voteList.includes(Number(data.id)))) {
+                voteBtn.style.display = 'none';
+            } else {
+                voteBtn.style.display = '';
+                voteBtn.setAttribute('onclick', `vote(${data.id})`);
+                voteBtn.classList.add('modal-button-clicked');
+            }
+        }
+    }
 
-    // タイトル
-    const modalTitle = document.getElementById('modalTitle'); // IDはHTMLに合わせて調整
+    if (bookmarkBtn) {
+        bookmarkBtn.setAttribute('onclick', `favorite(${data.id})`);
+        if (typeof isFavorite === 'function' && isFavorite(data.id)) {
+            bookmarkBtn.classList.add('modal-button-clicked');
+        } else {
+            bookmarkBtn.classList.add('modal-button');
+        }
+    }
+
+    // 今開いた本を記録
+    if (typeof currentOpenedBook !== 'undefined') {
+        currentOpenedBook = book;
+    }
+
+    // チュートリアルオーバーレイ削除
+    const overlay = document.getElementById('tutorialOverlay');
+    if (overlay && overlay.style.display === 'block') {
+        overlay.style.display = 'none';
+        if (book.classList.contains('first-book-target')) {
+            book.classList.remove('highlight');
+            const msg = book.querySelector('.tutorial-msg');
+            if (msg) msg.remove();
+        }
+    }
+
+    // --- モーダル内の基本データセット ---
+    // HTMLの構造（img, h3）は消さずに、srcやinnerTextだけ書き換える
+    const iconElem = document.getElementById('modalIcon');
+    if (iconElem) iconElem.src = data.icon;
+
+    const nameElem = document.getElementById('modalName');
+    if (nameElem) nameElem.innerText = data.name;
+
+    const infoElem = document.getElementById('modalInfo');
+    if (infoElem) infoElem.innerText = `${data.age} / ${data.gender} / ${data.address}`;
+
+    const profileTextElem = document.getElementById('modalProfileText');
+    if (profileTextElem) profileTextElem.innerText = data.text;
+
+    // タイトルと画像（pタグの親兄弟にいる要素）
+    const modalTitle = document.getElementById('modalTitle');
     if (modalTitle) modalTitle.innerText = data.title;
-
-    // プロフィール情報など（必要に応じて）
-    const modalName = document.getElementById('modalName');
-    if (modalName) modalName.innerText = data.name;
     
-    // --- 2. モーダルを表示 (これをしないと幅が取れない) ---
-    modal.style.display = 'flex'; // または 'block'
+    // ※画像のIDがない場合はクラスなどで取得する必要がありますが、
+    // 提示されたHTMLにはIDがないため、modal-textFirst-box内のimgを探します
+    const firstBox = document.querySelector('.modal-textFirst-box');
+    if (firstBox) {
+        const roseImg = firstBox.querySelector('img.modal-rose');
+        // 必要ならここで画像のsrcを変える処理を入れる
+        // if(roseImg) roseImg.src = ... 
+    }
+
+    // --- ★ここからレスポンシブテキスト処理 ---
+    
+    const modal = document.getElementById('bookDetailModal');
+    modal.style.display = 'flex'; // 先に表示して幅を確定させる
     document.body.classList.add('no-scroll');
 
-    // --- 3. テキストのレスポンシブ計算処理 ---
-    const updateModalText = () => {
-        // テキストを入れる箱と要素を取得
+    const renderText = () => {
         const boxFirst = document.querySelector('.modal-textFirst-box');
         const pFirst = document.getElementById('textFirst');
+        // 2ページ目があれば取得（なければnull）
         const boxSecond = document.querySelector('.modal-textSecond-box');
         const pSecond = document.getElementById('textSecond');
 
         if (!boxFirst || !pFirst) return;
 
-        // 箱の幅を取得
-        const width = boxFirst.clientWidth;
-        
-        // ★調整ポイント: 1文字のサイズ(px)と、1ページ目の行数
-        const charSize = 20; 
+        // 1. 今の幅を取得
+        const boxWidth = boxFirst.clientWidth;
+        if (boxWidth === 0) return;
+
+        // 2. 設定値
+        // 1文字の幅(px)。行間やフォントサイズに合わせて調整
+        const charSize = 23; 
+        // 1ページ目に表示する最大行数
         const maxLines = 10; 
 
-        // 計算実行
-        const result = splitTextResponsive(data.content, width, charSize, maxLines);
+        // 3. 計算実行 (共通関数を使用)
+        const result = splitTextResponsive(data.content, boxWidth, charSize, maxLines);
 
-        // 結果を反映
+        // 4. 結果を流し込む
+        // HTML構造を壊さず、pタグの中身だけを書き換える
         pFirst.innerHTML = result.p1;
-        
+
+        // 2ページ目の処理
         if (pSecond && boxSecond) {
             pSecond.innerHTML = result.p2;
-            // 2ページ目に文字があれば表示、なければ非表示
             if (result.p2 !== "") {
-                boxSecond.style.display = 'block';
+                boxSecond.style.display = 'block'; // または 'flex' HTMLに合わせて
             } else {
                 boxSecond.style.display = 'none';
             }
         }
     };
 
-    // --- 4. 実行とリサイズ対応 ---
-    
-    // アニメーション等の影響で即時だと幅が0になる場合があるため、わずかに遅らせる
-    requestAnimationFrame(updateModalText);
+    // DOM描画待ちをして実行
+    requestAnimationFrame(renderText);
 
-    // 以前のリサイズイベントがあれば削除（重複防止）
+    // リサイズイベントの管理（重複防止）
     if (currentResizeHandler) {
         window.removeEventListener('resize', currentResizeHandler);
     }
-    // 今回用のリサイズイベントを登録
-    currentResizeHandler = updateModalText;
+    currentResizeHandler = renderText;
     window.addEventListener('resize', currentResizeHandler);
 
-    // --- 5. 閉じるボタンの処理 (簡易実装) ---
-    // HTML側に onclick="closeModal()" があるか、クラスで閉じるボタンがある場合
-    const closeBtn = modal.querySelector('.close-modal'); // クラス名は適宜
-    if (closeBtn) {
-        closeBtn.onclick = function() {
-            modal.style.display = 'none';
-            document.body.classList.remove('no-scroll');
-            // イベントリスナーの掃除
-            window.removeEventListener('resize', currentResizeHandler);
-        };
+    // --- チュートリアル開始 ---
+    if (typeof startModalTutorial === 'function') {
+        startModalTutorial();
     }
 }
 
-// モーダルの外側をクリックして閉じる処理（既存コードに合わせて変数名など調整）
-const modal = document.getElementById('bookDetailModal');
+// モーダルを閉じる処理の修正（リサイズイベント解除を追加）
 window.addEventListener('click', function (event) {
+    const modal = document.getElementById('bookDetailModal');
     if (event.target == modal) {
         modal.style.display = 'none';
         document.body.classList.remove('no-scroll');
-        // リサイズ監視も解除
+        
+        // 閉じたときはリサイズ監視をやめる（メモリ節約）
         if (currentResizeHandler) {
             window.removeEventListener('resize', currentResizeHandler);
+            currentResizeHandler = null;
         }
     }
 });
-
 
 /* =========================================================
     ページ読み込み完了時の処理

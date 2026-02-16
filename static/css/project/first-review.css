@@ -261,7 +261,6 @@ p {
 
 }
 
-
 @media screen and (min-width: 400px) {
     
     /* --- 1. 文字のサイズと位置 --- */
@@ -483,7 +482,6 @@ p {
 
 }
 
-
 @media screen and (min-width: 530px) {
     
     /* --- 1. 文字のサイズと位置 --- */
@@ -530,6 +528,7 @@ p {
 }
 
 }
+
 @media screen and (min-width: 580px) {
     
     /* --- 1. 文字のサイズと位置 --- */
@@ -575,11 +574,6 @@ p {
 }
 
 }
-
-
-
-
-
 
 /* ボタンのスタイル */
 .button-area {

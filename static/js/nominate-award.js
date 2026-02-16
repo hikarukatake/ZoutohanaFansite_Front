@@ -339,7 +339,7 @@ function renderLeftSection(data) {
 
         const pFirst = document.createElement('p');
         pFirst.id = "award-textFirst"; 
-        pFirst.classList.add('modal-textFirst');
+        pFirst.classList.add('modal-textFirst-award');
         pFirst.innerText = data.content; 
 
     textBox.appendChild(roseImg);

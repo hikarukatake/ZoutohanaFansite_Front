@@ -5,6 +5,7 @@ html {
 body {
     margin: 0;
     padding: 0;
+    min-width: 440px;
 }
 
 body.no-scroll {
@@ -65,7 +66,7 @@ section {
 .img-box {
     padding-top: 200px;
     width: 100%;
-    height: 90vh;
+    min-height: 100vh;
     background-image: url(../../img/back-book.png);
     background-size: cover;
     background-repeat: no-repeat;
@@ -148,7 +149,6 @@ section {
     z-index: 2;
 }
 
-
 .all-book {
     background-image: url('../../img/book2.png');
     position: relative;
@@ -163,7 +163,6 @@ section {
     border-radius: 4px;
     z-index: 1;
     box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.3);
-
 }
 
 .all-book::before {
@@ -187,6 +186,376 @@ section {
 
 .all-landed {
     opacity: 1;
+}
+
+
+@media screen and (min-width: 300px) {
+    
+    /* --- 1. 文字のサイズと位置 --- */
+    .book-text h1 {
+        font-size: 24px;
+    }
+    
+    .book-text p {
+        font-size: 14px;
+    }
+
+    .book-text {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 100px;
+    left: 20%;
+    color: #303030;
+    transition: opacity 3s ease;
+    opacity: 1;
+    }
+
+    .one-book-text-overlay {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 30px;
+    line-height: 2;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+
+    position: absolute;
+    top: 40px;
+    left: 40px;
+
+    color: var(--font-normal);
+    z-index: 2;
+}
+    
+.one-book {
+    background-image: url('../../img/book2.png');
+    position: relative;
+    /* ← 疑似要素の基準 */
+    width: 100%;
+    height: 300px;
+    /* 本なので高さも必要 */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 2px solid rgb(160, 160, 160);
+    border-radius: 4px;
+    z-index: 1;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
+}
+
+
+
+}
+
+@media screen and (min-width: 400px) {
+    
+    /* --- 1. 文字のサイズと位置 --- */
+    .book-text h1 {
+        font-size: 25px;
+    }
+    
+    .book-text p {
+        font-size: 15px;
+    }
+
+    .book-text {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 100px;
+    left: 20%;
+    color: #303030;
+    transition: opacity 3s ease;
+    opacity: 1;
+    }
+
+    .one-book-text-overlay {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 30px;
+    line-height: 2;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+
+    position: absolute;
+    top: 40px;
+    left: 40px;
+
+    color: var(--font-normal);
+    z-index: 2;
+}
+    
+.one-book {
+    background-image: url('../../img/book2.png');
+    position: relative;
+    /* ← 疑似要素の基準 */
+    width: 100%;
+    height: 200px;
+    /* 本なので高さも必要 */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 2px solid rgb(160, 160, 160);
+    border-radius: 4px;
+    z-index: 1;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
+}
+
+
+
+}
+
+@media screen and (min-width: 450px) {
+    
+    /* --- 1. 文字のサイズと位置 --- */
+    .book-text h1 {
+        font-size: 30px; /* スマホ(24px)より大きく、PC(32px)より小さく */
+    }
+    
+    .book-text p {
+        font-size: 19px;
+    }
+
+    .book-text {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 100px;
+    left: 20%;
+    color: #303030;
+    transition: opacity 3s ease;
+    opacity: 1;
+    }
+
+    .one-book-text-overlay {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 30px;
+    line-height: 2;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+
+    position: absolute;
+    top: 40px;
+    left: 40px;
+
+    color: var(--font-normal);
+    z-index: 2;
+}
+
+
+
+}
+
+@media screen and (min-width: 475px) {
+    
+    /* --- 1. 文字のサイズと位置 --- */
+    .book-text h1 {
+        font-size: 30px; /* スマホ(24px)より大きく、PC(32px)より小さく */
+    }
+    
+    .book-text p {
+        font-size: 19px;
+    }
+
+    .book-text {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 100px;
+    left: 20%;
+    color: #303030;
+    transition: opacity 3s ease;
+    opacity: 1;
+    }
+
+    .one-book-text-overlay {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 30px;
+    line-height: 2;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+
+    position: absolute;
+    top: 40px;
+    left: 50px;
+
+    color: var(--font-normal);
+    z-index: 2;
+}
+
+
+
+}
+@media screen and (min-width: 500px) {
+    
+    /* --- 1. 文字のサイズと位置 --- */
+    .book-text h1 {
+        font-size: 30px; /* スマホ(24px)より大きく、PC(32px)より小さく */
+    }
+    
+    .book-text p {
+        font-size: 19px;
+    }
+
+    .book-text {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 100px;
+    left: 20%;
+    color: #303030;
+    transition: opacity 3s ease;
+    opacity: 1;
+    }
+
+    .one-book-text-overlay {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 30px;
+    line-height: 2;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+
+    position: absolute;
+    top: 40px;
+    left: 60px;
+
+    color: var(--font-normal);
+    z-index: 2;
+}
+
+
+
+}
+
+@media screen and (min-width: 520px) {
+    
+    /* --- 1. 文字のサイズと位置 --- */
+    .book-text h1 {
+        font-size: 30px; /* スマホ(24px)より大きく、PC(32px)より小さく */
+    }
+    
+    .book-text p {
+        font-size: 19px;
+    }
+
+    .book-text {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 100px;
+    left: 20%;
+    color: #303030;
+    transition: opacity 3s ease;
+    opacity: 1;
+    }
+
+    .one-book-text-overlay {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 30px;
+    line-height: 2;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+
+    position: absolute;
+    top: 40px;
+    left: 70px;
+
+    color: var(--font-normal);
+    z-index: 2;
+}
+
+
+
+}
+
+@media screen and (min-width: 530px) {
+    
+    /* --- 1. 文字のサイズと位置 --- */
+    .book-text h1 {
+        font-size: 34px; /* スマホ(24px)より大きく、PC(32px)より小さく */
+    }
+    
+    .book-text p {
+        font-size: 23px;
+    }
+
+    .book-text {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 100px;
+    left: 20%;
+    color: #303030;
+    transition: opacity 3s ease;
+    opacity: 1;
+    }
+
+        .one-book-shinto-box {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.one-book-text-overlay {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 30px;
+    line-height: 2;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+
+    position: absolute;
+    top: 40px;
+    left: 80px;
+
+    color: var(--font-normal);
+    z-index: 2;
+}
+}
+@media screen and (min-width: 580px) {
+    
+    /* --- 1. 文字のサイズと位置 --- */
+    .book-text h1 {
+        font-size: 36px; /* スマホ(24px)より大きく、PC(32px)より小さく */
+    }
+    
+    .book-text p {
+        font-size: 25px;
+    }
+
+    .book-text {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 100px;
+    left: 20%;
+    color: #303030;
+    transition: opacity 3s ease;
+    opacity: 1;
+    }
+
+}
+
+@media screen and (min-width: 720px) {
+    
+    /* --- 1. 文字のサイズと位置 --- */
+    .book-text h1 {
+        font-size: 36px; /* スマホ(24px)より大きく、PC(32px)より小さく */
+    }
+    
+    .book-text p {
+        font-size: 25px;
+    }    
+
+    .book-text {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 100px;
+    left: 22%;
+    color: #303030;
+    transition: opacity 3s ease;
+    opacity: 1;
+}
 }
 
 .book-shinto-box {
@@ -384,15 +753,12 @@ section {
 
 .modal-textFirst-award-box,
 .modal-textSecond-box {
-    width: 100%;
+    width: 95%;
     margin: 0 auto;
     padding: 10px 0px 10px 0px;
-    /* 内側の線 */
     border: 1px solid var(--font-bold);
-    /* 外側の線 */
     outline: 1px solid var(--font-bold);
     outline-offset: 2px;
-    /* ← ★ここが「二重線の間隔」 */
     position: relative;
     margin-bottom: 32px;
     background-color: var(--back-color);
@@ -432,26 +798,17 @@ section {
 .modal-textSecond-box {
     border-bottom: none;
 }
-
-/* 「#」ではなく「.」から始まるのが重要です */
 .modal-textFirst {
-    /* 1行ごとに線を引く */
     border-bottom: 1px solid #555;
-
-    /* 余白の調整 */
     padding-bottom: 5px;
-    /* 文字と線の間 */
     margin-bottom: 15px;
-    /* 次の行との間 */
-
-    /* 念のためブロック要素にする */
     display: block;
     width: 100%;
 }
 
-
 .modal-textFirst,
 .modal-textSecond {
+    width: 70%;
     font-size: 16px;
     line-height: 2.2;
     padding: 10px;
@@ -671,7 +1028,8 @@ section {
     color: var(--font-normal);
 }
 
-.modal-award-textFirst{
+.modal-textFirst-award{
+    width: 70%;
     font-size: 16px;
     line-height: 2.2;
     padding: 5px;

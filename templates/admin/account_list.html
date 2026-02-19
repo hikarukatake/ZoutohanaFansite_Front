@@ -13,7 +13,11 @@
 <div th:replace="~{layout-admin :: header}"></div>
 
 <main id="admin-main">
-    <h1 class="page-title">利用者一覧<span class="page-title-count" th:text="'(' + ${users.size()} + '件)'">(0件)</span></h1>
+    <h1 class="page-title">
+        <span class="material-symbols-outlined scale-bigger text-gray mr-2">account_circle</span>
+        利用者一覧
+        <span class="page-title-count" th:text="'(' + ${users.size()} + '件)'">(0件)</span>
+    </h1>
 
     <div class="main-content">
         <div class="flex justify-between mt-2"> <!-- テーブルの上のメニュー部分 -->

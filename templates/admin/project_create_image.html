@@ -33,7 +33,10 @@
 <div th:replace="~{layout-admin :: header}"></div>
 
 <main id="admin-main">
-    <h1 class="page-title">画像アップロード</h1>
+    <h1 class="page-title">
+        <span class="material-symbols-outlined scale-bigger text-gray mr-2">upload_file</span>
+        画像アップロード
+    </h1>
 
     <div class="main-content-card mt-4">
         <form th:action="@{/admin/project/create/image}" th:object="${form}" method="post" enctype="multipart/form-data">

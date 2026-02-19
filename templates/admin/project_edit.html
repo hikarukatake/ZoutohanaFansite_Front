@@ -15,7 +15,10 @@
       <a href="project_list.html" th:href="@{/admin/project/list}" th:object="${project}" class="icon-center review-card-sub-info text-decoration-none hover-bold">
         <span class="material-symbols-outlined">keyboard_double_arrow_left</span>企画一覧に戻る
       </a>
-      <h1 class="page-title">企画編集・情報</h1>
+      <h1 class="page-title">
+        <span class="material-symbols-outlined scale-bigger text-gray mr-2">docs</span>
+        企画編集・情報
+      </h1>
 
       <div class="tab-menu w-full mt-2">
         <ul class="tab-list">
@@ -194,7 +197,10 @@
         </div>
 
         <div class="main-content-card p-8 tab-panel"> <!-- 「投稿された書評について」タブの中身 -->
-          <div class="table-border-b-strong pb-8"> <h2 class="page-title-sub">通知一括送信</h2>
+          <div class="table-border-b-strong pb-8"> <h2 class="page-title-sub">
+            <span class="material-symbols-outlined scale-bigger text-gray mr-2">mail</span>
+            通知一括送信
+          </h2>
 
             <div class="flex gap-4 mt-2 mb-2">
               <label class="cursor-pointer">
@@ -216,17 +222,31 @@
               <span style="flex-shrink: 0;">タイトル : </span>
               <input type="text" id="template-title" class="input-text flex-1" placeholder="通知のタイトルを入力してください">
             </div>
-            <textarea id="template-body" rows="7" class="input-textarea w-full mt-2"></textarea>
+            <textarea id="template-textarea" rows="7" class="input-textarea w-full mt-2"></textarea>
+            <p class="icon-center">置き換えタグ<span class="material-symbols-outlined text-gray cursor-help" title="個別通知送信時、自動的に各プロジェクト・書評・ユーザの情報に置換されます">help</span></p>
+            <div class="grid-4 gap-1 mt-2">
+              <button type="button" class="btn merge-tag" data-tag="{project-name}">プロジェクト名</button>
+              <button type="button" class="btn merge-tag" data-tag="{project-submissionStartAt}">書評投稿開始日時</button>
+              <button type="button" class="btn merge-tag" data-tag="{project-submissionEndAt}">書評投稿終了日時</button>
+              <button type="button" class="btn merge-tag" data-tag="{project-votingStartAt}">書評投票開始日時</button>
+              <button type="button" class="btn merge-tag" data-tag="{project-votingEndAt}">書評投票終了日時</button>
+              <button type="button" class="btn merge-tag" data-tag="{user-nickname}">ユーザーのニックネーム</button>
+              <button type="button" class="btn merge-tag" data-tag="{review-title}">書評タイトル</button>
+              <button type="button" class="btn merge-tag" data-tag="{book-title}">書籍タイトル</button>
+            </div>
             <div class="button-wrap mt-2 text-right">
               <button type="button" id="open-notification-confirm" class="btn">内容を確認する</button>
             </div>
           </div>
 
           <div class="pt-4 pb-4"> <!-- 「書評閲覧」部分 -->
-            <h2 class="page-title-sub">書評閲覧</h2>
+            <h2 class="page-title-sub">
+              <span class="material-symbols-outlined scale-bigger text-gray mr-2">note_stack</span>
+              書評閲覧
+            </h2>
             <div class="flex gap-1 mt-2">
               <a href="review_list.html" th:href="@{/admin/review/list(urlKey=${project.urlKey})}" class="btn icon-center">
-                <span class="material-symbols-outlined scale-bigger pr-1">library_books</span>すべての書評を確認
+                <span class="material-symbols-outlined scale-bigger pr-1">note_stack</span>すべての書評を確認
               </a>
               <a th:href="@{/admin/review/export(urlKey=${project.urlKey})}" class="btn icon-center">
                 <span class="material-symbols-outlined scale-bigger pr-1">csv</span>
@@ -236,9 +256,12 @@
             </div>
           </div>
 
-          <div class="pt-4 pb-4" th:if="${!#lists.isEmpty(awardedReviews)}"> <!-- 「大賞の書評」部分 -->
-            <h2 class="page-title-sub">大賞の書評</h2>
-            <div class="review-card mt-4" th:each="awardedReview : ${awardedReviews}"> <!-- 書評カード -->
+          <div class="pt-4 pb-4"> <!-- 「大賞の書評」部分 -->
+            <h2 class="page-title-sub">
+              <span class="material-symbols-outlined scale-bigger text-gray mr-2">trophy</span>
+              大賞の書評
+            </h2>
+            <div th:if="${!#lists.isEmpty(awardedReviews)}" class="review-card mt-4" th:each="awardedReview : ${awardedReviews}"> <!-- 書評カード -->
               <div class="table-border-b-strong flex justify-between py-4"> <!-- 書評カードヘッダー -->
                 <div> <!-- 左側 -->
                   <p class="review-card-sub-info">No.<span th:text="${awardedReview.reviewId}">0</span></p>
@@ -283,11 +306,17 @@
                 <a href="review_edit.html" th:href="@{/admin/review/view(id=${awardedReview.reviewId})}" class="icon-center review-card-sub-info text-decoration-none hover-bold">詳細を確認する<span class="material-symbols-outlined ml-2">keyboard_double_arrow_right</span></a> <!-- 右側 -->
               </div>
             </div>
+            <div th:if="${#lists.isEmpty(awardedReviews)}" class="review-card p-8 mt-4">
+              <p class="text-center p-8">大賞の書評はありません</p>
+            </div>
           </div>
 
-          <div class="pt-4" th:if="${!#lists.isEmpty(nominatedReviews)}"> <!-- 「ノミネートした書評」部分 -->
-            <h2 class="page-title-sub">ノミネートした書評</h2>
-            <div> <!-- 書評カードを並べる部分 -->
+          <div class="pt-4"> <!-- 「ノミネートした書評」部分 -->
+            <h2 class="page-title-sub">
+              <span class="material-symbols-outlined scale-bigger text-gray mr-2">star</span>
+              ノミネートした書評
+            </h2>
+            <div th:if="${!#lists.isEmpty(nominatedReviews)}"> <!-- 書評カードを並べる部分 -->
               <div class="review-card mt-4" th:each="nominatedReview : ${nominatedReviews}"> <!-- 書評カード -->
                 <div class="table-border-b-strong flex justify-between py-4"> <!-- 書評カードヘッダー -->
                   <div> <!-- 左側 -->
@@ -334,6 +363,9 @@
                 </div>
               </div>
             </div>
+            <div th:if="${#lists.isEmpty(nominatedReviews)}" class="review-card p-8 mt-4">
+              <p class="text-center p-8">ノミネートした書評はありません</p>
+            </div>
           </div>
         </div>
 
@@ -377,6 +409,11 @@
           </div>
 
           <div class="mt-8">
+            <h3 class="page-title-sub">タイトル</h3>
+            <p class="notification-confirm-preview"></p>
+          </div>
+
+          <div class="mt-8">
             <h3 class="page-title-sub">内容</h3>
             <pre class="notification-confirm-preview">
               <span class="merge-tag-preview">{user-nickname}</span>さん、こんにちは。
@@ -409,14 +446,15 @@
     const templateSelect = document.getElementById('template-select');
     const loadButton = document.getElementById('load-template-button');
     const templateTitle = document.getElementById('template-title');
-    const templateBody = document.getElementById('template-body');
+    const templateBody = document.getElementById('template-textarea');
 
     // 確認モーダル関連
     const openConfirmBtn = document.getElementById('open-notification-confirm');
     const confirmModal = document.getElementById('notification-confirm-modal');
     const sendButton = confirmModal.querySelector('button[type="submit"]');
 
-    const previewPre = confirmModal.querySelector('.notification-confirm-preview');
+    const previewTitle = confirmModal.querySelector('p.notification-confirm-preview');
+    const previewContent = confirmModal.querySelector('pre.notification-confirm-preview');
     const confirmText = confirmModal.querySelector('#confirm-text');
 
     /**
@@ -473,10 +511,11 @@
         const selectedPhaseRadio = document.querySelector('input[name="targetPhase"]:checked');
         const phaseLabel = selectedPhaseRadio ? selectedPhaseRadio.parentElement.textContent.trim() : "";
 
-        if (previewPre) previewPre.textContent = templateBody.value;
+        if (previewTitle) previewTitle.textContent = templateTitle.value;
+        if (previewContent) previewContent.textContent = templateBody.value;
         if (confirmText) {
           confirmText.innerHTML = `
-            <p>以下の内容で<span class="font-bold">${phaseLabel}</span>に通知を送信してよろしいですか？</p>
+            <p>以下の内容で<span class="font-bold">${phaseLabel}</span>の書評に通知を送信してよろしいですか？</p>
           `;
         }
         confirmModal.style.display = 'block';

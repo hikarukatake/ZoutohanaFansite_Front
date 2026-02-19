@@ -22,8 +22,6 @@ window.onload = async function () {
         voteReview.style.display = 'none';
     }
     createShintoShelf(allBooksData.slice(0, 10));
-
-    oneShintobook(allBooksData[0]);
 };
 
 /* =========================
@@ -215,6 +213,7 @@ async function Allbook(data, book) {
     if (voteBtn && !await isVote()) {
         voteBtn.setAttribute('onclick', `vote(${data.id})`);
         voteBtn.style.display = '';
+        voteBtn.classList.add('modal-button');
     }else{
         const currentData = localStorage.getItem(VOTE_KEY);
         const voteList = JSON.parse(currentData || "[]");
@@ -225,6 +224,7 @@ async function Allbook(data, book) {
             }else{
                 voteBtn.style.display = '';
                 voteBtn.setAttribute('onclick', `vote(${data.id})`);
+                voteBtn.classList.add('modal-button-clicked');
             }
         }
     }
@@ -232,6 +232,11 @@ async function Allbook(data, book) {
 
         if (bookmarkBtn) {
             bookmarkBtn.setAttribute('onclick', `favorite(${data.id})`);
+            if(isFavorite(data.id)){
+                bookmarkBtn.classList.add('modal-button-clicked');
+            }else{
+                bookmarkBtn.classList.add('modal-button');
+            }
         }
     // 今開いた本を記録
     currentOpenedBook = book;
@@ -737,16 +742,20 @@ function finishButtonTutorial() {
 function favorite(id) {
     // ボタンを押したらその推された本のidを受け取ってtargetBookに代入
     const targetBook = document.getElementById(id);
-
+    const bookmarkBtn = document.getElementById('bookmarkBtn');
     if (targetBook) {
         if(isFavorite(id)){
             targetBook.classList.remove('is-favorite');
             removeFavoriteId(id);
+            bookmarkBtn.classList.remove('modal-button-clicked');
+            bookmarkBtn.classList.add('modal-button');
         }else{
             // 2. CSSクラス「is-favorite」をつける
             targetBook.classList.add('is-favorite');
             // 3. ローカルストレージに保存
             addFavoriteId(id);
+            bookmarkBtn.classList.remove('modal-button');
+            bookmarkBtn.classList.add('modal-button-clicked');
         }
         
     } else {
@@ -755,8 +764,12 @@ function favorite(id) {
 
         if(favIds.includes(id)){
             removeFavoriteId(id);
+            bookmarkBtn.classList.remove('modal-button-clicked');
+            bookmarkBtn.classList.add('modal-button');
         }else{
             addFavoriteId(id);
+            bookmarkBtn.classList.remove('modal-button');
+            bookmarkBtn.classList.add('modal-button-clicked');
         }
     }
 }
@@ -818,6 +831,10 @@ async function vote(id){
             localStorage.setItem(VOTE_KEY, JSON.stringify(voteIds));
             const voteReview = document.getElementById('voteReview');
             voteReview.style.display = 'none';
+
+            const voteBtn = document.getElementById('voteBtn');
+            voteBtn.classList.remove('modal-button-clicked');
+            voteBtn.classList.add('modal-button');
         }
     }else{
         // 投票加算処理
@@ -828,6 +845,10 @@ async function vote(id){
         voteReview.style.display = '';
         const voteData = await getVoteReviewData();
         oneShintobook(voteData);
+
+        const voteBtn = document.getElementById('voteBtn');
+        voteBtn.classList.remove('modal-button');
+        voteBtn.classList.add('modal-button-clicked');
     }
 }
 
@@ -919,9 +940,16 @@ function oneShintobook(data) {
     setDiv.appendChild(penBox);
 
     const shareBox = document.getElementById('shareBox');
-    shareBox.onclick = () => {
-        vote(data.id);
-    };
+    console.log('shareBox:', shareBox); // ← これを追加
+    console.log('data.id:', data.id);   // ← これを追加
+
+    if(shareBox) {
+        shareBox.onclick = () => {
+            vote(data.id);
+        };
+    } else {
+        console.error('shareBoxが見つかりません');
+    }
 
     // 画面の箱に追加して表示完了
     oneShintoContainer.appendChild(setDiv);
@@ -934,7 +962,12 @@ async function createShintoShelf(booksData) {
     // この神棚レイアウト自体をDOMにいれる
     const shintoContainer = document.querySelector('.book-shinto-box');
     shintoContainer.innerHTML = "";
-    if(booksData === null){
+    
+    if (!booksData || booksData.length === 0) {
+        const noMessage = document.createElement('p');
+        noMessage.innerText = "ブックマークを付けた書評が存在しません";
+        noMessage.classList.add('no-data-message');
+        shintoContainer.appendChild(noMessage);
         return;
     }
     // 受け取ったデータの数文繰り返す

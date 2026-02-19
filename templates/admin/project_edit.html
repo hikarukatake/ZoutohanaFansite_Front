@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${project.name} + ' | 企画編集・情報'">データが取得できませんでした:企画名 | 企画編集・情報</title>
+    <link rel="icon" th:href="@{/img/zoutohana-jitsubutsu.png}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="../../static/css/admin/admin-style.css" th:href="@{/css/admin/admin-style.css}">
 </head>
@@ -29,8 +30,8 @@
 
       <div class="tab-content">
         <div class="main-content-card tab-panel active"> <!-- 「企画について」タブの中身 -->
-          <form method="POST" th:action="@{/admin/project/view/{urlKey}(urlKey=${project.urlKey})}" class="no-auto-submit">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          <form method="post" th:action="@{/admin/project/view/{urlKey}(urlKey=${project.urlKey})}" th:object="${project}" class="no-auto-submit">
+<!--            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
             <div class="table-container">
               <table>
                 <tr>
@@ -62,16 +63,6 @@
                     </select>
                   </td>
                 </tr>
-<!--                <tr>-->
-<!--                  <th>QRコード : </th>-->
-<!--                  <td>-->
-<!--                    <div class="flex gap-4">-->
-<!--                      <button type="button" id="qrImg-showButton" class="btn">表示する</button> &lt;!&ndash; TODO:後で実装 &ndash;&gt;-->
-<!--                      <button type="button" id="qrImg-downloadButton" class="btn">ダウンロードする</button> &lt;!&ndash; TODO:後で実装 &ndash;&gt;-->
-<!--                    </div>-->
-<!--                    <img id="qrImg-preview" src="../../static/img/flower-blue.png" th:src="@{/img/flower-blue.png}" class="hidden">-->
-<!--                  </td>-->
-<!--                </tr>-->
                 <tr>
                   <th class="table-border-b-strong">削除 : </th>
                   <td class="table-border-b-strong">
@@ -98,6 +89,19 @@
                       <span class="material-symbols-outlined font-sm">content_copy</span>
                     </button>
                     <p th:if="${param.error}" style="color: red">すでに使用されている企画URLは利用できません</p>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <span class="icon-center gap-1">
+                      書評投稿用URL :
+                    </span>
+                  </th>
+                  <td>
+                    <span th:text="${'https://zoutohana-fansite.com/login?id=' + project.id}"></span>
+                    <button type="button" class="btn-sm urlKey-copyBtn-fromInput">
+                      <span class="material-symbols-outlined font-sm">content_copy</span>
+                    </button>
                   </td>
                 </tr>
                 <tr>
@@ -439,158 +443,191 @@
 
     <script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/admin-general.js}"></script>
     <script src="../../static/js/admin/admin-general.js" th:src="@{/js/admin/project-edit.js}"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // --- 要素の取得 ---
-    const phaseRadios = document.querySelectorAll('input[name="targetPhase"]');
-    const templateSelect = document.getElementById('template-select');
-    const loadButton = document.getElementById('load-template-button');
-    const templateTitle = document.getElementById('template-title');
-    const templateBody = document.getElementById('template-textarea');
 
-    // 確認モーダル関連
-    const openConfirmBtn = document.getElementById('open-notification-confirm');
-    const confirmModal = document.getElementById('notification-confirm-modal');
-    const sendButton = confirmModal.querySelector('button[type="submit"]');
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // --- 要素の取得 ---
+        const phaseRadios = document.querySelectorAll('input[name="targetPhase"]');
+        const templateSelect = document.getElementById('template-select');
+        const loadButton = document.getElementById('load-template-button');
+        const templateTitle = document.getElementById('template-title');
+        const templateBody = document.getElementById('template-body');
 
-    const previewTitle = confirmModal.querySelector('p.notification-confirm-preview');
-    const previewContent = confirmModal.querySelector('pre.notification-confirm-preview');
-    const confirmText = confirmModal.querySelector('#confirm-text');
+        // 確認モーダル関連
+        const openConfirmBtn = document.getElementById('open-notification-confirm');
+        const confirmModal = document.getElementById('notification-confirm-modal');
+        const sendButton = confirmModal.querySelector('button[type="submit"]');
 
-    /**
-     * 1. テンプレートリストの取得
-     */
-    const updateTemplateList = async (phase) => {
-      try {
-        const response = await fetch(`/api/admin/notification/template/list?phase=${phase}`);
-        if (!response.ok) throw new Error('リストの取得に失敗しました');
-        const templates = await response.json();
-        templateSelect.innerHTML = '<option value="">選択してください</option>';
-        templates.forEach(template => {
-          const option = document.createElement('option');
-          option.value = template.id;
-          option.textContent = template.title;
-          templateSelect.appendChild(option);
+        const previewTitle = confirmModal.querySelector('p.notification-confirm-preview');
+        const previewPre = confirmModal.querySelector('.notification-confirm-preview');
+        const confirmText = confirmModal.querySelector('#confirm-text');
+
+        /**
+         * 書評投稿用URLのコピーボタン
+         */
+        const copyButtons = document.querySelectorAll('.urlKey-copyBtn-fromInput');
+        copyButtons.forEach((button, index) => {
+          button.addEventListener('click', () => {
+            let textToCopy;
+
+            // ボタンの前にある要素からテキストを取得
+            const previousElement = button.previousElementSibling;
+
+            if (index === 0) {
+              // 1つ目のボタン（企画URL用）
+              const urlKeyPreview = document.getElementById('urlKey-preview');
+              textToCopy = 'https://zoutohana-fansite.com/project/' + urlKeyPreview.textContent;
+            } else {
+              // 2つ目のボタン（書評投稿用URL用）
+              textToCopy = previousElement.textContent.trim();
+            }
+
+            // クリップボードにコピー
+            navigator.clipboard.writeText(textToCopy)
+                    .then(() => {
+                      alert('URLをコピーしました: ' + textToCopy);
+                    })
+                    .catch(err => {
+                      console.error('コピーに失敗しました:', err);
+                      alert('コピーに失敗しました');
+                    });
+          });
         });
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
 
-    /**
-     * 2. 個別テンプレートの呼び出し
-     */
-    loadButton.addEventListener('click', async () => {
-      const selectedId = templateSelect.value;
-      if (!selectedId) {
-        alert('テンプレートを選択してください');
-        return;
-      }
-      try {
-        const response = await fetch(`/api/admin/notification/template/${selectedId}`);
-        if (!response.ok) throw new Error('取得失敗');
-        const data = await response.json();
+        /**
+         * 1. テンプレートリストの取得
+         */
+        const updateTemplateList = async (phase) => {
+          try {
+            const response = await fetch(`/api/admin/notification/template/list?phase=${phase}`);
+            if (!response.ok) throw new Error('リストの取得に失敗しました');
+            const templates = await response.json();
+            templateSelect.innerHTML = '<option value="">選択してください</option>';
+            templates.forEach(template => {
+              const option = document.createElement('option');
+              option.value = template.id;
+              option.textContent = template.title;
+              templateSelect.appendChild(option);
+            });
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        };
 
-        templateTitle.value = data.title;
-        templateBody.value = data.content;
-      } catch (error) {
-        console.error('Error:', error);
-        alert('テンプレートの読み込み中にエラーが発生しました');
-      }
-    });
+        /**
+         * 2. 個別テンプレートの呼び出し
+         */
+        loadButton.addEventListener('click', async () => {
+          const selectedId = templateSelect.value;
+          if (!selectedId) {
+            alert('テンプレートを選択してください');
+            return;
+          }
+          try {
+            const response = await fetch(`/api/admin/notification/template/${selectedId}`);
+            if (!response.ok) throw new Error('取得失敗');
+            const data = await response.json();
 
-    /**
-     * 3. 確認モーダルの表示
-     */
-    if (openConfirmBtn) {
-      openConfirmBtn.addEventListener('click', () => {
-        if (!templateTitle.value.trim() || !templateBody.value.trim()) {
-          alert('タイトルと本文を入力してください。');
-          return;
-        }
-        const selectedPhaseRadio = document.querySelector('input[name="targetPhase"]:checked');
-        const phaseLabel = selectedPhaseRadio ? selectedPhaseRadio.parentElement.textContent.trim() : "";
+            templateTitle.value = data.title;
+            templateBody.value = data.content;
+          } catch (error) {
+            console.error('Error:', error);
+            alert('テンプレートの読み込み中にエラーが発生しました');
+          }
+        });
+
+        /**
+         * 3. 確認モーダルの表示
+         */
+        if (openConfirmBtn) {
+          openConfirmBtn.addEventListener('click', () => {
+            if (!templateTitle.value.trim() || !templateBody.value.trim()) {
+              alert('タイトルと本文を入力してください。');
+              return;
+            }
+            const selectedPhaseRadio = document.querySelector('input[name="targetPhase"]:checked');
+            const phaseLabel = selectedPhaseRadio ? selectedPhaseRadio.parentElement.textContent.trim() : "";
 
         if (previewTitle) previewTitle.textContent = templateTitle.value;
-        if (previewContent) previewContent.textContent = templateBody.value;
+        if (previewPre) previewPre.textContent = templateBody.value;
         if (confirmText) {
-          confirmText.innerHTML = `
+        confirmText.innerHTML = `
             <p>以下の内容で<span class="font-bold">${phaseLabel}</span>の書評に通知を送信してよろしいですか？</p>
           `;
+            }
+            confirmModal.style.display = 'block';
+          });
         }
-        confirmModal.style.display = 'block';
-      });
-    }
 
-    /**
-     * 4. 送信処理 (APIリクエスト & リダイレクト)
-     */
-    sendButton.addEventListener('click', async (e) => {
-      e.preventDefault();
+        /**
+         * 4. 送信処理 (APIリクエスト & リダイレクト)
+         */
+        sendButton.addEventListener('click', async (e) => {
+          e.preventDefault();
 
-      // 二重送信防止のためにボタンを無効化
-      sendButton.disabled = true;
+          // 二重送信防止のためにボタンを無効化
+          sendButton.disabled = true;
 
-      const params = new URLSearchParams(window.location.search);
-      const urlKey = params.get('urlKey');
-      const selectedPhase = document.querySelector('input[name="targetPhase"]:checked').value;
-      const recipient = (selectedPhase === 'FIRST_PHASE') ? 1 : 2;
+          const params = new URLSearchParams(window.location.search);
+          const urlKey = params.get('urlKey');
+          const selectedPhase = document.querySelector('input[name="targetPhase"]:checked').value;
+          const recipient = (selectedPhase === 'FIRST_PHASE') ? 1 : 2;
 
-      const requestData = {
-        recipient: recipient,
-        urlKey: urlKey,
-        title: templateTitle.value,
-        message: templateBody.value
-      };
+          const requestData = {
+            recipient: recipient,
+            urlKey: urlKey,
+            title: templateTitle.value,
+            message: templateBody.value
+          };
 
-      try {
-        const response = await fetch('/api/admin/notification/send', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('input[name="_csrf"]')?.value
-          },
-          body: JSON.stringify(requestData)
+          try {
+            const response = await fetch('/api/admin/notification/send', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('input[name="_csrf"]')?.value
+              },
+              body: JSON.stringify(requestData)
+            });
+
+            if (response.ok) {
+              // 成功時の処理
+              alert('通知を送信しました。');
+              // alertの「OK」が押された後に実行される
+              window.location.reload();
+            } else {
+              const errorData = await response.json();
+              alert('送信に失敗しました: ' + (errorData.message || 'サーバーエラー'));
+              sendButton.disabled = false; // 失敗時はボタンを元に戻す
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert('通信エラーが発生しました。');
+            sendButton.disabled = false;
+          }
         });
 
-        if (response.ok) {
-          // 成功時の処理
-          alert('通知を送信しました。');
-          // alertの「OK」が押された後に実行される
-          window.location.reload();
-        } else {
-          const errorData = await response.json();
-          alert('送信に失敗しました: ' + (errorData.message || 'サーバーエラー'));
-          sendButton.disabled = false; // 失敗時はボタンを元に戻す
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('通信エラーが発生しました。');
-        sendButton.disabled = false;
-      }
-    });
+        /**
+         * 5. モーダルを閉じる
+         */
+        const closeButtons = confirmModal.querySelectorAll('[data-modal-close], .modal-close');
+        closeButtons.forEach(btn => {
+          btn.addEventListener('click', () => confirmModal.style.display = 'none');
+        });
 
-    /**
-     * 5. モーダルを閉じる
-     */
-    const closeButtons = confirmModal.querySelectorAll('[data-modal-close], .modal-close');
-    closeButtons.forEach(btn => {
-      btn.addEventListener('click', () => confirmModal.style.display = 'none');
-    });
+        window.addEventListener('click', (event) => {
+          if (event.target === confirmModal) {
+            confirmModal.style.display = 'none';
+          }
+        });
 
-    window.addEventListener('click', (event) => {
-      if (event.target === confirmModal) {
-        confirmModal.style.display = 'none';
-      }
-    });
+        phaseRadios.forEach(radio => {
+          radio.addEventListener('change', (e) => updateTemplateList(e.target.value));
+        });
 
-    phaseRadios.forEach(radio => {
-      radio.addEventListener('change', (e) => updateTemplateList(e.target.value));
-    });
-
-    const initialPhase = document.querySelector('input[name="targetPhase"]:checked')?.value || 'FIRST_PHASE';
-    updateTemplateList(initialPhase);
-  });
-</script>
+        const initialPhase = document.querySelector('input[name="targetPhase"]:checked')?.value || 'FIRST_PHASE';
+        updateTemplateList(initialPhase);
+      });
+    </script>
 </body>
 </html>

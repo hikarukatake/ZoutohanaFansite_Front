@@ -5,10 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title th:text="${project.name}">企画投票期間</title>
+    <link rel="icon" th:href="@{/img/zoutohana-jitsubutsu.png}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" th:href="@{/css/project/first-review.css}" href="../../static/css/project.css">
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
     <link rel="stylesheet" th:href="@{/css/project/first-review.css}" href="../../static/css/project.css">
     <style th:inline="css">
@@ -102,7 +102,7 @@
             <div class="Award-box">
                 <div class="Award">
                     <div class="Award-circle-box">
-                        <div class="Award-circle">
+                        <div class="inversion-circle">
                             <p class="Award-circle-step">STEP</p>
                             <p class="Award-circle-1">01</p>
                         </div>
@@ -121,7 +121,7 @@
             <div class="Award-box">
                 <div class="Award">
                     <div class="Award-circle-box">
-                        <div class="inversion-circle">
+                        <div class="Award-circle">
                             <p class="inversion-circle-step">STEP</p>
                             <p class="inversion-circle-1">02</p>
                         </div>
@@ -180,9 +180,9 @@
                     </div>
 
                     <div class="modal-buttons" id="modalButtonsArea">
-                        <button id="voteBtn" onclick="Sample(id)" class="modal-button"><span
+                        <button id="voteBtn" onclick="Sample(id)"><span
                                 class="material-symbols-outlined">how_to_vote</span>投票</button>
-                        <button id="bookmarkBtn" onclick="Sample(id)" class="modal-button"><span
+                        <button id="bookmarkBtn" onclick="Sample(id)" class=""><span
                                 class="material-symbols-outlined">bookmark</span>ブックマーク</button>
                     </div>
 

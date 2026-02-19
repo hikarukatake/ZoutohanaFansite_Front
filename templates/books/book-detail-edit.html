@@ -6,12 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>書評の編集</title>
-
-
+    <link rel="icon" th:href="@{/img/zoutohana-jitsubutsu.png}">
     <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css">
-    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/header.css">
-    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/footer.css">
-    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/form-container.css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" href="../../static/css/header.css">
+    <link rel="stylesheet" th:href="@{/css/footer.css}" href="../../static/css/footer.css">
+    <link rel="stylesheet" th:href="@{/css/form-container.css}" href="../../static/css/form-container.css">
 
     <link rel="stylesheet" th:href="@{/css/books/book-detail-edit.css}"
         href="../../static/css/books/book-detail-edit.css">
@@ -77,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-                <form id="signup-form" th:action="@{/review/view/{id}(id=${reviewId})}" method="post"
+                <form id="signup-form" th:action="@{/review/edit/{id}(id=${reviewId})}" method="post"
                     th:object="${reviewForm}">
                     <div class="form-group bio-wrapper">
                         <label for="account-id">書評タイトル<span>（タイトルは20文字以内）</span></label>

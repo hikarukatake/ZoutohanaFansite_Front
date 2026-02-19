@@ -5,6 +5,11 @@ html {
 body {
     margin: 0;
     padding: 0;
+    min-width: 465px;
+    min-height: 812px;
+    max-width: 768px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 body.no-scroll {
@@ -60,14 +65,11 @@ p {
 .img-box {
     padding-top: 200px;
     width: 100%;
-    height: 78vh;
+    min-height: 100vh;
     background-image: url(../../img/back-book.png);
     background-size: cover;
-    /* ←全体にフィット（必要なら拡大縮小） */
     background-repeat: no-repeat;
-    /* ←繰り返しを止める */
     background-position: center;
-    /* ←中央に置く */
     display: block;
     justify-content: center;
     align-items: center;
@@ -76,22 +78,19 @@ p {
     position: relative;
 }
 
-/* 動作確認用に下にコンテンツがないとスクロールできないのでダミーを追加 */
 .next-section {
     width: 100%;
-    height: 95vh;
+    min-height: 100vh;
     background-image: url(../../img/book-flow.png);
     display: block;
     justify-content: center;
     align-items: center;
     font-size: 24px;
     background-size: cover;
-    /* ←全体にフィット（必要なら拡大縮小） */
     background-repeat: no-repeat;
-    /* ←繰り返しを止める */
     background-position: center;
-    /* ←中央に置く */
     margin-bottom: 20px;
+    padding-bottom: 20px;
 }
 
 .look-review {
@@ -102,7 +101,7 @@ p {
 /* --- 本棚エリア --- */
 .shelf-grid {
     display: grid;
-    grid-template-columns: repeat(3, 120px);
+    grid-template-columns: repeat(3, 110px);
     gap: 15px;
     justify-content: center;
     position: relative;
@@ -203,261 +202,412 @@ p {
         transform: translateY(120vh) rotate(180deg);
     }
 }
-
-@media screen and (min-width: 375px) {
-    
-    /* --- 1. 文字のサイズと位置 --- */
-    .book-text h1 {
+@media screen and (min-width: 300px) {
+    #bookDetailModal .book-text h1 {
         font-size: 24px;
     }
-    
-    .book-text p {
+
+    #bookDetailModal .book-text p {
         font-size: 14px;
     }
 
-    .book-text {
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-    position: absolute;
-    top: 100px;
-    left: 20%;
-    color: #303030;
-    transition: opacity 3s ease;
-    opacity: 1;
+    #bookDetailModal .book-text {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+        position: absolute;
+        top: 100px;
+        left: 20%;
+        color: #303030;
+        transition: opacity 3s ease;
+        opacity: 1;
     }
 
-    .one-book-text-overlay {
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    font-size: 30px;
-    line-height: 2;
-    letter-spacing: 0.1em;
-    font-weight: bold;
+    #bookDetailModal .one-book-text-overlay {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        font-size: 30px;
+        line-height: 2;
+        letter-spacing: 0.1em;
+        font-weight: bold;
 
-    position: absolute;
-    top: 40px;
-    left: 40px;
+        position: absolute;
+        top: 40px;
+        left: 40px;
 
-    color: var(--font-normal);
-    z-index: 2;
+        color: var(--font-normal);
+        z-index: 2;
+    }
+
+    #bookDetailModal .one-book {
+        background-image: url('../../img/book2.png');
+        position: relative;
+        width: 100%;
+        height: 300px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border: 2px solid rgb(160, 160, 160);
+        border-radius: 4px;
+        z-index: 1;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
 }
-    
-.one-book {
-    background-image: url('../../img/book2.png');
-    position: relative;
-    /* ← 疑似要素の基準 */
-    width: 100%;
-    height: 200px;
-    /* 本なので高さも必要 */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border: 2px solid rgb(160, 160, 160);
-    border-radius: 4px;
-    z-index: 1;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-
-}
-
-
-
-}
-
 
 @media screen and (min-width: 400px) {
-    
-    /* --- 1. 文字のサイズと位置 --- */
-    .book-text h1 {
+
+    #bookDetailModal .book-text h1 {
         font-size: 25px;
     }
-    
-    .book-text p {
+
+    #bookDetailModal .book-text p {
         font-size: 15px;
     }
 
-    .book-text {
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-    position: absolute;
-    top: 100px;
-    left: 20%;
-    color: #303030;
-    transition: opacity 3s ease;
-    opacity: 1;
+    #bookDetailModal .book-text {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+        position: absolute;
+        top: 100px;
+        left: 20%;
+        color: #303030;
+        transition: opacity 3s ease;
+        opacity: 1;
     }
 
-    .one-book-text-overlay {
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    font-size: 30px;
-    line-height: 2;
-    letter-spacing: 0.1em;
-    font-weight: bold;
+    #bookDetailModal .modal-textFirst {
+        font-size: 18px;
+    }
 
-    position: absolute;
-    top: 40px;
-    left: 40px;
+    #bookDetailModal .one-book-text-overlay {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        font-size: 30px;
+        line-height: 2;
+        letter-spacing: 0.1em;
+        font-weight: bold;
 
-    color: var(--font-normal);
-    z-index: 2;
+        position: absolute;
+        top: 40px;
+        left: 40px;
+
+        color: var(--font-normal);
+        z-index: 2;
+    }
+
+    #bookDetailModal .one-book {
+        background-image: url('../../img/book2.png');
+        position: relative;
+        width: 100%;
+        height: 200px;
+        /* ここで高さが変わる設定 */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border: 2px solid rgb(160, 160, 160);
+        border-radius: 4px;
+        z-index: 1;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
 }
-    
-.one-book {
-    background-image: url('../../img/book2.png');
-    position: relative;
-    /* ← 疑似要素の基準 */
-    width: 100%;
-    height: 200px;
-    /* 本なので高さも必要 */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border: 2px solid rgb(160, 160, 160);
-    border-radius: 4px;
-    z-index: 1;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
+@media screen and (min-width: 440px) {
+    .award-lined-text {
+        font-size: 15px;
+    }
 
 }
 
+@media screen and (min-width: 445px) {
+    #bookDetailModal .modal-textFirst {
+        font-size: 17px;
+    }
 
 
 }
 
 @media screen and (min-width: 450px) {
-    
-    /* --- 1. 文字のサイズと位置 --- */
-    .book-text h1 {
-        font-size: 30px; /* スマホ(24px)より大きく、PC(32px)より小さく */
+    #bookDetailModal .book-text h1 {
+        font-size: 30px;
     }
-    
-    .book-text p {
+
+    #bookDetailModal .book-text p {
         font-size: 19px;
     }
 
-    .book-text {
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-    position: absolute;
-    top: 100px;
-    left: 20%;
-    color: #303030;
-    transition: opacity 3s ease;
-    opacity: 1;
+    #bookDetailModal .book-text {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+        position: absolute;
+        top: 100px;
+        left: 20%;
+        color: #303030;
+        transition: opacity 3s ease;
+        opacity: 1;
     }
 
-    .one-book-text-overlay {
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    font-size: 30px;
-    line-height: 2;
-    letter-spacing: 0.1em;
-    font-weight: bold;
+    #bookDetailModal .one-book-text-overlay {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        font-size: 30px;
+        line-height: 2;
+        letter-spacing: 0.1em;
+        font-weight: bold;
 
-    position: absolute;
-    top: 40px;
-    left: 40px;
+        position: absolute;
+        top: 40px;
+        left: 40px;
 
-    color: var(--font-normal);
-    z-index: 2;
+        color: var(--font-normal);
+        z-index: 2;
+    }
+
+    #bookDetailModal .modal-textFirst {
+        font-size: 18px;
+    }
 }
 
+@media screen and (min-width: 460px) {
+    #bookDetailModal .book-text h1 {
+        font-size: 30px;
+    }
 
+    #bookDetailModal .book-text p {
+        font-size: 19px;
+    }
 
+    #bookDetailModal .book-text {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+        position: absolute;
+        top: 100px;
+        left: 20%;
+        color: #303030;
+        transition: opacity 3s ease;
+        opacity: 1;
+    }
+
+    #bookDetailModal .one-book-text-overlay {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        font-size: 30px;
+        line-height: 2;
+        letter-spacing: 0.1em;
+        font-weight: bold;
+
+        position: absolute;
+        top: 40px;
+        left: 40px;
+
+        color: var(--font-normal);
+        z-index: 2;
+    }
+
+    #bookDetailModal .modal-textFirst {
+        font-size: 17px;
+    }
 }
 
+@media screen and (min-width: 475px) {
+    #bookDetailModal .book-text h1 {
+        font-size: 30px;
+    }
+
+    #bookDetailModal .book-text p {
+        font-size: 19px;
+    }
+
+    #bookDetailModal .book-text {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+        position: absolute;
+        top: 100px;
+        left: 20%;
+        color: #303030;
+        transition: opacity 3s ease;
+        opacity: 1;
+    }
+
+    #bookDetailModal .modal-textFirst {
+        font-size: 18px;
+    }
+
+    #bookDetailModal .one-book-text-overlay {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        font-size: 30px;
+        line-height: 2;
+        letter-spacing: 0.1em;
+        font-weight: bold;
+
+        position: absolute;
+        top: 40px;
+        left: 50px;
+        /* 左位置調整 */
+
+        color: var(--font-normal);
+        z-index: 2;
+    }
+}
+
+@media screen and (min-width: 500px) {
+
+    #bookDetailModal .book-text h1 {
+        font-size: 30px;
+    }
+
+    #bookDetailModal .book-text p {
+        font-size: 19px;
+    }
+
+    #bookDetailModal .book-text {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+        position: absolute;
+        top: 100px;
+        left: 20%;
+        color: #303030;
+        transition: opacity 3s ease;
+        opacity: 1;
+    }
+
+    #bookDetailModal .one-book-text-overlay {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        font-size: 30px;
+        line-height: 2;
+        letter-spacing: 0.1em;
+        font-weight: bold;
+
+        position: absolute;
+        top: 40px;
+        left: 60px;
+        /* 左位置調整 */
+
+        color: var(--font-normal);
+        z-index: 2;
+    }
+}
+
+@media screen and (min-width: 520px) {
+    #bookDetailModal .book-text h1 {
+        font-size: 30px;
+    }
+
+    #bookDetailModal .book-text p {
+        font-size: 19px;
+    }
+
+    #bookDetailModal .book-text {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+        position: absolute;
+        top: 100px;
+        left: 20%;
+        color: #303030;
+        transition: opacity 3s ease;
+        opacity: 1;
+    }
+
+    #bookDetailModal .one-book-text-overlay {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        font-size: 30px;
+        line-height: 2;
+        letter-spacing: 0.1em;
+        font-weight: bold;
+
+        position: absolute;
+        top: 40px;
+        left: 70px;
+        /* 左位置調整 */
+
+        color: var(--font-normal);
+        z-index: 2;
+    }
+}
 
 @media screen and (min-width: 530px) {
-    
-    /* --- 1. 文字のサイズと位置 --- */
-    .book-text h1 {
-        font-size: 34px; /* スマホ(24px)より大きく、PC(32px)より小さく */
+    #bookDetailModal .book-text h1 {
+        font-size: 34px;
     }
-    
-    .book-text p {
+
+    #bookDetailModal .book-text p {
         font-size: 23px;
     }
 
-    .book-text {
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-    position: absolute;
-    top: 100px;
-    left: 20%;
-    color: #303030;
-    transition: opacity 3s ease;
-    opacity: 1;
+    #bookDetailModal .book-text {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+        position: absolute;
+        top: 100px;
+        left: 20%;
+        color: #303030;
+        transition: opacity 3s ease;
+        opacity: 1;
     }
 
-        .one-book-shinto-box {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    max-width: 450px;
-    margin: 0 auto;
+    /* .one-book-shinto-box はモーダル内の要素かどうか不明ですが、
+       このブロックが「モーダル用CSS」であるならスコープします。
+       もし投票画面のボックスなら、このブロックから削除する必要があります。 */
+    #bookDetailModal .one-book-shinto-box {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        max-width: 450px;
+        margin: 0 auto;
+    }
+
+    #bookDetailModal .one-book-text-overlay {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        font-size: 30px;
+        line-height: 2;
+        letter-spacing: 0.1em;
+        font-weight: bold;
+
+        position: absolute;
+        top: 40px;
+        left: 80px;
+        /* 左位置調整 */
+
+        color: var(--font-normal);
+        z-index: 2;
+    }
 }
 
-.one-book-text-overlay {
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    font-size: 30px;
-    line-height: 2;
-    letter-spacing: 0.1em;
-    font-weight: bold;
-
-    position: absolute;
-    top: 40px;
-    left: 80px;
-
-    color: var(--font-normal);
-    z-index: 2;
-}
-
-}
 @media screen and (min-width: 580px) {
-    
-    /* --- 1. 文字のサイズと位置 --- */
-    .book-text h1 {
-        font-size: 36px; /* スマホ(24px)より大きく、PC(32px)より小さく */
+
+    #bookDetailModal .book-text h1 {
+        font-size: 36px;
     }
-    
-    .book-text p {
+
+    #bookDetailModal .book-text p {
         font-size: 25px;
     }
 
-    .book-text {
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-    position: absolute;
-    top: 100px;
-    left: 20%;
-    color: #303030;
-    transition: opacity 3s ease;
-    opacity: 1;
+    #bookDetailModal .book-text {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+        position: absolute;
+        top: 100px;
+        left: 20%;
+        color: #303030;
+        transition: opacity 3s ease;
+        opacity: 1;
     }
-
 }
 
 @media screen and (min-width: 720px) {
-    
-    /* --- 1. 文字のサイズと位置 --- */
-    .book-text h1 {
-        font-size: 36px; /* スマホ(24px)より大きく、PC(32px)より小さく */
+
+    #bookDetailModal .book-text h1 {
+        font-size: 36px;
     }
-    
-    .book-text p {
+
+    #bookDetailModal .book-text p {
         font-size: 25px;
-    }    
+    }
 
-    .book-text {
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-    position: absolute;
-    top: 100px;
-    left: 22%;
-    color: #303030;
-    transition: opacity 3s ease;
-    opacity: 1;
+    #bookDetailModal .book-text {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+        position: absolute;
+        top: 100px;
+        left: 22%;
+        color: #303030;
+        transition: opacity 3s ease;
+        opacity: 1;
+    }
 }
-
-}
-
-
-
-
 
 
 /* ボタンのスタイル */
@@ -652,6 +802,7 @@ p {
 .one-book-box {
     width: 99%;
     margin:  0 auto;
+    padding-top: 50px;
     background-color: var(--back-color);
 }
 
@@ -763,8 +914,8 @@ p {
 /* チュートリアルメッセージ */
 .tutorial-msg {
     position: absolute;
-    top: 400%;
-    left: 30%;
+    top: 150%;
+    left: 50%;
     background: #fff;
     color: var(--font-normal);
     font-size: 20px;
@@ -925,7 +1076,7 @@ p {
 .modal-textSecond-box {
     width: 80%;
     margin: 0 auto;
-    padding: 10px 50px 10px 40px;
+    padding: 10px 40px 10px 40px;
     /* 内側の線 */
     border: 1px solid var(--font-bold);
     /* 外側の線 */
@@ -1077,15 +1228,25 @@ p {
     border: 2px solid var(--sub-color);
 }
 
-.modal-button:hover {
-    background-color: var(--sub-color);
-    color: white;
-}
+/*.modal-button:hover {*/
+/*    background-color: var(--sub-color);*/
+/*    color: white;*/
+/*}*/
 
 
 .modal-button-clicked { /* voteBtn, bookmarkBtnクリックしたときこのクラスを追加で */
+    display: flex;
+    justify-content: center;
     background-color: var(--sub-color);
+    width: 35%;
+    height: 45px;
+    padding: 10px;
+    border-radius: 5px;
+    align-items: center;
+    gap: 10px;
+    border: none;
     color: white;
+    border: 2px solid var(--sub-color);
 }
 
 .modal-img {
@@ -1354,5 +1515,13 @@ p {
     color: #aaa;
     cursor: default;
     text-decoration: none;
+}
+
+.no-data-message {
+    text-align: center;
+    color: var(--font-bold);
+    font-size: 18px;
+    margin-bottom: 50px;
+    font-weight: bold;
 }
 
